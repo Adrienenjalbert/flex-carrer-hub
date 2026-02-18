@@ -1,0 +1,234 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Indeed Flex Brand Design System - Wellness Inspired */
+
+@layer base {
+  :root {
+    /* Indeed Flex Exact Brand Colors */
+    --background: 40 10% 99%;
+    --foreground: 220 25% 15%;
+    
+    /* Primary: Indeed Blue #003ea2 */
+    --primary: 218 100% 32%;
+    --primary-foreground: 0 0% 100%;
+    
+    /* Accent: Flex Pink #dd01aa */
+    --accent: 310 99% 43%;
+    --accent-foreground: 0 0% 100%;
+    
+    /* Wellness-Inspired Secondary Colors */
+    --secondary: 40 20% 97%;
+    --secondary-foreground: 220 25% 15%;
+    
+    /* Muted - Soft earth tones */
+    --muted: 40 15% 94%;
+    --muted-foreground: 220 15% 45%;
+    
+    /* Cards - Pure white for contrast */
+    --card: 0 0% 100%;
+    --card-foreground: 220 25% 15%;
+    
+    /* Popover */
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 25% 15%;
+    
+    /* Destructive */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    
+    /* Borders - Soft and subtle */
+    --border: 40 10% 88%;
+    --input: 40 10% 88%;
+    --ring: 218 100% 32%;
+    
+    --radius: 0.75rem;
+    
+    /* Success - Wellness green */
+    --success: 158 64% 42%;
+    --success-foreground: 0 0% 100%;
+    
+    /* Warning - Warm amber */
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+    
+    /* Info - Calming blue */
+    --info: 199 89% 48%;
+    --info-foreground: 0 0% 100%;
+
+    /* Sidebar */
+    --sidebar-background: 40 15% 98%;
+    --sidebar-foreground: 220 25% 15%;
+    --sidebar-primary: 218 100% 32%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 40 15% 94%;
+    --sidebar-accent-foreground: 220 25% 15%;
+    --sidebar-border: 40 10% 88%;
+    --sidebar-ring: 218 100% 32%;
+  }
+
+  .dark {
+    --background: 220 20% 8%;
+    --foreground: 40 10% 95%;
+    
+    --primary: 218 90% 50%;
+    --primary-foreground: 0 0% 100%;
+    
+    --accent: 310 90% 55%;
+    --accent-foreground: 0 0% 100%;
+    
+    --secondary: 220 15% 14%;
+    --secondary-foreground: 40 10% 95%;
+    
+    --muted: 220 15% 14%;
+    --muted-foreground: 40 10% 60%;
+    
+    --card: 220 18% 12%;
+    --card-foreground: 40 10% 95%;
+    
+    --popover: 220 18% 12%;
+    --popover-foreground: 40 10% 95%;
+    
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 220 15% 20%;
+    --input: 220 15% 20%;
+    --ring: 218 90% 50%;
+    
+    --success: 158 64% 35%;
+    --success-foreground: 0 0% 100%;
+    
+    --warning: 38 92% 40%;
+    --warning-foreground: 0 0% 100%;
+    
+    --info: 199 89% 38%;
+    --info-foreground: 0 0% 100%;
+
+    --sidebar-background: 220 18% 10%;
+    --sidebar-foreground: 40 10% 95%;
+    --sidebar-primary: 218 90% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 15% 14%;
+    --sidebar-accent-foreground: 40 10% 95%;
+    --sidebar-border: 220 15% 20%;
+    --sidebar-ring: 218 90% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Indeed Flex Navigation - Exact styles from indeedflex.co.uk */
+  /* .menu-item > a::before { position:absolute left:0 bottom:-5px height:1px width:0 bg:pink transition:300ms } */
+  .nav-link-hover {
+    position: relative;
+    display: inline-block;
+  }
+  .nav-link-hover::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    height: 1px;
+    width: 0;
+    background-color: rgb(221, 0, 169);
+    transition-duration: 300ms;
+  }
+  .nav-link-hover:hover::before {
+    width: 100%;
+  }
+  .nav-link-hover:hover {
+    color: rgb(221, 0, 169) !important;
+  }
+
+  /* Secondary nav link hover underline */
+  .sub-nav-link-hover {
+    position: relative;
+  }
+  .sub-nav-link-hover::before {
+    content: '';
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    bottom: 0;
+    height: 1px;
+    background-color: rgb(221, 0, 169);
+    transform: scaleX(0);
+    transition-duration: 300ms;
+  }
+  .sub-nav-link-hover:hover::before {
+    transform: scaleX(1);
+  }
+  .sub-nav-link-hover:hover {
+    color: rgb(221, 0, 169) !important;
+  }
+
+  /* Download button hover - matches [data-ancestor=jobseeker-page] .button:hover { bg: rgb(181 4 139) } */
+  .download-btn-hover:hover {
+    background-color: rgb(181, 4, 139) !important;
+  }
+
+  /* Responsive button sizing */
+  @media (min-width: 640px) {
+    .download-btn-hover {
+      padding: 16px 24px !important;
+      font-size: 16px !important;
+      line-height: 16px !important;
+    }
+  }
+  
+  /* Indeed Flex Brand Gradients */
+  .gradient-primary {
+    background: linear-gradient(135deg, hsl(218 100% 32%) 0%, hsl(218 90% 42%) 100%);
+  }
+  
+  .gradient-accent {
+    background: linear-gradient(135deg, hsl(310 99% 43%) 0%, hsl(310 85% 55%) 100%);
+  }
+  
+  /* Wellness-Inspired Hero Gradient */
+  .hero-gradient {
+    background: linear-gradient(135deg, hsl(218 100% 28%) 0%, hsl(218 90% 38%) 50%, hsl(260 60% 35%) 100%);
+  }
+  
+  /* Soft Wellness Gradient */
+  .gradient-wellness {
+    background: linear-gradient(135deg, hsl(218 100% 32% / 0.08) 0%, hsl(310 99% 43% / 0.05) 100%);
+  }
+  
+  /* Calm Earth Tone Gradient */
+  .gradient-calm {
+    background: linear-gradient(180deg, hsl(40 20% 97%) 0%, hsl(40 15% 94%) 100%);
+  }
+  
+  /* Soft shadow for cards */
+  .shadow-soft {
+    box-shadow: 0 4px 20px -4px hsl(220 25% 15% / 0.08), 0 2px 8px -2px hsl(220 25% 15% / 0.04);
+  }
+  
+  .shadow-soft-lg {
+    box-shadow: 0 8px 30px -6px hsl(220 25% 15% / 0.12), 0 4px 12px -4px hsl(220 25% 15% / 0.06);
+  }
+}
