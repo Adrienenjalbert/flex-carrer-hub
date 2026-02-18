@@ -30,6 +30,9 @@ export const metadata: Metadata = {
     "emergency fund gig economy",
     "retirement saving freelancers",
   ],
+  alternates: {
+    canonical: "https://indeedflex.com/career-hub/financial-tips",
+  },
 };
 
 const quickTips = [

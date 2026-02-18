@@ -14,6 +14,9 @@ export const metadata: Metadata = {
     "hourly work near me",
     "city jobs",
   ],
+  alternates: {
+    canonical: "https://indeedflex.com/career-hub/cities",
+  },
 };
 
 export default function CitiesPage() {

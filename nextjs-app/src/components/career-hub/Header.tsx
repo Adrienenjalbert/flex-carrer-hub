@@ -373,7 +373,7 @@ const Header = () => {
                 >
                   <button
                     onClick={() => setOpenDropdown(isOpen ? null : pillar.id)}
-                    className={`relative inline-flex items-center gap-1 cursor-pointer bg-transparent border-none secondary-nav-link-hover ${isOpen ? '!text-pink' : ''}`}
+                    className={`relative inline-flex items-center gap-1 cursor-pointer bg-transparent border-none sub-nav-link-hover`}
                     style={{
                       fontSize: 14, fontWeight: 700, lineHeight: '27px', letterSpacing: '0.25px',
                       color: isOpen ? 'rgb(221,0,169)' : 'rgba(60,60,60,0.8)',
@@ -408,55 +408,6 @@ const Header = () => {
                         boxShadow: '0 10px 40px -10px rgba(0,0,0,0.15)',
                       }}
                     >
-                      {/* Single-column dropdown */}
-                      {pillar.dropdown.type === 'single' && (
-                        <div style={{ padding: '12px 0' }}>
-                          {pillar.dropdown.sections?.map((section, sIdx) => (
-                            <div key={sIdx}>
-                              {sIdx > 0 && <div style={{ height: 1, backgroundColor: 'rgb(236,236,236)', margin: '8px 16px' }} />}
-                              {section.label && (
-                                <p style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 1, color: 'rgba(60,60,60,0.5)', padding: '8px 20px 4px' }}>
-                                  {section.label}
-                                </p>
-                              )}
-                              {section.items.map((item) => {
-                                const Icon = item.icon;
-                                return (
-                                  <Link
-                                    key={item.href}
-                                    href={item.href}
-                                    onClick={() => setOpenDropdown(null)}
-                                    className="flex items-center gap-3 hover:bg-gray-50 transition-colors"
-                                    style={{ padding: '10px 20px', textDecoration: 'none' }}
-                                  >
-                                    <Icon className="h-4 w-4 flex-shrink-0" style={{ color: 'rgb(221,0,169)' }} strokeWidth={1.8} />
-                                    <span style={{ fontSize: 14, fontWeight: 600, color: 'rgba(60,60,60,0.9)', lineHeight: '18px' }}>
-                                      {item.title}
-                                    </span>
-                                  </Link>
-                                );
-                              })}
-                            </div>
-                          ))}
-                          {pillar.dropdown.viewAll && (
-                            <>
-                              <div style={{ height: 1, backgroundColor: 'rgb(236,236,236)', margin: '8px 16px' }} />
-                              <Link
-                                href={pillar.dropdown.viewAll.href}
-                                onClick={() => setOpenDropdown(null)}
-                                className="flex items-center gap-2 hover:bg-gray-50 transition-colors"
-                                style={{ padding: '10px 20px', textDecoration: 'none' }}
-                              >
-                                <span style={{ fontSize: 13, fontWeight: 700, color: 'rgb(221,0,169)' }}>
-                                  {pillar.dropdown.viewAll.text}
-                                </span>
-                                <ArrowRight className="h-3.5 w-3.5" style={{ color: 'rgb(221,0,169)' }} />
-                              </Link>
-                            </>
-                          )}
-                        </div>
-                      )}
-
                       {/* Multi-column dropdown (Mega Menu) */}
                       {pillar.dropdown.type === 'multi' && (
                         <div style={{ padding: '20px 0 16px' }}>
@@ -566,9 +517,6 @@ const Header = () => {
           <div className="flex-1 overflow-auto">
             {contentPillars.map((pillar) => {
               const isExpanded = mobileExpandedSection === pillar.id;
-              const allItems = pillar.dropdown.type === 'single'
-                ? (pillar.dropdown.sections?.flatMap(s => s.items) ?? [])
-                : (pillar.dropdown.columns?.flatMap(c => c.items) ?? []);
 
               return (
                 <div key={pillar.id} style={{ borderBottom: '1px solid rgb(236,236,236)' }}>
@@ -583,7 +531,7 @@ const Header = () => {
                     }}
                   >
                     <span>{pillar.label}</span>
-                    <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${isExpanded ? 'rotate-180 text-pink' : 'text-gray-400'}`} />
+                    <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${isExpanded ? 'rotate-180 text-accent' : 'text-gray-400'}`} />
                   </button>
 
                   {isExpanded && (
@@ -595,32 +543,6 @@ const Header = () => {
                             {column.label}
                           </p>
                           {column.items.map((item) => {
-                            const Icon = item.icon;
-                            return (
-                              <Link
-                                key={item.href}
-                                href={item.href}
-                                onClick={() => setMobileMenuOpen(false)}
-                                className="flex items-center gap-3 hover:bg-gray-100/60 transition-colors"
-                                style={{ padding: '10px 16px 10px 28px', textDecoration: 'none' }}
-                              >
-                                <Icon className="h-4 w-4 flex-shrink-0" style={{ color: 'rgb(221,0,169)' }} strokeWidth={1.8} />
-                                <span style={{ fontSize: 13, fontWeight: 600, color: 'rgba(60,60,60,0.9)' }}>{item.title}</span>
-                              </Link>
-                            );
-                          })}
-                        </div>
-                      ))}
-
-                      {/* Single column items */}
-                      {pillar.dropdown.type === 'single' && pillar.dropdown.sections?.map((section, sIdx) => (
-                        <div key={sIdx}>
-                          {section.label && (
-                            <p style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 1, color: 'rgba(60,60,60,0.45)', padding: '10px 16px 4px' }}>
-                              {section.label}
-                            </p>
-                          )}
-                          {section.items.map((item) => {
                             const Icon = item.icon;
                             return (
                               <Link
@@ -676,13 +598,6 @@ const Header = () => {
         </div>
       )}
 
-      {/* CSS animation for dropdown */}
-      <style jsx>{`
-        @keyframes fadeSlideDown {
-          from { opacity: 0; transform: translateY(-4px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
     </header>
   );
 };

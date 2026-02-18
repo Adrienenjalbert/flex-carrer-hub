@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/providers";
 
@@ -12,15 +12,21 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
+const plusJakartaSans = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  display: "swap",
+  preload: true,
+  fallback: ["system-ui", "arial"],
+  variable: "--font-plus-jakarta",
+  weight: ["400", "500", "700"],
+});
+
 // Viewport configuration for mobile optimization
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#0f172a" },
-  ],
+  themeColor: "#ffffff",
 };
 
 export const metadata: Metadata = {
@@ -97,6 +103,10 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: "https://indeedflex.com",
+    languages: {
+      "en-US": "https://indeedflex.com",
+      "es-US": "https://indeedflex.com/es",
+    },
   },
   other: {
     "geo.region": "US",
@@ -174,11 +184,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={inter.variable} suppressHydrationWarning>
+    <html lang="en" className={`${inter.variable} ${plusJakartaSans.variable}`} suppressHydrationWarning>
       <head>
         {/* Preconnect to critical origins for faster loading */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://indeedflex.com" />
         
         {/* Favicon and app icons */}

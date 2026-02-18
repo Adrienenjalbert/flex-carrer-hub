@@ -1,9 +1,5 @@
 import { Metadata } from "next";
-import dynamic from "next/dynamic";
-
-const RolesClient = dynamic(() => import("./RolesClient"), {
-  ssr: false,
-});
+import RolesClient from "./RolesClient";
 
 export const metadata: Metadata = {
   title: "Flexible Work Roles",
@@ -16,6 +12,9 @@ export const metadata: Metadata = {
     "hospitality jobs",
     "retail jobs",
   ],
+  alternates: {
+    canonical: "https://indeedflex.com/career-hub/roles",
+  },
 };
 
 export default function RolesPage() {

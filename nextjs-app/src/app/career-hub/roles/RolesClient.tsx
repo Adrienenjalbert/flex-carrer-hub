@@ -69,14 +69,11 @@ export default function RolesClient() {
       {
         id: "industry",
         label: "Industry",
-        options: [
-          { id: "all", label: "All Industries", value: "" },
-          ...industries.map((ind) => ({
-            id: ind.id,
-            label: ind.name,
-            value: ind.name,
-          })),
-        ],
+        options: industries.map((ind) => ({
+          id: ind.id,
+          label: ind.name,
+          value: ind.name,
+        })),
         value: selectedIndustry,
         onChange: setSelectedIndustry,
       },
@@ -84,7 +81,6 @@ export default function RolesClient() {
         id: "pay",
         label: "Pay Range",
         options: [
-          { id: "all", label: "All Ranges", value: "" },
           { id: "12-15", label: "$12-$15/hr", value: "12-15" },
           { id: "15-18", label: "$15-$18/hr", value: "15-18" },
           { id: "18-22", label: "$18-$22/hr", value: "18-22" },

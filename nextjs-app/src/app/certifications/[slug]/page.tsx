@@ -37,6 +37,9 @@ export async function generateMetadata({
       `how to get ${cert.name.toLowerCase()}`,
       `${cert.category} certification`,
     ],
+    alternates: {
+      canonical: `https://indeedflex.com/certifications/${slug}`,
+    },
   };
 }
 

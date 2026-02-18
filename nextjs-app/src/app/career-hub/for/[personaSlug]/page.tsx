@@ -42,6 +42,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: `${hub.title} | Indeed Flex Career Hub`,
     description: hub.metaDescription,
     keywords: hub.seoKeywords,
+    alternates: {
+      canonical: `https://indeedflex.com/career-hub/for/${personaSlug}`,
+    },
     openGraph: {
       title: hub.title,
       description: hub.metaDescription,

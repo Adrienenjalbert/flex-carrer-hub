@@ -21,6 +21,9 @@ export const metadata: Metadata = {
   title: "About Our Career Hub | Indeed Flex",
   description: "Learn about the Indeed Flex Career Hub editorial team, our data sources, methodology, and commitment to providing accurate, helpful career information.",
   keywords: ["Indeed Flex", "career hub", "about us", "editorial team", "data sources"],
+  alternates: {
+    canonical: "https://indeedflex.com/career-hub/about",
+  },
 };
 
 export default function AboutPage() {

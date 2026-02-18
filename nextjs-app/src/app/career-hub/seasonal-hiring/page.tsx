@@ -24,6 +24,7 @@ import {
   Sun,
   Leaf,
   Flower2,
+  Briefcase,
 } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -38,6 +39,9 @@ export const metadata: Metadata = {
     "seasonal employment",
     "temp jobs",
   ],
+  alternates: {
+    canonical: "https://indeedflex.com/career-hub/seasonal-hiring",
+  },
 };
 
 const seasonIcons = {

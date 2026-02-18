@@ -33,6 +33,9 @@ export const metadata: Metadata = {
     "hospitality resume",
     "warehouse resume",
   ],
+  alternates: {
+    canonical: "https://indeedflex.com/career-hub/job-application-toolkit",
+  },
   openGraph: {
     title: "Job Application Toolkit | Indeed Flex Career Hub",
     description: "Free resume templates, cover letter examples, and job application guides for hourly and flexible workers.",

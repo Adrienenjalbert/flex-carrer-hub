@@ -13,6 +13,9 @@ export const metadata: Metadata = {
     "temp jobs in my area",
     "gig work by city",
   ],
+  alternates: {
+    canonical: "https://indeedflex.com/career-hub/locations",
+  },
 };
 
 export default function LocationsPage() {

@@ -42,6 +42,9 @@ export async function generateMetadata({
       `${roleTitle} skills`,
       `${roleTitle} certification`,
     ],
+    alternates: {
+      canonical: `https://indeedflex.com/how-to-become/${roleSlug}`,
+    },
   };
 }
 

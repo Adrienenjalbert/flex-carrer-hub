@@ -14,7 +14,6 @@ export default function robots(): MetadataRoute.Robots {
           "/_next/",
           "/private/",
           "/admin/",
-          "/*?*", // Block URL parameters (avoid duplicate content)
         ],
       },
       // Google (primary target)
@@ -45,23 +44,6 @@ export default function robots(): MetadataRoute.Robots {
         crawlDelay: 10,
         disallow: ["/api/", "/_next/"],
       },
-      // Block AI training crawlers (optional - remove if you want to be in AI training data)
-      {
-        userAgent: "GPTBot",
-        disallow: "/",
-      },
-      {
-        userAgent: "ChatGPT-User",
-        disallow: "/",
-      },
-      {
-        userAgent: "CCBot",
-        disallow: "/",
-      },
-      {
-        userAgent: "anthropic-ai",
-        disallow: "/",
-      },
     ],
     sitemap: [
       `${baseUrl}/sitemap/core.xml`,
@@ -73,6 +55,8 @@ export default function robots(): MetadataRoute.Robots {
       `${baseUrl}/sitemap/states.xml`,
       `${baseUrl}/sitemap/job-application.xml`,
       `${baseUrl}/sitemap/personas.xml`,
+      `${baseUrl}/sitemap/seasonal.xml`,
+      `${baseUrl}/sitemap/wage-report.xml`,
     ],
     host: baseUrl,
   };

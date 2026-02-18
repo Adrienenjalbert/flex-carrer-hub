@@ -1,328 +1,256 @@
 "use client";
-
+// Tools Index Client Component - v2
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import { 
-  Calculator, 
-  DollarSign, 
-  Repeat, 
-  Wallet, 
-  Receipt, 
-  Target, 
-  Scale, 
-  Clock, 
-  Wrench, 
-  Globe, 
-  Car, 
-  Baby, 
-  Shield, 
-  AlertCircle, 
-  Award, 
-  Coffee, 
-  UtensilsCrossed, 
-  MessageCircle, 
-  HardHat,
+import {
+  Calculator,
+  Wallet,
+  Receipt,
+  ArrowLeftRight,
+  Calendar,
+  Search,
+  MapPin,
+  TrendingUp,
+  Shield,
+  GraduationCap,
+  Baby,
+  Briefcase,
+  Languages,
+  Brain,
+  Wine,
+  CheckCircle,
   Star,
-  TrendingUp
+  Wrench,
 } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import FilterBar, { FilterConfig } from "@/components/career-hub/FilterBar";
-import SectionHeader from "@/components/career-hub/SectionHeader";
-import ContentGrid from "@/components/career-hub/ContentGrid";
-import EmptyState from "@/components/career-hub/EmptyState";
+import { Input } from "@/components/ui/input";
 import PageHero from "@/components/career-hub/PageHero";
 
-interface Tool {
-  name: string;
-  slug: string;
-  description: string;
-  icon: React.ComponentType<{ className?: string }>;
-  category: "pay-salary" | "planning-career" | "life-benefits" | "fun-interactive";
-  popular?: boolean;
-  complexity?: "simple" | "intermediate" | "advanced";
-}
-
-const allTools: Tool[] = [
-  // Pay & Salary
+// All available tools with their metadata
+const allTools = [
+  // === Financial Calculators ===
   {
-    name: "Paycheck Calculator",
     slug: "paycheck-calculator",
-    description: "Calculate your weekly and monthly take-home pay after taxes",
-    icon: Calculator,
-    category: "pay-salary",
+    name: "Paycheck Calculator",
+    description: "Calculate your take-home pay after federal and state taxes, Social Security, Medicare, and deductions.",
+    category: "Financial Calculators",
+    icon: "Calculator",
     popular: true,
-    complexity: "simple",
   },
   {
-    name: "Salary Converter",
-    slug: "salary-converter",
-    description: "Convert between hourly, weekly, monthly, and annual pay",
-    icon: Repeat,
-    category: "pay-salary",
-    complexity: "simple",
-  },
-  {
-    name: "Take-Home Pay",
     slug: "take-home-pay",
-    description: "Estimate your net pay after deductions and taxes",
-    icon: Wallet,
-    category: "pay-salary",
-    complexity: "simple",
+    name: "Take-Home Pay Calculator",
+    description: "See exactly how much money hits your bank account after all taxes and deductions.",
+    category: "Financial Calculators",
+    icon: "Wallet",
+    popular: true,
   },
   {
-    name: "Tax Calculator",
     slug: "tax-calculator",
-    description: "Estimate your federal and state tax obligations",
-    icon: Receipt,
-    category: "pay-salary",
+    name: "Tax Calculator",
+    description: "Estimate your federal and state income taxes. Includes self-employment tax for gig workers.",
+    category: "Financial Calculators",
+    icon: "Receipt",
     popular: true,
-    complexity: "intermediate",
   },
-  // Planning & Career
   {
-    name: "Career Path Explorer",
-    slug: "career-path",
-    description: "Visualize your career progression from entry-level to management",
-    icon: Target,
-    category: "planning-career",
+    slug: "salary-converter",
+    name: "Salary Converter",
+    description: "Convert between hourly, weekly, monthly, and annual pay. Compare job offers easily.",
+    category: "Financial Calculators",
+    icon: "ArrowLeftRight",
     popular: true,
-    complexity: "intermediate",
   },
   {
-    name: "Job Offer Analyzer",
-    slug: "job-offer-analyzer",
-    description: "Compare job offers to find the best opportunity",
-    icon: Scale,
-    category: "planning-career",
-    complexity: "intermediate",
-  },
-  {
-    name: "Shift Planner",
-    slug: "shift-planner",
-    description: "Plan your work schedule and maximize earnings",
-    icon: Clock,
-    category: "planning-career",
-    popular: true,
-    complexity: "simple",
-  },
-  {
-    name: "Skills Analyzer",
-    slug: "skills-analyzer",
-    description: "Assess your skills and identify areas for growth",
-    icon: Wrench,
-    category: "planning-career",
-    complexity: "intermediate",
-  },
-  {
-    name: "Data Verification",
-    slug: "data-verification",
-    description: "Verify and validate your work history and credentials",
-    icon: DollarSign,
-    category: "planning-career",
-    complexity: "simple",
-  },
-  // Life & Benefits
-  {
-    name: "Cost of Living",
-    slug: "cost-of-living",
-    description: "Compare living costs across cities",
-    icon: Globe,
-    category: "life-benefits",
-    popular: true,
-    complexity: "simple",
-  },
-  {
-    name: "Commute Calculator",
-    slug: "commute-calculator",
-    description: "Calculate the true cost of commuting to work",
-    icon: Car,
-    category: "life-benefits",
-    complexity: "simple",
-  },
-  {
-    name: "Childcare Calculator",
-    slug: "childcare-calculator",
-    description: "Estimate childcare costs in your area",
-    icon: Baby,
-    category: "life-benefits",
-    complexity: "simple",
-  },
-  {
-    name: "Benefits Checker",
-    slug: "benefits-checker",
-    description: "Check what benefits you may be eligible for",
-    icon: Shield,
-    category: "life-benefits",
-    complexity: "intermediate",
-  },
-  {
-    name: "Unemployment Calculator",
     slug: "unemployment-calculator",
-    description: "Estimate unemployment benefits by state",
-    icon: AlertCircle,
-    category: "life-benefits",
-    complexity: "intermediate",
+    name: "Unemployment Calculator",
+    description: "Estimate your unemployment benefits by state. Understand eligibility and payment amounts.",
+    category: "Financial Calculators",
+    icon: "Calculator",
+    popular: false,
   },
   {
-    name: "Certification ROI",
+    slug: "cost-of-living",
+    name: "Cost of Living Calculator",
+    description: "Compare cost of living between cities. See how far your paycheck goes in different locations.",
+    category: "Financial Calculators",
+    icon: "MapPin",
+    popular: false,
+  },
+  {
+    slug: "childcare-calculator",
+    name: "Childcare Cost Calculator",
+    description: "Calculate childcare costs and see how they affect your take-home pay. Find affordable options.",
+    category: "Financial Calculators",
+    icon: "Baby",
+    popular: false,
+  },
+  // === Career Planning ===
+  {
+    slug: "shift-planner",
+    name: "Shift Planner",
+    description: "Plan your work week and maximize earnings. Calculate overtime, night differentials, and weekend premiums.",
+    category: "Career Planning",
+    icon: "Calendar",
+    popular: true,
+  },
+  {
+    slug: "career-path",
+    name: "Career Path Explorer",
+    description: "Discover career progression paths from entry-level to advanced roles in your industry.",
+    category: "Career Planning",
+    icon: "TrendingUp",
+    popular: false,
+  },
+  {
+    slug: "job-offer-analyzer",
+    name: "Job Offer Analyzer",
+    description: "Compare job offers side by side. Evaluate pay, benefits, commute, and growth potential.",
+    category: "Career Planning",
+    icon: "Briefcase",
+    popular: false,
+  },
+  {
+    slug: "skills-analyzer",
+    name: "Skills Analyzer",
+    description: "Identify your transferable skills and find matching job opportunities in flexible work.",
+    category: "Career Planning",
+    icon: "Brain",
+    popular: false,
+  },
+  {
+    slug: "commute-calculator",
+    name: "Commute Calculator",
+    description: "Calculate commute costs and time for different job locations. Factor in gas, transit, and wear.",
+    category: "Career Planning",
+    icon: "MapPin",
+    popular: false,
+  },
+  // === Certification & Benefits ===
+  {
     slug: "certification-roi",
-    description: "Calculate return on investment for certifications",
-    icon: Award,
-    category: "life-benefits",
-    complexity: "advanced",
-  },
-  // Fun & Interactive
-  {
-    name: "Cocktail Quiz",
-    slug: "cocktail-quiz",
-    description: "Test your bartending knowledge with interactive quizzes",
-    icon: Coffee,
-    category: "fun-interactive",
-    complexity: "simple",
+    name: "Certification ROI Calculator",
+    description: "Calculate the return on investment for professional certifications and training programs.",
+    category: "Certification & Benefits",
+    icon: "GraduationCap",
+    popular: false,
   },
   {
-    name: "Menu Master",
-    slug: "menu-master",
-    description: "Master menu knowledge for restaurant and hospitality roles",
-    icon: UtensilsCrossed,
-    category: "fun-interactive",
-    complexity: "intermediate",
+    slug: "benefits-checker",
+    name: "Benefits Eligibility Checker",
+    description: "Check your eligibility for workplace benefits, government programs, and tax credits.",
+    category: "Certification & Benefits",
+    icon: "CheckCircle",
+    popular: false,
   },
+  // === Industry-Specific ===
   {
-    name: "WorkTalk",
     slug: "worktalk",
-    description: "Practice workplace English and communication skills",
-    icon: MessageCircle,
-    category: "fun-interactive",
-    complexity: "intermediate",
+    name: "WorkTalk",
+    description: "Workplace English phrases for ESL workers with audio pronunciation guides.",
+    category: "Industry Tools",
+    icon: "Languages",
+    popular: false,
   },
   {
-    name: "Safety First",
+    slug: "cocktail-quiz",
+    name: "Cocktail Quiz",
+    description: "Test your bartending knowledge with an interactive cocktail recipe quiz.",
+    category: "Industry Tools",
+    icon: "Wine",
+    popular: false,
+  },
+  {
+    slug: "menu-master",
+    name: "Menu Master",
+    description: "Learn restaurant menu terminology and improve your food service knowledge.",
+    category: "Industry Tools",
+    icon: "Star",
+    popular: false,
+  },
+  {
     slug: "safety-first",
-    description: "Learn workplace safety protocols and best practices",
-    icon: HardHat,
-    category: "fun-interactive",
-    complexity: "simple",
+    name: "Safety First",
+    description: "Workplace safety training quiz covering OSHA standards and best practices.",
+    category: "Industry Tools",
+    icon: "Shield",
+    popular: false,
+  },
+  {
+    slug: "data-verification",
+    name: "Data Verification Tool",
+    description: "Verify and validate your employment documents and work eligibility information.",
+    category: "Industry Tools",
+    icon: "CheckCircle",
+    popular: false,
+  },
+  {
+    slug: "pay-calculator",
+    name: "Pay Calculator",
+    description: "Quick hourly pay calculator with tax estimates for common flexible work roles.",
+    category: "Financial Calculators",
+    icon: "Calculator",
+    popular: false,
   },
 ];
 
-const categoryLabels: Record<string, string> = {
-  "pay-salary": "Pay & Salary",
-  "planning-career": "Planning & Career",
-  "life-benefits": "Life & Benefits",
-  "fun-interactive": "Fun & Interactive",
+const iconMap: Record<string, React.ReactNode> = {
+  Calculator: <Calculator className="h-6 w-6" />,
+  Wallet: <Wallet className="h-6 w-6" />,
+  Receipt: <Receipt className="h-6 w-6" />,
+  ArrowLeftRight: <ArrowLeftRight className="h-6 w-6" />,
+  Calendar: <Calendar className="h-6 w-6" />,
+  MapPin: <MapPin className="h-6 w-6" />,
+  TrendingUp: <TrendingUp className="h-6 w-6" />,
+  Shield: <Shield className="h-6 w-6" />,
+  GraduationCap: <GraduationCap className="h-6 w-6" />,
+  Baby: <Baby className="h-6 w-6" />,
+  Briefcase: <Briefcase className="h-6 w-6" />,
+  Languages: <Languages className="h-6 w-6" />,
+  Brain: <Brain className="h-6 w-6" />,
+  Wine: <Wine className="h-6 w-6" />,
+  CheckCircle: <CheckCircle className="h-6 w-6" />,
+  Star: <Star className="h-6 w-6" />,
+  Wrench: <Wrench className="h-6 w-6" />,
 };
 
-const complexityLabels: Record<string, string> = {
-  "simple": "Simple",
-  "intermediate": "Intermediate",
-  "advanced": "Advanced",
-};
+const categories = [
+  "All",
+  "Financial Calculators",
+  "Career Planning",
+  "Certification & Benefits",
+  "Industry Tools",
+];
 
 export default function ToolsClient() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
-  const [selectedComplexity, setSelectedComplexity] = useState<string>("");
-  const [sortBy, setSortBy] = useState<string>("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
 
   const filteredTools = useMemo(() => {
     let result = allTools;
 
-    // Search filter
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
       result = result.filter(
         (tool) =>
           tool.name.toLowerCase().includes(query) ||
           tool.description.toLowerCase().includes(query) ||
-          categoryLabels[tool.category].toLowerCase().includes(query)
+          tool.category.toLowerCase().includes(query)
       );
     }
 
-    // Category filter
-    if (selectedCategory) {
+    if (selectedCategory !== "All") {
       result = result.filter((tool) => tool.category === selectedCategory);
     }
 
-    // Complexity filter
-    if (selectedComplexity) {
-      result = result.filter((tool) => tool.complexity === selectedComplexity);
-    }
-
-    // Sort
-    if (sortBy === "popular") {
-      result = result.sort((a, b) => (b.popular ? 1 : 0) - (a.popular ? 1 : 0));
-    } else if (sortBy === "name") {
-      result = result.sort((a, b) => a.name.localeCompare(b.name));
-    } else if (sortBy === "category") {
-      result = result.sort((a, b) => a.category.localeCompare(b.category));
-    }
-
     return result;
-  }, [searchQuery, selectedCategory, selectedComplexity, sortBy]);
+  }, [searchQuery, selectedCategory]);
 
   const popularTools = allTools.filter((t) => t.popular);
-  const categories = Array.from(new Set(allTools.map((t) => t.category)));
 
-  const filterConfig: FilterConfig = {
-    search: {
-      placeholder: "Search tools by name or use case...",
-      onSearch: setSearchQuery,
-    },
-    filters: [
-      {
-        id: "category",
-        label: "Category",
-        options: [
-          { id: "all", label: "All Categories", value: "" },
-          ...categories.map((cat) => ({
-            id: cat,
-            label: categoryLabels[cat],
-            value: cat,
-          })),
-        ],
-        value: selectedCategory,
-        onChange: setSelectedCategory,
-      },
-      {
-        id: "complexity",
-        label: "Complexity",
-        options: [
-          { id: "all", label: "All Levels", value: "" },
-          { id: "simple", label: "Simple", value: "simple" },
-          { id: "intermediate", label: "Intermediate", value: "intermediate" },
-          { id: "advanced", label: "Advanced", value: "advanced" },
-        ],
-        value: selectedComplexity,
-        onChange: setSelectedComplexity,
-      },
-    ],
-    sort: {
-      options: [
-        { id: "default", label: "Default", value: "" },
-        { id: "popular", label: "Most Popular", value: "popular" },
-        { id: "name", label: "Name (A-Z)", value: "name" },
-        { id: "category", label: "Category", value: "category" },
-      ],
-      value: sortBy,
-      onChange: setSortBy,
-    },
-    activeFilters: [
-      ...(selectedCategory ? [{ id: "category", label: "Category", value: categoryLabels[selectedCategory], onRemove: () => setSelectedCategory("") }] : []),
-      ...(selectedComplexity ? [{ id: "complexity", label: "Complexity", value: complexityLabels[selectedComplexity], onRemove: () => setSelectedComplexity("") }] : []),
-    ],
-  };
-
-  const clearAllFilters = () => {
-    setSearchQuery("");
-    setSelectedCategory("");
-    setSelectedComplexity("");
-    setSortBy("");
-  };
-
-  const groupedTools = useMemo(() => {
-    const groups: Record<string, Tool[]> = {};
+  const toolsByCategory = useMemo(() => {
+    const groups: Record<string, typeof allTools> = {};
     filteredTools.forEach((tool) => {
       if (!groups[tool.category]) {
         groups[tool.category] = [];
@@ -336,162 +264,159 @@ export default function ToolsClient() {
     <>
       <PageHero
         title="Career Tools & Calculators"
-        description={`Free tools to help you calculate pay, compare jobs, and plan your career. ${allTools.length} tools available.`}
-        searchPlaceholder="What do you want to calculate?"
+        description={`Free interactive tools to help you plan your career, calculate pay, and make informed decisions. ${allTools.length} tools available.`}
+        searchPlaceholder="Search tools by name or category..."
         onSearch={setSearchQuery}
         stats={[
-          { value: allTools.length.toString(), label: "Free Tools" },
+          { value: allTools.length.toString(), label: "Total Tools" },
           { value: categories.length.toString(), label: "Categories" },
-          { value: popularTools.length.toString(), label: "Popular Tools" },
+          { value: popularTools.length.toString(), label: "Most Popular" },
         ]}
       />
 
-      <FilterBar config={filterConfig} />
+      {/* Filter Bar */}
+      <div className="bg-card border-b border-border/50 sticky top-[57px] z-40">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex flex-col gap-4">
+            {/* Search */}
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+              <Input
+                type="search"
+                placeholder="Search tools..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10"
+              />
+            </div>
+
+            {/* Category Tabs */}
+            <div className="flex flex-wrap gap-2">
+              {categories.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setSelectedCategory(cat)}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                    selectedCategory === cat
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+                  }`}
+                >
+                  {cat}
+                  {cat !== "All" && (
+                    <span className="ml-1 opacity-70">
+                      ({allTools.filter((t) => t.category === cat).length})
+                    </span>
+                  )}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
 
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-6xl mx-auto">
           {/* Popular Tools Section */}
-          {!searchQuery && !selectedCategory && !selectedComplexity && (
+          {!searchQuery && selectedCategory === "All" && (
             <section className="mb-12">
-              <SectionHeader
-                title="Popular Tools"
-                description="Most used tools by Indeed Flex workers"
-                icon={<Star className="h-6 w-6 text-yellow-500 fill-yellow-500" />}
-              />
-              <ContentGrid columns={4} gap="md">
-                {popularTools.map((tool) => {
-                  const Icon = tool.icon;
-                  return (
-                    <Link key={tool.slug} href={`/career-hub/tools/${tool.slug}`}>
-                      <Card className="h-full hover:shadow-soft transition-shadow cursor-pointer group hover:border-primary/30">
-                        <CardHeader className="pb-2">
-                          <div className="flex items-start justify-between mb-3">
-                            <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
-                              <Icon className="h-6 w-6 text-primary" />
-                            </div>
-                            <Badge variant="secondary" className="bg-accent/10 text-accent">
-                              Popular
-                            </Badge>
+              <div className="flex items-center gap-2 mb-6">
+                <Star className="h-6 w-6 text-primary" />
+                <h2 className="text-2xl font-bold">Popular Tools</h2>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {popularTools.map((tool) => (
+                  <Link key={tool.slug} href={`/career-hub/tools/${tool.slug}`}>
+                    <Card className="h-full hover:shadow-lg transition-all cursor-pointer group hover:border-primary/30 hover:-translate-y-1">
+                      <CardHeader className="pb-2">
+                        <div className="flex items-start justify-between mb-3">
+                          <div className="p-2.5 bg-primary/10 rounded-xl group-hover:bg-primary/20 transition-colors">
+                            <span className="text-primary">
+                              {iconMap[tool.icon] || <Wrench className="h-6 w-6" />}
+                            </span>
                           </div>
-                          <CardTitle className="text-lg group-hover:text-primary transition-colors">
-                            {tool.name}
-                          </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                          <CardDescription>{tool.description}</CardDescription>
-                        </CardContent>
-                      </Card>
-                    </Link>
-                  );
-                })}
-              </ContentGrid>
+                          <Badge variant="secondary" className="bg-accent/10 text-accent text-xs">
+                            Popular
+                          </Badge>
+                        </div>
+                        <CardTitle className="text-lg group-hover:text-primary transition-colors">
+                          {tool.name}
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <CardDescription className="text-sm leading-relaxed">
+                          {tool.description}
+                        </CardDescription>
+                        <div className="mt-3">
+                          <Badge variant="outline" className="text-xs">
+                            {tool.category}
+                          </Badge>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                ))}
+              </div>
             </section>
           )}
 
           {/* Filtered Results or Category Sections */}
           {filteredTools.length === 0 ? (
-            <EmptyState
-              title="No tools found"
-              description="Try adjusting your filters or search query to find what you're looking for."
-              onClearFilters={clearAllFilters}
-            />
-          ) : searchQuery || selectedCategory || selectedComplexity ? (
-            <section>
-              <SectionHeader
-                title={`${filteredTools.length} Tool${filteredTools.length !== 1 ? "s" : ""} Found`}
-              />
-              <ContentGrid columns={4} gap="md">
-                {filteredTools.map((tool) => {
-                  const Icon = tool.icon;
-                  return (
+            <div className="text-center py-16">
+              <Wrench className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+              <h3 className="text-xl font-semibold mb-2">No tools found</h3>
+              <p className="text-muted-foreground mb-4">
+                Try adjusting your search or category filter.
+              </p>
+              <button
+                onClick={() => {
+                  setSearchQuery("");
+                  setSelectedCategory("All");
+                }}
+                className="text-primary hover:underline font-medium"
+              >
+                Clear all filters
+              </button>
+            </div>
+          ) : (
+            Object.entries(toolsByCategory).map(([category, tools]) => (
+              <section key={category} className="mb-12">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-xl font-bold">{category}</h2>
+                  <Badge variant="outline">{tools.length} tools</Badge>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {tools.map((tool) => (
                     <Link key={tool.slug} href={`/career-hub/tools/${tool.slug}`}>
-                      <Card className="h-full hover:shadow-soft transition-shadow cursor-pointer group hover:border-primary/30">
+                      <Card className="h-full hover:shadow-lg transition-all cursor-pointer group hover:border-primary/30 hover:-translate-y-1">
                         <CardHeader className="pb-2">
                           <div className="flex items-start justify-between mb-3">
-                            <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
-                              <Icon className="h-6 w-6 text-primary" />
+                            <div className="p-2.5 bg-primary/10 rounded-xl group-hover:bg-primary/20 transition-colors">
+                              <span className="text-primary">
+                                {iconMap[tool.icon] || <Wrench className="h-6 w-6" />}
+                              </span>
                             </div>
-                            <div className="flex gap-1">
-                              {tool.popular && (
-                                <Badge variant="secondary" className="bg-accent/10 text-accent text-xs">
-                                  Popular
-                                </Badge>
-                              )}
-                              {tool.complexity && (
-                                <Badge variant="outline" className="text-xs">
-                                  {complexityLabels[tool.complexity]}
-                                </Badge>
-                              )}
-                            </div>
+                            {tool.popular && (
+                              <Badge variant="secondary" className="bg-accent/10 text-accent text-xs">
+                                Popular
+                              </Badge>
+                            )}
                           </div>
                           <CardTitle className="text-lg group-hover:text-primary transition-colors">
                             {tool.name}
                           </CardTitle>
                         </CardHeader>
                         <CardContent>
-                          <CardDescription>{tool.description}</CardDescription>
-                          <div className="mt-2">
-                            <Badge variant="outline" className="text-xs">
-                              {categoryLabels[tool.category]}
-                            </Badge>
-                          </div>
+                          <CardDescription className="text-sm leading-relaxed">
+                            {tool.description}
+                          </CardDescription>
                         </CardContent>
                       </Card>
                     </Link>
-                  );
-                })}
-              </ContentGrid>
-            </section>
-          ) : (
-            <>
-              {categories.map((category) => {
-                const categoryTools = allTools.filter((t) => t.category === category);
-                return (
-                  <section key={category} className="mb-12">
-                    <SectionHeader
-                      title={categoryLabels[category]}
-                      badge={categoryTools.length}
-                    />
-                    <ContentGrid columns={4} gap="md">
-                      {categoryTools.map((tool) => {
-                        const Icon = tool.icon;
-                        return (
-                          <Link key={tool.slug} href={`/career-hub/tools/${tool.slug}`}>
-                            <Card className="h-full hover:shadow-soft transition-shadow cursor-pointer group hover:border-primary/30">
-                              <CardHeader className="pb-2">
-                                <div className="flex items-start justify-between mb-3">
-                                  <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
-                                    <Icon className="h-6 w-6 text-primary" />
-                                  </div>
-                                  <div className="flex gap-1">
-                                    {tool.popular && (
-                                      <Badge variant="secondary" className="bg-accent/10 text-accent text-xs">
-                                        Popular
-                                      </Badge>
-                                    )}
-                                    {tool.complexity && (
-                                      <Badge variant="outline" className="text-xs">
-                                        {complexityLabels[tool.complexity]}
-                                      </Badge>
-                                    )}
-                                  </div>
-                                </div>
-                                <CardTitle className="text-lg group-hover:text-primary transition-colors">
-                                  {tool.name}
-                                </CardTitle>
-                              </CardHeader>
-                              <CardContent>
-                                <CardDescription>{tool.description}</CardDescription>
-                              </CardContent>
-                            </Card>
-                          </Link>
-                        );
-                      })}
-                    </ContentGrid>
-                  </section>
-                );
-              })}
-            </>
+                  ))}
+                </div>
+              </section>
+            ))
           )}
         </div>
       </div>

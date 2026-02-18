@@ -4,13 +4,6 @@ import { useState } from "react";
 import { Search, X, Filter } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 
 export interface FilterOption {
@@ -97,44 +90,53 @@ export default function FilterBar({ config, className = "" }: FilterBarProps) {
           {/* Filters and Sort */}
           {(config.filters || config.sort) && (
             <div className="flex flex-wrap items-center gap-4">
-              {config.filters?.map((filter) => (
-                <div key={filter.id} className="flex items-center gap-2">
-                  <label className="text-sm font-medium text-muted-foreground whitespace-nowrap">
-                    {filter.label}:
-                  </label>
-                  <Select value={filter.value || ""} onValueChange={filter.onChange}>
-                    <SelectTrigger className="w-[180px]">
-                      <SelectValue placeholder={`All ${filter.label}`} />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="">All {filter.label}</SelectItem>
-                      {filter.options.map((option) => (
-                        <SelectItem key={option.id} value={option.value}>
+              {config.filters?.map((filter) => {
+                // Filter out options with empty values
+                const validOptions = filter.options.filter(
+                  (opt) => opt.value !== "" && opt.value !== "__all__"
+                );
+                return (
+                  <div key={filter.id} className="flex items-center gap-2">
+                    <label className="text-sm font-medium text-muted-foreground whitespace-nowrap">
+                      {filter.label}:
+                    </label>
+                    <select
+                      value={filter.value || ""}
+                      onChange={(e) => filter.onChange(e.target.value)}
+                      className="flex h-10 w-[180px] items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                    >
+                      <option value="">All {filter.label}</option>
+                      {validOptions.map((option) => (
+                        <option key={option.id} value={option.value}>
                           {option.label}
-                        </SelectItem>
+                        </option>
                       ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-              ))}
+                    </select>
+                  </div>
+                );
+              })}
 
               {config.sort && (
                 <div className="flex items-center gap-2 ml-auto">
                   <label className="text-sm font-medium text-muted-foreground whitespace-nowrap">
                     Sort:
                   </label>
-                  <Select value={config.sort.value || ""} onValueChange={config.sort.onChange}>
-                    <SelectTrigger className="w-[180px]">
-                      <SelectValue placeholder="Default" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {config.sort.options.map((option) => (
-                        <SelectItem key={option.id} value={option.value}>
+                  <select
+                    value={config.sort.value || ""}
+                    onChange={(e) => config.sort!.onChange(e.target.value)}
+                    className="flex h-10 w-[180px] items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                  >
+                    <option value="">Default</option>
+                    {config.sort.options
+                      .filter(
+                        (opt) => opt.value !== "" && opt.value !== "__all__"
+                      )
+                      .map((option) => (
+                        <option key={option.id} value={option.value}>
                           {option.label}
-                        </SelectItem>
+                        </option>
                       ))}
-                    </SelectContent>
-                  </Select>
+                  </select>
                 </div>
               )}
             </div>
@@ -176,4 +178,3 @@ export default function FilterBar({ config, className = "" }: FilterBarProps) {
     </div>
   );
 }
-

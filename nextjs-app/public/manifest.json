@@ -1,0 +1,21 @@
+{
+  "name": "Indeed Flex Career Hub",
+  "short_name": "Career Hub",
+  "description": "Free career tools, guides, and resources for flexible workers",
+  "start_url": "/career-hub",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#003ea2",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon"
+    }
+  ],
+  "categories": ["business", "productivity", "education"],
+  "lang": "en-US",
+  "dir": "ltr"
+}
+

@@ -192,6 +192,7 @@ const popularGuides = [
   { slug: "certifications", title: "Getting Certifications That Pay Off", readTime: "8 min", description: "Discover which certifications boost your hourly rate the most" },
 ].map(g => ({
   ...g,
+  ...guideArticles[g.slug],
   description: g.description || guideArticles[g.slug]?.description || "Read this guide to learn more",
 }));
 
@@ -279,9 +280,44 @@ const jobApplicationHighlights = [
   { title: "Resume Examples", count: 23, description: "Role-specific content", href: "/career-hub/resume-examples", icon: UserCheck },
 ];
 
+// CollectionPage structured data for rich search results
+const collectionPageSchema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "@id": "https://indeedflex.com/career-hub/#webpage",
+  name: "Indeed Flex Career Hub",
+  description:
+    "Find flexible hourly jobs in hospitality, warehouse, retail & more. Free pay calculators, salary guides, resume templates and career resources for workers across the US.",
+  url: "https://indeedflex.com/career-hub",
+  isPartOf: { "@id": "https://indeedflex.com/#website" },
+  about: {
+    "@type": "Thing",
+    name: "Flexible Work Career Resources",
+  },
+  publisher: { "@id": "https://indeedflex.com/#organization" },
+  inLanguage: "en-US",
+  mainEntity: {
+    "@type": "ItemList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Explore Jobs", url: "https://indeedflex.com/career-hub/roles" },
+      { "@type": "ListItem", position: 2, name: "Career Tools", url: "https://indeedflex.com/career-hub/tools" },
+      { "@type": "ListItem", position: 3, name: "Career Guides", url: "https://indeedflex.com/career-hub/guides" },
+      { "@type": "ListItem", position: 4, name: "Application Toolkit", url: "https://indeedflex.com/career-hub/job-application-toolkit" },
+      { "@type": "ListItem", position: 5, name: "Financial Resources", url: "https://indeedflex.com/career-hub/financial-tips" },
+    ],
+  },
+};
+
 export default function CareerHubHome() {
   return (
     <>
+      {/* Structured data for search engines */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(collectionPageSchema),
+        }}
+      />
       <HeroSection />
 
       {/* Quick Search Section */}

@@ -18,6 +18,9 @@ export const metadata: Metadata = {
     "career advancement",
     "work skills",
   ],
+  alternates: {
+    canonical: "https://indeedflex.com/career-hub/guides",
+  },
 };
 
 const categoryIcons: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -255,6 +258,7 @@ export default function GuidesPage() {
         </section>
       </div>
     </div>
+    </>
   );
 }
 

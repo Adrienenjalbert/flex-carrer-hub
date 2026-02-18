@@ -144,6 +144,18 @@ function generateCoreSitemap(now: Date): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
+      url: `${BASE_URL}/interview-questions`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${BASE_URL}/career-hub/industries`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
       url: `${BASE_URL}/career-hub/wage-report`,
       lastModified: now,
       changeFrequency: "monthly",

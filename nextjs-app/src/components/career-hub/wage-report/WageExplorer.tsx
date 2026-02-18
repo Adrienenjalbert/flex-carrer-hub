@@ -64,14 +64,14 @@ export function WageExplorer() {
           <div>
             <label className="text-sm font-medium mb-2 block">Filter by Industry</label>
             <Select
-              value={filters.industry || ""}
-              onValueChange={(value) => setFilters({ ...filters, industry: value || undefined })}
+              value={filters.industry || "__all__"}
+              onValueChange={(value) => setFilters({ ...filters, industry: value === "__all__" ? undefined : value })}
             >
               <SelectTrigger>
                 <SelectValue placeholder="All Industries" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Industries</SelectItem>
+                <SelectItem value="__all__">All Industries</SelectItem>
                 {availableIndustries.map(ind => (
                   <SelectItem key={ind.value} value={ind.value}>
                     {ind.label}
@@ -84,7 +84,7 @@ export function WageExplorer() {
           <div>
             <label className="text-sm font-medium mb-2 block">Add Occupation to Compare</label>
             <Select
-              value=""
+              value={undefined}
               onValueChange={handleAddOccupation}
               disabled={selectedOccupations.length >= 3}
             >

@@ -131,17 +131,14 @@ const nextConfig = {
     ];
   },
 
-  // Redirects for SEO (trailing slash normalization, etc.)
-  async redirects() {
-    return [
-      // Redirect www to non-www (handled at DNS/CDN level typically)
-      // Remove trailing slashes for consistency
-      {
-        source: '/:path+/',
-        destination: '/:path+',
-        permanent: true,
-      },
-    ];
+  // Note: Trailing slash and www redirects are handled in middleware.ts
+  // to avoid duplicate redirect chains.
+
+  // Logging configuration for production
+  logging: {
+    fetches: {
+      fullUrl: false,
+    },
   },
 };
 

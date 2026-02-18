@@ -25,6 +25,9 @@ export const metadata: Metadata = {
     "certification resources",
     "healthcare resources",
   ],
+  alternates: {
+    canonical: "https://indeedflex.com/career-hub/resources",
+  },
 };
 
 const resourceCategories = [

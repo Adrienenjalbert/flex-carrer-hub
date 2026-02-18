@@ -41,6 +41,9 @@ export async function generateMetadata({
       `${roleTitle} interview tips`,
       `${roleTitle} job interview`,
     ],
+    alternates: {
+      canonical: `https://indeedflex.com/interview-questions/${roleSlug}`,
+    },
   };
 }
 

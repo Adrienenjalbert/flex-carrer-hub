@@ -48,6 +48,9 @@ export async function generateMetadata({
       "flexible work",
       "temp jobs",
     ],
+    alternates: {
+      canonical: `https://indeedflex.com/career-hub/guides/${slug}`,
+    },
     openGraph: {
       title: article.title,
       description: article.description,
