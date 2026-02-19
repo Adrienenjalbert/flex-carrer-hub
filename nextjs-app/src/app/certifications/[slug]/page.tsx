@@ -1,11 +1,16 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { Award, ChevronRight, Clock, DollarSign, ExternalLink, BookOpen, CheckCircle, AlertCircle, BadgeCheck } from "lucide-react";
+import { Award, Clock, DollarSign, ExternalLink, BookOpen, CheckCircle, AlertCircle, BadgeCheck } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
+import CTASection from "@/components/career-hub/CTASection";
 import { certifications, getCertificationBySlug, Certification } from "@/lib/data/certifications";
 import { FAQSchema, WebPageSchema, BreadcrumbSchema, ArticleSchema } from "@/components/career-hub/seo";
+import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
+import { AuthorByline } from "@/components/career-hub/AuthorByline";
+import { getLastUpdated } from "@/lib/utils/date-variation";
 
 // Generate static params for all certifications
 export function generateStaticParams() {
@@ -27,9 +32,13 @@ export async function generateMetadata({
     return { title: "Certification Not Found" };
   }
 
+  const canonical = `https://indeedflex.com/certifications/${slug}`;
+  const title = `${cert.name} Guide ${new Date().getFullYear()} | Cost, Duration & Providers`;
+  const description = `Get your ${cert.name} certification. ${cert.description} Compare ${cert.providers.length} providers, costs from ${cert.providers[0]?.cost || "varies"}, and complete in ${cert.providers[0]?.duration || "1 day"}.`;
+
   return {
-    title: `${cert.name} Guide ${new Date().getFullYear()} | Cost, Duration & Providers`,
-    description: `Get your ${cert.name} certification. ${cert.description} Compare ${cert.providers.length} providers, costs from ${cert.providers[0]?.cost || "varies"}, and complete in ${cert.providers[0]?.duration || "1 day"}.`,
+    title: `${title} | Indeed Flex`,
+    description,
     keywords: [
       cert.name.toLowerCase(),
       `${cert.name.toLowerCase()} cost`,
@@ -38,7 +47,19 @@ export async function generateMetadata({
       `${cert.category} certification`,
     ],
     alternates: {
-      canonical: `https://indeedflex.com/certifications/${slug}`,
+      canonical,
+    },
+    openGraph: {
+      title,
+      description,
+      url: canonical,
+      type: "article",
+      siteName: "Indeed Flex Career Hub",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
     },
   };
 }
@@ -130,20 +151,16 @@ export default async function CertificationPage({
         ]}
       />
 
+      <div className="container mx-auto px-4 py-4">
+        <Breadcrumbs
+          items={[
+            { label: "Certifications", href: "/certifications" },
+            { label: cert.name },
+          ]}
+        />
+      </div>
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
-          {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
-            <Link href="/career-hub" className="hover:text-primary">
-              Career Hub
-            </Link>
-            <ChevronRight className="h-4 w-4" />
-            <Link href="/certifications" className="hover:text-primary">
-              Certifications
-            </Link>
-            <ChevronRight className="h-4 w-4" />
-            <span className="text-foreground">{cert.name}</span>
-          </nav>
 
           {/* Hero */}
           <div className="mb-8">
@@ -394,6 +411,26 @@ export default async function CertificationPage({
           </section>
         </div>
       </div>
+
+      <div className="container mx-auto px-4 py-12">
+        <InternalLinkHub 
+          variant="full" 
+          currentPage={{ 
+            type: "certification", 
+            slug
+          }} 
+        />
+      </div>
+      
+      <div className="container mx-auto px-4 py-8">
+        <AuthorByline
+          contentType="guide"
+          lastUpdated={getLastUpdated(slug, 'guide')}
+          variant="block"
+        />
+      </div>
+      
+      <CTASection />
     </>
   );
 }

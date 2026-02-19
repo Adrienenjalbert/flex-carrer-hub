@@ -4,7 +4,10 @@ import { MessageSquare, ArrowRight, Briefcase } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
+import PageHero from "@/components/career-hub/PageHero";
+import CTASection from "@/components/career-hub/CTASection";
 import { interviewGuides } from "@/lib/data/interview-questions";
+import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
 
 export const metadata: Metadata = {
   title: "Interview Questions by Role | Indeed Flex Career Hub",
@@ -21,6 +24,17 @@ export const metadata: Metadata = {
   ],
   alternates: {
     canonical: "https://indeedflex.com/interview-questions",
+  },
+  openGraph: {
+    title: "Interview Questions by Role | Indeed Flex Career Hub",
+    description: "Prepare for your next job interview with role-specific questions and expert answers.",
+    url: "https://indeedflex.com/interview-questions",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Interview Questions by Role",
+    description: "Prepare for your next job interview with role-specific questions and expert answers.",
   },
 };
 
@@ -49,30 +63,27 @@ export default function InterviewQuestionsPage() {
     return order.indexOf(a) - order.indexOf(b);
   });
 
+  const totalQuestions = interviewGuides.reduce((sum, guide) => sum + guide.questions.length, 0);
+
   return (
     <>
-      <Breadcrumbs
-        items={[
-          { label: "Career Hub", href: "/career-hub" },
-          { label: "Interview Questions" },
+      <div className="container mx-auto px-4 py-4">
+        <Breadcrumbs
+          items={[
+            { label: "Interview Questions" },
+          ]}
+        />
+      </div>
+      <PageHero
+        title="Interview Questions by Role"
+        description="Practice with real interview questions and expert answers tailored to your target role. Get confident and land the job."
+        stats={[
+          { value: interviewGuides.length.toString(), label: "Interview Guides" },
+          { value: totalQuestions.toString(), label: "Total Questions" },
+          { value: sortedIndustries.length.toString(), label: "Industries" },
         ]}
       />
-
       <div className="container mx-auto px-4 py-8">
-        {/* Hero Section */}
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-medium mb-4">
-            <MessageSquare className="h-4 w-4" />
-            <span>{interviewGuides.length} Interview Guides</span>
-          </div>
-          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Interview Questions by Role
-          </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Practice with real interview questions and expert answers tailored to
-            your target role. Get confident and land the job.
-          </p>
-        </div>
 
         {/* Guides by Industry */}
         <div className="space-y-10">
@@ -121,6 +132,11 @@ export default function InterviewQuestionsPage() {
           })}
         </div>
       </div>
+
+      <div className="container mx-auto px-4 py-12">
+        <InternalLinkHub variant="full" currentPage={{ type: "interview" }} />
+      </div>
+      <CTASection />
     </>
   );
 }

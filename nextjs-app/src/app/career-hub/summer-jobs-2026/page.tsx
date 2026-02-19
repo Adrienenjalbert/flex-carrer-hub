@@ -400,7 +400,7 @@ export default function SummerJobs2026Page() {
           </section>
 
           {/* Internal Links */}
-          <InternalLinkHub variant="full" />
+          <InternalLinkHub variant="full" currentPage={{ type: "seasonal", season: "summer" }} />
         </div>
       </div>
     </>

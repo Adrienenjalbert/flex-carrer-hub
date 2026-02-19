@@ -8,6 +8,11 @@ import { Button } from "@/components/ui/button";
 import { howToBecomeGuides, getHowToBecomeBySlug } from "@/lib/data/how-to-become";
 import { getRoleBySlug } from "@/lib/data/roles";
 import { HowToSchema, FAQSchema, BreadcrumbSchema } from "@/components/career-hub/seo";
+import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
+import CTASection from "@/components/career-hub/CTASection";
+import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
+import { AuthorByline } from "@/components/career-hub/AuthorByline";
+import { getLastUpdated } from "@/lib/utils/date-variation";
 
 // Generate static params for all how-to-become guides
 export function generateStaticParams() {
@@ -32,9 +37,13 @@ export async function generateMetadata({
 
   const roleTitle = role?.title || guide.roleSlug.replace(/-/g, " ");
 
+  const canonical = `https://indeedflex.com/how-to-become/${roleSlug}`;
+  const title = `How to Become a ${roleTitle} - Complete Guide`;
+  const description = `Learn how to become a ${roleTitle}. Step-by-step guide covering requirements, skills, certifications, and career path. ${guide.timeToStart || "Start your journey today."}`;
+
   return {
-    title: `How to Become a ${roleTitle} - Complete Guide`,
-    description: `Learn how to become a ${roleTitle}. Step-by-step guide covering requirements, skills, certifications, and career path. ${guide.timeToStart || "Start your journey today."}`,
+    title: `${title} | Indeed Flex`,
+    description,
     keywords: [
       `how to become a ${roleTitle}`,
       `${roleTitle} career`,
@@ -43,7 +52,19 @@ export async function generateMetadata({
       `${roleTitle} certification`,
     ],
     alternates: {
-      canonical: `https://indeedflex.com/how-to-become/${roleSlug}`,
+      canonical,
+    },
+    openGraph: {
+      title,
+      description,
+      url: canonical,
+      type: "article",
+      siteName: "Indeed Flex Career Hub",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
     },
   };
 }
@@ -102,20 +123,17 @@ export default async function HowToBecomePage({
         ]}
       />
 
+      <div className="container mx-auto px-4 py-4">
+        <Breadcrumbs
+          items={[
+            { label: "Career Hub", href: "/career-hub" },
+            { label: "How to Become", href: "/how-to-become" },
+            { label: roleTitle },
+          ]}
+        />
+      </div>
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
-          {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
-            <Link href="/career-hub" className="hover:text-primary">
-              Career Hub
-            </Link>
-            <ChevronRight className="h-4 w-4" />
-            <Link href="/career-hub/guides" className="hover:text-primary">
-              Guides
-            </Link>
-            <ChevronRight className="h-4 w-4" />
-            <span className="text-foreground">How to Become a {roleTitle}</span>
-          </nav>
 
           {/* Hero */}
           <div className="mb-8">
@@ -259,6 +277,25 @@ export default async function HowToBecomePage({
           </div>
         </div>
       </div>
+
+      <div className="container mx-auto px-4 py-8">
+        <AuthorByline
+          contentType="guide"
+          lastUpdated={getLastUpdated(roleSlug, 'guide')}
+          variant="block"
+        />
+      </div>
+
+      <div className="container mx-auto px-4 py-12">
+        <InternalLinkHub 
+          variant="full" 
+          currentPage={{ 
+            type: "how-to-become", 
+            role: roleSlug
+          }} 
+        />
+      </div>
+      <CTASection />
     </>
   );
 }

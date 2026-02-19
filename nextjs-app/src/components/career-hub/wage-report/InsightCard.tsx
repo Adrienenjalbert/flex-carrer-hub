@@ -71,3 +71,4 @@ export function InsightCard({ insight, className }: InsightCardProps) {
 
 
 
+

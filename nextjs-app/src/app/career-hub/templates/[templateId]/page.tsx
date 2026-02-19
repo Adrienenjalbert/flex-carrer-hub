@@ -2,8 +2,10 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
+import CTASection from "@/components/career-hub/CTASection";
 import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
 import { AuthorByline } from "@/components/career-hub/AuthorByline";
+import { getLastUpdated } from "@/lib/utils/date-variation";
 import { 
   FileText, 
   CheckCircle, 
@@ -35,10 +37,29 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return { title: "Template Not Found" };
   }
 
+  const canonical = `https://indeedflex.com/career-hub/templates/${templateId}`;
+  const title = `${template.name} Resume Template | Free Download`;
+  const description = `Download the free ${template.name} resume template. ${template.description} Perfect for ${template.bestFor.slice(0, 3).join(", ")}.`;
+
   return {
-    title: `${template.name} Resume Template | Free Download | Indeed Flex`,
-    description: `Download the free ${template.name} resume template. ${template.description} Perfect for ${template.bestFor.slice(0, 3).join(", ")}.`,
+    title: `${title} | Indeed Flex`,
+    description,
     keywords: template.seoKeywords,
+    alternates: {
+      canonical,
+    },
+    openGraph: {
+      title,
+      description,
+      url: canonical,
+      type: "article",
+      siteName: "Indeed Flex Career Hub",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
   };
 }
 
@@ -344,10 +365,10 @@ export default async function TemplatePage({ params }: PageProps) {
           </div>
         </div>
 
-        <AuthorByline contentType="guide" lastUpdated="2026-02-01" />
+        <AuthorByline contentType="guide" lastUpdated={getLastUpdated(templateId, 'core')} />
 
         <div className="mt-8">
-          <InternalLinkHub variant="full" />
+          <InternalLinkHub variant="full" currentPage={{ type: "application" }} />
         </div>
       </div>
 
@@ -385,6 +406,7 @@ export default async function TemplatePage({ params }: PageProps) {
           }),
         }}
       />
+      <CTASection />
     </div>
   );
 }

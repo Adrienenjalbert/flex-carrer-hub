@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
 import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
 import { AuthorByline } from "@/components/career-hub/AuthorByline";
+import { getLastUpdated } from "@/lib/utils/date-variation";
 import { 
   CheckCircle, 
   ArrowRight,
@@ -334,10 +335,10 @@ export default async function PersonaPage({ params }: PageProps) {
           </div>
         </div>
 
-        <AuthorByline contentType="guide" lastUpdated="2026-02-01" />
+        <AuthorByline contentType="guide" lastUpdated={getLastUpdated(personaSlug, 'core')} />
 
         <div className="mt-8">
-          <InternalLinkHub variant="full" />
+          <InternalLinkHub variant="full" currentPage={{ type: "persona", personaSlug }} />
         </div>
       </div>
 

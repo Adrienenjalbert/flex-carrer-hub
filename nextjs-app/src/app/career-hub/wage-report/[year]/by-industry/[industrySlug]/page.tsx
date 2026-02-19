@@ -10,6 +10,7 @@ import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
 import { BreadcrumbSchema } from "@/components/career-hub/seo";
 import { InsightCard, WageDistributionChart } from "@/components/career-hub/wage-report";
 import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
+import CTASection from "@/components/career-hub/CTASection";
 
 interface IndustryPageProps {
   params: Promise<{ year: string; industrySlug: string }>;
@@ -34,12 +35,28 @@ export async function generateMetadata({ params }: IndustryPageProps): Promise<M
     return {};
   }
 
+  const canonical = `https://indeedflex.com/career-hub/wage-report/2026/by-industry/${industrySlug}`;
+  const title = `${industry.industryName} Wages 2026 | Industry Wage Report`;
+  const description = `${industry.industryName} wage analysis: ${industry.avgMedianWage}/hr median, ${industry.wageGrowth}% growth. ${industry.totalEmployment.toLocaleString()} workers.`;
+  
   return {
-    title: `${industry.industryName} Wages 2026 | Industry Wage Report`,
-    description: `${industry.industryName} wage analysis: ${industry.avgMedianWage}/hr median, ${industry.wageGrowth}% growth. ${industry.totalEmployment.toLocaleString()} workers.`,
+    title,
+    description,
     keywords: [`${industry.industryName} wages`, "industry wage report", "hourly wages", "flex work"],
     alternates: {
-      canonical: `https://indeedflex.com/career-hub/wage-report/2026/by-industry/${industrySlug}`,
+      canonical,
+    },
+    openGraph: {
+      title,
+      description,
+      url: canonical,
+      type: "article",
+      siteName: "Indeed Flex Career Hub",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
     },
   };
 }
@@ -227,9 +244,10 @@ export default async function IndustryPage({ params }: IndustryPageProps) {
         </div>
 
         <aside className="lg:col-span-1">
-          <InternalLinkHub currentPage={{ type: 'programmatic', slug: industrySlug }} />
+          <InternalLinkHub currentPage={{ type: 'industry', industry: industrySlug }} />
         </aside>
       </div>
+      <CTASection />
     </div>
   );
 }

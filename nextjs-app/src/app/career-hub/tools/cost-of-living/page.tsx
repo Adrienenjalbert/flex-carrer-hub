@@ -1,9 +1,18 @@
 import { Metadata } from "next";
 import CostOfLivingClient from "./CostOfLivingClient";
+import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
+import CTASection from "@/components/career-hub/CTASection";
 import { SoftwareApplicationSchema, FAQSchema } from "@/components/career-hub/seo";
+import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
+import { AuthorByline } from "@/components/career-hub/AuthorByline";
+import { getLastUpdated } from "@/lib/utils/date-variation";
+
+const toolName = "Cost of Living Comparison";
+const toolDescription = "Compare cost of living between US cities. See how far your money goes in different locations and make informed decisions about relocation for work.";
+const canonical = "https://indeedflex.com/career-hub/tools/cost-of-living";
 
 export const metadata: Metadata = {
-  title: "Cost of Living Comparison | Compare US Cities",
+  title: "Cost of Living Comparison | Compare US Cities | Indeed Flex",
   description:
     "Compare cost of living between US cities. See how far your money goes in different locations and make informed decisions about relocation for work.",
   keywords: [
@@ -16,10 +25,20 @@ export const metadata: Metadata = {
     "cost of living index",
     "moving calculator",
   ],
+  alternates: {
+    canonical,
+  },
   openGraph: {
-    title: "Cost of Living Comparison | Indeed Flex",
+    title: "Cost of Living Comparison | Compare US Cities",
     description: "Compare cost of living across US cities. Make informed relocation decisions.",
+    url: canonical,
     type: "website",
+    siteName: "Indeed Flex Career Hub",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Cost of Living Comparison",
+    description: "Compare cost of living across US cities.",
   },
 };
 
@@ -46,24 +65,41 @@ export default function CostOfLivingPage() {
   return (
     <>
       <SoftwareApplicationSchema
-        name="Indeed Flex Cost of Living Calculator"
-        description="Compare cost of living between US cities. Make informed decisions about relocation with detailed expense breakdowns."
-        url="https://indeedflex.com/career-hub/tools/cost-of-living"
+        name={toolName}
+        description={toolDescription}
+        url={canonical}
         applicationCategory="FinanceApplication"
-        featureList={[
-          "50+ US cities comparison",
-          "Salary equivalent calculator",
-          "Housing cost breakdown",
-          "Expense category analysis",
-          "Interactive charts"
-        ]}
-        aggregateRating={{
-          ratingValue: 4.7,
-          ratingCount: 2134
-        }}
+        aggregateRating={{ ratingValue: 4.7, ratingCount: 2134 }}
+        featureList={["City Comparison", "Cost Breakdown", "Salary Adjustment"]}
       />
       <FAQSchema questions={costFAQs} />
+      <div className="container mx-auto px-4 py-4">
+        <Breadcrumbs
+          items={[
+            { label: "Tools", href: "/career-hub/tools" },
+            { label: toolName },
+          ]}
+        />
+      </div>
       <CostOfLivingClient />
+      <div className="container mx-auto px-4 py-8">
+        <AuthorByline
+          contentType="tool"
+          lastUpdated={getLastUpdated('cost-of-living', 'tool')}
+          variant="block"
+        />
+      </div>
+      <div className="container mx-auto px-4 py-12">
+        <InternalLinkHub 
+          variant="full" 
+          currentPage={{ 
+            type: "tool", 
+            slug: "cost-of-living",
+            relatedTools: []
+          }} 
+        />
+      </div>
+      <CTASection />
     </>
   );
 }

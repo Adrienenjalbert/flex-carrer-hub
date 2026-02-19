@@ -3,9 +3,13 @@ import Link from "next/link";
 import { MapPin } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { usLocations } from "@/lib/data/locations";
+import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
+import PageHero from "@/components/career-hub/PageHero";
+import CTASection from "@/components/career-hub/CTASection";
+import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
 
 export const metadata: Metadata = {
-  title: "Flexible Jobs by Location",
+  title: "Flexible Jobs by Location | Indeed Flex Career Hub",
   description: "Find flexible hourly jobs near you. Explore opportunities in major cities across the United States with Indeed Flex.",
   keywords: [
     "flexible jobs near me",
@@ -15,6 +19,17 @@ export const metadata: Metadata = {
   ],
   alternates: {
     canonical: "https://indeedflex.com/career-hub/locations",
+  },
+  openGraph: {
+    title: "Flexible Jobs by Location | Indeed Flex Career Hub",
+    description: "Find flexible hourly jobs near you. Explore opportunities in major cities across the United States.",
+    url: "https://indeedflex.com/career-hub/locations",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Flexible Jobs by Location",
+    description: "Find flexible hourly jobs near you.",
   },
 };
 
@@ -31,13 +46,21 @@ export default function LocationsPage() {
   const states = Object.keys(locationsByState).sort();
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="max-w-5xl mx-auto">
-        <h1 className="text-4xl font-bold mb-4">Flexible Jobs by Location</h1>
-        <p className="text-xl text-muted-foreground mb-8">
-          Find hourly work opportunities in major cities across the United
-          States.
-        </p>
+    <>
+      <div className="container mx-auto px-4 py-4">
+        <Breadcrumbs items={[{ label: "Locations" }]} />
+      </div>
+      <PageHero
+        title="Flexible Jobs by Location"
+        description={`Find hourly work opportunities in ${usLocations.length} major cities across the United States where Indeed Flex is actively operating.`}
+        stats={[
+          { value: usLocations.length.toString(), label: "Active Markets" },
+          { value: states.length.toString(), label: "States" },
+          { value: "19", label: "Metro Areas" },
+        ]}
+      />
+      <div className="container mx-auto px-4 py-8">
+        <div className="max-w-5xl mx-auto">
 
         <div className="grid gap-8">
           {states.map((state) => (
@@ -71,8 +94,14 @@ export default function LocationsPage() {
             </section>
           ))}
         </div>
+        </div>
       </div>
-    </div>
+
+      <div className="container mx-auto px-4 py-12">
+        <InternalLinkHub variant="full" currentPage={{ type: "location" }} />
+      </div>
+      <CTASection />
+    </>
   );
 }
 

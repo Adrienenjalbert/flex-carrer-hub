@@ -599,7 +599,7 @@ export default function CareerHubHome() {
       {/* Internal Link Hub for SEO */}
       <section className="py-16 bg-muted/30">
         <div className="container mx-auto px-4">
-          <InternalLinkHub variant="full" currentPage={{ type: "guide" }} />
+          <InternalLinkHub variant="full" currentPage={{ type: "home" }} />
         </div>
       </section>
 

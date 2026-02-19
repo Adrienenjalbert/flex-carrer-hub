@@ -18,6 +18,8 @@ import {
   AlertCircle,
 } from "lucide-react";
 
+const canonical = "https://indeedflex.com/career-hub/financial-tips";
+
 export const metadata: Metadata = {
   title: "Financial Tips for Flexible Workers | Indeed Flex Career Hub",
   description:
@@ -31,7 +33,19 @@ export const metadata: Metadata = {
     "retirement saving freelancers",
   ],
   alternates: {
-    canonical: "https://indeedflex.com/career-hub/financial-tips",
+    canonical,
+  },
+  openGraph: {
+    title: "Financial Tips for Flexible Workers",
+    description: "Master your finances as a flexible worker. Learn budgeting, saving, tax tips, and money management strategies.",
+    url: canonical,
+    type: "website",
+    siteName: "Indeed Flex Career Hub",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Financial Tips for Flexible Workers",
+    description: "Master your finances as a flexible worker.",
   },
 };
 
@@ -277,7 +291,7 @@ export default function FinancialTipsPage() {
         <div className="container mx-auto px-4">
           <InternalLinkHub
             variant="sidebar"
-            currentPage={{ type: "guide" }}
+            currentPage={{ type: "financial" }}
           />
         </div>
       </section>

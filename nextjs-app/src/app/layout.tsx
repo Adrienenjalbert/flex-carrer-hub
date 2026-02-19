@@ -2,6 +2,10 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/providers";
+import Header from "@/components/career-hub/Header";
+import Footer from "@/components/career-hub/Footer";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 // Optimized font loading with display:swap to prevent FOIT
 const inter = Inter({
@@ -97,15 +101,14 @@ export const metadata: Metadata = {
   },
   category: "Employment",
   verification: {
-    // Add your verification codes here
-    // google: "google-site-verification-code",
+    // Add your verification codes here when registered in Google Search Console
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || undefined,
     // yandex: "yandex-verification-code",
   },
   alternates: {
     canonical: "https://indeedflex.com",
     languages: {
       "en-US": "https://indeedflex.com",
-      "es-US": "https://indeedflex.com/es",
     },
   },
   other: {
@@ -209,7 +212,34 @@ export default function RootLayout({
         />
       </head>
       <body className={inter.className}>
-        <Providers>{children}</Providers>
+        <Providers>
+          <div className="min-h-screen flex flex-col">
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </div>
+        </Providers>
+        <Analytics />
+        <SpeedInsights />
+        {/* GA4 - Add when NEXT_PUBLIC_GA_MEASUREMENT_ID is set */}
+        {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
+          <>
+            <script
+              async
+              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`}
+            />
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', '${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}');
+                `,
+              }}
+            />
+          </>
+        )}
       </body>
     </html>
   );

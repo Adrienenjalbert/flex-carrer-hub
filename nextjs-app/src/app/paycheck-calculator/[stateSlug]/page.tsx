@@ -4,6 +4,9 @@ import { getAllStateSlugs } from "@/lib/data/state-tax-content";
 import { stateTaxData, calculatorRolePresets } from "@/lib/data/tool-registry";
 import StatePaycheckClient from "./StatePaycheckClient";
 import RolePaycheckClient from "./RolePaycheckClient";
+import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
+import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
+import CTASection from "@/components/career-hub/CTASection";
 
 // US State name mapping
 const stateNames: Record<string, string> = {
@@ -106,6 +109,12 @@ export async function generateMetadata({
         description: `Free ${stateName} paycheck calculator. Calculate take-home pay with ${hasNoTax ? 'no state income tax!' : `${stateName} state taxes.`}`,
         url: `https://indeedflex.com/paycheck-calculator/${stateSlug}`,
         type: "website",
+        siteName: "Indeed Flex Career Hub",
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: `${stateName} Paycheck Calculator - Indeed Flex`,
+        description: `Free ${stateName} paycheck calculator. Calculate take-home pay with ${hasNoTax ? 'no state income tax!' : `${stateName} state taxes.`}`,
       },
     };
   }
@@ -134,6 +143,12 @@ export async function generateMetadata({
           description: `How much do ${roleName}s make? Calculate take-home pay at $${avgPay}/hr${tipInfo}.`,
           url: `https://indeedflex.com/paycheck-calculator/${stateSlug}`,
           type: "website",
+          siteName: "Indeed Flex Career Hub",
+        },
+        twitter: {
+          card: "summary_large_image",
+          title: `${roleName} Pay Calculator - Indeed Flex`,
+          description: `How much do ${roleName}s make? Calculate take-home pay at $${avgPay}/hr${tipInfo}.`,
         },
       };
     }

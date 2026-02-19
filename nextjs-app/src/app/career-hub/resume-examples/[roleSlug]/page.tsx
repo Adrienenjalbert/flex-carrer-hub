@@ -2,8 +2,10 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
+import CTASection from "@/components/career-hub/CTASection";
 import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
 import { AuthorByline } from "@/components/career-hub/AuthorByline";
+import { getLastUpdated } from "@/lib/utils/date-variation";
 import { 
   FileText, 
   CheckCircle, 
@@ -39,10 +41,29 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return { title: "Example Not Found" };
   }
 
+  const canonical = `https://indeedflex.com/career-hub/resume-examples/${roleSlug}`;
+  const title = `${example.roleName} Resume Example | Free Template`;
+  const description = `See a complete ${example.roleName.toLowerCase()} resume example with summary, skills, and experience bullet points. Copy and customize for your own resume.`;
+
   return {
-    title: `${example.roleName} Resume Example | Free Template | Indeed Flex`,
-    description: `See a complete ${example.roleName.toLowerCase()} resume example with summary, skills, and experience bullet points. Copy and customize for your own resume.`,
+    title: `${title} | Indeed Flex`,
+    description,
     keywords: example.seoKeywords,
+    alternates: {
+      canonical,
+    },
+    openGraph: {
+      title,
+      description,
+      url: canonical,
+      type: "article",
+      siteName: "Indeed Flex Career Hub",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
   };
 }
 
@@ -404,10 +425,10 @@ export default async function ResumeExamplePage({ params }: PageProps) {
           </div>
         </div>
 
-        <AuthorByline contentType="guide" lastUpdated="2026-02-01" />
+        <AuthorByline contentType="guide" lastUpdated={getLastUpdated(roleSlug, 'core')} />
 
         <div className="mt-8">
-          <InternalLinkHub variant="full" />
+          <InternalLinkHub variant="full" currentPage={{ type: "application", role: roleSlug }} />
         </div>
       </div>
 
@@ -429,6 +450,7 @@ export default async function ResumeExamplePage({ params }: PageProps) {
           }),
         }}
       />
+      <CTASection />
     </div>
   );
 }

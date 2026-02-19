@@ -1,9 +1,18 @@
 import { Metadata } from "next";
 import TaxCalculatorClient from "./TaxCalculatorClient";
+import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
+import CTASection from "@/components/career-hub/CTASection";
 import { SoftwareApplicationSchema, FAQSchema } from "@/components/career-hub/seo";
+import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
+import { AuthorByline } from "@/components/career-hub/AuthorByline";
+import { getToolBySlug } from "@/lib/data/tool-registry";
+import { getLastUpdated } from "@/lib/utils/date-variation";
+
+const tool = getToolBySlug('tax-calculator')!;
+const canonical = "https://indeedflex.com/career-hub/tools/tax-calculator";
 
 export const metadata: Metadata = {
-  title: "Tax Calculator for Gig Workers | 1099 & W-2 Calculator",
+  title: "Tax Calculator for Gig Workers | 1099 & W-2 Calculator | Indeed Flex",
   description:
     "Calculate your taxes as a gig worker or 1099 contractor. Estimate federal, state, and self-employment taxes with deductions for mileage and expenses.",
   keywords: [
@@ -16,10 +25,20 @@ export const metadata: Metadata = {
     "state income tax",
     "tax withholding",
   ],
+  alternates: {
+    canonical,
+  },
   openGraph: {
-    title: "Tax Calculator for Gig Workers | Indeed Flex",
+    title: "Tax Calculator for Gig Workers | 1099 & W-2 Calculator",
     description: "Free tax calculator for 1099 contractors and gig workers. Estimate federal, state, and self-employment taxes.",
+    url: canonical,
     type: "website",
+    siteName: "Indeed Flex Career Hub",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Tax Calculator for Gig Workers",
+    description: "Free tax calculator for 1099 contractors and gig workers.",
   },
 };
 
@@ -46,24 +65,44 @@ export default function TaxCalculatorPage() {
   return (
     <>
       <SoftwareApplicationSchema
-        name="Indeed Flex Tax Calculator"
-        description="Free tax calculator for 1099 contractors and gig workers. Estimate federal, state, and self-employment taxes with deduction tracking."
-        url="https://indeedflex.com/career-hub/tools/tax-calculator"
+        name={tool.name}
+        description={tool.description}
+        url={canonical}
         applicationCategory="FinanceApplication"
-        featureList={[
-          "1099 and W-2 tax calculation",
-          "Self-employment tax estimates",
-          "All 50 US states supported",
-          "Mileage deduction calculator",
-          "Quarterly payment schedule"
-        ]}
-        aggregateRating={{
+        aggregateRating={tool.schema?.aggregateRating || {
           ratingValue: 4.7,
           ratingCount: 1923
         }}
+        featureList={tool.inputs.map(i => i.name)}
       />
       <FAQSchema questions={taxFAQs} />
+      <div className="container mx-auto px-4 py-4">
+        <Breadcrumbs
+          items={[
+            { label: "Tools", href: "/career-hub/tools" },
+            { label: tool.name },
+          ]}
+        />
+      </div>
       <TaxCalculatorClient />
+      <div className="container mx-auto px-4 py-8">
+        <AuthorByline
+          contentType="tool"
+          lastUpdated={getLastUpdated('tax-calculator', 'tool')}
+          variant="block"
+        />
+      </div>
+      <div className="container mx-auto px-4 py-12">
+        <InternalLinkHub 
+          variant="full" 
+          currentPage={{ 
+            type: "tool", 
+            slug: "tax-calculator",
+            relatedTools: tool.relatedTools
+          }} 
+        />
+      </div>
+      <CTASection />
     </>
   );
 }

@@ -3,6 +3,7 @@ import Link from "next/link";
 import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
 import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
 import { AuthorByline } from "@/components/career-hub/AuthorByline";
+import { getLastUpdated } from "@/lib/utils/date-variation";
 import { 
   FileText, 
   CheckCircle, 
@@ -285,10 +286,10 @@ export default function CoverLettersPage() {
           </div>
         </div>
 
-        <AuthorByline contentType="guide" lastUpdated="2026-02-01" />
+        <AuthorByline contentType="guide" lastUpdated={getLastUpdated('cover-letters', 'core')} />
 
         <div className="mt-8">
-          <InternalLinkHub variant="full" />
+          <InternalLinkHub variant="full" currentPage={{ type: "application" }} />
         </div>
       </div>
 

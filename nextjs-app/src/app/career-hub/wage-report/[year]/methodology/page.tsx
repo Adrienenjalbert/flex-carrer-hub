@@ -6,6 +6,8 @@ import Link from "next/link";
 import { wageReportMethodology } from "@/lib/data/wage-report/methodology";
 import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
 import { BreadcrumbSchema } from "@/components/career-hub/seo";
+import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
+import CTASection from "@/components/career-hub/CTASection";
 
 interface MethodologyPageProps {
   params: Promise<{ year: string }>;
@@ -17,12 +19,28 @@ export async function generateMetadata({ params }: MethodologyPageProps): Promis
     return {};
   }
 
+  const canonical = `https://indeedflex.com/career-hub/wage-report/${year}/methodology`;
+  const title = "Wage Report Methodology | Data Sources & Research Methods";
+  const description = "Comprehensive methodology for the 2026 Flex Work Wage Report. Data sources, research methods, limitations, and update schedule.";
+  
   return {
-    title: "Wage Report Methodology | Data Sources & Research Methods",
-    description: "Comprehensive methodology for the 2026 Flex Work Wage Report. Data sources, research methods, limitations, and update schedule.",
+    title,
+    description,
     keywords: ["wage report methodology", "BLS data", "research methods", "data sources"],
     alternates: {
-      canonical: `https://indeedflex.com/career-hub/wage-report/${year}/methodology`,
+      canonical,
+    },
+    openGraph: {
+      title,
+      description,
+      url: canonical,
+      type: "article",
+      siteName: "Indeed Flex Career Hub",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
     },
   };
 }
@@ -203,6 +221,11 @@ export default async function MethodologyPage({ params }: MethodologyPageProps) 
           </CardContent>
         </Card>
       </div>
+      
+      <div className="container mx-auto px-4 py-12">
+        <InternalLinkHub currentPage={{ type: 'wage-report' }} />
+      </div>
+      <CTASection />
     </div>
   );
 }

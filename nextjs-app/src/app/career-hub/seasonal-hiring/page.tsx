@@ -3,6 +3,7 @@ import Link from "next/link";
 import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
 import CTASection from "@/components/career-hub/CTASection";
 import HiringCalendar from "@/components/career-hub/HiringCalendar";
+import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { seasons } from "@/lib/data/seasonal-hiring";
@@ -41,6 +42,17 @@ export const metadata: Metadata = {
   ],
   alternates: {
     canonical: "https://indeedflex.com/career-hub/seasonal-hiring",
+  },
+  openGraph: {
+    title: "Seasonal Hiring Guide 2026 | When Companies Hire Most",
+    description: "Discover peak hiring seasons for warehouse, hospitality, and retail jobs. Learn when major employers hire the most workers.",
+    url: "https://indeedflex.com/career-hub/seasonal-hiring",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Seasonal Hiring Guide 2026",
+    description: "Discover peak hiring seasons for warehouse, hospitality, and retail jobs.",
   },
 };
 
@@ -354,6 +366,10 @@ export default function SeasonalHiringPage() {
           </div>
         </div>
       </section>
+
+      <div className="container mx-auto px-4 py-12">
+        <InternalLinkHub variant="full" currentPage={{ type: "seasonal" }} />
+      </div>
 
       <CTASection />
     </>

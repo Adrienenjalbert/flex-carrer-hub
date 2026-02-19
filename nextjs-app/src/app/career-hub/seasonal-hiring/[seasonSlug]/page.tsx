@@ -20,6 +20,7 @@ import { roles, industries } from "@/lib/data/roles";
 import { cities } from "@/lib/data/cities";
 import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
 import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
+import CTASection from "@/components/career-hub/CTASection";
 import { BreadcrumbSchema, FAQSchema } from "@/components/career-hub/seo";
 
 interface PageProps {
@@ -40,14 +41,28 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return { title: "Season Not Found" };
   }
 
+  const canonical = `https://indeedflex.com/career-hub/seasonal-hiring/${seasonSlug}`;
+  const title = `${season.name} Jobs & Hiring Guide | Indeed Flex`;
+  const description = `${season.shortDescription} Learn when to apply, what jobs are available, and how to maximize your earnings during ${season.name.toLowerCase()}.`;
+  
   return {
-    title: `${season.name} Jobs & Hiring Guide | Indeed Flex`,
-    description: `${season.shortDescription} Learn when to apply, what jobs are available, and how to maximize your earnings during ${season.name.toLowerCase()}.`,
+    title,
+    description,
     keywords: season.searchKeywords,
+    alternates: {
+      canonical,
+    },
     openGraph: {
       title: `${season.name} Jobs | Indeed Flex`,
       description: season.shortDescription,
+      url: canonical,
       type: "article",
+      siteName: "Indeed Flex Career Hub",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
     },
   };
 }
@@ -383,9 +398,10 @@ export default async function SeasonPage({ params }: PageProps) {
           </section>
 
           {/* Internal Links */}
-          <InternalLinkHub variant="full" />
+          <InternalLinkHub variant="full" currentPage={{ type: "seasonal", season: seasonSlug }} />
         </div>
       </div>
+      <CTASection />
     </>
   );
 }

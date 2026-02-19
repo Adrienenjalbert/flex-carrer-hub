@@ -10,6 +10,7 @@ import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
 import { BreadcrumbSchema } from "@/components/career-hub/seo";
 import { InsightCard, WageDistributionChart, YoYComparisonChart, RegionalHeatmap } from "@/components/career-hub/wage-report";
 import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
+import CTASection from "@/components/career-hub/CTASection";
 
 interface OccupationPageProps {
   params: Promise<{ year: string; roleSlug: string }>;
@@ -24,12 +25,28 @@ export async function generateMetadata({ params }: OccupationPageProps): Promise
   }
 
   const median = occupation.currentYear.wagePercentiles.percentile50;
+  const canonical = `https://indeedflex.com/career-hub/wage-report/2026/by-occupation/${roleSlug}`;
+  const title = `${occupation.occupationTitle} Wages 2026 | Hourly Pay Report`;
+  const description = `${occupation.occupationTitle} wage data: $${median}/hr median, ${occupation.yoyChange.percentChange}% growth. Percentiles, regional variations, and tips included.`;
+  
   return {
-    title: `${occupation.occupationTitle} Wages 2026 | Hourly Pay Report`,
-    description: `${occupation.occupationTitle} wage data: $${median}/hr median, ${occupation.yoyChange.percentChange}% growth. Percentiles, regional variations, and tips included.`,
+    title,
+    description,
     keywords: [`${occupation.occupationTitle} wage`, "hourly pay", "salary", "wage report"],
     alternates: {
-      canonical: `https://indeedflex.com/career-hub/wage-report/2026/by-occupation/${roleSlug}`,
+      canonical,
+    },
+    openGraph: {
+      title,
+      description,
+      url: canonical,
+      type: "article",
+      siteName: "Indeed Flex Career Hub",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
     },
   };
 }
@@ -188,6 +205,7 @@ export default async function OccupationPage({ params }: OccupationPageProps) {
           <InternalLinkHub currentPage={{ type: 'role', role: roleSlug }} />
         </aside>
       </div>
+      <CTASection />
     </div>
   );
 }

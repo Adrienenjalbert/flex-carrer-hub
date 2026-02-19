@@ -22,6 +22,7 @@ import { howToBecomeGuides, HowToBecomeGuide } from "@/lib/data/how-to-become";
 import { getRoleBySlug, industries } from "@/lib/data/roles";
 import { BreadcrumbSchema } from "@/components/career-hub/seo";
 import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
+import CTASection from "@/components/career-hub/CTASection";
 import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
 
 export const metadata: Metadata = {
@@ -37,10 +38,19 @@ export const metadata: Metadata = {
     "get started in",
     "career change",
   ],
+  alternates: {
+    canonical: "https://indeedflex.com/how-to-become",
+  },
   openGraph: {
     title: "How to Become Career Guides | Indeed Flex",
     description: "Step-by-step guides to starting your career in hospitality, warehouse, retail, and more.",
+    url: "https://indeedflex.com/how-to-become",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "How to Become Career Guides",
+    description: "Step-by-step guides to starting your career in hospitality, warehouse, retail, and more.",
   },
 };
 
@@ -383,9 +393,10 @@ export default function HowToBecomeIndexPage() {
           </section>
 
           {/* Internal Links */}
-          <InternalLinkHub variant="full" />
+          <InternalLinkHub variant="full" currentPage={{ type: "how-to-become" }} />
         </div>
       </div>
+      <CTASection />
     </>
   );
 }

@@ -10,17 +10,26 @@ import { BreadcrumbSchema } from "@/components/career-hub/seo";
 import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
 import { WageExplorer } from "@/components/career-hub/wage-report";
 
+const canonical = "https://indeedflex.com/career-hub/wage-report";
+
 export const metadata: Metadata = {
-  title: "2026 Flex Work Wage Report | Annual Hourly Wage Analysis",
+  title: "2026 Flex Work Wage Report | Annual Hourly Wage Analysis | Indeed Flex",
   description: "Comprehensive 2026 wage report covering hourly pay across 49 occupations, 6 industries, and 20+ regions. Data-driven insights from BLS and Indeed Flex market data.",
   keywords: ["wage report", "hourly wages", "flex work", "gig economy wages", "BLS data", "salary report 2026"],
   alternates: {
-    canonical: "https://indeedflex.com/career-hub/wage-report",
+    canonical,
   },
   openGraph: {
+    title: "2026 Flex Work Wage Report | Annual Hourly Wage Analysis",
+    description: "Comprehensive analysis of hourly wages across flexible work occupations",
+    url: canonical,
+    type: "article",
+    siteName: "Indeed Flex Career Hub",
+  },
+  twitter: {
+    card: "summary_large_image",
     title: "2026 Flex Work Wage Report",
     description: "Comprehensive analysis of hourly wages across flexible work occupations",
-    type: "article",
   },
 };
 
@@ -253,7 +262,7 @@ export default function WageReportHubPage() {
         </div>
 
         <aside className="lg:col-span-1">
-          <InternalLinkHub currentPage={{ type: 'programmatic', slug: 'wage-report' }} />
+          <InternalLinkHub currentPage={{ type: 'wage-report' }} />
         </aside>
       </div>
     </div>

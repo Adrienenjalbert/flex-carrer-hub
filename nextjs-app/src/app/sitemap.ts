@@ -16,6 +16,11 @@ import { personaHubs } from "@/lib/data/persona-hubs";
 import { calculatorRolePresets, getCanonicalToolSlugs } from "@/lib/data/tool-registry";
 import { seasons, seasonalEvents } from "@/lib/data/seasonal-hiring";
 import { occupationWageData, industryTrends, regionalAnalysis } from "@/lib/data/wage-report/2026-data";
+import { allGuideArticles } from "@/lib/data/articles/guides";
+import { financialArticles } from "@/lib/data/articles/financial-tips";
+import { careerEvaluations } from "@/lib/data/career-evaluations";
+import { salaryByLocation } from "@/lib/data/salary-by-location";
+import { payBrackets } from "@/lib/data/jobs-by-pay";
 
 const BASE_URL = "https://indeedflex.com";
 
@@ -29,11 +34,14 @@ export async function generateSitemaps() {
     { id: "city-roles" },
     { id: "tools" },
     { id: "guides" },
+    { id: "articles" },
     { id: "states" },
     { id: "job-application" },
     { id: "personas" },
     { id: "seasonal" },
     { id: "wage-report" },
+    { id: "career-evaluations" },
+    { id: "salary-by-city" },
   ];
 }
 
@@ -53,6 +61,8 @@ export default function sitemap({ id }: { id: string }): MetadataRoute.Sitemap {
       return generateToolsSitemap(now);
     case "guides":
       return generateGuidesSitemap(now);
+    case "articles":
+      return generateArticlesSitemap(now);
     case "states":
       return generateStatesSitemap(now);
     case "job-application":
@@ -63,6 +73,10 @@ export default function sitemap({ id }: { id: string }): MetadataRoute.Sitemap {
       return generateSeasonalSitemap(now);
     case "wage-report":
       return generateWageReportSitemap(now);
+    case "career-evaluations":
+      return generateCareerEvaluationsSitemap(now);
+    case "salary-by-city":
+      return generateSalaryByCitySitemap(now);
     default:
       return [];
   }
@@ -324,6 +338,27 @@ function generateGuidesSitemap(now: Date): MetadataRoute.Sitemap {
   return [...howToPages, ...interviewPages, ...certPages];
 }
 
+// Article pages sitemap (guide articles and financial articles)
+function generateArticlesSitemap(now: Date): MetadataRoute.Sitemap {
+  // Guide articles
+  const guideArticlePages = Object.keys(allGuideArticles).map((slug) => ({
+    url: `${BASE_URL}/career-hub/guides/${slug}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.8,
+  }));
+
+  // Financial articles
+  const financialArticlePages = Object.keys(financialArticles).map((slug) => ({
+    url: `${BASE_URL}/career-hub/financial-tips/${slug}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
+  return [...guideArticlePages, ...financialArticlePages];
+}
+
 // State tax/unemployment pages sitemap
 function generateStatesSitemap(now: Date): MetadataRoute.Sitemap {
   const taxPages = getAllStateSlugs().map((slug) => ({
@@ -421,24 +456,36 @@ function generatePersonasSitemap(now: Date): MetadataRoute.Sitemap {
       changeFrequency: "monthly" as const,
       priority: 0.7,
     },
-    // Pay range pages
+    // Pay range pages (all ranges)
     {
-      url: `${BASE_URL}/career-hub/pay-range/15-20`,
+      url: `${BASE_URL}/career-hub/pay-range/15-under`,
       lastModified: now,
       changeFrequency: "monthly" as const,
-      priority: 0.6,
+      priority: 0.7,
     },
     {
-      url: `${BASE_URL}/career-hub/pay-range/20-25`,
+      url: `${BASE_URL}/career-hub/pay-range/15-18`,
       lastModified: now,
       changeFrequency: "monthly" as const,
-      priority: 0.6,
+      priority: 0.7,
+    },
+    {
+      url: `${BASE_URL}/career-hub/pay-range/18-22`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    },
+    {
+      url: `${BASE_URL}/career-hub/pay-range/22-25`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
     },
     {
       url: `${BASE_URL}/career-hub/pay-range/25-plus`,
       lastModified: now,
       changeFrequency: "monthly" as const,
-      priority: 0.6,
+      priority: 0.7,
     },
     // Schedule type pages
     {
@@ -551,4 +598,32 @@ function generateWageReportSitemap(now: Date): MetadataRoute.Sitemap {
     }));
 
   return [...corePages, ...industryPages, ...occupationPages, ...regionalPages];
+}
+
+// Career evaluation pages sitemap
+function generateCareerEvaluationsSitemap(now: Date): MetadataRoute.Sitemap {
+  return [
+    {
+      url: `${BASE_URL}/career-hub/is-it-a-good-job`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.9,
+    },
+    ...careerEvaluations.map((evaluation) => ({
+      url: `${BASE_URL}/career-hub/is-it-a-good-job/${evaluation.roleSlug}`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    })),
+  ];
+}
+
+// Salary by city pages sitemap
+function generateSalaryByCitySitemap(now: Date): MetadataRoute.Sitemap {
+  return salaryByLocation.map((data) => ({
+    url: `${BASE_URL}/career-hub/salary/${data.roleSlug}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.8,
+  }));
 }

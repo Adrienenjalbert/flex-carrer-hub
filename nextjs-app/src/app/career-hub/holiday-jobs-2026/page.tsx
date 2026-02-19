@@ -454,7 +454,7 @@ export default function HolidayJobs2026Page() {
           </section>
 
           {/* Internal Links */}
-          <InternalLinkHub variant="full" />
+          <InternalLinkHub variant="full" currentPage={{ type: "seasonal", season: "holiday" }} />
         </div>
       </div>
     </>

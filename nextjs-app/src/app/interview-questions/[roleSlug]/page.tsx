@@ -1,13 +1,18 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { MessageSquare, ChevronRight, Lightbulb, CheckCircle2 } from "lucide-react";
+import { MessageSquare, Lightbulb, CheckCircle2 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { interviewGuides, getInterviewGuideBySlug } from "@/lib/data/interview-questions";
 import { getRoleBySlug } from "@/lib/data/roles";
 import { FAQSchema, ArticleSchema, BreadcrumbSchema } from "@/components/career-hub/seo";
+import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
+import CTASection from "@/components/career-hub/CTASection";
+import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
+import { AuthorByline } from "@/components/career-hub/AuthorByline";
+import { getLastUpdated } from "@/lib/utils/date-variation";
 
 // Generate static params for all interview guides
 export function generateStaticParams() {
@@ -32,9 +37,13 @@ export async function generateMetadata({
 
   const roleTitle = role?.title || guide.roleTitle;
 
+  const canonical = `https://indeedflex.com/interview-questions/${roleSlug}`;
+  const title = `${roleTitle} Interview Questions & Answers`;
+  const description = `Prepare for your ${roleTitle} interview with ${guide.questions.length}+ common questions and expert answers. Tips to ace your interview.`;
+
   return {
-    title: `${roleTitle} Interview Questions & Answers`,
-    description: `Prepare for your ${roleTitle} interview with ${guide.questions.length}+ common questions and expert answers. Tips to ace your interview.`,
+    title: `${title} | Indeed Flex`,
+    description,
     keywords: [
       `${roleTitle} interview questions`,
       `${roleTitle} interview`,
@@ -42,7 +51,19 @@ export async function generateMetadata({
       `${roleTitle} job interview`,
     ],
     alternates: {
-      canonical: `https://indeedflex.com/interview-questions/${roleSlug}`,
+      canonical,
+    },
+    openGraph: {
+      title,
+      description,
+      url: canonical,
+      type: "article",
+      siteName: "Indeed Flex Career Hub",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
     },
   };
 }
@@ -97,20 +118,17 @@ export default async function InterviewQuestionsPage({
         ]}
       />
 
+      <div className="container mx-auto px-4 py-4">
+        <Breadcrumbs
+          items={[
+            { label: "Career Hub", href: "/career-hub" },
+            { label: "Interview Questions", href: "/interview-questions" },
+            { label: `${roleTitle} Interview` },
+          ]}
+        />
+      </div>
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
-          {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
-            <Link href="/career-hub" className="hover:text-primary">
-              Career Hub
-            </Link>
-            <ChevronRight className="h-4 w-4" />
-            <Link href="/career-hub/guides" className="hover:text-primary">
-              Guides
-            </Link>
-            <ChevronRight className="h-4 w-4" />
-            <span className="text-foreground">{roleTitle} Interview</span>
-          </nav>
 
           {/* Hero */}
           <div className="mb-8">
@@ -233,6 +251,25 @@ export default async function InterviewQuestionsPage({
           </div>
         </div>
       </div>
+
+      <div className="container mx-auto px-4 py-8">
+        <AuthorByline
+          contentType="guide"
+          lastUpdated={getLastUpdated(roleSlug, 'guide')}
+          variant="block"
+        />
+      </div>
+
+      <div className="container mx-auto px-4 py-12">
+        <InternalLinkHub 
+          variant="full" 
+          currentPage={{ 
+            type: "interview", 
+            role: roleSlug
+          }} 
+        />
+      </div>
+      <CTASection />
     </>
   );
 }

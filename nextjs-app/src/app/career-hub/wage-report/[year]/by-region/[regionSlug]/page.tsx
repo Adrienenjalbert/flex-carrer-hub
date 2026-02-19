@@ -10,6 +10,7 @@ import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
 import { BreadcrumbSchema } from "@/components/career-hub/seo";
 import { InsightCard, RegionalHeatmap } from "@/components/career-hub/wage-report";
 import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
+import CTASection from "@/components/career-hub/CTASection";
 
 interface RegionPageProps {
   params: Promise<{ year: string; regionSlug: string }>;
@@ -23,12 +24,28 @@ export async function generateMetadata({ params }: RegionPageProps): Promise<Met
     return {};
   }
 
+  const canonical = `https://indeedflex.com/career-hub/wage-report/2026/by-region/${regionSlug}`;
+  const title = `${region.region} Wages 2026 | Regional Wage Report`;
+  const description = `${region.region} wage analysis: $${region.avgMedianWage}/hr median, ${region.topOccupations.length}+ roles. Cost-of-living adjusted wages and regional insights.`;
+  
   return {
-    title: `${region.region} Wages 2026 | Regional Wage Report`,
-    description: `${region.region} wage analysis: $${region.avgMedianWage}/hr median, ${region.topOccupations.length}+ roles. Cost-of-living adjusted wages and regional insights.`,
+    title,
+    description,
     keywords: [`${region.region} wages`, "regional wage report", "hourly wages", "cost of living"],
     alternates: {
-      canonical: `https://indeedflex.com/career-hub/wage-report/2026/by-region/${regionSlug}`,
+      canonical,
+    },
+    openGraph: {
+      title,
+      description,
+      url: canonical,
+      type: "article",
+      siteName: "Indeed Flex Career Hub",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
     },
   };
 }
@@ -226,6 +243,7 @@ export default async function RegionPage({ params }: RegionPageProps) {
           <InternalLinkHub currentPage={{ type: 'city', city: region.citySlug || regionSlug }} />
         </aside>
       </div>
+      <CTASection />
     </div>
   );
 }

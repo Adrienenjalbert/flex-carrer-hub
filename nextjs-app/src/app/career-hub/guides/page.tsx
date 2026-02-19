@@ -7,9 +7,12 @@ import { allGuideCategories, guideArticles } from "@/lib/data/articles/guides";
 import PageHero from "@/components/career-hub/PageHero";
 import SectionHeader from "@/components/career-hub/SectionHeader";
 import ContentGrid from "@/components/career-hub/ContentGrid";
+import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
+
+const canonical = "https://indeedflex.com/career-hub/guides";
 
 export const metadata: Metadata = {
-  title: "Career Guides",
+  title: "Career Guides | Indeed Flex Career Hub",
   description: "Expert career guides for hourly workers. Learn how to advance your career, prepare for interviews, and maximize your earning potential.",
   keywords: [
     "career guides",
@@ -19,7 +22,19 @@ export const metadata: Metadata = {
     "work skills",
   ],
   alternates: {
-    canonical: "https://indeedflex.com/career-hub/guides",
+    canonical,
+  },
+  openGraph: {
+    title: "Career Guides | Indeed Flex Career Hub",
+    description: "Expert career guides for hourly workers. Learn how to advance your career, prepare for interviews, and maximize your earning potential.",
+    url: canonical,
+    type: "website",
+    siteName: "Indeed Flex Career Hub",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Career Guides",
+    description: "Expert career guides for hourly workers.",
   },
 };
 
@@ -256,6 +271,13 @@ export default function GuidesPage() {
             </div>
           </div>
         </section>
+      </div>
+
+      <div className="container mx-auto px-4 py-12">
+        <InternalLinkHub 
+          variant="full" 
+          currentPage={{ type: "generic" }} 
+        />
       </div>
     </div>
     </>

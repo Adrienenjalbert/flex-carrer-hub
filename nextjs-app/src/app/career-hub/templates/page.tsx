@@ -1,8 +1,11 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
+import PageHero from "@/components/career-hub/PageHero";
+import CTASection from "@/components/career-hub/CTASection";
 import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
 import { AuthorByline } from "@/components/career-hub/AuthorByline";
+import { getLastUpdated } from "@/lib/utils/date-variation";
 import { 
   FileText, 
   CheckCircle, 
@@ -26,6 +29,20 @@ export const metadata: Metadata = {
     "warehouse resume template",
     "entry-level resume",
   ],
+  alternates: {
+    canonical: "https://indeedflex.com/career-hub/templates",
+  },
+  openGraph: {
+    title: "Free Resume Templates for Hourly Workers | ATS-Friendly | Indeed Flex",
+    description: "Download free resume templates designed for hospitality, warehouse, and retail workers. ATS-friendly formats that get you noticed.",
+    url: "https://indeedflex.com/career-hub/templates",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Free Resume Templates for Hourly Workers",
+    description: "Download free resume templates designed for hourly and flexible workers.",
+  },
 };
 
 function TemplateCard({ template }: { template: ResumeTemplate }) {
@@ -108,39 +125,24 @@ export default function TemplatesPage() {
   // Group templates by style
   const highAtsTemplates = resumeTemplates.filter((t) => t.atsScore === "high");
 
-  return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
-      <div className="container mx-auto px-4 py-8">
-        <Breadcrumbs items={breadcrumbs} />
+  const highAtsCount = resumeTemplates.filter((t) => t.atsScore === "high").length;
 
-        {/* Hero */}
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-100 text-blue-700 rounded-full mb-4">
-            <Layout className="h-4 w-4" />
-            <span className="text-sm font-medium">Free Templates</span>
-          </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Resume Templates
-          </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-6">
-            Professional, ATS-friendly resume templates designed specifically for 
-            hourly and flexible workers. Choose your style and start building.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-500">
-            <span className="flex items-center gap-1">
-              <CheckCircle className="h-4 w-4 text-green-500" />
-              {resumeTemplates.length} Templates
-            </span>
-            <span className="flex items-center gap-1">
-              <Zap className="h-4 w-4 text-green-500" />
-              ATS-Optimized
-            </span>
-            <span className="flex items-center gap-1">
-              <Star className="h-4 w-4 text-green-500" />
-              100% Free
-            </span>
-          </div>
-        </div>
+  return (
+    <>
+      <div className="container mx-auto px-4 py-4">
+        <Breadcrumbs items={breadcrumbs} />
+      </div>
+      <PageHero
+        title="Resume Templates"
+        description="Professional, ATS-friendly resume templates designed specifically for hourly and flexible workers. Choose your style and start building."
+        badge="Free Templates"
+        stats={[
+          { value: resumeTemplates.length.toString(), label: "Templates" },
+          { value: highAtsCount.toString(), label: "High ATS Score" },
+          { value: "100%", label: "Free" },
+        ]}
+      />
+      <div className="container mx-auto px-4 py-8">
 
         {/* ATS Info Banner */}
         <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 mb-12">
@@ -275,10 +277,10 @@ export default function TemplatesPage() {
           </div>
         </div>
 
-        <AuthorByline contentType="guide" lastUpdated="2026-02-01" />
+        <AuthorByline contentType="guide" lastUpdated={getLastUpdated('templates', 'core')} />
 
         <div className="mt-8">
-          <InternalLinkHub variant="full" />
+          <InternalLinkHub variant="full" currentPage={{ type: "application" }} />
         </div>
       </div>
 
@@ -304,7 +306,8 @@ export default function TemplatesPage() {
           }),
         }}
       />
-    </div>
+      <CTASection />
+    </>
   );
 }
 

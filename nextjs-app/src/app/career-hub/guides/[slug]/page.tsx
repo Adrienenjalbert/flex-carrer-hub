@@ -12,9 +12,12 @@ import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
 import CTASection from "@/components/career-hub/CTASection";
 import MarkdownContent from "@/components/career-hub/MarkdownContent";
 import TableOfContents from "@/components/career-hub/TableOfContents";
+import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
+import { AuthorByline } from "@/components/career-hub/AuthorByline";
 import { generateTOCFromSections } from "@/lib/utils/toc";
 import { allGuideArticles, allGuideCategories } from "@/lib/data/articles/guides";
 import { FAQSchema, ArticleSchema, BreadcrumbSchema } from "@/components/career-hub/seo";
+import { getArticleDates, getLastUpdated } from "@/lib/utils/date-variation";
 import { Clock, ArrowLeft, ArrowRight, CheckCircle2 } from "lucide-react";
 
 // Generate static params for all guide articles
@@ -37,6 +40,9 @@ export async function generateMetadata({
     return { title: "Guide Not Found" };
   }
 
+  const canonical = `https://indeedflex.com/career-hub/guides/${slug}`;
+  const { publishedTime, modifiedTime } = getArticleDates(slug, 'guide');
+
   return {
     title: `${article.title} | Indeed Flex Career Hub`,
     description: article.description,
@@ -49,15 +55,22 @@ export async function generateMetadata({
       "temp jobs",
     ],
     alternates: {
-      canonical: `https://indeedflex.com/career-hub/guides/${slug}`,
+      canonical,
     },
     openGraph: {
       title: article.title,
       description: article.description,
+      url: canonical,
       type: "article",
-      publishedTime: "2024-01-15",
-      modifiedTime: new Date().toISOString(),
+      publishedTime,
+      modifiedTime,
       section: article.category,
+      siteName: "Indeed Flex Career Hub",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: article.title,
+      description: article.description,
     },
   };
 }
@@ -293,6 +306,26 @@ export default async function GuidesArticlePage({
           </section>
         )}
       </article>
+
+      <div className="container mx-auto px-4 py-8">
+        <AuthorByline
+          contentType="guide"
+          lastUpdated={getLastUpdated(slug, 'guide')}
+          variant="block"
+        />
+      </div>
+
+      <div className="container mx-auto px-4 py-12">
+        <InternalLinkHub 
+          variant="full" 
+          currentPage={{ 
+            type: "guide", 
+            slug,
+            relatedArticles: article.relatedArticles,
+            guideCategory: article.categorySlug
+          }} 
+        />
+      </div>
 
       <CTASection
         title="Put Your Knowledge Into Action"

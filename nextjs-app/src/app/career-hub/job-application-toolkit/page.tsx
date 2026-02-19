@@ -3,6 +3,7 @@ import Link from "next/link";
 import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
 import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
 import { AuthorByline } from "@/components/career-hub/AuthorByline";
+import { getLastUpdated } from "@/lib/utils/date-variation";
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   FileText, 
@@ -20,6 +21,8 @@ import { resumeTemplates } from "@/lib/data/resume-templates";
 import { coverLetterTemplates } from "@/lib/data/cover-letter-templates";
 import { resumeExamples } from "@/lib/data/resume-examples";
 
+const canonical = "https://indeedflex.com/career-hub/job-application-toolkit";
+
 export const metadata: Metadata = {
   title: "Job Application Toolkit | Resume Templates, Cover Letters & More | Indeed Flex Career Hub",
   description: "Free resume templates, cover letter examples, and job application guides for hourly and flexible workers. ATS-friendly templates for hospitality, warehouse, and retail jobs.",
@@ -34,12 +37,19 @@ export const metadata: Metadata = {
     "warehouse resume",
   ],
   alternates: {
-    canonical: "https://indeedflex.com/career-hub/job-application-toolkit",
+    canonical,
   },
   openGraph: {
-    title: "Job Application Toolkit | Indeed Flex Career Hub",
+    title: "Job Application Toolkit | Resume Templates, Cover Letters & More",
     description: "Free resume templates, cover letter examples, and job application guides for hourly and flexible workers.",
+    url: canonical,
     type: "website",
+    siteName: "Indeed Flex Career Hub",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Job Application Toolkit",
+    description: "Free resume templates, cover letter examples, and job application guides.",
   },
 };
 
@@ -582,10 +592,10 @@ export default function JobApplicationToolkitPage() {
           </div>
         </div>
 
-        <AuthorByline contentType="guide" lastUpdated="2026-02-01" />
+        <AuthorByline contentType="guide" lastUpdated={getLastUpdated('job-application-toolkit', 'core')} />
 
         <div className="mt-8">
-          <InternalLinkHub variant="full" />
+          <InternalLinkHub variant="full" currentPage={{ type: "application" }} />
         </div>
       </div>
 

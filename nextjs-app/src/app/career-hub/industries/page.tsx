@@ -12,7 +12,10 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
+import PageHero from "@/components/career-hub/PageHero";
+import CTASection from "@/components/career-hub/CTASection";
 import { roles } from "@/lib/data/roles";
+import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
 
 export const metadata: Metadata = {
   title: "Jobs by Industry | Indeed Flex Career Hub",
@@ -28,6 +31,17 @@ export const metadata: Metadata = {
   ],
   alternates: {
     canonical: "https://indeedflex.com/career-hub/industries",
+  },
+  openGraph: {
+    title: "Jobs by Industry | Indeed Flex Career Hub",
+    description: "Explore flexible work opportunities by industry. Find jobs in hospitality, warehouse, retail, and facilities management.",
+    url: "https://indeedflex.com/career-hub/industries",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Jobs by Industry",
+    description: "Explore flexible work opportunities by industry.",
   },
 };
 
@@ -87,30 +101,34 @@ const industries = [
 ];
 
 export default function IndustriesPage() {
+  const totalRoles = roles.length;
+  const industriesWithCounts = industries.map(industry => {
+    const industryRoles = roles.filter(
+      (r) => r.industry.toLowerCase() === industry.id.toLowerCase() ||
+             r.industry.toLowerCase().includes(industry.id.toLowerCase())
+    );
+    return { ...industry, roleCount: industryRoles.length };
+  });
+
   return (
     <>
-      <Breadcrumbs
-        items={[
-          { label: "Career Hub", href: "/career-hub" },
-          { label: "Industries" },
+      <div className="container mx-auto px-4 py-4">
+        <Breadcrumbs
+          items={[
+            { label: "Industries" },
+          ]}
+        />
+      </div>
+      <PageHero
+        title="Explore Jobs by Industry"
+        description="Discover flexible work opportunities across the top industries. Find the sector that matches your skills and interests."
+        stats={[
+          { value: industries.length.toString(), label: "Industries" },
+          { value: totalRoles.toString(), label: "Total Roles" },
+          { value: "4", label: "Major Sectors" },
         ]}
       />
-
       <div className="container mx-auto px-4 py-8">
-        {/* Hero Section */}
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-medium mb-4">
-            <Briefcase className="h-4 w-4" />
-            <span>{industries.length} Industries</span>
-          </div>
-          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Explore Jobs by Industry
-          </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Discover flexible work opportunities across the top industries.
-            Find the sector that matches your skills and interests.
-          </p>
-        </div>
 
         {/* Industry Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
@@ -163,6 +181,11 @@ export default function IndustriesPage() {
           })}
         </div>
       </div>
+
+      <div className="container mx-auto px-4 py-12">
+        <InternalLinkHub variant="full" currentPage={{ type: "industry" }} />
+      </div>
+      <CTASection />
     </>
   );
 }

@@ -40,6 +40,7 @@ import {
   LocalBusinessSchema,
   WebPageSchema,
 } from "@/components/career-hub/seo";
+import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
 import CityRolePageClient from "./CityRolePageClient";
 
 const BASE_URL = "https://indeedflex.com";
@@ -106,10 +107,13 @@ export async function generateMetadata({
   }
 
   const localSalary = getLocalSalary(role, city);
+  const canonical = `https://indeedflex.com/career-hub/cities/${citySlug}/${roleSlug}`;
+  const title = `${role.title} Jobs in ${city.city}, ${city.stateCode} | $${localSalary.min.toFixed(0)}-$${localSalary.max.toFixed(0)}/hr`;
+  const description = `Find ${role.title} jobs in ${city.city}, ${city.stateCode}. Earn $${localSalary.min.toFixed(2)}-$${localSalary.max.toFixed(2)}/hr with flexible scheduling. ${role.shortDescription}. Apply today with Indeed Flex.`;
 
   return {
-    title: `${role.title} Jobs in ${city.city}, ${city.stateCode} | $${localSalary.min.toFixed(0)}-$${localSalary.max.toFixed(0)}/hr`,
-    description: `Find ${role.title} jobs in ${city.city}, ${city.stateCode}. Earn $${localSalary.min.toFixed(2)}-$${localSalary.max.toFixed(2)}/hr with flexible scheduling. ${role.shortDescription}. Apply today with Indeed Flex.`,
+    title: `${title} | Indeed Flex`,
+    description,
     keywords: [
       `${role.title} jobs ${city.city}`,
       `${role.title} ${city.stateCode}`,
@@ -119,6 +123,21 @@ export async function generateMetadata({
       `part time ${role.title}`,
       `${role.title} pay ${city.city}`,
     ],
+    alternates: {
+      canonical,
+    },
+    openGraph: {
+      title,
+      description,
+      url: canonical,
+      type: "website",
+      siteName: "Indeed Flex Career Hub",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
   };
 }
 
@@ -762,6 +781,18 @@ export default async function CityRolePage({
 
         {/* Data Source Citations for E-E-A-T */}
         <DataSourceCitation pageType="city" />
+      </div>
+
+      <div className="container mx-auto px-4 py-12">
+        <InternalLinkHub 
+          variant="full" 
+          currentPage={{ 
+            type: "city", 
+            city: citySlug,
+            role: roleSlug,
+            industry: role.industry
+          }} 
+        />
       </div>
 
       <CTASection />

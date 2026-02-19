@@ -1,10 +1,13 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import { ChevronRight, DollarSign, Clock, TrendingUp, ArrowRight } from "lucide-react";
+import { DollarSign, Clock, TrendingUp, ArrowRight } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { stateUnemploymentData, getSortedStatesByBenefit, getSortedStatesByDuration } from "@/lib/data/unemployment-benefits";
 import { WebPageSchema, FAQSchema, BreadcrumbSchema } from "@/components/career-hub/seo";
+import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
+import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
+import CTASection from "@/components/career-hub/CTASection";
 
 export const metadata: Metadata = {
   title: "Unemployment Benefits by State 2026 | Complete Guide",
@@ -76,16 +79,16 @@ export default function UnemploymentBenefitsPage() {
         ]}
       />
 
+      <div className="container mx-auto px-4 py-4">
+        <Breadcrumbs
+          items={[
+            { label: "Career Hub", href: "/career-hub" },
+            { label: "Unemployment Benefits" },
+          ]}
+        />
+      </div>
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-6xl mx-auto">
-          {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
-            <Link href="/career-hub" className="hover:text-primary">
-              Career Hub
-            </Link>
-            <ChevronRight className="h-4 w-4" />
-            <span className="text-foreground">Unemployment Benefits</span>
-          </nav>
 
           {/* Hero */}
           <div className="mb-8">
@@ -262,26 +265,15 @@ export default function UnemploymentBenefitsPage() {
             </div>
           </section>
 
-          {/* CTA */}
-          <section>
-            <Card className="bg-gradient-to-r from-primary/10 to-primary/5 border-primary/20">
-              <CardContent className="pt-6 text-center">
-                <h3 className="text-xl font-semibold mb-2">Need Flexible Work?</h3>
-                <p className="text-muted-foreground mb-4 max-w-xl mx-auto">
-                  Indeed Flex helps you find shifts that work around your schedule. All earnings are reported transparently, making it easy to manage with unemployment benefits.
-                </p>
-                <Link 
-                  href="https://www.indeedflex.com" 
-                  className="inline-block bg-primary text-primary-foreground px-6 py-2 rounded-lg font-semibold hover:bg-primary/90"
-                >
-                  Explore Indeed Flex
-                </Link>
-              </CardContent>
-            </Card>
-          </section>
         </div>
       </div>
+
+      <div className="container mx-auto px-4 py-12">
+        <InternalLinkHub variant="full" currentPage={{ type: "generic" }} />
+      </div>
+      <CTASection />
     </>
   );
 }
+
 

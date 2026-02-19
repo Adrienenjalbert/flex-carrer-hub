@@ -5,6 +5,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { certifications, getHospitalityCertifications, getWarehouseCertifications, getUniversalCertifications } from "@/lib/data/certifications";
 import { WebPageSchema, FAQSchema, BreadcrumbSchema } from "@/components/career-hub/seo";
+import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
+import PageHero from "@/components/career-hub/PageHero";
+import CTASection from "@/components/career-hub/CTASection";
+import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
 
 export const metadata: Metadata = {
   title: "Career Certifications for Flex Workers 2026 | Boost Your Hourly Rate",
@@ -18,6 +22,20 @@ export const metadata: Metadata = {
     "gig worker certifications",
     "hourly worker certifications",
   ],
+  alternates: {
+    canonical: "https://indeedflex.com/certifications",
+  },
+  openGraph: {
+    title: "Career Certifications for Flex Workers 2026 | Boost Your Hourly Rate",
+    description: "Get certified and earn more. Compare food handler, forklift, OSHA, and alcohol service certifications.",
+    url: "https://indeedflex.com/certifications",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Career Certifications for Flex Workers 2026",
+    description: "Get certified and earn more. Compare certifications that boost your hourly rate.",
+  },
 };
 
 export default function CertificationsPage() {
@@ -74,30 +92,25 @@ export default function CertificationsPage() {
         ]}
       />
 
+      <div className="container mx-auto px-4 py-4">
+        <Breadcrumbs
+          items={[
+            { label: "Certifications" },
+          ]}
+        />
+      </div>
+      <PageHero
+        title="Career Certifications for Flex Workers"
+        description="Boost your hourly rate and unlock more shift opportunities with industry-recognized certifications. Most can be completed in a single day."
+        badge={`Updated ${new Date().getFullYear()}`}
+        stats={[
+          { value: certifications.length.toString(), label: "Certifications" },
+          { value: "+$5-10/hr", label: "Best ROI" },
+          { value: "2 hours", label: "Fastest" },
+        ]}
+      />
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-6xl mx-auto">
-          {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
-            <Link href="/career-hub" className="hover:text-primary">
-              Career Hub
-            </Link>
-            <ChevronRight className="h-4 w-4" />
-            <span className="text-foreground">Certifications</span>
-          </nav>
-
-          {/* Hero */}
-          <div className="mb-8">
-            <div className="flex items-center gap-2 mb-4">
-              <Award className="h-8 w-8 text-primary" />
-              <Badge variant="secondary">Updated {new Date().getFullYear()}</Badge>
-            </div>
-            <h1 className="text-4xl font-bold mb-4">
-              Career Certifications for Flex Workers
-            </h1>
-            <p className="text-xl text-muted-foreground max-w-3xl">
-              Boost your hourly rate and unlock more shift opportunities with industry-recognized certifications. Most can be completed in a single day.
-            </p>
-          </div>
 
           {/* Quick Stats */}
           <div className="grid md:grid-cols-4 gap-4 mb-8">
@@ -308,6 +321,11 @@ export default function CertificationsPage() {
           </section>
         </div>
       </div>
+
+      <div className="container mx-auto px-4 py-12">
+        <InternalLinkHub variant="full" currentPage={{ type: "certification" }} />
+      </div>
+      <CTASection />
     </>
   );
 }

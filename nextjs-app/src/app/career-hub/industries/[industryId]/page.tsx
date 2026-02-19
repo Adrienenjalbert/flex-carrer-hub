@@ -7,6 +7,7 @@ import RoleCard from "@/components/career-hub/RoleCard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { roles } from "@/lib/data/roles";
+import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
 import {
   UtensilsCrossed,
   Warehouse,
@@ -109,8 +110,11 @@ export async function generateMetadata({
     return { title: "Industry Not Found" };
   }
 
+  const canonical = `https://indeedflex.com/career-hub/industries/${industryId}`;
+  const title = `${industry.name} Jobs | Indeed Flex Career Hub`;
+
   return {
-    title: `${industry.name} Jobs | Indeed Flex Career Hub`,
+    title,
     description: industry.description,
     keywords: [
       `${industry.name.toLowerCase()} jobs`,
@@ -119,6 +123,21 @@ export async function generateMetadata({
       "indeed flex",
       "temp work",
     ],
+    alternates: {
+      canonical,
+    },
+    openGraph: {
+      title,
+      description: industry.description,
+      url: canonical,
+      type: "website",
+      siteName: "Indeed Flex Career Hub",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description: industry.description,
+    },
   };
 }
 
@@ -285,6 +304,16 @@ export default async function IndustryPage({
           </div>
         </div>
       </section>
+
+      <div className="container mx-auto px-4 py-12">
+        <InternalLinkHub 
+          variant="full" 
+          currentPage={{ 
+            type: "generic",
+            industry: industryId
+          }} 
+        />
+      </div>
 
       <CTASection />
     </>

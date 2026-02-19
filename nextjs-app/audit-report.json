@@ -1,0 +1,1368 @@
+[
+  {
+    "path": "/career-hub/about/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": false,
+    "hasTwitter": false,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": true,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": false,
+    "wordCount": 406,
+    "internalLinksCount": 1,
+    "issues": [
+      "Missing OpenGraph tags",
+      "Missing Twitter Card tags",
+      "Missing InternalLinkHub"
+    ]
+  },
+  {
+    "path": "/career-hub/cities/[citySlug]/[roleSlug]/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": false,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": true,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 639,
+    "internalLinksCount": 7,
+    "issues": [
+      "Missing description"
+    ]
+  },
+  {
+    "path": "/career-hub/cities/[citySlug]/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": false,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": true,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 221,
+    "internalLinksCount": 0,
+    "issues": [
+      "Missing description",
+      "Low word count: 221 (minimum 300 for detail pages)"
+    ]
+  },
+  {
+    "path": "/career-hub/cities/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": false,
+    "hasStructuredData": false,
+    "hasInternalLinkHub": true,
+    "wordCount": 189,
+    "internalLinksCount": 0,
+    "issues": [
+      "Missing H1 heading",
+      "Missing structured data",
+      "Low word count: 189 (minimum 200 for index pages)"
+    ]
+  },
+  {
+    "path": "/career-hub/cover-letters/[templateId]/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": false,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": true,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 342,
+    "internalLinksCount": 4,
+    "issues": [
+      "Missing description"
+    ]
+  },
+  {
+    "path": "/career-hub/cover-letters/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": false,
+    "hasTwitter": false,
+    "hasCanonical": false,
+    "hasBreadcrumbs": true,
+    "hasH1": true,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 360,
+    "internalLinksCount": 3,
+    "issues": [
+      "Missing OpenGraph tags",
+      "Missing Twitter Card tags",
+      "Missing canonical URL"
+    ]
+  },
+  {
+    "path": "/career-hub/experience/entry-level/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": false,
+    "hasTwitter": false,
+    "hasCanonical": false,
+    "hasBreadcrumbs": true,
+    "hasH1": true,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": false,
+    "wordCount": 518,
+    "internalLinksCount": 4,
+    "issues": [
+      "Missing OpenGraph tags",
+      "Missing Twitter Card tags",
+      "Missing canonical URL",
+      "Missing InternalLinkHub"
+    ]
+  },
+  {
+    "path": "/career-hub/financial-tips/[slug]/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": false,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": true,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 194,
+    "internalLinksCount": 1,
+    "issues": [
+      "Missing description",
+      "Low word count: 194 (minimum 300 for detail pages)"
+    ]
+  },
+  {
+    "path": "/career-hub/financial-tips/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": true,
+    "hasStructuredData": false,
+    "hasInternalLinkHub": true,
+    "wordCount": 316,
+    "internalLinksCount": 4,
+    "issues": [
+      "Missing structured data"
+    ]
+  },
+  {
+    "path": "/career-hub/for/[personaSlug]/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": false,
+    "hasOpenGraph": true,
+    "hasTwitter": false,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": true,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 328,
+    "internalLinksCount": 3,
+    "issues": [
+      "Missing description",
+      "Missing Twitter Card tags"
+    ]
+  },
+  {
+    "path": "/career-hub/for/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": false,
+    "hasTwitter": false,
+    "hasCanonical": false,
+    "hasBreadcrumbs": true,
+    "hasH1": true,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 243,
+    "internalLinksCount": 0,
+    "issues": [
+      "Missing OpenGraph tags",
+      "Missing Twitter Card tags",
+      "Missing canonical URL"
+    ]
+  },
+  {
+    "path": "/career-hub/guides/[slug]/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": false,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": true,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 226,
+    "internalLinksCount": 1,
+    "issues": [
+      "Missing description",
+      "Low word count: 226 (minimum 300 for detail pages)"
+    ]
+  },
+  {
+    "path": "/career-hub/guides/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": false,
+    "hasH1": false,
+    "hasStructuredData": false,
+    "hasInternalLinkHub": true,
+    "wordCount": 307,
+    "internalLinksCount": 3,
+    "issues": [
+      "Missing H1 heading",
+      "Missing structured data"
+    ]
+  },
+  {
+    "path": "/career-hub/holiday-jobs-2026/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": true,
+    "hasTwitter": false,
+    "hasCanonical": false,
+    "hasBreadcrumbs": true,
+    "hasH1": true,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 764,
+    "internalLinksCount": 8,
+    "issues": [
+      "Missing Twitter Card tags",
+      "Missing canonical URL"
+    ]
+  },
+  {
+    "path": "/career-hub/industries/[industryId]/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": true,
+    "hasStructuredData": false,
+    "hasInternalLinkHub": true,
+    "wordCount": 418,
+    "internalLinksCount": 1,
+    "issues": [
+      "Missing structured data"
+    ]
+  },
+  {
+    "path": "/career-hub/industries/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": false,
+    "hasStructuredData": false,
+    "hasInternalLinkHub": true,
+    "wordCount": 339,
+    "internalLinksCount": 0,
+    "issues": [
+      "Missing H1 heading",
+      "Missing structured data"
+    ]
+  },
+  {
+    "path": "/career-hub/job-application-toolkit/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": true,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 654,
+    "internalLinksCount": 22,
+    "issues": []
+  },
+  {
+    "path": "/career-hub/locations/[locationSlug]/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": false,
+    "hasOpenGraph": false,
+    "hasTwitter": false,
+    "hasCanonical": false,
+    "hasBreadcrumbs": true,
+    "hasH1": true,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 172,
+    "internalLinksCount": 0,
+    "issues": [
+      "Missing description",
+      "Missing OpenGraph tags",
+      "Missing Twitter Card tags",
+      "Missing canonical URL",
+      "Low word count: 172 (minimum 300 for detail pages)"
+    ]
+  },
+  {
+    "path": "/career-hub/locations/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": false,
+    "hasStructuredData": false,
+    "hasInternalLinkHub": true,
+    "wordCount": 158,
+    "internalLinksCount": 0,
+    "issues": [
+      "Missing H1 heading",
+      "Missing structured data",
+      "Low word count: 158 (minimum 200 for index pages)"
+    ]
+  },
+  {
+    "path": "/career-hub/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": false,
+    "hasH1": false,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 1079,
+    "internalLinksCount": 2,
+    "issues": [
+      "Missing H1 heading"
+    ]
+  },
+  {
+    "path": "/career-hub/pay-range/[range]/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": false,
+    "hasTwitter": false,
+    "hasCanonical": false,
+    "hasBreadcrumbs": true,
+    "hasH1": true,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": false,
+    "wordCount": 471,
+    "internalLinksCount": 1,
+    "issues": [
+      "Missing OpenGraph tags",
+      "Missing Twitter Card tags",
+      "Missing canonical URL",
+      "Missing InternalLinkHub"
+    ]
+  },
+  {
+    "path": "/career-hub/resources/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": false,
+    "hasTwitter": false,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": true,
+    "hasStructuredData": false,
+    "hasInternalLinkHub": false,
+    "wordCount": 214,
+    "internalLinksCount": 0,
+    "issues": [
+      "Missing OpenGraph tags",
+      "Missing Twitter Card tags",
+      "Missing structured data",
+      "Missing InternalLinkHub"
+    ]
+  },
+  {
+    "path": "/career-hub/resume-examples/[roleSlug]/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": false,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": true,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 403,
+    "internalLinksCount": 3,
+    "issues": [
+      "Missing description"
+    ]
+  },
+  {
+    "path": "/career-hub/resume-examples/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": false,
+    "hasTwitter": false,
+    "hasCanonical": false,
+    "hasBreadcrumbs": true,
+    "hasH1": true,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 395,
+    "internalLinksCount": 4,
+    "issues": [
+      "Missing OpenGraph tags",
+      "Missing Twitter Card tags",
+      "Missing canonical URL"
+    ]
+  },
+  {
+    "path": "/career-hub/roles/[roleSlug]/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": false,
+    "hasTwitter": false,
+    "hasCanonical": false,
+    "hasBreadcrumbs": true,
+    "hasH1": true,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 494,
+    "internalLinksCount": 0,
+    "issues": [
+      "Missing OpenGraph tags",
+      "Missing Twitter Card tags",
+      "Missing canonical URL"
+    ]
+  },
+  {
+    "path": "/career-hub/roles/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": false,
+    "hasStructuredData": false,
+    "hasInternalLinkHub": true,
+    "wordCount": 116,
+    "internalLinksCount": 0,
+    "issues": [
+      "Missing H1 heading",
+      "Missing structured data",
+      "Low word count: 116 (minimum 200 for index pages)"
+    ]
+  },
+  {
+    "path": "/career-hub/schedule/[type]/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": false,
+    "hasTwitter": false,
+    "hasCanonical": false,
+    "hasBreadcrumbs": true,
+    "hasH1": true,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": false,
+    "wordCount": 550,
+    "internalLinksCount": 1,
+    "issues": [
+      "Missing OpenGraph tags",
+      "Missing Twitter Card tags",
+      "Missing canonical URL",
+      "Missing InternalLinkHub"
+    ]
+  },
+  {
+    "path": "/career-hub/seasonal-hiring/[seasonSlug]/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": false,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": true,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 433,
+    "internalLinksCount": 2,
+    "issues": [
+      "Missing description"
+    ]
+  },
+  {
+    "path": "/career-hub/seasonal-hiring/events/[eventSlug]/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": false,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": true,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 428,
+    "internalLinksCount": 1,
+    "issues": [
+      "Missing description"
+    ]
+  },
+  {
+    "path": "/career-hub/seasonal-hiring/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": true,
+    "hasStructuredData": false,
+    "hasInternalLinkHub": true,
+    "wordCount": 389,
+    "internalLinksCount": 5,
+    "issues": [
+      "Missing structured data"
+    ]
+  },
+  {
+    "path": "/career-hub/summer-jobs-2026/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": true,
+    "hasTwitter": false,
+    "hasCanonical": false,
+    "hasBreadcrumbs": true,
+    "hasH1": true,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 681,
+    "internalLinksCount": 5,
+    "issues": [
+      "Missing Twitter Card tags",
+      "Missing canonical URL"
+    ]
+  },
+  {
+    "path": "/career-hub/templates/[templateId]/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": false,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": true,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 379,
+    "internalLinksCount": 4,
+    "issues": [
+      "Missing description"
+    ]
+  },
+  {
+    "path": "/career-hub/templates/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": false,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 420,
+    "internalLinksCount": 7,
+    "issues": [
+      "Missing H1 heading"
+    ]
+  },
+  {
+    "path": "/career-hub/tools/benefits-checker/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": false,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 136,
+    "internalLinksCount": 0,
+    "issues": [
+      "Missing H1 heading",
+      "Low word count: 136 (minimum 200 for index pages)"
+    ]
+  },
+  {
+    "path": "/career-hub/tools/career-path/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": false,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 129,
+    "internalLinksCount": 0,
+    "issues": [
+      "Missing H1 heading",
+      "Low word count: 129 (minimum 200 for index pages)"
+    ]
+  },
+  {
+    "path": "/career-hub/tools/certification-roi/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": false,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 127,
+    "internalLinksCount": 0,
+    "issues": [
+      "Missing H1 heading",
+      "Low word count: 127 (minimum 200 for index pages)"
+    ]
+  },
+  {
+    "path": "/career-hub/tools/childcare-calculator/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": false,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 130,
+    "internalLinksCount": 0,
+    "issues": [
+      "Missing H1 heading",
+      "Low word count: 130 (minimum 200 for index pages)"
+    ]
+  },
+  {
+    "path": "/career-hub/tools/cocktail-quiz/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": false,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 120,
+    "internalLinksCount": 0,
+    "issues": [
+      "Missing H1 heading",
+      "Low word count: 120 (minimum 200 for index pages)"
+    ]
+  },
+  {
+    "path": "/career-hub/tools/commute-calculator/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": false,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 141,
+    "internalLinksCount": 0,
+    "issues": [
+      "Missing H1 heading",
+      "Low word count: 141 (minimum 200 for index pages)"
+    ]
+  },
+  {
+    "path": "/career-hub/tools/cost-of-living/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": false,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 274,
+    "internalLinksCount": 0,
+    "issues": [
+      "Missing H1 heading"
+    ]
+  },
+  {
+    "path": "/career-hub/tools/data-verification/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": false,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 136,
+    "internalLinksCount": 0,
+    "issues": [
+      "Missing H1 heading",
+      "Low word count: 136 (minimum 200 for index pages)"
+    ]
+  },
+  {
+    "path": "/career-hub/tools/job-offer-analyzer/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": false,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 130,
+    "internalLinksCount": 0,
+    "issues": [
+      "Missing H1 heading",
+      "Low word count: 130 (minimum 200 for index pages)"
+    ]
+  },
+  {
+    "path": "/career-hub/tools/menu-master/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": false,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 121,
+    "internalLinksCount": 0,
+    "issues": [
+      "Missing H1 heading",
+      "Low word count: 121 (minimum 200 for index pages)"
+    ]
+  },
+  {
+    "path": "/career-hub/tools/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": false,
+    "hasStructuredData": false,
+    "hasInternalLinkHub": true,
+    "wordCount": 126,
+    "internalLinksCount": 0,
+    "issues": [
+      "Missing H1 heading",
+      "Missing structured data",
+      "Low word count: 126 (minimum 200 for index pages)"
+    ]
+  },
+  {
+    "path": "/career-hub/tools/pay-calculator/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": false,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 286,
+    "internalLinksCount": 0,
+    "issues": [
+      "Missing H1 heading"
+    ]
+  },
+  {
+    "path": "/career-hub/tools/paycheck-calculator/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": false,
+    "hasDescription": false,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": false,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 92,
+    "internalLinksCount": 0,
+    "issues": [
+      "Missing title",
+      "Missing description",
+      "Missing H1 heading",
+      "Low word count: 92 (minimum 200 for index pages)"
+    ]
+  },
+  {
+    "path": "/career-hub/tools/safety-first/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": false,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 129,
+    "internalLinksCount": 0,
+    "issues": [
+      "Missing H1 heading",
+      "Low word count: 129 (minimum 200 for index pages)"
+    ]
+  },
+  {
+    "path": "/career-hub/tools/salary-converter/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": false,
+    "hasDescription": false,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": false,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 89,
+    "internalLinksCount": 0,
+    "issues": [
+      "Missing title",
+      "Missing description",
+      "Missing H1 heading",
+      "Low word count: 89 (minimum 200 for index pages)"
+    ]
+  },
+  {
+    "path": "/career-hub/tools/shift-planner/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": false,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 255,
+    "internalLinksCount": 0,
+    "issues": [
+      "Missing H1 heading"
+    ]
+  },
+  {
+    "path": "/career-hub/tools/skills-analyzer/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": false,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 136,
+    "internalLinksCount": 0,
+    "issues": [
+      "Missing H1 heading",
+      "Low word count: 136 (minimum 200 for index pages)"
+    ]
+  },
+  {
+    "path": "/career-hub/tools/take-home-pay/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": false,
+    "hasDescription": false,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": false,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 95,
+    "internalLinksCount": 0,
+    "issues": [
+      "Missing title",
+      "Missing description",
+      "Missing H1 heading",
+      "Low word count: 95 (minimum 200 for index pages)"
+    ]
+  },
+  {
+    "path": "/career-hub/tools/tax-calculator/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": false,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 284,
+    "internalLinksCount": 0,
+    "issues": [
+      "Missing H1 heading"
+    ]
+  },
+  {
+    "path": "/career-hub/tools/unemployment-calculator/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": false,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 125,
+    "internalLinksCount": 0,
+    "issues": [
+      "Missing H1 heading",
+      "Low word count: 125 (minimum 200 for index pages)"
+    ]
+  },
+  {
+    "path": "/career-hub/tools/worktalk/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": false,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 130,
+    "internalLinksCount": 0,
+    "issues": [
+      "Missing H1 heading",
+      "Low word count: 130 (minimum 200 for index pages)"
+    ]
+  },
+  {
+    "path": "/career-hub/wage-report/[year]/by-industry/[industrySlug]/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": false,
+    "hasDescription": false,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": true,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 322,
+    "internalLinksCount": 0,
+    "issues": [
+      "Missing title",
+      "Missing description"
+    ]
+  },
+  {
+    "path": "/career-hub/wage-report/[year]/by-occupation/[roleSlug]/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": false,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": true,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 259,
+    "internalLinksCount": 0,
+    "issues": [
+      "Missing description",
+      "Low word count: 259 (minimum 300 for detail pages)"
+    ]
+  },
+  {
+    "path": "/career-hub/wage-report/[year]/by-region/[regionSlug]/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": false,
+    "hasDescription": false,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": true,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 316,
+    "internalLinksCount": 0,
+    "issues": [
+      "Missing title",
+      "Missing description"
+    ]
+  },
+  {
+    "path": "/career-hub/wage-report/[year]/methodology/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": false,
+    "hasTwitter": false,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": true,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": false,
+    "wordCount": 247,
+    "internalLinksCount": 0,
+    "issues": [
+      "Missing OpenGraph tags",
+      "Missing Twitter Card tags",
+      "Missing InternalLinkHub",
+      "Low word count: 247 (minimum 300 for detail pages)"
+    ]
+  },
+  {
+    "path": "/career-hub/wage-report/[year]/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": false,
+    "hasDescription": false,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": true,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 563,
+    "internalLinksCount": 4,
+    "issues": [
+      "Missing title",
+      "Missing description"
+    ]
+  },
+  {
+    "path": "/career-hub/wage-report/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": true,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 298,
+    "internalLinksCount": 6,
+    "issues": []
+  },
+  {
+    "path": "/certifications/[slug]/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": false,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": true,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 492,
+    "internalLinksCount": 0,
+    "issues": [
+      "Missing description"
+    ]
+  },
+  {
+    "path": "/certifications/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": false,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 478,
+    "internalLinksCount": 0,
+    "issues": [
+      "Missing H1 heading"
+    ]
+  },
+  {
+    "path": "/how-to-become/[roleSlug]/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": false,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": true,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 363,
+    "internalLinksCount": 2,
+    "issues": [
+      "Missing description"
+    ]
+  },
+  {
+    "path": "/how-to-become/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": true,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 465,
+    "internalLinksCount": 2,
+    "issues": []
+  },
+  {
+    "path": "/interview-questions/[roleSlug]/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": false,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": true,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": true,
+    "wordCount": 271,
+    "internalLinksCount": 2,
+    "issues": [
+      "Missing description",
+      "Low word count: 271 (minimum 300 for detail pages)"
+    ]
+  },
+  {
+    "path": "/interview-questions/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": true,
+    "hasTwitter": true,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": false,
+    "hasStructuredData": false,
+    "hasInternalLinkHub": true,
+    "wordCount": 218,
+    "internalLinksCount": 0,
+    "issues": [
+      "Missing H1 heading",
+      "Missing structured data"
+    ]
+  },
+  {
+    "path": "/page.tsx",
+    "hasMetadata": false,
+    "hasTitle": false,
+    "hasDescription": false,
+    "hasOpenGraph": false,
+    "hasTwitter": false,
+    "hasCanonical": false,
+    "hasBreadcrumbs": false,
+    "hasH1": false,
+    "hasStructuredData": false,
+    "hasInternalLinkHub": false,
+    "wordCount": 10,
+    "internalLinksCount": 0,
+    "issues": [
+      "Missing metadata export",
+      "Missing title",
+      "Missing description",
+      "Missing OpenGraph tags",
+      "Missing Twitter Card tags",
+      "Missing canonical URL",
+      "Missing H1 heading",
+      "Missing structured data",
+      "Missing InternalLinkHub",
+      "Low word count: 10 (minimum 200 for index pages)"
+    ]
+  },
+  {
+    "path": "/paycheck-calculator/[stateSlug]/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": false,
+    "hasOpenGraph": true,
+    "hasTwitter": false,
+    "hasCanonical": true,
+    "hasBreadcrumbs": false,
+    "hasH1": false,
+    "hasStructuredData": false,
+    "hasInternalLinkHub": false,
+    "wordCount": 507,
+    "internalLinksCount": 0,
+    "issues": [
+      "Missing description",
+      "Missing Twitter Card tags",
+      "Missing H1 heading",
+      "Missing structured data",
+      "Missing InternalLinkHub"
+    ]
+  },
+  {
+    "path": "/paycheck-calculator/adp-alternative/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": true,
+    "hasTwitter": false,
+    "hasCanonical": true,
+    "hasBreadcrumbs": true,
+    "hasH1": true,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": false,
+    "wordCount": 546,
+    "internalLinksCount": 8,
+    "issues": [
+      "Missing Twitter Card tags",
+      "Missing InternalLinkHub"
+    ]
+  },
+  {
+    "path": "/unemployment-benefits/[stateSlug]/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": false,
+    "hasOpenGraph": false,
+    "hasTwitter": false,
+    "hasCanonical": false,
+    "hasBreadcrumbs": true,
+    "hasH1": true,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": false,
+    "wordCount": 670,
+    "internalLinksCount": 1,
+    "issues": [
+      "Missing description",
+      "Missing OpenGraph tags",
+      "Missing Twitter Card tags",
+      "Missing canonical URL",
+      "Missing InternalLinkHub"
+    ]
+  },
+  {
+    "path": "/unemployment-benefits/page.tsx",
+    "hasMetadata": true,
+    "hasTitle": true,
+    "hasDescription": true,
+    "hasOpenGraph": false,
+    "hasTwitter": false,
+    "hasCanonical": false,
+    "hasBreadcrumbs": true,
+    "hasH1": true,
+    "hasStructuredData": true,
+    "hasInternalLinkHub": false,
+    "wordCount": 403,
+    "internalLinksCount": 1,
+    "issues": [
+      "Missing OpenGraph tags",
+      "Missing Twitter Card tags",
+      "Missing canonical URL",
+      "Missing InternalLinkHub"
+    ]
+  }
+]

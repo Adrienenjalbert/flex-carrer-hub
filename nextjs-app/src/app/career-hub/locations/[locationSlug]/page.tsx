@@ -1,14 +1,17 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { MapPin, Briefcase, DollarSign, ChevronRight, Building } from "lucide-react";
+import { MapPin, Briefcase, DollarSign, Building } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { usLocations, getLocationBySlug } from "@/lib/data/locations";
 import { roles } from "@/lib/data/roles";
 import { generateLocationMetadata } from "@/lib/seo/metadata";
+import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
+import CTASection from "@/components/career-hub/CTASection";
 import { BreadcrumbSchema, WebPageSchema } from "@/components/career-hub/seo";
+import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
 
 // Generate static params for all locations
 export function generateStaticParams() {
@@ -77,20 +80,16 @@ export default async function LocationPage({
         ]}
       />
 
+      <div className="container mx-auto px-4 py-4">
+        <Breadcrumbs
+          items={[
+            { label: "Locations", href: "/career-hub/locations" },
+            { label: `${location.city}, ${location.state}` },
+          ]}
+        />
+      </div>
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
-          {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
-            <Link href="/career-hub" className="hover:text-primary">
-              Career Hub
-            </Link>
-            <ChevronRight className="h-4 w-4" />
-            <Link href="/career-hub/locations" className="hover:text-primary">
-              Locations
-            </Link>
-            <ChevronRight className="h-4 w-4" />
-            <span className="text-foreground">{location.city}, {location.state}</span>
-          </nav>
 
           {/* Hero */}
           <div className="mb-8">
@@ -198,6 +197,17 @@ export default async function LocationPage({
           </div>
         </div>
       </div>
+
+      <div className="container mx-auto px-4 py-12">
+        <InternalLinkHub 
+          variant="full" 
+          currentPage={{ 
+            type: "location", 
+            slug: locationSlug
+          }} 
+        />
+      </div>
+      <CTASection />
     </>
   );
 }

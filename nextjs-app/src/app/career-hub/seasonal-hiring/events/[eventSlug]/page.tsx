@@ -20,6 +20,7 @@ import { seasonalEvents, getEventBySlug, getUpcomingSeasons } from "@/lib/data/s
 import { roles, industries } from "@/lib/data/roles";
 import { cities, getCityBySlug } from "@/lib/data/cities";
 import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
+import CTASection from "@/components/career-hub/CTASection";
 import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
 import { BreadcrumbSchema, FAQSchema } from "@/components/career-hub/seo";
 
@@ -41,14 +42,28 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return { title: "Event Not Found" };
   }
 
+  const canonical = `https://indeedflex.com/career-hub/seasonal-hiring/events/${eventSlug}`;
+  const title = `${event.name} Jobs & Hiring | Indeed Flex`;
+  const description = `${event.shortDescription} Get hired for ${event.name}. Learn when to apply and what jobs pay the best.`;
+
   return {
-    title: `${event.name} Jobs & Hiring | Indeed Flex`,
-    description: `${event.shortDescription} Get hired for ${event.name}. Learn when to apply and what jobs pay the best.`,
+    title,
+    description,
     keywords: event.searchKeywords,
+    alternates: {
+      canonical,
+    },
     openGraph: {
-      title: `${event.name} Jobs | Indeed Flex`,
-      description: event.shortDescription,
+      title: `${event.name} Jobs & Hiring`,
+      description,
+      url: canonical,
       type: "article",
+      siteName: "Indeed Flex Career Hub",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${event.name} Jobs & Hiring`,
+      description,
     },
   };
 }
@@ -384,9 +399,10 @@ export default async function EventPage({ params }: PageProps) {
           </section>
 
           {/* Internal Links */}
-          <InternalLinkHub variant="full" />
+          <InternalLinkHub variant="full" currentPage={{ type: "seasonal" }} />
         </div>
       </div>
+      <CTASection />
     </>
   );
 }

@@ -1,9 +1,18 @@
 import { Metadata } from "next";
 import PayCalculatorClient from "./PayCalculatorClient";
+import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
+import CTASection from "@/components/career-hub/CTASection";
 import { SoftwareApplicationSchema, FAQSchema } from "@/components/career-hub/seo";
+import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
+import { AuthorByline } from "@/components/career-hub/AuthorByline";
+import { getLastUpdated } from "@/lib/utils/date-variation";
+
+const toolName = "Pay Calculator";
+const toolDescription = "Free paycheck calculator for hourly workers. Calculate your take-home pay, taxes, and deductions. Convert hourly wage to annual salary instantly.";
+const canonical = "https://indeedflex.com/career-hub/tools/pay-calculator";
 
 export const metadata: Metadata = {
-  title: "Pay Calculator - Calculate Your Take-Home Pay",
+  title: "Pay Calculator - Calculate Your Take-Home Pay | Indeed Flex",
   description:
     "Free paycheck calculator for hourly workers. Calculate your take-home pay, taxes, and deductions. Convert hourly wage to annual salary instantly.",
   keywords: [
@@ -16,11 +25,20 @@ export const metadata: Metadata = {
     "wage calculator",
     "net pay calculator",
   ],
+  alternates: {
+    canonical,
+  },
   openGraph: {
-    title: "Pay Calculator - Calculate Your Take-Home Pay | Indeed Flex",
+    title: "Pay Calculator - Calculate Your Take-Home Pay",
     description: "Free paycheck calculator for hourly workers. Calculate your take-home pay after taxes.",
+    url: canonical,
     type: "website",
-    url: "https://indeedflex.com/career-hub/tools/pay-calculator",
+    siteName: "Indeed Flex Career Hub",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Pay Calculator",
+    description: "Free paycheck calculator for hourly workers.",
   },
 };
 
@@ -47,24 +65,41 @@ export default function PayCalculatorPage() {
   return (
     <>
       <SoftwareApplicationSchema
-        name="Indeed Flex Pay Calculator"
-        description="Free paycheck calculator for hourly workers. Calculate your take-home pay, taxes, and deductions. Convert hourly wage to annual salary."
-        url="https://indeedflex.com/career-hub/tools/pay-calculator"
+        name={toolName}
+        description={toolDescription}
+        url={canonical}
         applicationCategory="FinanceApplication"
-        featureList={[
-          "Federal and state tax calculation",
-          "Hourly to salary conversion",
-          "Overtime pay calculation",
-          "All 50 US states supported",
-          "Real-time net pay updates"
-        ]}
-        aggregateRating={{
-          ratingValue: 4.8,
-          ratingCount: 2847
-        }}
+        aggregateRating={{ ratingValue: 4.8, ratingCount: 2847 }}
+        featureList={[]}
       />
       <FAQSchema questions={toolFAQs} />
+      <div className="container mx-auto px-4 py-4">
+        <Breadcrumbs
+          items={[
+            { label: "Tools", href: "/career-hub/tools" },
+            { label: toolName },
+          ]}
+        />
+      </div>
       <PayCalculatorClient />
+      <div className="container mx-auto px-4 py-8">
+        <AuthorByline
+          contentType="tool"
+          lastUpdated={getLastUpdated('pay-calculator', 'tool')}
+          variant="block"
+        />
+      </div>
+      <div className="container mx-auto px-4 py-12">
+        <InternalLinkHub 
+          variant="full" 
+          currentPage={{ 
+            type: "tool", 
+            slug: "pay-calculator",
+            relatedTools: []
+          }} 
+        />
+      </div>
+      <CTASection />
     </>
   );
 }

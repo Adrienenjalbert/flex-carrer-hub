@@ -10,6 +10,7 @@ import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
 import { BreadcrumbSchema } from "@/components/career-hub/seo";
 import { InsightCard } from "@/components/career-hub/wage-report";
 import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
+import CTASection from "@/components/career-hub/CTASection";
 
 interface YearPageProps {
   params: Promise<{ year: string }>;
@@ -23,12 +24,28 @@ export async function generateMetadata({ params }: YearPageProps): Promise<Metad
     return {};
   }
 
+  const canonical = `https://indeedflex.com/career-hub/wage-report/${year}`;
+  const title = `2026 Flex Work Wage Report | Comprehensive Hourly Wage Analysis`;
+  const description = `Complete 2026 wage report with data on ${wageReport2026.summary.totalOccupations} occupations, ${wageReport2026.industries.length} industries, and regional analysis. Average wage growth: ${wageReport2026.summary.avgWageGrowth}%.`;
+
   return {
-    title: `2026 Flex Work Wage Report | Comprehensive Hourly Wage Analysis`,
-    description: `Complete 2026 wage report with data on ${wageReport2026.summary.totalOccupations} occupations, ${wageReport2026.industries.length} industries, and regional analysis. Average wage growth: ${wageReport2026.summary.avgWageGrowth}%.`,
+    title: `${title} | Indeed Flex`,
+    description,
     keywords: ["wage report 2026", "hourly wages", "flex work", "BLS data", "salary report"],
     alternates: {
-      canonical: `https://indeedflex.com/career-hub/wage-report/${year}`,
+      canonical,
+    },
+    openGraph: {
+      title,
+      description,
+      url: canonical,
+      type: "article",
+      siteName: "Indeed Flex Career Hub",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
     },
   };
 }
@@ -327,9 +344,10 @@ export default async function YearReportPage({ params }: YearPageProps) {
         </div>
 
         <aside className="lg:col-span-1">
-          <InternalLinkHub currentPage={{ type: 'programmatic', slug: 'wage-report-2026' }} />
+          <InternalLinkHub currentPage={{ type: 'wage-report' }} />
         </aside>
       </div>
+      <CTASection />
     </div>
   );
 }

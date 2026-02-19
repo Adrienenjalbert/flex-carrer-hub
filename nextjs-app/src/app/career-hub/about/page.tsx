@@ -15,14 +15,31 @@ import { Button } from "@/components/ui/button";
 import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
 import CTASection from "@/components/career-hub/CTASection";
 import { WebPageSchema, BreadcrumbSchema } from "@/components/career-hub/seo";
+import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
 import { getAllDataSources, dataUpdateSchedule } from "@/lib/data/data-sources";
 
+const canonical = "https://indeedflex.com/career-hub/about";
+const title = "About Our Career Hub | Indeed Flex";
+const description = "Learn about the Indeed Flex Career Hub editorial team, our data sources, methodology, and commitment to providing accurate, helpful career information.";
+
 export const metadata: Metadata = {
-  title: "About Our Career Hub | Indeed Flex",
-  description: "Learn about the Indeed Flex Career Hub editorial team, our data sources, methodology, and commitment to providing accurate, helpful career information.",
+  title,
+  description,
   keywords: ["Indeed Flex", "career hub", "about us", "editorial team", "data sources"],
   alternates: {
-    canonical: "https://indeedflex.com/career-hub/about",
+    canonical,
+  },
+  openGraph: {
+    title,
+    description,
+    url: canonical,
+    type: "website",
+    siteName: "Indeed Flex Career Hub",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
   },
 };
 
@@ -292,6 +309,9 @@ export default function AboutPage() {
         </section>
       </div>
 
+      <div className="container mx-auto px-4 py-12">
+        <InternalLinkHub currentPage={{ type: "about" }} />
+      </div>
       <CTASection />
     </>
   );

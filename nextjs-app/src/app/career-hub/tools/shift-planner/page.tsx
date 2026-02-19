@@ -1,9 +1,18 @@
 import { Metadata } from "next";
 import ShiftPlannerClient from "./ShiftPlannerClient";
+import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
+import CTASection from "@/components/career-hub/CTASection";
 import { SoftwareApplicationSchema, FAQSchema } from "@/components/career-hub/seo";
+import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
+import { AuthorByline } from "@/components/career-hub/AuthorByline";
+import { getToolBySlug } from "@/lib/data/tool-registry";
+import { getLastUpdated } from "@/lib/utils/date-variation";
+
+const tool = getToolBySlug('shift-planner')!;
+const canonical = "https://indeedflex.com/career-hub/tools/shift-planner";
 
 export const metadata: Metadata = {
-  title: "Shift Income Planner | Calculate Your Weekly Earnings",
+  title: "Shift Income Planner | Calculate Your Weekly Earnings | Indeed Flex",
   description:
     "Plan your weekly earnings based on shifts, hourly rate, and tips. See which shifts pay the most and optimize your flexible work schedule for maximum income.",
   keywords: [
@@ -16,10 +25,20 @@ export const metadata: Metadata = {
     "shift scheduling",
     "work hours calculator",
   ],
+  alternates: {
+    canonical,
+  },
   openGraph: {
-    title: "Shift Income Planner | Indeed Flex",
+    title: "Shift Income Planner | Calculate Your Weekly Earnings",
     description: "Plan and optimize your weekly shifts for maximum earnings.",
+    url: canonical,
     type: "website",
+    siteName: "Indeed Flex Career Hub",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Shift Income Planner",
+    description: "Plan and optimize your weekly shifts for maximum earnings.",
   },
 };
 
@@ -42,24 +61,44 @@ export default function ShiftPlannerPage() {
   return (
     <>
       <SoftwareApplicationSchema
-        name="Indeed Flex Shift Income Planner"
-        description="Plan your weekly earnings based on shifts, hourly rate, and tips. Optimize your flexible work schedule for maximum income."
-        url="https://indeedflex.com/career-hub/tools/shift-planner"
+        name={tool.name}
+        description={tool.description}
+        url={canonical}
         applicationCategory="BusinessApplication"
-        featureList={[
-          "Weekly shift planning",
-          "Tip income estimation",
-          "Overtime calculation",
-          "Multiple job support",
-          "Income goal tracking"
-        ]}
-        aggregateRating={{
+        aggregateRating={tool.schema?.aggregateRating || {
           ratingValue: 4.6,
           ratingCount: 1456
         }}
+        featureList={tool.inputs.map(i => i.name)}
       />
       <FAQSchema questions={shiftFAQs} />
+      <div className="container mx-auto px-4 py-4">
+        <Breadcrumbs
+          items={[
+            { label: "Tools", href: "/career-hub/tools" },
+            { label: tool.name },
+          ]}
+        />
+      </div>
       <ShiftPlannerClient />
+      <div className="container mx-auto px-4 py-8">
+        <AuthorByline
+          contentType="tool"
+          lastUpdated={getLastUpdated('shift-planner', 'tool')}
+          variant="block"
+        />
+      </div>
+      <div className="container mx-auto px-4 py-12">
+        <InternalLinkHub 
+          variant="full" 
+          currentPage={{ 
+            type: "tool", 
+            slug: "shift-planner",
+            relatedTools: tool.relatedTools
+          }} 
+        />
+      </div>
+      <CTASection />
     </>
   );
 }

@@ -7,6 +7,9 @@ import MarkdownContent from "@/components/career-hub/MarkdownContent";
 import FAQSection from "@/components/career-hub/FAQSection";
 import { financialArticles } from "@/lib/data/articles/financial-tips";
 import { ArticleSchema, FAQSchema, BreadcrumbSchema } from "@/components/career-hub/seo";
+import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
+import { AuthorByline } from "@/components/career-hub/AuthorByline";
+import { getArticleDates, getLastUpdated } from "@/lib/utils/date-variation";
 import { Clock, ArrowLeft, CheckCircle2 } from "lucide-react";
 import {
   Accordion,
@@ -34,6 +37,9 @@ export async function generateMetadata({
     return { title: "Article Not Found" };
   }
 
+  const canonical = `https://indeedflex.com/career-hub/financial-tips/${slug}`;
+  const { publishedTime, modifiedTime } = getArticleDates(slug, 'guide');
+
   return {
     title: `${article.title} | Indeed Flex Career Hub`,
     description: article.description,
@@ -44,6 +50,24 @@ export async function generateMetadata({
       "money management",
       "flexible work",
     ],
+    alternates: {
+      canonical,
+    },
+    openGraph: {
+      title: article.title,
+      description: article.description,
+      url: canonical,
+      type: "article",
+      publishedTime,
+      modifiedTime,
+      section: "Financial Tips",
+      siteName: "Indeed Flex Career Hub",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: article.title,
+      description: article.description,
+    },
   };
 }
 
@@ -197,6 +221,25 @@ export default async function FinancialTipsArticlePage({
           </section>
         )}
       </article>
+
+      <div className="container mx-auto px-4 py-8">
+        <AuthorByline
+          contentType="guide"
+          lastUpdated={getLastUpdated(slug, 'guide')}
+          variant="block"
+        />
+      </div>
+
+      <div className="container mx-auto px-4 py-12">
+        <InternalLinkHub 
+          variant="full" 
+          currentPage={{ 
+            type: "financial",
+            slug,
+            relatedArticles: article.relatedArticles
+          }} 
+        />
+      </div>
 
       <CTASection
         title="Take Control of Your Finances"
