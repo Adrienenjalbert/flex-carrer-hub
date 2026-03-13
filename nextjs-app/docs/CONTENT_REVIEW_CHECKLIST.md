@@ -26,6 +26,7 @@ Single checklist to run before publishing any Career Hub content. Combines all r
 | CRAFT | Contextual, Real (score 2+), Actionable, Fresh, Trustworthy |
 | Real Advice | At least 2 of: sourced statistic, platform data, actionable specificity, state variance, worker insight |
 | AI Slop | No unverifiable stats, generic advice, B2B language, AI-style phrasing |
+| No AI-ish punctuation | No em dashes; no "delve", "navigate", "when it comes to" |
 | Voice | Warm, clear, empowering, honest; Grade 8 reading level |
 | Indeed Flex | Not shoehorned; natural placement; not mercenary CTAs |
 | Jargon | Defined on first use |
@@ -67,8 +68,9 @@ Single checklist to run before publishing any Career Hub content. Combines all r
 | Intent match | Content matches (informational / transactional / navigational) |
 | Actionable | Clear action step, link, or tool at end |
 | Unique value | Real Advice score 2+; something beyond 10-second Google |
-| Moment-in-journey | When in job search this helps — implied or stated |
+| Moment-in-journey | When in job search this helps (implied or stated) |
 | Outcome | Practical outcome described |
+| Depth (comparison articles) | 5+ named options with markets, pay, industries; no "and others" |
 
 ---
 

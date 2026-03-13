@@ -47,7 +47,7 @@ const categoryIcons: Record<string, React.ComponentType<{ className?: string }>>
 
 // Popular/Featured guides
 const featuredGuides = [
-  { slug: "first-flex-job", title: "Finding Flexible Work: Your Options Explained", readTime: "6 min" },
+  { slug: "first-flex-job", title: "Finding Flexible Work: Your Options Explained", readTime: "8 min" },
   { slug: "i9-complete-guide", title: "Form I-9 Explained: Complete Guide", readTime: "12 min" },
   { slug: "career-paths", title: "From Entry-Level to Management", readTime: "12 min" },
 ].map(g => ({

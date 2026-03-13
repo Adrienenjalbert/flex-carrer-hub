@@ -262,7 +262,7 @@ Summary:
 - **Style**: Clear, concise, actionable; real-world examples
 - **CTAs**: Action-oriented, benefit-focused
 
-The Cursor rule `.cursor/rules/brand-content.mdc` enforces these guidelines when creating or updating content.
+The Cursor rule `.cursor/rules/content-creation.mdc` enforces the Content Creation Loop and BRAND guidelines when creating or updating content.
 
 ## Internal Linking
 

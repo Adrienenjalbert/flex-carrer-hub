@@ -53,9 +53,9 @@ flowchart TD
 |--------|-------------------|
 | **Volume** | How many people search this (SEMrush, Google Keyword Planner) |
 | **Competition** | Keyword difficulty (SEMrush) |
-| **PAA** | Related questions users ask — good for FAQ, H2s |
+| **PAA** | Related questions users ask (good for FAQ, H2s) |
 | **Trending** | Seasonal or rising interest (Google Trends) |
-| **Gap** | Top SERP results vs our content — what we don't cover |
+| **Gap** | Top SERP results vs our content (what we don't cover) |
 
 ---
 
@@ -63,8 +63,22 @@ flowchart TD
 
 1. **Identify top SERP results** for target keyword (manual search or Firecrawl)
 2. **Compare** their H2s, FAQs, and coverage to our existing content
-3. **List gaps** — topics we don't cover that competitors do
-4. **Prioritize** — high demand + gap + Career Hub pillar fit
+3. **List gaps** (topics we don't cover that competitors do)
+4. **Prioritize** (demand + gap + Career Hub pillar fit)
+
+---
+
+## Comparison-Topic Discovery
+
+For comparison/options articles (e.g. "finding flexible work", "temp agencies vs apps"):
+
+| Step | Action |
+|------|--------|
+| 1 | Perplexity: "Top [N] [category] in the US with markets, industries, pay structure. Cite sources." |
+| 2 | Firecrawl: Scrape top 2-3 SERP results to extract H2s, comparison tables, named options |
+| 3 | Output: Research brief with named options, gaps, and suggested H2 structure before writing |
+
+Feed this brief into [RESEARCH_PIPELINE.md](./RESEARCH_PIPELINE.md) Comparison/Options section.
 
 ---
 
@@ -112,7 +126,7 @@ const { success, phrase, primary, allResults } = await response.json();
 Use the `perplexity-search` Edge Function for:
 
 - "What are the top 10 questions US temp workers ask about [topic]?"
-- "People also ask for [topic] — what are common follow-up questions?"
+- "People also ask for [topic]: what are common follow-up questions?"
 - "What do gig workers search for when [scenario]?"
 
 **Example API call** (from app or script):

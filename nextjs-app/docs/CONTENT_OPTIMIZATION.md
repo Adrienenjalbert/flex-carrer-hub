@@ -2,23 +2,24 @@
 
 A repeatable workflow for reviewing and improving Career Hub content based on feedback. Use this process across all sections (financial tips, guides, etc.).
 
-**References:** [BRAND.md](./BRAND.md), [CONTENT_DISCOVERY.md](./CONTENT_DISCOVERY.md), [CONTENT_REVIEW_CHECKLIST.md](./CONTENT_REVIEW_CHECKLIST.md)
+**References:** [BRAND.md](./BRAND.md), [CONTENT_CREATION_LOOP.md](./CONTENT_CREATION_LOOP.md), [CONTENT_DISCOVERY.md](./CONTENT_DISCOVERY.md), [CONTENT_REVIEW_CHECKLIST.md](./CONTENT_REVIEW_CHECKLIST.md)
 
 ---
 
 ## Phase 0: Discovery (New Content Only)
 
-Before creating new content, run the discovery process to validate demand:
+Before creating new content, run the full [CONTENT_CREATION_LOOP.md](./CONTENT_CREATION_LOOP.md):
 
 | Step | Action |
 |------|--------|
 | 1 | Run [CONTENT_DISCOVERY.md](./CONTENT_DISCOVERY.md) for the topic area |
 | 2 | Use **SEMrush** (`semrush-keyword` Edge Function) to check volume and competition for target keywords |
 | 3 | Use Perplexity for "top questions temp workers ask"; Firecrawl for competitor/gap analysis |
-| 4 | Prioritize: demand (SEMrush volume/PAA) + gap (we don't cover it) + fit (Career Hub pillars) |
-| 5 | Proceed to [RESEARCH_PIPELINE.md](./RESEARCH_PIPELINE.md) (source first) |
+| 4 | For comparison topics: Run Comparison-Topic Discovery (Perplexity + Firecrawl for named options) |
+| 5 | Prioritize: demand (SEMrush volume/PAA) + gap (we don't cover it) + fit (Career Hub pillars) |
+| 6 | Proceed to [RESEARCH_PIPELINE.md](./RESEARCH_PIPELINE.md) (source first) |
 
-**Triggers:** New section, "content feels light" feedback, quarterly planning, low engagement on a topic.
+**Triggers:** New section, "content feels light" feedback (routes to full loop: Discovery + Research + Write), quarterly planning, low engagement on a topic.
 
 ---
 
@@ -59,6 +60,8 @@ Group edits by type for consistent application:
 | **UI/UX** | Layout, scannability, accessibility, CTAs | [CONTENT_REVIEW_CHECKLIST.md](./CONTENT_REVIEW_CHECKLIST.md) |
 | **SEO** | Title, meta, H1, first 100 words, structured data | [SEO.md](./SEO.md) |
 | **User usefulness** | Job-to-be-done, intent match, actionable outcome | [CONTENT_REVIEW_CHECKLIST.md](./CONTENT_REVIEW_CHECKLIST.md) |
+| **Depth** | Comparison articles: 5+ named options, no "and others" | [BRAND.md](./BRAND.md) Depth Requirements |
+| **AI-ish punctuation** | No em dashes; no "delve", "navigate", "when it comes to" | [BRAND.md](./BRAND.md) Punctuation and Phrasing |
 
 ---
 

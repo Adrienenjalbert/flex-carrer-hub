@@ -844,7 +844,7 @@ const getContextualRecommendations = (context?: PageContext): ContextualRecommen
         title: 'Top Guides',
         icon: <FileText className="h-4 w-4" />,
         links: [
-          { href: '/career-hub/guides/first-flex-job', label: 'Finding Flexible Work: Your Options Explained', description: '6 min read' },
+          { href: '/career-hub/guides/first-flex-job', label: 'Finding Flexible Work: Your Options Explained', description: '8 min read' },
           { href: '/career-hub/guides/career-paths', label: 'Career Paths Guide', description: '12 min read' },
         ],
       },

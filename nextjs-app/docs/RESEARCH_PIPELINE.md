@@ -36,7 +36,7 @@ flowchart TD
 | **2. Use research-templates.ts** | [research-templates.ts](../src/lib/data/research-templates.ts) defines approved sources. Add new sources there before use. |
 | **3. Inline citations** | "According to BLS OEWS (2025), median pay is..." not footnotes. |
 | **4. Date everything** | "BLS OEWS May 2025 release", "IRS 2026 mileage rate" |
-| **5. Caveat variance** | "Rates vary by state/location/employer—check the listing." |
+| **5. Caveat variance** | "Rates vary by state/location/employer, so check the listing." |
 | **6. No AI-generated stats** | Never use a number from an LLM without verifying against primary source. |
 
 ---
@@ -62,6 +62,20 @@ flowchart TD
 | **Pay/rights claims** | BLS OEWS, state labor depts, [wage-report methodology](../src/lib/data/wage-report/methodology.ts) |
 | **Career/how-to** | BLS OOH, O*NET, [research-templates.ts](../src/lib/data/research-templates.ts) |
 | **Certifications** | State ABC boards, OSHA, NRA (ServSafe), official cert provider sites |
+| **Comparison/options** | Perplexity (named list + citations), Firecrawl (2-3 sites), BLS/SIA or official |
+
+---
+
+## Comparison / Options Articles
+
+For articles that compare options (e.g. "finding flexible work", "temp agencies vs apps"):
+
+| Step | Action |
+|------|--------|
+| 1 | Perplexity: "Top [N] [category] in the US with markets, industries, pay structure. Cite sources." |
+| 2 | Firecrawl: Scrape 2-3 official sites (agency/app) for markets, offerings, verification |
+| 3 | BLS/SIA or official source: At least one Tier 2-3 stat (e.g. contingent work, temp agency employment) |
+| 4 | Output: Named list (5+ options) with markets, pay type, industries. No "and others." |
 
 ---
 

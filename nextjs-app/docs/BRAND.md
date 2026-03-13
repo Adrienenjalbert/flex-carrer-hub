@@ -116,11 +116,35 @@ FAQ SECTION       — 3–5 questions using question-format H3 headings. Use PAA
 | Rule | Avoid | Use instead |
 |------|-------|-------------|
 | **Avoid B2B/white-paper language** | "smooth income fluctuations", "stay agile", "Market fluctuations", "High-ROI" | "buffer for when wages vary", "keep on top of things", "Changes in the job market", "certifications that quickly land you higher wages" |
-| **Avoid AI-style comparisons** | "It's not X—it's Y", "That's not just X—it's Y" | Plain statements: "This variability is just part and parcel of flexible work" |
+| **Avoid AI-style comparisons** | "It's not X, it's Y", "That's not just X, it's Y" | Plain statements: "This variability is just part and parcel of flexible work" |
 | **Indeed Flex placement** | Lead with Flex; mercenary CTAs; shoehorned mentions | Integrate naturally; offer generic alternatives (job boards, staffing agencies); never lead with Flex |
 | **Define jargon** | "Automate savings" (unclear) | "Set up a recurring transfer from checking to savings on paydays" |
-| **Realistic targets** | "$10,000–15,000" without context | Include time period and caveats: "Build over 1–2 years or more—start with $1,000, then grow. Every temp worker's timeline is different." |
+| **Realistic targets** | "$10,000–15,000" without context | Include time period and caveats: "Build over 1–2 years or more. Start with $1,000, then grow. Every temp worker's timeline is different." |
 | **Soften negative framing** | "Income can drop suddenly", "No employer-provided benefits" | "Income can slow down outside busy seasons", "Employer benefits aren't always guaranteed" |
+
+### Punctuation and Phrasing (Avoid AI Slop)
+
+| Avoid | Use instead |
+|-------|-------------|
+| Em dash (—) | Comma, colon, or parentheses. "Rates vary by state, so check the listing." |
+| "It's not X, it's Y" | Plain statement: "This is Y." |
+| "delve into", "dive deep", "navigate" | "look at", "compare", "check" |
+| "leverage", "robust", "comprehensive" (overused) | "use", "strong", "full" or specific term |
+| "in today's [X]", "in the world of [X]" | Cut; start with the subject |
+| "When it comes to [X]" | "[X] is..." or "[X] means..." |
+
+---
+
+## Depth Requirements (Comparison Articles)
+
+For articles that compare options (e.g. temp agencies vs apps, flexible work options):
+
+| Rule | Requirement |
+|------|-------------|
+| **Named examples** | List 5+ options with specifics. No "Examples include X, Y, and others." |
+| **Verifiable** | Each: markets, pay structure, industries. Link to official site or cite source. |
+| **No filler** | Every paragraph answers a real question. Cut generic advice. |
+| **Minimum length** | Comparison articles: 800-1,200 words (per Length Guidelines) |
 
 ---
 
@@ -150,19 +174,22 @@ Every article must contain something a reader couldn't get from generic AI searc
 | **Sourced statistic** | Number with Tier 1–4 source (BLS, IRS, DOL, industry report) | "BLS OEWS reports median warehouse pay at $18.42/hr (2025)" |
 | **Platform-specific data** | Indeed Flex data, shift rates, conversion rates | "Workers who complete profiles receive 40% more matches (Indeed Flex data)" |
 | **Actionable specificity** | Concrete step with tool/link/deadline | "Call 800-906-9887 for IRS VITA locations" |
-| **State/location variance** | Where rules differ by state, say so | "Unemployment eligibility varies by state—check [state].gov" |
+| **State/location variance** | Where rules differ by state, say so | "Unemployment eligibility varies by state. Check [state].gov" |
 | **Worker-tested insight** | First-hand or sector expert input | "Hiring managers cite reliability as #1 factor" (needs source) |
+| **Named, verifiable examples** | Comparison articles: 5+ options with markets, pay, industries. Traceable. | "Indeed Flex (16+ markets, W-2), Instawork (hospitality, warehouse), Wonolo (on-demand)" |
 
 ### AI Slop Red Flags (flag for removal or rewrite)
 
 | Red flag | Example |
 |----------|---------|
-| **Unverifiable statistic** | "20-40% of seasonal workers get permanent offers" — no source |
-| **Generic advice** | "Be professional and show up on time" — applies to any job |
-| **Vague claims** | "Many workers find that..." — who? how many? |
+| **Unverifiable statistic** | "20-40% of seasonal workers get permanent offers" with no source |
+| **Generic advice** | "Be professional and show up on time" (applies to any job) |
+| **Vague claims** | "Many workers find that..." (who? how many?) |
 | **B2B/white-paper language** | "Leverage", "optimize", "high-ROI", "market fluctuations" |
-| **AI-style phrasing** | "It's not X—it's Y", "That's not just X—it's Y" |
+| **AI-style phrasing** | "It's not X, it's Y", "That's not just X, it's Y" |
 | **Promises without ranges** | "You'll earn $25/hr" vs "$22-28/hr depending on venue" |
+| **Em dashes** | "Flexible work—whether part-time or gig—offers..." (use comma instead) |
+| **AI opener phrases** | "In today's gig economy", "When it comes to temp work" |
 
 **CRAFT "R" fails if:** no sourced statistic, no platform data, no sector insight, no actionable specificity.
 
@@ -298,3 +325,4 @@ H1 (keyword-led, under 65 chars) → 2-sentence intro → Quick answer (first 10
 | March 2025 | Initial version from editorial guidelines doc |
 | March 2025 | Added Language Rules from content feedback (B2B language, AI comparisons, Indeed Flex placement, jargon, targets, framing) |
 | March 2025 | Added Real Advice Standards, AI Slop Red Flags, Financial Content (YMYL) section; strengthened CRAFT "R" |
+| March 2025 | Added Depth Requirements (comparison articles), Punctuation and Phrasing rules, Named verifiable examples to Real Advice |

@@ -31,7 +31,7 @@ export const guideCategories: GuideCategory[] = [
     slug: "getting-started",
     icon: BookOpen,
     articles: [
-      { title: "Finding Flexible Work: Your Options Explained", slug: "first-flex-job", readTime: "6 min" },
+      { title: "Finding Flexible Work: Your Options Explained", slug: "first-flex-job", readTime: "8 min" },
       { title: "Complete Guide to Indeed Flex", slug: "complete-guide", readTime: "8 min" },
       { title: "What to Expect on Your First Shift", slug: "first-shift", readTime: "4 min" },
       { title: "Building Your Worker Profile", slug: "worker-profile", readTime: "6 min" },
@@ -114,10 +114,10 @@ export const guideArticles: Record<string, Article> = {
     title: "Finding Flexible Work: Your Options Explained",
     category: "Getting Started",
     categorySlug: "getting-started",
-    readTime: "6 min",
-    description: "An impartial guide to flexible work options—temp agencies, staffing apps, and gig platforms—so you can choose what fits your situation.",
+    readTime: "8 min",
+    description: "An impartial guide to flexible work options: temp agencies, staffing apps, and gig platforms. Compare named options so you can choose what fits your situation.",
     keyTakeaways: [
-      "Flexible work comes in several forms: temp agencies, staffing apps, and gig platforms—each with different pay structures and benefits",
+      "Flexible work comes in three forms: temp agencies, staffing apps, and gig platforms, each with different pay structures and benefits",
       "W-2 staffing (temp agencies, many apps) means taxes are withheld; 1099 gig work means you handle your own taxes",
       "Compare options by location, pay type, benefits, and how quickly you can start",
       "Prepare ID, I-9 documents, and a bank account regardless of which route you choose"
@@ -125,37 +125,49 @@ export const guideArticles: Record<string, Article> = {
     sections: [
       {
         heading: "The Flexible Work Landscape",
-        content: "If you're looking for work you can fit around other commitments—school, family, another job—you have more options than ever. According to the [Bureau of Labor Statistics](https://www.bls.gov/cps/labor-force/contingent-and-alternative-arrangements.htm), contingent and alternative work arrangements (including temp agency work, on-call work, and contract work) remain a steady part of the US labor market. Young workers ages 16–24 are more likely to hold these positions.\n\n**Your main options:**\n\n- **Temp agencies** — Traditional staffing firms that place you in short-term assignments. Often W-2 employment. Find them via Google, local job centers, or [CareerOneStop](https://www.careeronestop.org/).\n- **Staffing apps** — Mobile apps that connect workers with shifts in hospitality, warehouse, retail, and facilities. Examples include Indeed Flex, Instawork, and others. Many offer W-2 employment with benefits.\n- **Gig platforms** — Delivery, rideshare, and task-based apps (e.g., DoorDash, Uber). Typically 1099 independent contractor status—you handle your own taxes.\n\nNo single option is \"best\" for everyone. It depends on your goals, location, and whether you prefer W-2 (simpler taxes) or 1099 (more control, more paperwork)."
+        content: "If you're looking for work you can fit around other commitments (school, family, another job), you have more options than ever. According to the [Bureau of Labor Statistics](https://www.bls.gov/cps/labor-force/contingent-and-alternative-arrangements.htm), contingent and alternative work arrangements (including temp agency work, on-call work, and contract work) remain a steady part of the US labor market. Young workers ages 16 to 24 are more likely to hold these positions.\n\n**Your main options:**\n\n- **Temp agencies:** Traditional staffing firms that place you in short-term assignments. Often W-2 employment. Find them via [CareerOneStop](https://www.careeronestop.org/), state job centers, or local search.\n- **Staffing apps:** Mobile apps that connect workers with shifts in hospitality, warehouse, retail, and facilities. Examples: [Indeed Flex](https://indeedflex.com/download-app/), Instawork, Wonolo, Qwick, ShiftSmart. Many offer W-2 employment with benefits.\n- **Gig platforms:** Delivery, rideshare, and task-based apps (DoorDash, Uber, Lyft). Typically 1099 independent contractor status; you handle your own taxes.\n\nNo single option is \"best\" for everyone. It depends on your goals, location, and whether you prefer W-2 (simpler taxes) or 1099 (more control, more paperwork)."
+      },
+      {
+        heading: "Temp Agencies: Named Options",
+        content: "The largest US temp agencies by staffing volume include Kelly, Manpower, Randstad, Adecco, Robert Half, and Express Employment. Each focuses on different industries:\n\n| Agency | Industries | Typical work | How to find |\n|-------|------------|--------------|-------------|\n| Kelly | Warehouse, distribution, industrial, office | Multi-day assignments, temp-to-perm | kellyservices.com |
+| Manpower | Industrial, warehouse, general labor | Short and long-term assignments | manpower.com |
+| Randstad | Warehouse, manufacturing, office | Temp, contract, direct hire | randstadusa.com |
+| Adecco | Industrial, office, retail, logistics | Assignments nationwide | adeccousa.com |
+| Express Employment | Industrial, office, professional | Local branch placement | expresspros.com |\n\n**How to find temp agencies near you:** [CareerOneStop](https://www.careeronestop.org/) lists local job centers. Your state workforce agency also lists approved staffing firms. Call or visit in person; many agencies require an initial interview."
+      },
+      {
+        heading: "Staffing Apps: Named Options",
+        content: "Staffing apps let you browse and book shifts from your phone. Here are five with different market coverage and industries:\n\n| App | Markets | Industries | Pay type |\n|-----|---------|------------|----------|\n| Indeed Flex | 16+ cities (Austin, Dallas, Houston, Chicago, Atlanta, Las Vegas, Phoenix, etc.) | Hospitality, warehouse, retail, facilities | W-2 |\n| Instawork | 48+ US cities | Hospitality, warehouse, events, retail, manufacturing | W-2 |\n| Wonolo | Nationwide | Warehouse, food production, retail, manufacturing, events | W-2 |\n| Qwick | 40+ cities | Hospitality only (restaurants, hotels, events) | W-2 |\n| ShiftSmart | Multiple markets | Retail, convenience, hospitality, grocery, janitorial | Varies |\n\nMarkets change. Check each app's website for current cities. [See Indeed Flex locations](/career-hub/active-markets)."
       },
       {
         heading: "Temp Agencies vs. Staffing Apps vs. Gig Platforms",
-        content: "Understanding the differences helps you choose:\n\n| Option | Pay structure | Taxes | Typical work | Best for |\n|-------|---------------|-------|--------------|----------|\n| Temp agencies | W-2 hourly | Withheld | Assignments, often multi-day | Steady short-term work, office/warehouse |\n| Staffing apps | Usually W-2 | Withheld | Single shifts, same-day or advance | Hospitality, warehouse, events; flexible schedule |\n| Gig platforms | 1099 | You file | Per-task (delivery, ride) | Maximum flexibility, side income |\n\n**W-2 vs. 1099 matters:** With W-2 work, your employer withholds taxes and may offer benefits (health insurance, workers' comp). With 1099, you're self-employed—you pay self-employment tax and need to set aside money for taxes. See our [Tax Tips for Flexible Workers](/career-hub/financial-tips/tax-tips) for more.\n\n**Location matters:** Not every option operates in every city. Temp agencies and staffing apps tend to be market-specific. Check what's active in your area before committing."
+        content: "Understanding the differences helps you choose:\n\n| Option | Pay structure | Taxes | Typical work | Best for |\n|-------|---------------|-------|--------------|----------|\n| Temp agencies | W-2 hourly | Withheld | Assignments, often multi-day | Steady short-term work, office/warehouse |\n| Staffing apps | Usually W-2 | Withheld | Single shifts, same-day or advance | Hospitality, warehouse, events; flexible schedule |\n| Gig platforms | 1099 | You file | Per-task (delivery, ride) | Maximum flexibility, side income |\n\n**W-2 vs. 1099 matters:** With W-2 work, your employer withholds taxes and may offer benefits (health insurance, workers' comp). With 1099, you're self-employed: you pay self-employment tax and need to set aside money for taxes. See our [Tax Tips for Flexible Workers](/career-hub/financial-tips/tax-tips) for more.\n\n**Location matters:** Not every option operates in every city. Temp agencies have local branches; staffing apps are market-specific. Check what's active in your area before committing."
       },
       {
         heading: "What to Prepare (Regardless of Your Choice)",
-        content: "Most flexible work options require similar basics:\n\n**Documents:**\n\n- Valid ID (driver's license, passport, or state ID)\n- [I-9 documents](/career-hub/guides/i9-complete-guide) proving US work eligibility\n- Smartphone (for apps) or reliable contact method (for agencies)\n- US bank account for direct deposit\n\n**Profile (for apps):**\n\n- Professional photo (clear face, neutral background)\n- Work experience, even if limited\n- Relevant [certifications](/career-hub/guides/certifications) (e.g., forklift, food handler)\n- Availability and preferred locations\n\n**Verification:** Most platforms and agencies run a one-time check (E-Verify, background check). This can take 24–48 hours. Use that time to compare options and read reviews."
+        content: "Most flexible work options require similar basics:\n\n**Documents:**\n\n- Valid ID (driver's license, passport, or state ID)\n- [I-9 documents](/career-hub/guides/i9-complete-guide) proving US work eligibility\n- Smartphone (for apps) or reliable contact method (for agencies)\n- US bank account for direct deposit\n\n**Profile (for apps):**\n\n- Professional photo (clear face, neutral background)\n- Work experience, even if limited\n- Relevant [certifications](/career-hub/guides/certifications) (e.g., forklift, food handler)\n- Availability and preferred locations\n\n**Verification:** Most platforms and agencies run a one-time check (E-Verify, background check). This can take 24 to 48 hours. Use that time to compare options and read reviews."
       },
       {
         heading: "Entry-Level Roles to Consider",
-        content: "If you're new to flexible work, these roles often have low barriers to entry:\n\n| Role | Typical pay range | Experience needed |\n|------|-------------------|-------------------|\n| Picker/Packer | $16–19/hr | None |\n| Dishwasher | $14–17/hr | None |\n| General labor | $15–18/hr | Physical capability |\n| Event setup | $14–17/hr | Physical capability |\n| Retail assistant | $14–17/hr | Basic customer service |\n\nPay varies by location and employer. Use our [Pay Calculator](/career-hub/tools/pay-calculator) to estimate earnings based on your area and hours."
+        content: "If you're new to flexible work, these roles often have low barriers to entry:\n\n| Role | Typical pay range | Experience needed |\n|------|-------------------|-------------------|\n| Picker/Packer | $16 to 19/hr | None |\n| Dishwasher | $14 to 17/hr | None |\n| General labor | $15 to 18/hr | Physical capability |\n| Event setup | $14 to 17/hr | Physical capability |\n| Retail assistant | $14 to 17/hr | Basic customer service |\n\nPay varies by location and employer. Use our [Pay Calculator](/career-hub/tools/pay-calculator) to estimate earnings based on your area and hours."
       },
       {
         heading: "If You Choose a Staffing App",
-        content: "Staffing apps (like [Indeed Flex](https://indeedflex.com/download-app/), Instawork, and others) let you browse and book shifts from your phone. Here's what to expect:\n\n**Getting started:** Download the app, create a profile, complete verification. Most approvals take 24–48 hours.\n\n**Tips for success:**\n\n- Complete your profile fully—complete profiles tend to receive more offers\n- Enable notifications so you can respond quickly to shift postings\n- Arrive 10–15 minutes early for your first shift\n- Ask questions when unsure; supervisors prefer clarity over mistakes\n\n**After your first shift:** You'll typically receive a rating. High ratings can unlock better opportunities. For a detailed walkthrough, see [What to Expect on Your First Shift](/career-hub/guides/first-shift)."
+        content: "Staffing apps (Indeed Flex, Instawork, Wonolo, Qwick, ShiftSmart) let you browse and book shifts from your phone. Here's what to expect:\n\n**Getting started:** Download the app, create a profile, complete verification. Most approvals take 24 to 48 hours.\n\n**Tips for success:**\n\n- Complete your profile fully. Complete profiles tend to receive more offers.\n- Enable notifications so you can respond quickly to shift postings.\n- Arrive 10 to 15 minutes early for your first shift.\n- Ask questions when unsure; supervisors prefer clarity over mistakes.\n\n**After your first shift:** You'll typically receive a rating. High ratings can unlock better opportunities. For a detailed walkthrough, see [What to Expect on Your First Shift](/career-hub/guides/first-shift)."
       },
       {
         heading: "Next Steps",
-        content: "Once you've chosen an option:\n\n1. **Compare a few** — Check availability, pay, and reviews in your area before signing up.\n2. **Prepare your documents** — Have ID and I-9 docs ready to speed up onboarding.\n3. **Start with one** — Get comfortable before juggling multiple platforms or agencies.\n4. **Track your earnings** — Variable income requires planning. See [Budgeting for Irregular Income](/career-hub/financial-tips/irregular-income-budget) for tips.\n\nIf you decide to try a staffing app, our [Complete Guide to Indeed Flex](/career-hub/guides/complete-guide) and [Building Your Worker Profile](/career-hub/guides/worker-profile) offer step-by-step guidance."
+        content: "Once you've chosen an option:\n\n1. **Compare a few.** Check availability, pay, and reviews in your area before signing up.\n2. **Prepare your documents.** Have ID and I-9 docs ready to speed up onboarding.\n3. **Start with one.** Get comfortable before juggling multiple platforms or agencies.\n4. **Track your earnings.** Variable income requires planning. See [Budgeting for Irregular Income](/career-hub/financial-tips/irregular-income-budget) for tips.\n\nIf you decide to try a staffing app, our [Complete Guide to Indeed Flex](/career-hub/guides/complete-guide) and [Building Your Worker Profile](/career-hub/guides/worker-profile) offer step-by-step guidance."
       }
     ],
     faqs: [
       {
         question: "What's the difference between a temp agency and a staffing app?",
-        answer: "Temp agencies are typically brick-and-mortar or phone-based; you register, and they place you in assignments. Staffing apps work through your phone—you browse and book shifts yourself. Both often offer W-2 employment. The main difference is how you find and accept work."
+        answer: "Temp agencies are typically brick-and-mortar or phone-based; you register, and they place you in assignments. Staffing apps work through your phone: you browse and book shifts yourself. Both often offer W-2 employment. The main difference is how you find and accept work."
       },
       {
         question: "Do I need previous work experience for flexible work?",
-        answer: "Many flexible roles are entry-level—picker/packer, dishwasher, general labor, event setup. Your reliability and attitude often matter more than your resume. Check individual listings for requirements."
+        answer: "Many flexible roles are entry-level (picker/packer, dishwasher, general labor, event setup). Your reliability and attitude often matter more than your resume. Check individual listings for requirements."
       },
       {
         question: "How do I get paid with flexible work?",

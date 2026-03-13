@@ -228,18 +228,18 @@ Living audit of Career Hub content. Review one article at a time. Apply [BRAND.m
 | Slug | first-flex-job |
 | Title | Finding Flexible Work: Your Options Explained |
 | Content type | guide |
-| Real advice count | 3 (BLS contingent work data, CareerOneStop, tax-tips link) |
+| Real advice count | 4 (BLS, CareerOneStop, 5 temp agencies + 5 staffing apps named, tax-tips link) |
 | AI slop red flags | None |
-| Citation gaps | BLS link added; pay ranges from wage-report methodology |
+| Citation gaps | Agency/app markets from official sites; SIA/Forbes for agency rankings |
 | Verification status | N/A |
 | UI/UX | Pass |
 | SEO | Pass |
 | Target keyword | flexible work options, temp agencies, staffing apps |
-| User usefulness | 4 — Impartial comparison, actionable prep steps, W-2 vs 1099 clarity |
+| User usefulness | 5 (Named comparison tables: 5 agencies, 5 apps; actionable prep; W-2 vs 1099) |
 | User intent | Informational |
-| Unique value | Impartial overview of options (temp agencies, apps, gig) with Flex as one choice |
+| Unique value | Named comparison: Kelly, Manpower, Randstad, Adecco, Express; Indeed Flex, Instawork, Wonolo, Qwick, ShiftSmart |
 | Last reviewed | March 2025 |
-| Fixes applied | Full rewrite: Flex-only sales pitch → impartial guide to flexible work options per BRAND North Star |
+| Fixes applied | Optimization loop: added 5 temp agencies + 5 staffing apps tables, removed em dashes, 800+ words |
 
 ---
 
