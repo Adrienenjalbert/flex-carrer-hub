@@ -199,8 +199,12 @@ npm start
 
 See `/docs/` for detailed documentation:
 - [Architecture Guide](docs/ARCHITECTURE.md)
+- [Brand & Editorial Guidelines](docs/BRAND.md)
+- [Content Audit Log](docs/CONTENT_AUDIT.md)
+- [Content Optimization Process](docs/CONTENT_OPTIMIZATION.md)
 - [Component Reference](docs/COMPONENTS.md)
 - [Data Schema](docs/DATA.md)
+- [Research Pipeline](docs/RESEARCH_PIPELINE.md)
 - [SEO Guide](docs/SEO.md)
 - [Contributing](docs/CONTRIBUTING.md)
 

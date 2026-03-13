@@ -31,7 +31,7 @@ export const guideCategories: GuideCategory[] = [
     slug: "getting-started",
     icon: BookOpen,
     articles: [
-      { title: "How to Get Your First Flexible Job", slug: "first-flex-job", readTime: "5 min" },
+      { title: "Finding Flexible Work: Your Options Explained", slug: "first-flex-job", readTime: "6 min" },
       { title: "Complete Guide to Indeed Flex", slug: "complete-guide", readTime: "8 min" },
       { title: "What to Expect on Your First Shift", slug: "first-shift", readTime: "4 min" },
       { title: "Building Your Worker Profile", slug: "worker-profile", readTime: "6 min" },
@@ -111,55 +111,55 @@ export const guideCategories: GuideCategory[] = [
 export const guideArticles: Record<string, Article> = {
   "first-flex-job": {
     slug: "first-flex-job",
-    title: "How to Get Your First Flexible Job",
+    title: "Finding Flexible Work: Your Options Explained",
     category: "Getting Started",
     categorySlug: "getting-started",
-    readTime: "5 min",
-    description: "A step-by-step guide to landing your first flexible job with Indeed Flex, from downloading the app to completing your first shift successfully.",
+    readTime: "6 min",
+    description: "An impartial guide to flexible work options—temp agencies, staffing apps, and gig platforms—so you can choose what fits your situation.",
     keyTakeaways: [
-      "Download [Indeed Flex](https://indeedflex.com/download-app/) and complete your profile in under 15 minutes",
-      "Start with entry-level roles to build your reputation and ratings",
-      "Enable notifications to respond quickly to shift offers",
-      "Arrive 15 minutes early to make a great first impression"
+      "Flexible work comes in several forms: temp agencies, staffing apps, and gig platforms—each with different pay structures and benefits",
+      "W-2 staffing (temp agencies, many apps) means taxes are withheld; 1099 gig work means you handle your own taxes",
+      "Compare options by location, pay type, benefits, and how quickly you can start",
+      "Prepare ID, I-9 documents, and a bank account regardless of which route you choose"
     ],
     sections: [
       {
-        heading: "Why Flexible Work Is Growing",
-        content: "The gig economy has transformed how people work. In 2024, over 36% of US workers participate in some form of gig or flexible work. Whether you're looking for supplemental income, transitioning careers, or prefer the freedom of setting your own schedule, flexible work offers opportunities that traditional employment often can't match.\n\n[Indeed Flex](https://indeedflex.com/download-app/) connects workers with thousands of businesses looking for reliable help in hospitality, warehouse, retail, and facilities management. The best part? You choose when you work and can start earning within days of signing up.\n\n**Key benefits of Indeed Flex:**\n\n- W-2 employment (taxes handled for you)\n- [Same Day Pay](https://indeedflex.com/benefits-pay/same-day-pay/) – access up to 50% of earnings within 1 hour\n- Medical, dental, and vision benefits through Essential StaffCARE\n- 165,000+ Flexers nationwide"
+        heading: "The Flexible Work Landscape",
+        content: "If you're looking for work you can fit around other commitments—school, family, another job—you have more options than ever. According to the [Bureau of Labor Statistics](https://www.bls.gov/cps/labor-force/contingent-and-alternative-arrangements.htm), contingent and alternative work arrangements (including temp agency work, on-call work, and contract work) remain a steady part of the US labor market. Young workers ages 16–24 are more likely to hold these positions.\n\n**Your main options:**\n\n- **Temp agencies** — Traditional staffing firms that place you in short-term assignments. Often W-2 employment. Find them via Google, local job centers, or [CareerOneStop](https://www.careeronestop.org/).\n- **Staffing apps** — Mobile apps that connect workers with shifts in hospitality, warehouse, retail, and facilities. Examples include Indeed Flex, Instawork, and others. Many offer W-2 employment with benefits.\n- **Gig platforms** — Delivery, rideshare, and task-based apps (e.g., DoorDash, Uber). Typically 1099 independent contractor status—you handle your own taxes.\n\nNo single option is \"best\" for everyone. It depends on your goals, location, and whether you prefer W-2 (simpler taxes) or 1099 (more control, more paperwork)."
       },
       {
-        heading: "Step 1: Download and Set Up Your Profile",
-        content: "Getting started with [Indeed Flex](https://indeedflex.com/download-app/) takes about 15 minutes:\n\n1. Download the app from the App Store or Google Play\n2. Create your account with basic information\n3. Complete your profile\n\n**Your profile is your first impression. Include:**\n\n- A professional photo (clear face, neutral background)\n- Your work experience, even if it's limited\n- Any relevant skills or [certifications](/career-hub/guides/certifications)\n- Your availability and preferred work locations\n\n**Pro tip:** Profiles with photos get 40% more shift offers than those without.\n\nNeed help building a great profile? See our [Building Your Worker Profile](/career-hub/guides/worker-profile) guide."
+        heading: "Temp Agencies vs. Staffing Apps vs. Gig Platforms",
+        content: "Understanding the differences helps you choose:\n\n| Option | Pay structure | Taxes | Typical work | Best for |\n|-------|---------------|-------|--------------|----------|\n| Temp agencies | W-2 hourly | Withheld | Assignments, often multi-day | Steady short-term work, office/warehouse |\n| Staffing apps | Usually W-2 | Withheld | Single shifts, same-day or advance | Hospitality, warehouse, events; flexible schedule |\n| Gig platforms | 1099 | You file | Per-task (delivery, ride) | Maximum flexibility, side income |\n\n**W-2 vs. 1099 matters:** With W-2 work, your employer withholds taxes and may offer benefits (health insurance, workers' comp). With 1099, you're self-employed—you pay self-employment tax and need to set aside money for taxes. See our [Tax Tips for Flexible Workers](/career-hub/financial-tips/tax-tips) for more.\n\n**Location matters:** Not every option operates in every city. Temp agencies and staffing apps tend to be market-specific. Check what's active in your area before committing."
       },
       {
-        heading: "Step 2: Complete Required Verifications",
-        content: "Indeed Flex requires verification to ensure safety for workers and businesses:\n\n**What you'll need:**\n\n- Valid ID (driver's license, passport, or state ID)\n- I-9 documents proving US work eligibility\n- Smartphone (iOS or Android)\n- Registered US bank account\n\n**The process:**\n\n1. Submit your documents through the app\n2. Complete E-Verify authorization\n3. Pass a one-time onboarding interview (verification call)\n\nMost verifications complete within 24-48 hours. While you wait, explore available shifts in your area to understand what opportunities exist."
+        heading: "What to Prepare (Regardless of Your Choice)",
+        content: "Most flexible work options require similar basics:\n\n**Documents:**\n\n- Valid ID (driver's license, passport, or state ID)\n- [I-9 documents](/career-hub/guides/i9-complete-guide) proving US work eligibility\n- Smartphone (for apps) or reliable contact method (for agencies)\n- US bank account for direct deposit\n\n**Profile (for apps):**\n\n- Professional photo (clear face, neutral background)\n- Work experience, even if limited\n- Relevant [certifications](/career-hub/guides/certifications) (e.g., forklift, food handler)\n- Availability and preferred locations\n\n**Verification:** Most platforms and agencies run a one-time check (E-Verify, background check). This can take 24–48 hours. Use that time to compare options and read reviews."
       },
       {
-        heading: "Step 3: Choose Your First Shift",
-        content: "When selecting your first shift, start with entry-level positions that match your experience:\n\n**Popular first-time roles:**\n\n| Role | Typical Pay | Requirements |\n|------|-------------|-------------|\n| Picker/Packer | $16-19/hr | No experience needed |\n| Event Setup | $14-17/hr | Physical capability |\n| Dishwasher | $14-17/hr | No experience needed |\n| General Labor | $15-18/hr | Physical capability |\n| Retail Assistant | $14-17/hr | Basic customer service |\n\nThese roles have lower barriers to entry and help you build ratings and experience quickly.\n\n**Use our [Pay Calculator](/career-hub/tools/pay-calculator)** to estimate your earnings based on shifts and hours."
+        heading: "Entry-Level Roles to Consider",
+        content: "If you're new to flexible work, these roles often have low barriers to entry:\n\n| Role | Typical pay range | Experience needed |\n|------|-------------------|-------------------|\n| Picker/Packer | $16–19/hr | None |\n| Dishwasher | $14–17/hr | None |\n| General labor | $15–18/hr | Physical capability |\n| Event setup | $14–17/hr | Physical capability |\n| Retail assistant | $14–17/hr | Basic customer service |\n\nPay varies by location and employer. Use our [Pay Calculator](/career-hub/tools/pay-calculator) to estimate earnings based on your area and hours."
       },
       {
-        heading: "Step 4: Prepare for Success",
-        content: "Before your first shift:\n\n**The night before:**\n\n- Review the job details carefully (dress code, requirements, location)\n- Plan your route and parking\n- Set multiple alarms\n- Prepare required items (ID, non-slip shoes if needed)\n- Get a good night's sleep\n\n**Day of:**\n\n- Arrive 10-15 minutes early\n- Introduce yourself to the supervisor\n- Clock in through the Indeed Flex app\n- Ask questions if anything is unclear\n\nFirst impressions matter. Being punctual, professional, and positive can lead to repeat bookings, Talent Pool invitations, and higher ratings.\n\nFor detailed guidance, see [What to Expect on Your First Shift](/career-hub/guides/first-shift)."
+        heading: "If You Choose a Staffing App",
+        content: "Staffing apps (like [Indeed Flex](https://indeedflex.com/download-app/), Instawork, and others) let you browse and book shifts from your phone. Here's what to expect:\n\n**Getting started:** Download the app, create a profile, complete verification. Most approvals take 24–48 hours.\n\n**Tips for success:**\n\n- Complete your profile fully—complete profiles tend to receive more offers\n- Enable notifications so you can respond quickly to shift postings\n- Arrive 10–15 minutes early for your first shift\n- Ask questions when unsure; supervisors prefer clarity over mistakes\n\n**After your first shift:** You'll typically receive a rating. High ratings can unlock better opportunities. For a detailed walkthrough, see [What to Expect on Your First Shift](/career-hub/guides/first-shift)."
       },
       {
-        heading: "Step 5: Complete Your Shift and Build Your Rating",
-        content: "During your shift, focus on:\n\n- Following instructions carefully\n- Asking questions when unsure (supervisors prefer this over mistakes)\n- Being friendly and professional\n- Staying off your personal phone\n- Going above and beyond when possible\n\n**After your shift:**\n\nYou'll receive a rating from the employer (1-5 stars). High ratings unlock:\n\n- Access to premium, higher-paying shifts\n- Talent Pool invitations for repeat work\n- Priority booking for popular shifts\n- Potential temp-to-perm opportunities\n\n**Want to maximize your earnings?** See our guide on [How to Get More (and Better) Shifts](/career-hub/guides/more-shifts)."
+        heading: "Next Steps",
+        content: "Once you've chosen an option:\n\n1. **Compare a few** — Check availability, pay, and reviews in your area before signing up.\n2. **Prepare your documents** — Have ID and I-9 docs ready to speed up onboarding.\n3. **Start with one** — Get comfortable before juggling multiple platforms or agencies.\n4. **Track your earnings** — Variable income requires planning. See [Budgeting for Irregular Income](/career-hub/financial-tips/irregular-income-budget) for tips.\n\nIf you decide to try a staffing app, our [Complete Guide to Indeed Flex](/career-hub/guides/complete-guide) and [Building Your Worker Profile](/career-hub/guides/worker-profile) offer step-by-step guidance."
       }
     ],
     faqs: [
       {
-        question: "How quickly can I start working after signing up?",
-        answer: "Most workers can start booking shifts within 24-48 hours of completing their profile and passing verification. [Download the Indeed Flex app](https://indeedflex.com/download-app/) to get started."
+        question: "What's the difference between a temp agency and a staffing app?",
+        answer: "Temp agencies are typically brick-and-mortar or phone-based; you register, and they place you in assignments. Staffing apps work through your phone—you browse and book shifts yourself. Both often offer W-2 employment. The main difference is how you find and accept work."
       },
       {
-        question: "Do I need previous work experience?",
-        answer: "No! Many positions on Indeed Flex are entry-level and require no prior experience. Your attitude and reliability matter more than your resume. Roles like picker/packer, dishwasher, and general labor are great starting points."
+        question: "Do I need previous work experience for flexible work?",
+        answer: "Many flexible roles are entry-level—picker/packer, dishwasher, general labor, event setup. Your reliability and attitude often matter more than your resume. Check individual listings for requirements."
       },
       {
-        question: "How do I get paid?",
-        answer: "Indeed Flex offers weekly payments directly to your bank account (deposited Fridays). Plus, [Same Day Pay](https://indeedflex.com/benefits-pay/same-day-pay/) lets you access up to 50% of your earnings within 1 hour of completing a shift."
+        question: "How do I get paid with flexible work?",
+        answer: "It depends on the option. Temp agencies and many staffing apps pay via direct deposit (often weekly). Gig platforms may offer instant pay for a fee or standard weekly payouts. Always confirm pay frequency and method before you start."
       }
     ],
     relatedArticles: ["complete-guide", "first-shift", "worker-profile"]

@@ -26,3 +26,6 @@ verify_jwt = false
 
 [functions.seasonal-research]
 verify_jwt = false
+
+[functions.semrush-keyword]
+verify_jwt = false

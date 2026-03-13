@@ -352,7 +352,7 @@ export default function EntryLevelPage() {
             <Link href="/career-hub/guides/first-flex-job">
               <Card className="hover:border-primary transition-colors h-full">
                 <CardContent className="pt-6">
-                  <h3 className="font-semibold mb-2">Getting Your First Flex Job</h3>
+                  <h3 className="font-semibold mb-2">Finding Flexible Work</h3>
                   <p className="text-sm text-muted-foreground">
                     Step-by-step guide to landing your first shift
                   </p>

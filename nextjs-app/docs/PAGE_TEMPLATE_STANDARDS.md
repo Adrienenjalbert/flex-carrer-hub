@@ -252,12 +252,17 @@ H1: Page Title (one per page)
     └── H3: Question 2
 ```
 
-## Brand Voice Guidelines
+## Brand & Editorial Guidelines
 
-- **Tone**: Helpful, professional, approachable
-- **Style**: Clear, concise, actionable
-- **Examples**: Real-world, relatable
+**Full guidelines:** See [BRAND.md](./BRAND.md) for complete voice, CRAFT framework, sourcing, SEO, and content structure.
+
+Summary:
+- **Voice**: Warm & human, clear & direct, empowering, honest
+- **Tone**: Helpful, professional, approachable — knowledgeable friend, not corporate HR
+- **Style**: Clear, concise, actionable; real-world examples
 - **CTAs**: Action-oriented, benefit-focused
+
+The Cursor rule `.cursor/rules/brand-content.mdc` enforces these guidelines when creating or updating content.
 
 ## Internal Linking
 

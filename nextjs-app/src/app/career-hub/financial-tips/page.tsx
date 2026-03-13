@@ -4,7 +4,7 @@ import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
 import CTASection from "@/components/career-hub/CTASection";
 import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { financialTips } from "@/lib/data/articles/financial-tips";
+import { financialTips, quickTips } from "@/lib/data/articles/financial-tips";
 import {
   ArrowRight,
   Wallet,
@@ -48,15 +48,6 @@ export const metadata: Metadata = {
     description: "Master your finances as a flexible worker.",
   },
 };
-
-const quickTips = [
-  "Set aside 25-30% of each paycheck for taxes if you're an independent contractor",
-  "Use the 50/30/20 rule: 50% needs, 30% wants, 20% savings",
-  "Track your mileage if you drive for work—it's a valuable tax deduction",
-  "Pay yourself first: set up automatic transfers to savings on paydays",
-  "Keep a separate bank account for taxes and business expenses",
-  "Review your expenses monthly to find areas to cut",
-];
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   "irregular-income-budget": Wallet,

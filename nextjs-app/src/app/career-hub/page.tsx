@@ -186,7 +186,7 @@ const tools = [
 
 // Get popular guides (most viewed/important)
 const popularGuides = [
-  { slug: "first-flex-job", title: "How to Get Your First Flexible Job", readTime: "5 min", description: "A step-by-step guide to landing your first flexible job with Indeed Flex" },
+  { slug: "first-flex-job", title: "Finding Flexible Work: Your Options Explained", readTime: "6 min", description: "An impartial guide to temp agencies, staffing apps, and gig platforms—choose what fits you" },
   { slug: "i9-complete-guide", title: "Form I-9 Explained: Complete Guide", readTime: "12 min", description: "Everything you need to know about Form I-9 and work authorization" },
   { slug: "career-paths", title: "From Entry-Level to Management", readTime: "12 min", description: "Visualize your career progression and plan your growth path" },
   { slug: "certifications", title: "Getting Certifications That Pay Off", readTime: "8 min", description: "Discover which certifications boost your hourly rate the most" },
