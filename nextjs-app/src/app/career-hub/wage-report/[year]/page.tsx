@@ -114,9 +114,9 @@ export default async function YearReportPage({ params }: YearPageProps) {
               <div className="flex items-center gap-3">
                 <Briefcase className="h-8 w-8 text-primary" />
                 <div>
-                  <p className="text-sm text-muted-foreground">Total Employment</p>
+                  <p className="text-sm text-muted-foreground">Workers Employed</p>
                   <p className="text-2xl font-bold">
-                    {Math.round(wageReport2026.summary.totalEmployment / 1000)}K
+                    {wageReport2026.summary.totalEmployment.toLocaleString()}
                   </p>
                 </div>
               </div>
@@ -160,7 +160,7 @@ export default async function YearReportPage({ params }: YearPageProps) {
               <p className="text-base md:text-lg leading-relaxed mb-4">
                 The 2026 Flex Work Wage Report provides comprehensive analysis of hourly wages across {wageReport2026.summary.totalOccupations} flexible work occupations, 
                 covering {wageReport2026.industries.length} major industries and {wageReport2026.regions.length}+ metropolitan regions. This year's report reveals 
-                strong wage growth across most sectors, with an average increase of <strong>{wageReport2026.summary.avgWageGrowth}%</strong> year-over-year.
+                strong wage growth across most sectors, with an average increase of <strong>{wageReport2026.summary.avgWageGrowth}%</strong> over the past year.
               </p>
               <p className="text-base md:text-lg leading-relaxed mb-4">
                 Key findings include significant wage growth in {wageReport2026.summary.topGrowingIndustry.name.toLowerCase()} ({wageReport2026.summary.topGrowingIndustry.growth}% increase) 
@@ -210,7 +210,7 @@ export default async function YearReportPage({ params }: YearPageProps) {
               <p className="text-base md:text-lg text-muted-foreground mb-4 leading-relaxed">
                 Wages grew <span className="text-primary font-bold text-xl">
                   {wageReport2026.summary.topGrowingOccupation.growth}%
-                </span> year-over-year, outpacing inflation and reflecting strong demand for skilled workers in this role.
+                </span> over the past year, outpacing inflation and reflecting strong demand for skilled workers in this role.
               </p>
               <Button asChild variant="outline" className="w-full md:w-auto">
                 <Link href={`/career-hub/wage-report/2026/by-occupation/${wageReport2026.summary.topGrowingOccupation.slug}`}>
@@ -235,7 +235,7 @@ export default async function YearReportPage({ params }: YearPageProps) {
               <p className="text-base md:text-lg text-muted-foreground mb-4 leading-relaxed">
                 Industry wages grew <span className="text-primary font-bold text-xl">
                   {wageReport2026.summary.topGrowingIndustry.growth}%
-                </span> year-over-year, driven by increased demand and competitive hiring practices.
+                </span> over the past year, driven by increased demand and competitive hiring practices.
               </p>
               <Button asChild variant="outline" className="w-full md:w-auto">
                 <Link href={`/career-hub/wage-report/2026/by-industry/${wageReport2026.summary.topGrowingIndustry.slug}`}>
@@ -270,8 +270,8 @@ export default async function YearReportPage({ params }: YearPageProps) {
                 <div>
                   <h4 className="font-semibold mb-2">For Current Workers</h4>
                   <p className="text-muted-foreground leading-relaxed">
-                    Compare your current wage to industry percentiles to understand your market position. 
-                    Review year-over-year growth to see if your role is keeping pace with market trends.
+                    Compare your current wage to industry wage ranges to understand your market position. 
+                    Review yearly growth to see if your role is keeping pace with market trends.
                   </p>
                 </div>
               </div>
@@ -320,7 +320,7 @@ export default async function YearReportPage({ params }: YearPageProps) {
                         By Region
                       </h3>
                       <p className="text-sm text-muted-foreground">
-                        Regional wage variations and COL adjustments
+                        Regional wage variations and Cost of Living adjustments
                       </p>
                     </CardContent>
                   </Card>

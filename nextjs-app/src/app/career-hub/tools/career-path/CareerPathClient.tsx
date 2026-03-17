@@ -23,7 +23,26 @@ import {
   ChevronDown,
 } from "lucide-react";
 import CTASection from "@/components/career-hub/CTASection";
+import FAQSection from "@/components/career-hub/FAQSection";
 import RelatedToolsSidebar from "@/components/career-hub/RelatedToolsSidebar";
+
+const faqs = [
+  {
+    question: "How does the Career Path Explorer work?",
+    answer:
+      "Select your current industry to see career progression paths from entry-level to management. Each level shows typical roles, pay ranges, and the skills you need to advance.",
+  },
+  {
+    question: "Can I switch industries using this tool?",
+    answer:
+      "Yes. Try different industries to compare career paths. Many skills transfer between hospitality, warehouse, and retail, so you may find faster advancement in a new field.",
+  },
+  {
+    question: "Are the salary ranges accurate?",
+    answer:
+      "Salary ranges are based on BLS OEWS 2025 data and Indeed Flex market rates. Actual pay varies by city, experience, and employer.",
+  },
+];
 
 const careerPaths = {
   hospitality: {
@@ -304,6 +323,8 @@ export default function CareerPathClient() {
                 </ul>
               </CardContent>
             </Card>
+
+            <FAQSection faqs={faqs} />
           </div>
 
           {/* Sidebar */}

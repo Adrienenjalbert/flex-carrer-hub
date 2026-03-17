@@ -10,13 +10,19 @@ export interface FinancialArticle {
   sections: { heading: string; content: string }[];
   faqs: { question: string; answer: string }[];
   relatedArticles: string[];
+  lastReviewed?: string;
+  dateModified?: string;
+  primaryKeyword?: string;
+  searchIntent?: 'informational' | 'how-to' | 'comparison' | 'transactional';
+  sources?: { name: string; url: string; tier: 1 | 2 | 3 | 4; lastAccessed: string }[];
+  targetPersonas?: string[];
 }
 
 export const financialTips: { icon: LucideIcon; title: string; description: string; slug: string; readTime: string }[] = [
   {
     icon: Wallet,
     title: "Budgeting for Irregular Income",
-    description: "Day-to-day budgeting when your income changes week to week—baseline expenses, buffer accounts, and weekly tracking.",
+    description: "Day-to-day budgeting when your income changes week to week: baseline expenses, buffer accounts, and weekly tracking.",
     slug: "irregular-income-budget",
     readTime: "7 min"
   },
@@ -58,7 +64,7 @@ export const financialTips: { icon: LucideIcon; title: string; description: stri
   {
     icon: Heart,
     title: "Free Government Resources for Gig Workers",
-    description: "Programs and assistance you've already paid for with your taxes—here's how to use them.",
+    description: "Programs and assistance you've already paid for with your taxes: here's how to use them.",
     slug: "government-resources",
     readTime: "7 min"
   },
@@ -72,12 +78,12 @@ export const financialTips: { icon: LucideIcon; title: string; description: stri
 ];
 
 export const quickTips = [
-  "Know your baseline—the minimum you need each month for rent, food, transport, and essentials",
+  "Know your baseline: the minimum you need each month for rent, food, transport, and essentials",
   "Build a buffer account for when wages vary; aim for 1-2 months of baseline expenses",
   "Track expenses weekly, not monthly, to keep on top of things when income changes",
-  "Start with a $1,000 emergency fund—even $25/week gets you there in under a year",
+  "Start with a $1,000 emergency fund: even $25/week gets you there in under a year",
   "W-2 workers (like Indeed Flex) have taxes withheld; 1099 workers must set aside 25-30% for taxes",
-  "Set up automatic transfers to savings on paydays—pay yourself first, then spend what's left",
+  "Set up automatic transfers to savings on paydays: pay yourself first, then spend what's left",
 ];
 
 export const financialArticles: Record<string, FinancialArticle> = {
@@ -101,7 +107,7 @@ export const financialArticles: Record<string, FinancialArticle> = {
       },
       {
         heading: "Step 1: Know Your Baseline",
-        content: "Your baseline is the minimum you need to survive each month:\n\n**Calculate your must-haves:**\n\n- Rent/mortgage\n- Utilities\n- Food (basic groceries)\n- Transportation (to get to work)\n- Insurance premiums\n- Minimum debt payments\n- Phone/internet\n\nThis number is your floor—no matter what, you need to earn at least this much each month.\n\n**Pro tip:** Use our [Pay Calculator](/career-hub/tools/pay-calculator) to see how many shifts you need to cover your baseline."
+        content: "Your baseline is the minimum you need to survive each month:\n\n**Calculate your must-haves:**\n\n- Rent/mortgage\n- Utilities\n- Food (basic groceries)\n- Transportation (to get to work)\n- Insurance premiums\n- Minimum debt payments\n- Phone/internet\n\nThis number is your floor. No matter what, you need to earn at least this much each month.\n\n**Pro tip:** Use our [Pay Calculator](/career-hub/tools/pay-calculator) to see how many shifts you need to cover your baseline."
       },
       {
         heading: "Step 2: The Baseline Budget Method",
@@ -109,7 +115,7 @@ export const financialArticles: Record<string, FinancialArticle> = {
       },
       {
         heading: "Step 3: Build Your Buffer Account",
-        content: "A buffer account helps when wages vary:\n\n**How it works:**\n\n- Open a separate savings account (high-yield accounts like [Ally](https://www.ally.com) or [Marcus](https://www.marcus.com)—rates vary, check current APY at bank websites)\n- In good months, deposit the excess into the buffer\n- In slow months, transfer from buffer to checking\n\n**Target buffer:** 1-2 months of baseline expenses\n\nThis buffer is different from an emergency fund—it's specifically for income smoothing, not true emergencies."
+        content: "A buffer account helps when wages vary:\n\n**How it works:**\n\n- Open a separate savings account (high-yield accounts like [Ally](https://www.ally.com) or [Marcus](https://www.marcus.com); rates vary, check current APY at bank websites)\n- In good months, deposit the excess into the buffer\n- In slow months, transfer from buffer to checking\n\n**Target buffer:** 1-2 months of baseline expenses\n\nThis buffer is different from an emergency fund. It's specifically for income smoothing, not true emergencies."
       },
       {
         heading: "Step 4: Track Weekly, Not Monthly",
@@ -127,7 +133,7 @@ export const financialArticles: Record<string, FinancialArticle> = {
       },
       {
         question: "Should I use the same budget every month?",
-        answer: "No—your budget should flex with your income. Create a baseline budget and a 'good month' budget. Switch between them based on actual earnings."
+        answer: "No. Your budget should flex with your income. Create a baseline budget and a 'good month' budget. Switch between them based on actual earnings."
       },
       {
         question: "How do I handle unexpected expenses?",
@@ -144,19 +150,19 @@ export const financialArticles: Record<string, FinancialArticle> = {
     readTime: "8 min",
     keyTakeaways: [
       "Start with a $1,000 mini-emergency fund as your first goal",
-      "Automate savings—set up a recurring transfer from checking to savings on paydays. Even small amounts add up.",
+      "Automate savings: set up a recurring transfer from checking to savings on paydays. Even small amounts add up.",
       "Keep emergency funds separate from checking to reduce temptation",
       "Use the 'pay yourself first' approach on every payday",
-      "High-yield savings accounts often offer competitive APY—rates vary; check bank websites for current rates"
+      "High-yield savings accounts often offer competitive APY (rates vary; check bank websites for current rates)"
     ],
     sections: [
       {
         heading: "Why Gig Workers Need Emergency Funds More",
-        content: "Flexible workers face unique financial risks:\n\n- Income can slow down outside busy seasons\n- Employer benefits aren't always guaranteed\n- Some states limit unemployment for temp workers\n- Health issues mean no work = no pay\n\nAn emergency fund isn't optional for gig workers—it's essential financial protection.\n\nSome platforms like [Indeed Flex](https://indeedflex.com/download-app/) offer Same Day Pay, which can help bridge gaps—but an emergency fund is still your best protection."
+        content: "Flexible workers face unique financial risks:\n\n- Income can slow down outside busy seasons\n- Employer benefits aren't always guaranteed\n- Some states limit unemployment for temp workers\n- Health issues mean no work = no pay\n\nAn emergency fund isn't optional for gig workers. It's essential financial protection.\n\nSome platforms like [Indeed Flex](https://indeedflex.com/download-app/) offer Same Day Pay, which can help bridge gaps. But an emergency fund is still your best protection."
       },
       {
         heading: "How Much Do You Need?",
-        content: "**Traditional advice:** 3-6 months of expenses\n\n**For gig workers:** Aim for 4-6 months minimum (income is less predictable)\n\nCalculate based on your baseline (essential) expenses:\n\n- Rent/mortgage\n- Utilities\n- Basic food\n- Insurance\n- Minimum debt payments\n- Transportation\n\n**Example:**\n\n- Baseline expenses = $2,500/month\n- Target emergency fund = $10,000-15,000\n\nThis example assumes $2,500/month baseline. Build over 1-2 years or more—start with $1,000, then grow. Every temp worker's timeline is different.\n\n**Use our [Pay Calculator](/career-hub/tools/pay-calculator)** to estimate your monthly baseline based on typical shifts."
+        content: "**Traditional advice:** 3-6 months of expenses\n\n**For gig workers:** Aim for 4-6 months minimum (income is less predictable)\n\nCalculate based on your baseline (essential) expenses:\n\n- Rent/mortgage\n- Utilities\n- Basic food\n- Insurance\n- Minimum debt payments\n- Transportation\n\n**Example:**\n\n- Baseline expenses = $2,500/month\n- Target emergency fund = $10,000-15,000\n\nThis example assumes $2,500/month baseline. Build over 1-2 years or more: start with $1,000, then grow. Every temp worker's timeline is different.\n\n**Use our [Pay Calculator](/career-hub/tools/pay-calculator)** to estimate your monthly baseline based on typical shifts."
       },
       {
         heading: "Starting from Zero: The $1,000 Milestone",
@@ -168,7 +174,7 @@ export const financialArticles: Record<string, FinancialArticle> = {
       },
       {
         heading: "Keeping Your Emergency Fund Safe",
-        content: "Make your emergency fund accessible but not too easy to raid:\n\n**Where to keep it:**\n\n- **High-yield savings account** (rates vary—check current APY at bank websites; many online banks offered 4-5% in 2025):\n  - [Ally Bank](https://www.ally.com) - No minimum, no fees\n  - [Marcus by Goldman Sachs](https://www.marcus.com) - Competitive rates\n  - [Discover Savings](https://www.discover.com/online-banking/savings/) - Also offers cashback checking\n- Separate from your checking account (out of sight, out of mind)\n- Online bank removes the temptation of instant access\n\n**What counts as an emergency:**\n\n✅ Job loss or extended slow period\n✅ Medical emergency or unexpected health costs\n✅ Car breakdown (when you need it for work)\n✅ Urgent home repair\n\n❌ Vacation (save separately)\n❌ Sale on something you want\n❌ Regular car maintenance (budget for this)"
+        content: "Make your emergency fund accessible but not too easy to raid:\n\n**Where to keep it:**\n\n- **High-yield savings account** (rates vary; check current APY at bank websites; many online banks offered 4-5% in 2025):\n  - [Ally Bank](https://www.ally.com) - No minimum, no fees\n  - [Marcus by Goldman Sachs](https://www.marcus.com) - Competitive rates\n  - [Discover Savings](https://www.discover.com/online-banking/savings/) - Also offers cashback checking\n- Separate from your checking account (out of sight, out of mind)\n- Online bank removes the temptation of instant access\n\n**What counts as an emergency:**\n\n✅ Job loss or extended slow period\n✅ Medical emergency or unexpected health costs\n✅ Car breakdown (when you need it for work)\n✅ Urgent home repair\n\n❌ Vacation (save separately)\n❌ Sale on something you want\n❌ Regular car maintenance (budget for this)"
       },
       {
         heading: "Building Beyond the Basics",
@@ -186,7 +192,7 @@ export const financialArticles: Record<string, FinancialArticle> = {
       },
       {
         question: "Can I invest my emergency fund?",
-        answer: "No—emergency funds should be liquid and stable. Investments can lose value right when you need the money. Keep your emergency fund in savings, not stocks. For retirement investing, see our [Retirement Saving Guide](/career-hub/financial-tips/retirement-saving)."
+        answer: "No. Emergency funds should be liquid and stable. Investments can lose value right when you need the money. Keep your emergency fund in savings, not stocks. For retirement investing, see our [Retirement Saving Guide](/career-hub/financial-tips/retirement-saving)."
       }
     ],
     relatedArticles: ["irregular-income-budget", "between-shifts", "retirement-saving"]
@@ -199,7 +205,7 @@ export const financialArticles: Record<string, FinancialArticle> = {
     readTime: "10 min",
     keyTakeaways: [
       "W-2 workers have taxes withheld; 1099 workers must pay self-employment tax",
-      "Track all work-related expenses—they reduce your taxable income",
+      "Track all work-related expenses: they reduce your taxable income",
       "Set aside 25-30% of 1099 income for quarterly taxes",
       "Mileage is often the largest deduction for gig workers (70¢/mile in 2026)",
       "Free tax help is available through [IRS VITA](https://www.irs.gov/individuals/free-tax-return-preparation-for-qualifying-taxpayers) if you earn $67,000 or less"
@@ -207,7 +213,7 @@ export const financialArticles: Record<string, FinancialArticle> = {
     sections: [
       {
         heading: "Understanding Your Tax Situation",
-        content: "This guide provides general information. Tax rules vary by state and situation. Consider having a US tax professional or payroll specialist review your specific case.\n\nYour tax situation depends on how you're classified:\n\n**W-2 Employee (Indeed Flex workers are W-2):**\n\n- Taxes are withheld from your paycheck\n- Employer pays half of Social Security/Medicare\n- File standard tax return, relatively simple\n- Access to benefits like [Same Day Pay](https://indeedflex.com/benefits-pay/same-day-pay/)\n\n**1099 Independent Contractor:**\n\n- No taxes withheld—you're responsible\n- Pay self-employment tax (15.3% for Social Security/Medicare)\n- Can deduct business expenses\n- Must pay estimated quarterly taxes\n\n**Good news for Flexers:** [Indeed Flex](https://indeedflex.com/download-app/) workers are W-2 employees, which simplifies taxes significantly."
+        content: "This guide provides general information. Tax rules vary by state and situation. Consider having a US tax professional or payroll specialist review your specific case.\n\nYour tax situation depends on how you're classified:\n\n**W-2 Employee (Indeed Flex workers are W-2):**\n\n- Taxes are withheld from your paycheck\n- Employer pays half of Social Security/Medicare\n- File standard tax return, relatively simple\n- Access to benefits like [Same Day Pay](https://indeedflex.com/benefits-pay/same-day-pay/)\n\n**1099 Independent Contractor:**\n\n- No taxes withheld: you're responsible\n- Pay self-employment tax (15.3% for Social Security/Medicare)\n- Can deduct business expenses\n- Must pay estimated quarterly taxes\n\n**Good news for Flexers:** [Indeed Flex](https://indeedflex.com/download-app/) workers are W-2 employees, which simplifies taxes significantly."
       },
       {
         heading: "Self-Employment Tax Explained",
@@ -215,11 +221,11 @@ export const financialArticles: Record<string, FinancialArticle> = {
       },
       {
         heading: "Quarterly Estimated Taxes",
-        content: "1099 workers must pay taxes quarterly, not just at tax time:\n\n**Due dates:**\n\n- Q1: April 15\n- Q2: June 15\n- Q3: September 15\n- Q4: January 15 (following year)\n\n**How much to set aside:**\n\nSave 25-30% of your 1099 income in a separate account.\n\n**How to pay:**\n\n- [IRS Direct Pay](https://www.irs.gov/payments) - Free, instant confirmation\n- [EFTPS.gov](https://www.eftps.gov) - Electronic Federal Tax Payment System\n- Mail [Form 1040-ES](https://www.irs.gov/forms-pubs/about-form-1040-es)\n\n**Penalty for not paying:** Failing to pay quarterly results in interest and penalties when you file. Pay what you can—partial payment is better than nothing."
+        content: "1099 workers must pay taxes quarterly, not just at tax time:\n\n**Due dates:**\n\n- Q1: April 15\n- Q2: June 15\n- Q3: September 15\n- Q4: January 15 (following year)\n\n**How much to set aside:**\n\nSave 25-30% of your 1099 income in a separate account.\n\n**How to pay:**\n\n- [IRS Direct Pay](https://www.irs.gov/payments) - Free, instant confirmation\n- [EFTPS.gov](https://www.eftps.gov) - Electronic Federal Tax Payment System\n- Mail [Form 1040-ES](https://www.irs.gov/forms-pubs/about-form-1040-es)\n\n**Penalty for not paying:** Failing to pay quarterly results in interest and penalties when you file. Pay what you can: partial payment is better than nothing."
       },
       {
         heading: "Deductions That Lower Your Tax Bill",
-        content: "If you're a 1099 contractor, these reduce your taxable income:\n\n**Mileage (often the biggest deduction):**\n\n- 2026 rate: **70 cents per mile** for business driving (IRS publishes the rate annually—[verify current rate](https://www.irs.gov/tax-professionals/standard-mileage-rates))\n- Track with apps like [Stride](https://www.stridehealth.com) (free) or [Everlance](https://www.everlance.com)\n- Example: 5,000 work miles = **$3,500 deduction**\n\n**Other common deductions:**\n\n- Phone/internet (business use percentage)\n- Work clothing (uniforms, non-slip shoes, safety gear)\n- Equipment and supplies\n- Professional development and [certifications](/career-hub/guides/certifications)\n- Home office (if you use dedicated space for admin work)\n\n**Keep receipts!** Photo apps like your phone's camera or expense trackers make this easy."
+        content: "If you're a 1099 contractor, these reduce your taxable income:\n\n**Mileage (often the biggest deduction):**\n\n- 2026 rate: **70 cents per mile** for business driving (IRS publishes the rate annually; [verify current rate](https://www.irs.gov/tax-professionals/standard-mileage-rates))\n- Track with apps like [Stride](https://www.stridehealth.com) (free) or [Everlance](https://www.everlance.com)\n- Example: 5,000 work miles = **$3,500 deduction**\n\n**Other common deductions:**\n\n- Phone/internet (business use percentage)\n- Work clothing (uniforms, non-slip shoes, safety gear)\n- Equipment and supplies\n- Professional development and [certifications](/career-hub/guides/certifications)\n- Home office (if you use dedicated space for admin work)\n\n**Keep receipts!** Photo apps like your phone's camera or expense trackers make this easy."
       },
       {
         heading: "Record-Keeping Essentials",
@@ -237,7 +243,7 @@ export const financialArticles: Record<string, FinancialArticle> = {
       },
       {
         question: "What if I can't afford my quarterly tax payment?",
-        answer: "Pay what you can—partial payment is better than nothing. You'll owe penalties on the unpaid portion, but they're smaller than the penalties for not filing. Consider adjusting your savings rate going forward. If you're struggling, look into [IRS payment plans](https://www.irs.gov/payments/payment-plans-installment-agreements)."
+        answer: "Pay what you can: partial payment is better than nothing. You'll owe penalties on the unpaid portion, but they're smaller than the penalties for not filing. Consider adjusting your savings rate going forward. If you're struggling, look into [IRS payment plans](https://www.irs.gov/payments/payment-plans-installment-agreements)."
       },
       {
         question: "How do I prove mileage deductions to the IRS?",
@@ -262,15 +268,15 @@ export const financialArticles: Record<string, FinancialArticle> = {
     sections: [
       {
         heading: "The Reality of Income Gaps",
-        content: "Every flexible worker experiences slow periods:\n\n- Seasonal dips (January lull, late summer)\n- Random slow weeks in any industry\n- Personal needs (illness, family obligations)\n- Changes in the job market\n\nThe goal isn't to avoid slow periods—it's to survive them without financial stress.\n\n**Your first move during slow times:** Check job apps you use and enable notifications. New shifts get snapped up fast, and being first to respond puts you ahead."
+        content: "Every flexible worker experiences slow periods:\n\n- Seasonal dips (January lull, late summer)\n- Random slow weeks in any industry\n- Personal needs (illness, family obligations)\n- Changes in the job market\n\nThe goal isn't to avoid slow periods. It's to survive them without financial stress.\n\n**Your first move during slow times:** Check job apps you use and enable notifications. New shifts get snapped up fast, and being first to respond puts you ahead."
       },
       {
         heading: "Quick Expense Cuts",
-        content: "Know exactly what to cut when income drops:\n\n**Cut immediately:**\n\n- Dining out and takeout (biggest budget leak for most people)\n- Entertainment subscriptions (pause, don't cancel—most let you resume)\n- Shopping for non-essentials\n- Premium grocery items (store brands save 20-30%)\n\n**Reduce but keep:**\n\n- Groceries (switch to budget options, meal plan)\n- Transportation (minimize non-work driving)\n- Utilities (adjust thermostat a few degrees)\n\n**Never cut:**\n\n- Insurance premiums (you need protection most when income is tight)\n- Minimum debt payments (late fees and credit damage cost more)\n- Rent/mortgage (housing stability is non-negotiable)"
+        content: "Know exactly what to cut when income drops:\n\n**Cut immediately:**\n\n- Dining out and takeout (biggest budget leak for most people)\n- Entertainment subscriptions (pause, don't cancel; most let you resume)\n- Shopping for non-essentials\n- Premium grocery items (store brands save 20-30%)\n\n**Reduce but keep:**\n\n- Groceries (switch to budget options, meal plan)\n- Transportation (minimize non-work driving)\n- Utilities (adjust thermostat a few degrees)\n\n**Never cut:**\n\n- Insurance premiums (you need protection most when income is tight)\n- Minimum debt payments (late fees and credit damage cost more)\n- Rent/mortgage (housing stability is non-negotiable)"
       },
       {
         heading: "Find More Work When You Need It",
-        content: "The best way to bridge income gaps is finding more work:\n\n**Job searching options:**\n\n- Use job apps like [Indeed Flex](https://indeedflex.com/download-app/) to find shifts\n- Review online job boards for local opportunities\n- Register with local staffing agencies\n- Consider new industries where your skills are transferable\n\n**If you use Indeed Flex:**\n\n- Enable push notifications to be first to know about new shifts\n- Maintain a 5-star rating—top performers get first access to the best opportunities\n- Get into Talent Pools for repeat work with companies you impress\n- [Same Day Pay](https://indeedflex.com/benefits-pay/same-day-pay/) lets you access up to 50% of earnings within 1 hour of completing a shift—helpful during tight weeks\n\nHaving multiple ways to find work is your best defense against slow periods."
+        content: "The best way to bridge income gaps is finding more work:\n\n**Job searching options:**\n\n- Use job apps like [Indeed Flex](https://indeedflex.com/download-app/) to find shifts\n- Review online job boards for local opportunities\n- Register with local staffing agencies\n- Consider new industries where your skills are transferable\n\n**If you use Indeed Flex:**\n\n- Enable push notifications to be first to know about new shifts\n- Maintain a 5-star rating: top performers get first access to the best opportunities\n- Get into Talent Pools for repeat work with companies you impress\n- [Same Day Pay](https://indeedflex.com/benefits-pay/same-day-pay/) lets you access up to 50% of earnings within 1 hour of completing a shift (helpful during tight weeks)\n\nHaving multiple ways to find work is your best defense against slow periods."
       },
       {
         heading: "Boost Your Earning Potential with Certifications",
@@ -278,11 +284,11 @@ export const financialArticles: Record<string, FinancialArticle> = {
       },
       {
         heading: "Free Resources When Money is Tight",
-        content: "These resources exist to help—using them is smart, not shameful:\n\n**Immediate assistance:**\n\n- **[211.org](https://211.org)** – Call or text 211 for free, confidential help with bills, food, housing, and more. Available 24/7.\n- **[SNAP Food Assistance](https://www.fns.usda.gov/snap/recipient/eligibility)** – Help paying for groceries. Many gig workers with variable income qualify.\n- **[USA.gov Benefits Finder](https://www.usa.gov/benefit-finder)** – Answer questions to find government programs you may qualify for.\n\n**Tax help (saves $100-300):**\n\n- **[IRS VITA Program](https://www.irs.gov/individuals/free-tax-return-preparation-for-qualifying-taxpayers)** – Free tax preparation if income ≤$67,000. Call 800-906-9887 for locations.\n\n**Career services:**\n\n- **[CareerOneStop](https://www.careeronestop.org)** – Free career exploration, training, and job search resources from the U.S. Department of Labor.\n\nThese programs are funded by your tax dollars—you've already paid for them."
+        content: "These resources exist to help: using them is smart, not shameful:\n\n**Immediate assistance:**\n\n- **[211.org](https://211.org)** – Call or text 211 for free, confidential help with bills, food, housing, and more. Available 24/7.\n- **[SNAP Food Assistance](https://www.fns.usda.gov/snap/recipient/eligibility)** – Help paying for groceries. Many gig workers with variable income qualify.\n- **[USA.gov Benefits Finder](https://www.usa.gov/benefit-finder)** – Answer questions to find government programs you may qualify for.\n\n**Tax help (saves $100-300):**\n\n- **[IRS VITA Program](https://www.irs.gov/individuals/free-tax-return-preparation-for-qualifying-taxpayers)** – Free tax preparation if income ≤$67,000. Call 800-906-9887 for locations.\n\n**Career services:**\n\n- **[CareerOneStop](https://www.careeronestop.org)** – Free career exploration, training, and job search resources from the U.S. Department of Labor.\n\nThese programs are funded by your tax dollars. You've already paid for them."
       },
       {
         heading: "Use Slow Time Productively",
-        content: "Turn downtime into opportunity:\n\n**Skill building (increases future earnings):**\n\n- Get [certifications](/career-hub/guides/certifications) that unlock higher-paying roles\n- Watch free tutorials on YouTube for skills in demand\n- Practice skills at home\n\n**Job searching:**\n\n- Update your profile on job apps you use with new skills\n- Add a professional photo and detailed bio\n- Consider expanding to new industries—[Indeed Flex](https://indeedflex.com/download-app/) is one option if you haven't tried it\n\n**Financial planning:**\n\n- Review your budget with our [tools](/career-hub/tools)\n- Update your financial goals\n- Research ways to earn more when things pick up"
+        content: "Turn downtime into opportunity:\n\n**Skill building (increases future earnings):**\n\n- Get [certifications](/career-hub/guides/certifications) that unlock higher-paying roles\n- Watch free tutorials on YouTube for skills in demand\n- Practice skills at home\n\n**Job searching:**\n\n- Update your profile on job apps you use with new skills\n- Add a professional photo and detailed bio\n- Consider expanding to new industries: [Indeed Flex](https://indeedflex.com/download-app/) is one option if you haven't tried it\n\n**Financial planning:**\n\n- Review your budget with our [tools](/career-hub/tools)\n- Update your financial goals\n- Research ways to earn more when things pick up"
       },
       {
         heading: "Communicating During Tight Times",
@@ -300,7 +306,7 @@ export const financialArticles: Record<string, FinancialArticle> = {
       },
       {
         question: "Should I take any available shift during slow times?",
-        answer: "Generally yes—income is income during slow periods. The exception: don't take shifts that cost you more than you earn (extreme commute costs, childcare exceeding pay). Use our [Pay Calculator](/career-hub/tools/pay-calculator) to make sure a shift is worth it after expenses."
+        answer: "Generally yes. Income is income during slow periods. The exception: don't take shifts that cost you more than you earn (extreme commute costs, childcare exceeding pay). Use our [Pay Calculator](/career-hub/tools/pay-calculator) to make sure a shift is worth it after expenses."
       },
       {
         question: "How do I know if a slow period is temporary or permanent?",
@@ -337,7 +343,7 @@ export const financialArticles: Record<string, FinancialArticle> = {
       },
       {
         heading: "Retirement Savings Vehicles",
-        content: "No employer 401(k)? No problem:\n\n**Traditional/Roth IRA:**\n\n- Anyone with earned income can contribute\n- 2024 limit: $7,000 ($8,000 if 50+); IRS adjusts limits annually—[check current limits](https://www.irs.gov/retirement-plans/plan-participant-employee/retirement-topics-ira-contribution-limits)\n- Tax advantages (traditional = deduction now; Roth = tax-free later)\n- Easy to open at [Fidelity](https://www.fidelity.com), [Schwab](https://www.schwab.com), or [Vanguard](https://www.vanguard.com)\n- **No minimum to start** at most providers\n\n**Solo 401(k):**\n\n- For self-employed/1099 workers\n- Higher limits: up to $69,000 (2024); IRS adjusts annually\n- More complex but powerful for high earners\n\n**SEP-IRA:**\n\n- Simpler alternative to solo 401(k)\n- Contribute up to 25% of net self-employment income\n- Easy to set up and maintain\n\n**[Learn more about retirement options →](/career-hub/financial-tips/retirement-saving)**"
+        content: "No employer 401(k)? No problem:\n\n**Traditional/Roth IRA:**\n\n- Anyone with earned income can contribute\n- 2024 limit: $7,000 ($8,000 if 50+); IRS adjusts limits annually; [check current limits](https://www.irs.gov/retirement-plans/plan-participant-employee/retirement-topics-ira-contribution-limits)\n- Tax advantages (traditional = deduction now; Roth = tax-free later)\n- Easy to open at [Fidelity](https://www.fidelity.com), [Schwab](https://www.schwab.com), or [Vanguard](https://www.vanguard.com)\n- **No minimum to start** at most providers\n\n**Solo 401(k):**\n\n- For self-employed/1099 workers\n- Higher limits: up to $69,000 (2024); IRS adjusts annually\n- More complex but powerful for high earners\n\n**SEP-IRA:**\n\n- Simpler alternative to solo 401(k)\n- Contribute up to 25% of net self-employment income\n- Easy to set up and maintain\n\n**[Learn more about retirement options →](/career-hub/financial-tips/retirement-saving)**"
       },
       {
         heading: "Disability and Life Insurance",
@@ -355,7 +361,7 @@ export const financialArticles: Record<string, FinancialArticle> = {
     faqs: [
       {
         question: "Can I afford health insurance as a gig worker?",
-        answer: "Many can—ACA subsidies make marketplace plans affordable for lower and middle incomes. Use [healthcare.gov's calculator](https://www.healthcare.gov) to see your potential costs before assuming you can't afford it. Also check if you qualify for Medicaid."
+        answer: "Many can. ACA subsidies make marketplace plans affordable for lower and middle incomes. Use [healthcare.gov's calculator](https://www.healthcare.gov) to see your potential costs before assuming you can't afford it. Also check if you qualify for Medicaid."
       },
       {
         question: "What if I have a pre-existing condition?",
@@ -379,7 +385,7 @@ export const financialArticles: Record<string, FinancialArticle> = {
     description: "How to save for retirement when you don't have an employer-sponsored 401(k).",
     readTime: "8 min",
     keyTakeaways: [
-      "Start saving for retirement now—even $50/month makes a significant difference",
+      "Start saving for retirement now: even $50/month makes a significant difference",
       "IRAs are accessible to anyone with earned income (no employer needed)",
       "Self-employed workers have powerful options like Solo 401(k)s",
       "Automate contributions to make saving effortless",
@@ -392,11 +398,11 @@ export const financialArticles: Record<string, FinancialArticle> = {
       },
       {
         heading: "Traditional vs. Roth: The Tax Choice",
-        content: "All retirement accounts offer tax advantages, but timing differs:\n\n**Traditional (IRA/401k):**\n\n- Contribute pre-tax (lowers taxable income NOW)\n- Pay taxes when you withdraw in retirement\n- Best if you expect lower taxes in retirement\n\n**Roth (IRA/401k):**\n\n- Contribute after-tax (no deduction now)\n- Withdraw tax-free in retirement\n- Best if you expect higher taxes later\n\n**For most gig workers:** Roth often makes sense—gig income is often lower now than future career earnings might be.\n\n**Pro tip:** You can have both! Many people split contributions between Traditional and Roth for tax diversification."
+        content: "All retirement accounts offer tax advantages, but timing differs:\n\n**Traditional (IRA/401k):**\n\n- Contribute pre-tax (lowers taxable income NOW)\n- Pay taxes when you withdraw in retirement\n- Best if you expect lower taxes in retirement\n\n**Roth (IRA/401k):**\n\n- Contribute after-tax (no deduction now)\n- Withdraw tax-free in retirement\n- Best if you expect higher taxes later\n\n**For most gig workers:** Roth often makes sense. Gig income is often lower now than future career earnings might be.\n\n**Pro tip:** You can have both! Many people split contributions between Traditional and Roth for tax diversification."
       },
       {
         heading: "IRA Basics",
-        content: "The easiest way to start:\n\n**Who can contribute:** Anyone with earned income (including gig income)\n\n**2024 limit:** $7,000 ($8,000 if 50+). IRS adjusts limits annually—[check current limits](https://www.irs.gov/retirement-plans/plan-participant-employee/retirement-topics-ira-contribution-limits)\n\n**Deadline:** Tax filing deadline (April 15)\n\n**How to open:**\n\n1. Choose a provider (all offer free accounts with no minimums):\n   - [Fidelity](https://www.fidelity.com) – Excellent app, great index funds\n   - [Schwab](https://www.schwab.com) – Full-service, branch locations\n   - [Vanguard](https://www.vanguard.com) – Pioneer of low-cost investing\n2. Open account online (10-15 minutes)\n3. Connect bank account\n4. Set up automatic contributions\n5. Choose investments (target-date funds are easiest)\n\n**Minimum to start:** $0 at Fidelity, Schwab, and Vanguard"
+        content: "The easiest way to start:\n\n**Who can contribute:** Anyone with earned income (including gig income)\n\n**2024 limit:** $7,000 ($8,000 if 50+). IRS adjusts limits annually; [check current limits](https://www.irs.gov/retirement-plans/plan-participant-employee/retirement-topics-ira-contribution-limits)\n\n**Deadline:** Tax filing deadline (April 15)\n\n**How to open:**\n\n1. Choose a provider (all offer free accounts with no minimums):\n   - [Fidelity](https://www.fidelity.com) – Excellent app, great index funds\n   - [Schwab](https://www.schwab.com) – Full-service, branch locations\n   - [Vanguard](https://www.vanguard.com) – Pioneer of low-cost investing\n2. Open account online (10-15 minutes)\n3. Connect bank account\n4. Set up automatic contributions\n5. Choose investments (target-date funds are easiest)\n\n**Minimum to start:** $0 at Fidelity, Schwab, and Vanguard"
       },
       {
         heading: "Solo 401(k) for Self-Employed",
@@ -411,7 +417,7 @@ export const financialArticles: Record<string, FinancialArticle> = {
         content: "Retirement saving should be automatic:\n\n**Set up recurring transfers:**\n\n- Match your pay schedule (weekly, biweekly)\n- Start small if needed ($25-50/week = $100-200/month)\n- Increase when income increases\n\n**Income-based rules:**\n\n- Commit a percentage of every paycheck\n- Increase 1% every 6 months until you reach 15-20%\n\n**Round-up apps:**\n\nServices like [Acorns](https://www.acorns.com) round up purchases and invest the difference. Good for getting started, but graduate to an IRA for lower fees.\n\n**The key:** Make it happen without thinking about it.\n\n**Track your progress:** Use our [Pay Calculator](/career-hub/tools/pay-calculator) to estimate annual earnings and calculate what percentage you can save."
       },
       {
-        heading: "Start Today—Even if It's Small",
+        heading: "Start Today: Even if It's Small",
         content: "The most important step is the first one:\n\n**If you can save $25/week:**\n\n- That's $1,300/year\n- In a Roth IRA at 7% return\n- After 30 years: ~$130,000 (tax-free!)\n\n**Action steps today:**\n\n1. Open a Roth IRA at [Fidelity](https://www.fidelity.com) (free, no minimum)\n2. Set up a $25/week automatic transfer\n3. Invest in a target-date fund (one-click, automatically diversified)\n4. Forget about it and let compounding work\n\nThat's it. You're now saving for retirement.\n\n**Build income to save more:** Get [certifications](/career-hub/guides/certifications) to increase your hourly rate, then save the difference."
       }
     ],
@@ -439,19 +445,19 @@ export const financialArticles: Record<string, FinancialArticle> = {
     slug: "government-resources",
     title: "Free Government Resources for Gig Workers",
     icon: Heart,
-    description: "Programs and assistance you've already paid for with your taxes—here's how to use them.",
+    description: "Programs and assistance you've already paid for with your taxes: here's how to use them.",
     readTime: "7 min",
     keyTakeaways: [
-      "211 connects you with local help for bills, food, and housing—call or text anytime",
+      "211 connects you with local help for bills, food, and housing: call or text anytime",
       "SNAP (food stamps) helps many gig workers with variable income buy groceries",
       "IRS VITA provides free tax preparation if you earn $67,000 or less",
       "CareerOneStop offers free job training and career services nationwide",
-      "These programs exist because you pay taxes—using them is smart, not shameful"
+      "These programs exist because you pay taxes: using them is smart, not shameful"
     ],
     sections: [
       {
         heading: "Why These Resources Matter for Gig Workers",
-        content: "Gig workers face unique challenges:\n\n- Variable income makes budgeting difficult\n- No employer-provided safety net\n- Often no unemployment insurance\n- Health issues mean no work = no pay\n\n**The truth about government programs:** These aren't handouts—they're services funded by your tax dollars. Using them during tough times is exactly what they're designed for.\n\nMany programs have income thresholds that gig workers with variable earnings often qualify for, even if you have good months."
+        content: "Gig workers face unique challenges:\n\n- Variable income makes budgeting difficult\n- No employer-provided safety net\n- Often no unemployment insurance\n- Health issues mean no work = no pay\n\n**The truth about government programs:** These aren't handouts. They're services funded by your tax dollars. Using them during tough times is exactly what they're designed for.\n\nMany programs have income thresholds that gig workers with variable earnings often qualify for, even if you have good months."
       },
       {
         heading: "211: Your First Call for Any Need",
@@ -459,7 +465,7 @@ export const financialArticles: Record<string, FinancialArticle> = {
       },
       {
         heading: "SNAP: Help Buying Groceries",
-        content: "**What is SNAP?**\n\nThe Supplemental Nutrition Assistance Program (formerly food stamps) helps eligible people buy food. Benefits come on an EBT card that works like a debit card at grocery stores.\n\n**Who qualifies:**\n\n- Income limits vary by state and household size\n- Many gig workers with variable income qualify\n- Self-employment income is calculated differently (business expenses deducted)\n\n**How much you could receive:**\n\n- Average benefit: ~$200/month per person\n- Depends on income, household size, and expenses\n- Even partial benefits help stretch your food budget\n\n**How to apply:**\n\n1. Check eligibility at [fns.usda.gov/snap](https://www.fns.usda.gov/snap/recipient/eligibility)\n2. Apply through your state's SNAP office or online\n3. Provide proof of income (bank statements, 1099s, pay stubs)\n4. Complete an interview (often by phone)\n\n**Pro tip for gig workers:** Your \"income\" for SNAP is calculated after business expenses. Track your mileage, supplies, and other costs—they reduce your countable income."
+        content: "**What is SNAP?**\n\nThe Supplemental Nutrition Assistance Program (formerly food stamps) helps eligible people buy food. Benefits come on an EBT card that works like a debit card at grocery stores.\n\n**Who qualifies:**\n\n- Income limits vary by state and household size\n- Many gig workers with variable income qualify\n- Self-employment income is calculated differently (business expenses deducted)\n\n**How much you could receive:**\n\n- Average benefit: ~$200/month per person\n- Depends on income, household size, and expenses\n- Even partial benefits help stretch your food budget\n\n**How to apply:**\n\n1. Check eligibility at [fns.usda.gov/snap](https://www.fns.usda.gov/snap/recipient/eligibility)\n2. Apply through your state's SNAP office or online\n3. Provide proof of income (bank statements, 1099s, pay stubs)\n4. Complete an interview (often by phone)\n\n**Pro tip for gig workers:** Your \"income\" for SNAP is calculated after business expenses. Track your mileage, supplies, and other costs: they reduce your countable income."
       },
       {
         heading: "Free Tax Preparation (Save $100-300)",
@@ -479,7 +485,7 @@ export const financialArticles: Record<string, FinancialArticle> = {
       },
       {
         heading: "How to Ask for Help (Without Feeling Weird)",
-        content: "Many people avoid using these programs because they feel embarrassed. Here's a reframe:\n\n**You already paid for these services.**\n\nEvery time you:\n- Pay sales tax on purchases\n- Pay income tax (even on gig work)\n- Buy gas (fuel taxes)\n- Pay property tax (directly or through rent)\n\n...you're funding these programs.\n\n**These programs exist because:**\n\n- Income fluctuates for many workers\n- Temporary help prevents bigger problems\n- Helping people stay stable benefits everyone\n\n**What actually happens when you apply:**\n\n- You fill out forms (mostly online)\n- You provide income documentation\n- Someone reviews your application\n- You receive benefits if you qualify\n\nNo judgment. No lectures. Just services you've paid for.\n\n**Start here:**\n\n1. Call or text **211** to describe your situation\n2. Get matched with relevant programs\n3. Apply for what you need\n\nOr bookmark these resources for when you need them—slow periods happen to everyone in gig work."
+        content: "Many people avoid using these programs because they feel embarrassed. Here's a reframe:\n\n**You already paid for these services.**\n\nEvery time you:\n- Pay sales tax on purchases\n- Pay income tax (even on gig work)\n- Buy gas (fuel taxes)\n- Pay property tax (directly or through rent)\n\n...you're funding these programs.\n\n**These programs exist because:**\n\n- Income fluctuates for many workers\n- Temporary help prevents bigger problems\n- Helping people stay stable benefits everyone\n\n**What actually happens when you apply:**\n\n- You fill out forms (mostly online)\n- You provide income documentation\n- Someone reviews your application\n- You receive benefits if you qualify\n\nNo judgment. No lectures. Just services you've paid for.\n\n**Start here:**\n\n1. Call or text **211** to describe your situation\n2. Get matched with relevant programs\n3. Apply for what you need\n\nOr bookmark these resources for when you need them: slow periods happen to everyone in gig work."
       }
     ],
     faqs: [
@@ -488,12 +494,12 @@ export const financialArticles: Record<string, FinancialArticle> = {
         answer: "No. Using SNAP, VITA, 211, or other assistance programs does not affect your credit score or appear on background checks. These are confidential services designed to help you."
       },
       {
-        question: "I had a good month—do I still qualify?",
+        question: "I had a good month: do I still qualify?",
         answer: "Possibly. Many programs look at annual income or average monthly income over several months, not just your best month. Gig workers with variable income often qualify even with occasional high-earning periods. Apply and let them determine eligibility."
       },
       {
         question: "What documents do I need to apply?",
-        answer: "Typically: ID (driver's license, passport), proof of income (bank statements, 1099s, pay stubs), proof of expenses (rent, utilities), and Social Security numbers for household members. Requirements vary by program—211 can tell you exactly what you need."
+        answer: "Typically: ID (driver's license, passport), proof of income (bank statements, 1099s, pay stubs), proof of expenses (rent, utilities), and Social Security numbers for household members. Requirements vary by program: 211 can tell you exactly what you need."
       },
       {
         question: "How long does it take to get help?",
@@ -518,11 +524,11 @@ export const financialArticles: Record<string, FinancialArticle> = {
     sections: [
       {
         heading: "Why Indeed Flex is Different",
-        content: "[Indeed Flex](https://indeedflex.com/download-app/) isn't just another gig app—it's a platform designed for flexible workers who want stability, benefits, and growth.\n\n**Key differences:**\n\n- **W-2 employment** – Taxes are handled for you, unlike 1099 gig work\n- **Real benefits** – Medical, dental, vision, disability, and life insurance through Essential StaffCARE\n- **Same Day Pay** – Access earnings fast when you need them\n- **Career growth** – Build ratings, get into Talent Pools, unlock better opportunities\n\nThis guide shows you how to maximize everything Indeed Flex offers."
+        content: "[Indeed Flex](https://indeedflex.com/download-app/) isn't just another gig app. It's a platform designed for flexible workers who want stability, benefits, and growth.\n\n**Key differences:**\n\n- **W-2 employment** – Taxes are handled for you, unlike 1099 gig work\n- **Real benefits** – Medical, dental, vision, disability, and life insurance through Essential StaffCARE\n- **Same Day Pay** – Access earnings fast when you need them\n- **Career growth** – Build ratings, get into Talent Pools, unlock better opportunities\n\nThis guide shows you how to maximize everything Indeed Flex offers."
       },
       {
         heading: "Get Shifts First: Enable Notifications",
-        content: "The best shifts go fast. Here's how to never miss an opportunity:\n\n**Enable push notifications:**\n\n1. Open the Indeed Flex app\n2. Go to your profile settings\n3. Turn on notifications for new shifts\n4. Allow notifications in your phone's settings too\n\n**Why it matters:**\n\nPopular shifts can be booked within minutes of posting. Workers who respond first have the best selection of:\n\n- Higher-paying shifts\n- Convenient locations\n- Preferred time slots\n- Repeat opportunities with great companies\n\n**Pro tip:** Check the app first thing in the morning and right after dinner—these are common times for new shift postings."
+        content: "The best shifts go fast. Here's how to never miss an opportunity:\n\n**Enable push notifications:**\n\n1. Open the Indeed Flex app\n2. Go to your profile settings\n3. Turn on notifications for new shifts\n4. Allow notifications in your phone's settings too\n\n**Why it matters:**\n\nPopular shifts can be booked within minutes of posting. Workers who respond first have the best selection of:\n\n- Higher-paying shifts\n- Convenient locations\n- Preferred time slots\n- Repeat opportunities with great companies\n\n**Pro tip:** Check the app first thing in the morning and right after dinner: these are common times for new shift postings."
       },
       {
         heading: "Build Your Rating to 5 Stars",
@@ -530,7 +536,7 @@ export const financialArticles: Record<string, FinancialArticle> = {
       },
       {
         heading: "Get Into Talent Pools",
-        content: "Talent Pools are your path to consistent work.\n\n**What are Talent Pools?**\n\nWhen a company loves your work, they can add you to their Talent Pool. This means:\n\n- **First access** to their shifts before other Flexers\n- **Repeat work** with a company you already know\n- **Relationship building** that can lead to more hours\n- Potential path to **temp-to-perm** opportunities\n\n**How to get added:**\n\n1. Deliver excellent work on your first shift\n2. Learn company-specific procedures quickly\n3. Be reliable—no call-outs or late arrivals\n4. Show initiative without overstepping\n5. Express interest in returning\n\n**Maximize Talent Pool opportunities:**\n\n- Check the app regularly for Talent Pool shift offers\n- Accept quickly—these go even faster than regular shifts\n- Continue delivering excellent work to stay in the pool\n- Some workers build enough Talent Pool relationships for near-full-time hours"
+        content: "Talent Pools are your path to consistent work.\n\n**What are Talent Pools?**\n\nWhen a company loves your work, they can add you to their Talent Pool. This means:\n\n- **First access** to their shifts before other Flexers\n- **Repeat work** with a company you already know\n- **Relationship building** that can lead to more hours\n- Potential path to **temp-to-perm** opportunities\n\n**How to get added:**\n\n1. Deliver excellent work on your first shift\n2. Learn company-specific procedures quickly\n3. Be reliable: no call-outs or late arrivals\n4. Show initiative without overstepping\n5. Express interest in returning\n\n**Maximize Talent Pool opportunities:**\n\n- Check the app regularly for Talent Pool shift offers\n- Accept quickly: these go even faster than regular shifts\n- Continue delivering excellent work to stay in the pool\n- Some workers build enough Talent Pool relationships for near-full-time hours"
       },
       {
         heading: "Use Same Day Pay Strategically",
@@ -550,7 +556,7 @@ export const financialArticles: Record<string, FinancialArticle> = {
       },
       {
         heading: "Build Toward Your Goals",
-        content: "Indeed Flex can be a stepping stone or a long-term solution—you decide.\n\n**Short-term paths:**\n\n- **Extra income** while job searching\n- **Side hustle** alongside other work\n- **Seasonal boost** during high-demand periods\n- **Flexible schedule** during school or family obligations\n\n**Long-term possibilities:**\n\n- **Consistent hours** through multiple Talent Pools\n- **Temp-to-perm** opportunities with companies you impress\n- **Skill building** across industries\n- **Career exploration** to find your fit\n\n**Track your progress:**\n\n- Use our [Pay Calculator](/career-hub/tools/pay-calculator) to estimate earnings\n- Set weekly/monthly earning goals\n- Monitor your rating improvement\n- Count your Talent Pool invitations\n\n**The key:** Treat every shift like an audition. Companies remember great workers, and Indeed Flex rewards reliability with better opportunities."
+        content: "Indeed Flex can be a stepping stone or a long-term solution: you decide.\n\n**Short-term paths:**\n\n- **Extra income** while job searching\n- **Side hustle** alongside other work\n- **Seasonal boost** during high-demand periods\n- **Flexible schedule** during school or family obligations\n\n**Long-term possibilities:**\n\n- **Consistent hours** through multiple Talent Pools\n- **Temp-to-perm** opportunities with companies you impress\n- **Skill building** across industries\n- **Career exploration** to find your fit\n\n**Track your progress:**\n\n- Use our [Pay Calculator](/career-hub/tools/pay-calculator) to estimate earnings\n- Set weekly/monthly earning goals\n- Monitor your rating improvement\n- Count your Talent Pool invitations\n\n**The key:** Treat every shift like an audition. Companies remember great workers, and Indeed Flex rewards reliability with better opportunities."
       },
       {
         heading: "Quick Start Checklist",
@@ -564,7 +570,7 @@ export const financialArticles: Record<string, FinancialArticle> = {
       },
       {
         question: "What's the difference between Applied, Offered, and Booked?",
-        answer: "**Applied** means you've applied and are waiting for the company to accept. **Offered** means the company wants you—book it before other Flexers do! **Booked** means the shift is yours—confirm attendance 24 hours before."
+        answer: "**Applied** means you've applied and are waiting for the company to accept. **Offered** means the company wants you: book it before other Flexers do! **Booked** means the shift is yours: confirm attendance 24 hours before."
       },
       {
         question: "Can I work multiple roles on Indeed Flex?",

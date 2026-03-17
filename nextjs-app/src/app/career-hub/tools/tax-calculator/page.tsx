@@ -1,6 +1,5 @@
 import { Metadata } from "next";
 import TaxCalculatorClient from "./TaxCalculatorClient";
-import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
 import CTASection from "@/components/career-hub/CTASection";
 import { SoftwareApplicationSchema, FAQSchema } from "@/components/career-hub/seo";
 import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
@@ -12,14 +11,15 @@ const tool = getToolBySlug('tax-calculator')!;
 const canonical = "https://indeedflex.com/career-hub/tools/tax-calculator";
 
 export const metadata: Metadata = {
-  title: "Tax Calculator for Gig Workers | 1099 & W-2 Calculator | Indeed Flex",
+  title: "1099 Tax Calculator: Self-Employment & Quarterly Tax Estimator | Indeed Flex",
   description:
-    "Calculate your taxes as a gig worker or 1099 contractor. Estimate federal, state, and self-employment taxes with deductions for mileage and expenses.",
+    "Free 1099 tax calculator for gig workers. Estimate self-employment tax, federal and state income tax, quarterly payments, and mileage deductions. See your real take-home pay.",
   keywords: [
-    "tax calculator",
-    "1099 taxes",
-    "self-employment tax",
+    "1099 tax calculator",
+    "quarterly estimated tax",
+    "self employment tax calculator",
     "gig worker taxes",
+    "self-employment tax",
     "quarterly taxes",
     "freelance taxes",
     "state income tax",
@@ -29,16 +29,16 @@ export const metadata: Metadata = {
     canonical,
   },
   openGraph: {
-    title: "Tax Calculator for Gig Workers | 1099 & W-2 Calculator",
-    description: "Free tax calculator for 1099 contractors and gig workers. Estimate federal, state, and self-employment taxes.",
+    title: "1099 Tax Calculator: Self-Employment & Quarterly Tax Estimator",
+    description: "Free 1099 tax calculator for gig workers. Estimate self-employment tax, federal and state income tax, quarterly payments, and mileage deductions.",
     url: canonical,
     type: "website",
     siteName: "Indeed Flex Career Hub",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Tax Calculator for Gig Workers",
-    description: "Free tax calculator for 1099 contractors and gig workers.",
+    title: "1099 Tax Calculator for Gig Workers",
+    description: "Free 1099 tax calculator for gig workers. Estimate quarterly payments and take-home pay.",
   },
 };
 
@@ -76,14 +76,6 @@ export default function TaxCalculatorPage() {
         featureList={tool.inputs.map(i => i.name)}
       />
       <FAQSchema questions={taxFAQs} />
-      <div className="container mx-auto px-4 py-4">
-        <Breadcrumbs
-          items={[
-            { label: "Tools", href: "/career-hub/tools" },
-            { label: tool.name },
-          ]}
-        />
-      </div>
       <TaxCalculatorClient />
       <div className="container mx-auto px-4 py-8">
         <AuthorByline

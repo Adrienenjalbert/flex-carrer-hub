@@ -106,14 +106,14 @@ export default async function RegionPage({ params }: RegionPageProps) {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
             <Card className="border-2 border-primary/20 hover:shadow-lg transition-shadow">
               <CardContent className="p-6 md:p-8">
-                <p className="text-xs md:text-sm text-muted-foreground mb-2">Avg. Median Wage</p>
+                <p className="text-xs md:text-sm text-muted-foreground mb-2">Average Wage</p>
                 <p className="text-2xl md:text-3xl font-bold text-primary">${region.avgMedianWage}/hr</p>
               </CardContent>
             </Card>
             <Card className="border-2 border-primary/20 hover:shadow-lg transition-shadow">
               <CardContent className="p-6 md:p-8">
                 <p className="text-xs md:text-sm text-muted-foreground mb-2">Total Employment</p>
-                <p className="text-2xl md:text-3xl font-bold">{Math.round(region.totalEmployment / 1000)}K</p>
+                <p className="text-2xl md:text-3xl font-bold">{region.totalEmployment.toLocaleString()}</p>
               </CardContent>
             </Card>
             <Card className="border-2 border-primary/20 hover:shadow-lg transition-shadow">
@@ -148,7 +148,7 @@ export default async function RegionPage({ params }: RegionPageProps) {
               <CardHeader className="pb-4">
                 <CardTitle className="flex items-center gap-2 text-xl">
                   <Briefcase className="h-6 w-6 text-primary" />
-                  Top Occupations
+                  Roles Tracked
                 </CardTitle>
                 <p className="text-sm text-muted-foreground mt-2">Highest-paying flexible roles in {region.region}</p>
               </CardHeader>

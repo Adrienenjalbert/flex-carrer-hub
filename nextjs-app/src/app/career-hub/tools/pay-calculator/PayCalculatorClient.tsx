@@ -2,11 +2,10 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import { Calculator, DollarSign, ChevronRight, HelpCircle, Download } from "lucide-react";
+import { Calculator, DollarSign, ChevronRight, HelpCircle, AlertCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { Slider } from "@/components/ui/slider";
@@ -111,6 +110,8 @@ export default function PayCalculatorClient() {
 
   const formatCurrency = (value: number) => 
     new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(value);
+
+  const annualEarnings = hourlyRate * hoursPerWeek * 52;
 
   return (
     <>
@@ -320,13 +321,43 @@ export default function PayCalculatorClient() {
                   </div>
                 </div>
 
-                <Button className="w-full" variant="outline">
-                  <Download className="h-4 w-4 mr-2" />
-                  Download PDF Summary
-                </Button>
               </CardContent>
             </Card>
           </div>
+
+          {/* Social Security Earnings Info */}
+          {hourlyRate > 0 && (
+            <Card className="mt-8 mb-6 border-amber-200 bg-amber-50 dark:bg-amber-950/20">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <AlertCircle className="h-5 w-5 text-amber-600" />
+                  Working in Retirement?
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground mb-3">
+                  If you collect Social Security before full retirement age (66-67), the 2026 earnings limit is <strong>$24,480/year</strong>. Benefits are reduced by $1 for every $2 you earn above this limit.
+                </p>
+                <div className="bg-white dark:bg-background rounded-lg p-3 mb-3">
+                  <p className="text-sm font-medium mb-1">Your estimated annual earnings</p>
+                  <p className="text-2xl font-bold">${annualEarnings.toLocaleString()}</p>
+                  {annualEarnings > 24480 ? (
+                    <p className="text-sm text-amber-600 mt-1">
+                      ⚠️ ${(annualEarnings - 24480).toLocaleString()} over the limit — benefits may be reduced by ${Math.round((annualEarnings - 24480) / 2).toLocaleString()}/year
+                    </p>
+                  ) : (
+                    <p className="text-sm text-green-600 mt-1">
+                      ✓ Under the $24,480 limit — no impact on your benefits
+                    </p>
+                  )}
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  After full retirement age, there is no earnings limit. Withheld benefits are recalculated and returned at full retirement age.
+                  <a href="/career-hub/for/retirees" className="text-primary hover:underline ml-1">Learn more →</a>
+                </p>
+              </CardContent>
+            </Card>
+          )}
 
           {/* State-Specific Calculators */}
           <section className="mt-12">

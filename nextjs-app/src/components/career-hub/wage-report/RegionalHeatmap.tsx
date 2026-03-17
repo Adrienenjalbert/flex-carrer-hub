@@ -23,9 +23,10 @@ export function RegionalHeatmap({
     (showAdjusted ? (a.adjustedMedian || 0) : a.median)
   );
   
-  const maxValue = Math.max(...sortedRegions.map(r => showAdjusted ? (r.adjustedMedian || 0) : r.median));
-  const minValue = Math.min(...sortedRegions.map(r => showAdjusted ? (r.adjustedMedian || 0) : r.median));
-  const range = maxValue - minValue;
+  const values = sortedRegions.map(r => showAdjusted ? (r.adjustedMedian ?? 0) : r.median);
+  const maxValue = values.length > 0 ? Math.max(...values) : 0;
+  const minValue = values.length > 0 ? Math.min(...values) : 0;
+  const range = maxValue - minValue || 1;
 
   const getIntensity = (value: number) => {
     const normalized = (value - minValue) / range;
@@ -79,7 +80,7 @@ export function RegionalHeatmap({
                     <p className="font-semibold">${value.toFixed(2)}/hr</p>
                     {showAdjusted && region.costOfLivingIndex !== 100 && (
                       <p className="text-xs text-muted-foreground">
-                        COL: {region.costOfLivingIndex}
+                        Cost of Living: {region.costOfLivingIndex}
                       </p>
                     )}
                   </div>

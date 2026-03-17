@@ -26,7 +26,9 @@ import {
   Calculator,
   Calendar,
   AlertCircle,
+  ArrowRight,
 } from "lucide-react";
+import Link from "next/link";
 import CTASection from "@/components/career-hub/CTASection";
 import FAQSection from "@/components/career-hub/FAQSection";
 import ToolDisclaimer from "@/components/career-hub/ToolDisclaimer";
@@ -207,7 +209,7 @@ export default function TaxCalculatorClient() {
             </Card>
 
             {/* Results */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
               <Card className="bg-primary text-primary-foreground">
                 <CardContent className="pt-6">
                   <p className="text-sm opacity-80">Estimated Take-Home</p>
@@ -236,7 +238,63 @@ export default function TaxCalculatorClient() {
                   </p>
                 </CardContent>
               </Card>
+
+              <Card>
+                <CardContent className="pt-6">
+                  <div className="flex items-center gap-2 mb-2">
+                    <PiggyBank className="h-5 w-5 text-primary" />
+                    <span className="text-sm font-medium">
+                      Monthly Set-Aside
+                    </span>
+                  </div>
+                  <p className="text-3xl font-bold text-foreground">
+                    ${(calculations.totalTax / 12).toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                  </p>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Save this much each month for taxes
+                  </p>
+                </CardContent>
+              </Card>
             </div>
+
+            {/* Quarterly Payment Schedule */}
+            <Card className="mb-8">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Calendar className="h-5 w-5 text-primary" />
+                  Quarterly Payment Schedule
+                </CardTitle>
+                <CardDescription>
+                  IRS estimated tax due dates and amounts
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                  {[
+                    { quarter: "Q1", date: "April 15" },
+                    { quarter: "Q2", date: "June 15" },
+                    { quarter: "Q3", date: "September 15" },
+                    { quarter: "Q4", date: "January 15" },
+                  ].map((q) => (
+                    <div
+                      key={q.quarter}
+                      className="text-center p-4 bg-muted rounded-lg"
+                    >
+                      <p className="text-sm font-medium text-muted-foreground">
+                        {q.quarter} &mdash; {q.date}
+                      </p>
+                      <p className="text-xl font-bold mt-1">
+                        ${calculations.quarterlyPayment.toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+                <Badge variant="destructive" className="text-xs">
+                  <AlertCircle className="h-3 w-3 mr-1" />
+                  Missing deadlines means IRS penalties
+                </Badge>
+              </CardContent>
+            </Card>
 
             {/* Tax Breakdown */}
             <Card className="mb-8">
@@ -278,6 +336,54 @@ export default function TaxCalculatorClient() {
                       ${calculations.totalTax.toLocaleString(undefined, { maximumFractionDigits: 0 })}
                     </span>
                   </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* 1099 vs W-2 Comparison */}
+            <Card className="mb-8">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <DollarSign className="h-5 w-5 text-primary" />
+                  1099 vs W-2 Comparison
+                </CardTitle>
+                <CardDescription>
+                  If you earned the same ${calculations.grossIncome.toLocaleString(undefined, { maximumFractionDigits: 0 })} as a W-2 employee:
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center p-3 bg-muted rounded-lg">
+                    <span>Your 1099 Take-Home</span>
+                    <span className="font-semibold">
+                      ${calculations.takeHome.toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center p-3 bg-green-100 dark:bg-green-950/30 rounded-lg text-green-700 dark:text-green-400">
+                    <span>W-2 Take-Home (estimated)</span>
+                    <span className="font-semibold">
+                      ${(calculations.grossIncome - calculations.federalTax - calculations.stateTax - calculations.selfEmploymentTax * 0.5).toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center p-3 bg-orange-100 dark:bg-orange-950/30 rounded-lg text-orange-700 dark:text-orange-400">
+                    <span>As a 1099 contractor, you pay more in taxes</span>
+                    <span className="font-bold">
+                      ${(calculations.selfEmploymentTax * 0.5).toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                    </span>
+                  </div>
+                </div>
+                <div className="mt-4 p-4 bg-primary/5 rounded-lg border border-primary/10">
+                  <p className="text-sm text-muted-foreground">
+                    Indeed Flex offers W-2 shifts where your employer handles taxes.
+                    Your take-home is higher for the same hourly rate.
+                  </p>
+                  <Link
+                    href="/career-hub/guides/complete-guide"
+                    className="inline-flex items-center gap-1 text-sm font-medium text-primary mt-2 hover:underline"
+                  >
+                    Learn more about W-2 vs 1099 work
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
                 </div>
               </CardContent>
             </Card>

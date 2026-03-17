@@ -224,15 +224,113 @@ Career advice is YMYL content (Your Money, Your Life) — held to higher quality
 
 ---
 
-## Optimising for AI Search (AEO / GEO)
+## Answer Engine Optimization (AEO)
+
+AI-referred traffic converts at 14.2% compared to traditional search at 2.8%. Schema markup increases citation probability by 30-40%. Optimizing for AI engines (ChatGPT, Perplexity, Google AI Overviews, Gemini) is now as important as traditional SEO.
+
+### AEO Content Rules
 
 | Rule | What it means | Example |
 |------|---------------|---------|
-| Answer first | State direct answer in first 1–2 sentences of each section | "W-2 temp workers are entitled to minimum wage, overtime, and workers' comp." |
-| Self-contained sections | Each H2 should make sense if quoted standalone | Include enough context in each section for extraction |
-| Question-format H2s | Frame subheadings as the question the reader is asking | "How long does it take to get your first shift?" not "Getting your first shift" |
-| FAQ sections | 3–5 questions per article minimum, using PAA phrasing | Use Google's "People also ask" phrasing for target keyword |
-| Cite in-sentence | Attribute data inline, not just in footnotes | "According to the Bureau of Labor Statistics (2024), median hourly pay for..." |
+| **Answer-first (BLUF)** | Open every article with a 40-60 word definitive answer in the first paragraph | "Warehouse workers in the US earn $16-$22/hr (BLS OEWS 2025). Entry-level roles start at $14-$17/hr with no experience needed. Night and weekend shifts pay $1-$3 more." |
+| **Question-format H2s** | Frame H2s as the exact questions users ask (match PAA queries) | "How much do warehouse workers make?" not "Warehouse Pay Rates" |
+| **Direct answer per section** | Start each H2 section with a 1-2 sentence definitive answer before elaboration | "You need a valid ID and to pass a background check. Most warehouses don't require prior experience." |
+| **Self-contained sections** | Each H2 should make sense if extracted and quoted by an AI system in isolation | Include enough context in each section for standalone extraction |
+| **Citable statements** | Write definitive, source-backed statements that AI engines will want to cite | "Warehouse workers earn $16.20-$22.50/hr (BLS OEWS May 2025)" not "workers might earn around $18/hr" |
+| **Concise FAQ answers** | FAQ answers should be 2-3 sentences that stand alone as complete, citable answers | Each FAQ answer should fully answer the question without needing surrounding context |
+| **Entity clarity** | Name the role, location, and context in the first 100 words | "If you're looking for flexible warehouse work in the US, here's what you need to know about pay, requirements, and how to get started." |
+| **Cite in-sentence** | Attribute data inline, not just in footnotes | "According to the Bureau of Labor Statistics (2025), median hourly pay for..." |
+
+### AEO vs Traditional SEO
+
+| Traditional SEO | AEO |
+|----------------|-----|
+| Compete for position #1 | Compete to be one of 3-10 cited sources in AI answers |
+| Optimize title tags and meta | Optimize for content extractability and citation-worthiness |
+| Keyword density matters | Entity clarity and definitive statements matter |
+| Backlinks drive authority | Structured data and verifiable facts drive citations |
+| Ranking on page 1 = success | Being cited by AI engines = success |
+
+### Schema Markup for AI Citation
+
+Implement these JSON-LD schemas on every article (increases citation probability by 30-40%):
+- `FAQPage` — with clear Q&A pairs as `mainEntity`
+- `Article` — with `speakable` property marking the most citable sections
+- `HowTo` — for step-by-step content
+- `BreadcrumbList` — for navigation context
+- Add `about` and `mentions` entity references for semantic clarity
+- Ensure `dateModified` is always current and machine-readable
+
+### AI Crawler Access
+
+Allow these AI crawlers in `robots.txt`:
+- `OAI-SearchBot` (ChatGPT Search)
+- `PerplexityBot`
+- `ClaudeBot`
+- `GoogleOther` (AI training/citation)
+
+### Quality Scoring
+
+AEO readiness is scored by the quality scorer (`src/lib/content-engine/quality-scorer.ts`) at 15% weight:
+- Answer-first formatting (40-60 word quick answer)
+- Question-format H2 ratio
+- Direct answer count
+- FAQ count and quality
+- Entity clarity in first 100 words
+
+---
+
+## Quality Scoring (Single Source of Truth)
+
+All skills reference this section. Do NOT duplicate these rules in skill files.
+
+### Dimensions and Weights
+
+| # | Dimension | Weight | Pass | Key Signal |
+|---|-----------|--------|------|------------|
+| 1 | Usefulness | 0.25 | 70+ | Every section has a named example and action step |
+| 2 | Brand Tone | 0.15 | 70+ | 70%+ "you/your", zero AI slop, Grade 8 reading level |
+| 3 | Data Accuracy | 0.20 | 70+ | Every stat cited in-sentence with source + date |
+| 4 | SEO Value | 0.15 | 70+ | Keyword in title/first 100 words/H2s, 3+ internal links |
+| 5 | AEO Readiness | 0.10 | 70+ | 40-60 word answer-first lead, 50%+ question H2s, 3+ citable FAQs |
+| 6 | UX Quality | 0.15 | 70+ | Scannable, balanced sections, clear CTA, distributed links |
+
+**Composite threshold: 80/100 to pass.** Three dimensions have hard minimums of 70 (Brand Tone, Data Accuracy, UX Quality). An article fails if any minimum is violated even if the composite is above 80.
+
+### Banned Phrases (complete list)
+
+| Banned | Use Instead |
+|--------|-------------|
+| delve into / delve deeper / delving | look at, examine, check |
+| dive deep / deep dive into | explore, cover |
+| navigate the / navigating the | handle, manage, work through |
+| when it comes to | [X] is... / [X] means... |
+| in today's [X] / in the world of [X] | (cut; start with subject) |
+| leverage your / leveraging | use |
+| robust | strong, reliable |
+| comprehensive guide | guide, full guide |
+| seamless | smooth, easy |
+| game-changing / game changer | significant, major |
+| it's not just / it's not X, it's Y | (plain statement) |
+
+### AI Slop Patterns (flag for removal)
+
+- "In this section, we'll..." / "Let's explore..." / "Let's take a look at..."
+- "It's important to note..." / "It's worth mentioning..."
+- "You should consider..." / "Make sure to..."
+- "Without further ado" / "As we all know..."
+- "In conclusion..." / "In summary..."
+- Em dashes (—) — use comma, colon, or parentheses instead
+
+### Indeed Flex as Data Source
+
+Indeed Flex data is Tier 1.5 (between government and industry). Prefer it over generic data when available:
+- Shift volume, availability, and peak times by role and city
+- Actual hourly rates workers earn on the platform
+- Worker ratings and Talent Pool invitation rates
+- Hiring trends by industry and season
+
+Cite as: "(Indeed Flex 2026)" or "(Indeed Flex internal data)"
 
 ---
 
@@ -326,3 +424,4 @@ H1 (keyword-led, under 65 chars) → 2-sentence intro → Quick answer (first 10
 | March 2025 | Added Language Rules from content feedback (B2B language, AI comparisons, Indeed Flex placement, jargon, targets, framing) |
 | March 2025 | Added Real Advice Standards, AI Slop Red Flags, Financial Content (YMYL) section; strengthened CRAFT "R" |
 | March 2025 | Added Depth Requirements (comparison articles), Punctuation and Phrasing rules, Named verifiable examples to Real Advice |
+| March 2026 | Expanded AEO section with answer-first formatting, citable statements, schema requirements, and AI crawler access. Added quality scoring references. |

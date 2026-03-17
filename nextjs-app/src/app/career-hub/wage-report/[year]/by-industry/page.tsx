@@ -110,19 +110,19 @@ export default async function ByIndustryPage({ params }: ByIndustryPageProps) {
               <CardContent>
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">Median Wage</span>
+                    <span className="text-sm text-muted-foreground">Average Wage</span>
                     <span className="text-lg font-bold text-primary">
                       ${industry.avgMedianWage.toFixed(2)}/hr
                     </span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">Total Employment</span>
+                    <span className="text-sm text-muted-foreground">Workers Employed</span>
                     <span className="text-sm font-medium">
                       {industry.totalEmployment.toLocaleString()}
                     </span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">Top Occupations</span>
+                    <span className="text-sm text-muted-foreground">Roles Available</span>
                     <span className="text-sm font-medium">{industry.topOccupations.length}</span>
                   </div>
                   <div className="pt-2 border-t flex items-center justify-between text-primary">
@@ -147,7 +147,7 @@ export default async function ByIndustryPage({ params }: ByIndustryPageProps) {
         <CardContent>
           <div className="grid md:grid-cols-3 gap-6">
             <div>
-              <p className="text-sm text-muted-foreground mb-1">Highest Median Wage</p>
+              <p className="text-sm text-muted-foreground mb-1">Highest Average Wage</p>
               <p className="text-2xl font-bold">
                 {sortedIndustries[0]?.industryName || "N/A"}
               </p>

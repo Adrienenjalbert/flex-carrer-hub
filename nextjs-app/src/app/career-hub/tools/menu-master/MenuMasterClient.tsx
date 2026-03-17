@@ -21,8 +21,27 @@ import {
   Volume2,
 } from "lucide-react";
 import CTASection from "@/components/career-hub/CTASection";
+import FAQSection from "@/components/career-hub/FAQSection";
 import RelatedToolsSidebar from "@/components/career-hub/RelatedToolsSidebar";
 import { culinaryTerms } from "@/lib/data/culinary-terms";
+
+const faqs = [
+  {
+    question: "What culinary terms does Menu Master cover?",
+    answer:
+      "It covers essential kitchen and restaurant terms including cooking techniques, equipment names, and menu descriptions that you'll encounter in hospitality jobs.",
+  },
+  {
+    question: "Do I need to know these terms for restaurant work?",
+    answer:
+      "Yes. Knowing terms like 'mise en place,' '86'd,' and 'al dente' shows employers you're prepared and helps you communicate with kitchen staff.",
+  },
+  {
+    question: "Is Menu Master available in Spanish?",
+    answer:
+      "Many terms include Spanish translations and phonetic guides, making it useful for bilingual workers in restaurant environments.",
+  },
+];
 
 const categories = [
   { id: "cooking-methods", name: "Cooking Methods" },
@@ -215,6 +234,8 @@ export default function MenuMasterClient() {
                 </ul>
               </CardContent>
             </Card>
+
+            <FAQSection faqs={faqs} />
           </div>
 
           {/* Sidebar */}

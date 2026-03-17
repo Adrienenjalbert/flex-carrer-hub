@@ -44,6 +44,27 @@ export default function robots(): MetadataRoute.Robots {
         crawlDelay: 10,
         disallow: ["/api/", "/_next/"],
       },
+      // AI search engine crawlers (AEO: maximize citation probability)
+      {
+        userAgent: "OAI-SearchBot",
+        allow: "/",
+        disallow: ["/api/", "/_next/", "/private/"],
+      },
+      {
+        userAgent: "PerplexityBot",
+        allow: "/",
+        disallow: ["/api/", "/_next/", "/private/"],
+      },
+      {
+        userAgent: "ClaudeBot",
+        allow: "/",
+        disallow: ["/api/", "/_next/", "/private/"],
+      },
+      {
+        userAgent: "GoogleOther",
+        allow: "/",
+        disallow: ["/api/", "/_next/", "/private/"],
+      },
     ],
     sitemap: [
       `${baseUrl}/sitemap/core.xml`,

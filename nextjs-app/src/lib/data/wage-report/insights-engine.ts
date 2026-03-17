@@ -36,7 +36,7 @@ export function generateOccupationInsights(occupation: OccupationWageData): Insi
       type: 'trend',
       headline: 'Strong Wage Growth',
       value: `+${occupation.yoyChange.percentChange}%`,
-      context: `${occupation.occupationTitle} wages grew ${occupation.yoyChange.percentChange}% year-over-year, outpacing inflation.`,
+      context: `${occupation.occupationTitle} wages grew ${occupation.yoyChange.percentChange}% over the past year, outpacing inflation.`,
       source: 'BLS OEWS',
       actionLink: `/career-hub/wage-report/2026/by-occupation/${occupation.occupationSlug}`,
       priority: 'high',
@@ -100,7 +100,7 @@ export function generateIndustryInsights(industry: IndustryTrends): InsightCard[
       type: 'trend',
       headline: 'Industry Wage Growth',
       value: `+${industry.wageGrowth}%`,
-      context: `${industry.industryName} wages grew ${industry.wageGrowth}% year-over-year, indicating strong demand for workers.`,
+      context: `${industry.industryName} wages grew ${industry.wageGrowth}% over the past year, indicating strong demand for workers.`,
       source: 'BLS OEWS',
       actionLink: `/career-hub/wage-report/2026/by-industry/${industry.industrySlug}`,
       priority: 'high',
@@ -112,8 +112,8 @@ export function generateIndustryInsights(industry: IndustryTrends): InsightCard[
     id: `${industry.industrySlug}-employment`,
     type: 'stat',
     headline: 'Total Employment',
-    value: `${Math.round(industry.totalEmployment / 1000)}K`,
-    context: `${industry.industryName} employs over ${Math.round(industry.totalEmployment / 1000)}K workers in flexible roles nationwide.`,
+    value: `${industry.totalEmployment.toLocaleString()}`,
+    context: `${industry.industryName} employs over ${industry.totalEmployment.toLocaleString()} workers in flexible roles nationwide.`,
     priority: 'medium',
   });
   
@@ -136,9 +136,9 @@ export function generateIndustryInsights(industry: IndustryTrends): InsightCard[
     insights.push({
       id: `${industry.industrySlug}-demand`,
       type: 'recommendation',
-      headline: 'High Demand',
-      value: industry.trends.demandSignal === 'very-high' ? 'Very High' : 'High',
-      context: `${industry.industryName} shows ${industry.trends.demandSignal === 'very-high' ? 'very high' : 'high'} demand signals, with strong wage growth and abundant opportunities.`,
+      headline: 'Workers Needed',
+      value: industry.trends.demandSignal === 'very-high' ? 'Urgently Hiring' : 'Actively Hiring',
+      context: `${industry.industryName} is ${industry.trends.demandSignal === 'very-high' ? 'urgently hiring' : 'actively hiring'}, with strong wage growth and abundant opportunities.`,
       priority: 'high',
     });
   }
@@ -157,7 +157,7 @@ export function generateRegionalInsights(region: RegionalAnalysis): InsightCard[
     insights.push({
       id: `${region.citySlug}-value`,
       type: 'stat',
-      headline: 'Wage-to-COL Ratio',
+      headline: 'Wage-to-Cost-of-Living Ratio',
       value: region.wageToCOLRatio.toFixed(2),
       context: `${region.region} offers strong wage value relative to cost of living, making it an attractive market for flexible workers.`,
       priority: 'high',
@@ -183,8 +183,8 @@ export function generateRegionalInsights(region: RegionalAnalysis): InsightCard[
     id: `${region.citySlug}-employment`,
     type: 'stat',
     headline: 'Total Employment',
-    value: `${Math.round(region.totalEmployment / 1000)}K`,
-    context: `${region.region} has over ${Math.round(region.totalEmployment / 1000)}K flexible workers across all industries.`,
+    value: `${region.totalEmployment.toLocaleString()}`,
+    context: `${region.region} has over ${region.totalEmployment.toLocaleString()} flexible workers across all industries.`,
     priority: 'medium',
   });
   

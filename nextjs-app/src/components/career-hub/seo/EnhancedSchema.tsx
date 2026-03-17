@@ -77,6 +77,9 @@ interface ArticleSchemaProps {
   wordCount?: number;
   articleSection?: string;
   keywords?: string[];
+  speakable?: string[];
+  about?: Array<{ name: string; url?: string }>;
+  mentions?: Array<{ name: string; url?: string }>;
 }
 
 interface HowToSchemaProps {
@@ -314,7 +317,10 @@ export const ArticleSchema = ({
   mainEntityOfPage,
   wordCount,
   articleSection,
-  keywords = []
+  keywords = [],
+  speakable,
+  about,
+  mentions,
 }: ArticleSchemaProps) => {
   const schema = useMemo(() => ({
     "@context": "https://schema.org",
@@ -343,8 +349,28 @@ export const ArticleSchema = ({
     },
     ...(wordCount && { "wordCount": wordCount }),
     ...(articleSection && { "articleSection": articleSection }),
-    ...(keywords.length > 0 && { "keywords": keywords.join(", ") })
-  }), [headline, description, image, datePublished, dateModified, author, publisher, mainEntityOfPage, wordCount, articleSection, keywords]);
+    ...(keywords.length > 0 && { "keywords": keywords.join(", ") }),
+    ...(speakable && speakable.length > 0 && {
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": speakable
+      }
+    }),
+    ...(about && about.length > 0 && {
+      "about": about.map(entity => ({
+        "@type": "Thing",
+        "name": entity.name,
+        ...(entity.url && { "url": entity.url })
+      }))
+    }),
+    ...(mentions && mentions.length > 0 && {
+      "mentions": mentions.map(entity => ({
+        "@type": "Thing",
+        "name": entity.name,
+        ...(entity.url && { "url": entity.url })
+      }))
+    })
+  }), [headline, description, image, datePublished, dateModified, author, publisher, mainEntityOfPage, wordCount, articleSection, keywords, speakable, about, mentions]);
 
   return (
     <script

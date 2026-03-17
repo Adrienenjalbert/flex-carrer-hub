@@ -19,7 +19,7 @@ export function YoYComparisonChart({
   priorYear,
   currentMedian,
   priorMedian,
-  title = "Year-over-Year Comparison",
+  title = "Yearly Wage Comparison",
   className,
 }: YoYComparisonChartProps) {
   const chartData = useMemo(() => {
@@ -27,17 +27,19 @@ export function YoYComparisonChart({
       {
         year: priorYear.toString(),
         median: priorMedian,
-        label: `${priorYear} Median`,
+        label: `${priorYear} Average`,
       },
       {
         year: currentYear.toString(),
         median: currentMedian,
-        label: `${currentYear} Median`,
+        label: `${currentYear} Average`,
       },
     ];
   }, [currentYear, priorYear, currentMedian, priorMedian]);
 
-  const percentChange = ((currentMedian - priorMedian) / priorMedian) * 100;
+  const percentChange = priorMedian > 0
+    ? ((currentMedian - priorMedian) / priorMedian) * 100
+    : 0;
   const isPositive = percentChange > 0;
 
   const CustomTooltip = ({ active, payload }: { active?: boolean; payload?: any[] }) => {
@@ -52,6 +54,19 @@ export function YoYComparisonChart({
     }
     return null;
   };
+
+  if (chartData.length === 0) {
+    return (
+      <Card className={className}>
+        <CardHeader className="pb-4">
+          <CardTitle className="flex items-center gap-2 text-lg">{title}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-sm text-muted-foreground">No comparison data available.</p>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <Card className={className}>
@@ -80,8 +95,8 @@ export function YoYComparisonChart({
         </div>
       </CardHeader>
       <CardContent>
-        <div className="h-64">
-          <ResponsiveContainer width="100%" height="100%">
+        <div className="h-64 min-w-[280px]">
+          <ResponsiveContainer width="100%" height="100%" initialDimension={{ width: 400, height: 256 }}>
             <LineChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--muted))" />
               <XAxis 

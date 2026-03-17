@@ -1,40 +1,40 @@
 import { Metadata } from "next";
 import SkillsAnalyzerClient from "./SkillsAnalyzerClient";
-import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
 import CTASection from "@/components/career-hub/CTASection";
 import { SoftwareApplicationSchema } from "@/components/career-hub/seo";
 import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
 
-const toolName = "Skills Analyzer";
-const toolDescription = "Analyze your skills and discover which flexible jobs match your abilities. Get personalized career recommendations based on your experience.";
+const toolName = "Career Change Skills Quiz";
+const toolDescription = "Free career change quiz for hourly workers. Rate your skills across 4 categories and get matched to 47 flexible roles in hospitality, warehouse, retail, and more.";
 const canonical = "https://indeedflex.com/career-hub/tools/skills-analyzer";
 
 export const metadata: Metadata = {
-  title: "Skills Analyzer | Discover Your Strengths | Indeed Flex",
+  title: "Career Change Skills Quiz: Find Your Best Flexible Job | Indeed Flex",
   description:
-    "Analyze your skills and discover which flexible jobs match your abilities. Get personalized career recommendations based on your experience.",
+    "Free career change quiz for hourly workers. Rate your skills across 4 categories and get matched to 47 flexible roles in hospitality, warehouse, retail, and more.",
   keywords: [
-    "skills analyzer",
-    "career assessment",
-    "job matching",
-    "skills test",
+    "career change quiz",
+    "skills assessment",
+    "what job should I do",
     "career quiz",
-    "job recommendations",
+    "job skills test",
+    "transferable skills assessment",
+    "career aptitude test",
   ],
   alternates: {
     canonical,
   },
   openGraph: {
-    title: "Skills Analyzer | Discover Your Strengths",
-    description: "Analyze your skills and discover which flexible jobs match your abilities.",
+    title: "Career Change Skills Quiz: Find Your Best Flexible Job",
+    description: "Free career change quiz for hourly workers. Rate your skills across 4 categories and get matched to 47 flexible roles.",
     url: canonical,
     type: "website",
     siteName: "Indeed Flex Career Hub",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Skills Analyzer",
-    description: "Analyze your skills and discover which flexible jobs match your abilities.",
+    title: "Career Change Skills Quiz",
+    description: "Free career change quiz for hourly workers. Rate your skills and get matched to flexible roles.",
   },
 };
 
@@ -49,14 +49,6 @@ export default function SkillsAnalyzerPage() {
         aggregateRating={undefined}
         featureList={[]}
       />
-      <div className="container mx-auto px-4 py-4">
-        <Breadcrumbs
-          items={[
-            { label: "Tools", href: "/career-hub/tools" },
-            { label: toolName },
-          ]}
-        />
-      </div>
       <SkillsAnalyzerClient />
       <div className="container mx-auto px-4 py-12">
         <InternalLinkHub 

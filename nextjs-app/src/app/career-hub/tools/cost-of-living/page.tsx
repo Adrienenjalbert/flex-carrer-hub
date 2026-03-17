@@ -1,6 +1,5 @@
 import { Metadata } from "next";
 import CostOfLivingClient from "./CostOfLivingClient";
-import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
 import CTASection from "@/components/career-hub/CTASection";
 import { SoftwareApplicationSchema, FAQSchema } from "@/components/career-hub/seo";
 import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
@@ -73,14 +72,6 @@ export default function CostOfLivingPage() {
         featureList={["City Comparison", "Cost Breakdown", "Salary Adjustment"]}
       />
       <FAQSchema questions={costFAQs} />
-      <div className="container mx-auto px-4 py-4">
-        <Breadcrumbs
-          items={[
-            { label: "Tools", href: "/career-hub/tools" },
-            { label: toolName },
-          ]}
-        />
-      </div>
       <CostOfLivingClient />
       <div className="container mx-auto px-4 py-8">
         <AuthorByline

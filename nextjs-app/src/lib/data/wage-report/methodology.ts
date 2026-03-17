@@ -20,10 +20,10 @@ export const wageReportMethodology = {
       id: "bls-oews",
       name: "Bureau of Labor Statistics - Occupational Employment and Wage Statistics",
       url: "https://www.bls.gov/oes/",
-      dataTypes: ["wage percentiles", "employment counts", "geographic wage data"],
+      dataTypes: ["wage ranges", "employment counts", "geographic wage data"],
       reliability: "authoritative" as const,
       lastAccessed: "2026-01-20",
-      notes: "Primary source for wage percentile data (10th, 25th, 50th, 75th, 90th) and employment statistics by occupation and geographic area."
+      notes: "Primary source for wage range data (entry-level, early-career, mid-career, experienced, top earners) and employment statistics by occupation and geographic area."
     },
     {
       id: "bls-qcew",
@@ -66,7 +66,7 @@ export const wageReportMethodology = {
   methodology: {
     wageDataCollection: {
       primarySource: "BLS OEWS May 2025 release (most recent annual data)",
-      percentileCalculation: "Uses official BLS percentile estimates where available. For roles not directly mapped to BLS SOC codes, estimates are derived from Indeed Flex market data and industry benchmarks.",
+      percentileCalculation: "Uses official BLS wage range estimates where available. For roles not directly mapped to BLS SOC codes, estimates are derived from Indeed Flex market data and industry benchmarks.",
       employmentData: "BLS OEWS employment estimates for May 2025 survey period.",
       geographicData: "State and metropolitan area wage data from BLS OEWS."
     },
@@ -87,7 +87,7 @@ export const wageReportMethodology = {
     
     tipIncomeData: {
       source: "Toast Restaurant Technology Report 2025, Indeed Flex earnings data",
-      methodology: "Average tip rates calculated from actual worker earnings reports. Ranges represent 10th-90th percentile of tip income.",
+      methodology: "Average tip rates calculated from actual worker earnings reports. Ranges represent entry-level to top-earner tip income.",
       note: "Tip income varies significantly by establishment type, location, and shift timing."
     },
     
@@ -120,7 +120,7 @@ export const wageReportMethodology = {
     coverage: "49 occupations across 6 industries",
     geographicCoverage: "All 50 states + DC, 50+ metropolitan areas",
     employmentCoverage: "Approximately 15+ million workers in covered occupations",
-    dataCompleteness: "95%+ of occupations have complete percentile data"
+    dataCompleteness: "95%+ of occupations have complete wage range data"
   }
 };
 

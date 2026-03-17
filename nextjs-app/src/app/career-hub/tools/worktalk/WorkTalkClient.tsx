@@ -21,8 +21,27 @@ import {
   Lightbulb,
 } from "lucide-react";
 import CTASection from "@/components/career-hub/CTASection";
+import FAQSection from "@/components/career-hub/FAQSection";
 import RelatedToolsSidebar from "@/components/career-hub/RelatedToolsSidebar";
 import { getAllPhrases } from "@/lib/data/job-english-phrases";
+
+const faqs = [
+  {
+    question: "What is WorkTalk?",
+    answer:
+      "WorkTalk teaches essential workplace English phrases for non-native speakers. Each phrase includes the English text, Spanish translation, phonetic pronunciation, and context for when to use it.",
+  },
+  {
+    question: "What workplace situations does it cover?",
+    answer:
+      "It covers common scenarios like greeting customers, asking for help, reporting problems, and communicating with supervisors across restaurant, warehouse, and retail settings.",
+  },
+  {
+    question: "Can I practice pronunciation?",
+    answer:
+      "Yes. Each phrase includes a phonetic guide. Practice saying the phrases out loud before your shift to build confidence.",
+  },
+];
 
 // Get all phrases
 const jobEnglishPhrases = getAllPhrases();
@@ -215,6 +234,8 @@ export default function WorkTalkClient() {
                 </ul>
               </CardContent>
             </Card>
+
+            <FAQSection faqs={faqs} />
           </div>
 
           {/* Sidebar */}

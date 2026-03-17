@@ -107,9 +107,6 @@ export default async function MethodologyPage({ params }: MethodologyPageProps) 
                     <span>Reliability: {source.reliability}</span>
                     <span>Last Accessed: {source.lastAccessed}</span>
                   </div>
-                  {source.notes && (
-                    <p className="text-xs text-muted-foreground mt-2 italic">{source.notes}</p>
-                  )}
                 </div>
               ))}
             </div>

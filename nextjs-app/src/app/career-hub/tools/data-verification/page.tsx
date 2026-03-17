@@ -1,6 +1,5 @@
 import { Metadata } from "next";
 import DataVerificationClient from "./DataVerificationClient";
-import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
 import CTASection from "@/components/career-hub/CTASection";
 import { SoftwareApplicationSchema } from "@/components/career-hub/seo";
 import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
@@ -49,14 +48,6 @@ export default function DataVerificationPage() {
         aggregateRating={undefined}
         featureList={[]}
       />
-      <div className="container mx-auto px-4 py-4">
-        <Breadcrumbs
-          items={[
-            { label: "Tools", href: "/career-hub/tools" },
-            { label: toolName },
-          ]}
-        />
-      </div>
       <DataVerificationClient />
       <div className="container mx-auto px-4 py-12">
         <InternalLinkHub 

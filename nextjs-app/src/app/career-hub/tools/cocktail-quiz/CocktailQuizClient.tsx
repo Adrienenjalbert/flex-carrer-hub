@@ -21,8 +21,27 @@ import {
   Target,
 } from "lucide-react";
 import CTASection from "@/components/career-hub/CTASection";
+import FAQSection from "@/components/career-hub/FAQSection";
 import RelatedToolsSidebar from "@/components/career-hub/RelatedToolsSidebar";
 import { cocktails } from "@/lib/data/cocktails";
+
+const faqs = [
+  {
+    question: "What does the Cocktail Quiz test?",
+    answer:
+      "It tests your knowledge of classic cocktail recipes, including base spirits, ingredients, and preparation methods. Useful for bartender job prep.",
+  },
+  {
+    question: "Do I need this knowledge for bartending jobs?",
+    answer:
+      "Yes. Most bars expect you to know at least 20 classic cocktails. This quiz covers the essentials that come up in bartender interviews.",
+  },
+  {
+    question: "How can I improve my score?",
+    answer:
+      "Study classic cocktails like Old Fashioned, Margarita, Mojito, and Martini. Get TIPS certified for a stronger bartending application.",
+  },
+];
 
 // Generate quiz questions from cocktails data
 const cocktailQuestions = cocktails.slice(0, 20).map((cocktail) => ({
@@ -229,6 +248,8 @@ export default function CocktailQuizClient() {
                 </ul>
               </CardContent>
             </Card>
+
+            <FAQSection faqs={faqs} />
           </div>
 
           {/* Sidebar */}

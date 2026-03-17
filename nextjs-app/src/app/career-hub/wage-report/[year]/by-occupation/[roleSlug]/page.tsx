@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: OccupationPageProps): Promise
   const median = occupation.currentYear.wagePercentiles.percentile50;
   const canonical = `https://indeedflex.com/career-hub/wage-report/2026/by-occupation/${roleSlug}`;
   const title = `${occupation.occupationTitle} Wages 2026 | Hourly Pay Report`;
-  const description = `${occupation.occupationTitle} wage data: $${median}/hr median, ${occupation.yoyChange.percentChange}% growth. Percentiles, regional variations, and tips included.`;
+  const description = `${occupation.occupationTitle} wage data: $${median}/hr average, ${occupation.yoyChange.percentChange}% growth. Wages by experience level, regional variations, and tips included.`;
   
   return {
     title,
@@ -93,7 +93,7 @@ export default async function OccupationPage({ params }: OccupationPageProps) {
             {occupation.occupationTitle} Wage Profile
           </h1>
           <p className="text-lg md:text-xl text-gray-700 leading-relaxed max-w-3xl">
-            Comprehensive wage data, percentiles, and regional analysis for {occupation.occupationTitle.toLowerCase()}s.
+            Comprehensive wage data, wages by experience level, and regional analysis for {occupation.occupationTitle.toLowerCase()}s.
           </p>
         </div>
       </div>
@@ -104,7 +104,7 @@ export default async function OccupationPage({ params }: OccupationPageProps) {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             <Card className="border-2 border-primary/20 hover:shadow-lg transition-shadow">
               <CardContent className="p-6 md:p-8">
-                <p className="text-xs md:text-sm text-muted-foreground mb-2">Median Wage</p>
+                <p className="text-xs md:text-sm text-muted-foreground mb-2">Average Wage</p>
                 <p className="text-2xl md:text-3xl font-bold text-primary">${occupation.currentYear.wagePercentiles.percentile50}/hr</p>
               </CardContent>
             </Card>
@@ -118,9 +118,9 @@ export default async function OccupationPage({ params }: OccupationPageProps) {
             </Card>
             <Card className="border-2 border-primary/20 hover:shadow-lg transition-shadow">
               <CardContent className="p-6 md:p-8">
-                <p className="text-xs md:text-sm text-muted-foreground mb-2">Employment</p>
+                <p className="text-xs md:text-sm text-muted-foreground mb-2">Workers Employed</p>
                 <p className="text-2xl md:text-3xl font-bold">
-                  {Math.round(occupation.currentYear.employment / 1000)}K
+                  {occupation.currentYear.employment.toLocaleString()}
                 </p>
               </CardContent>
             </Card>
@@ -148,7 +148,7 @@ export default async function OccupationPage({ params }: OccupationPageProps) {
               priorYear={2025}
               currentMedian={occupation.currentYear.wagePercentiles.percentile50}
               priorMedian={occupation.priorYear.wagePercentiles.percentile50}
-              title="Year-over-Year Wage Growth"
+              title="Yearly Wage Growth"
             />
           )}
 

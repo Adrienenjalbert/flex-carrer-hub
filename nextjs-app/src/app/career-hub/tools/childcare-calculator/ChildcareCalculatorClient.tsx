@@ -20,6 +20,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
 import {
   DollarSign,
   Baby,
@@ -27,6 +28,11 @@ import {
   TrendingUp,
   AlertCircle,
   CheckCircle2,
+  AlertTriangle,
+  XCircle,
+  Lightbulb,
+  Calendar,
+  ArrowRight,
 } from "lucide-react";
 import CTASection from "@/components/career-hub/CTASection";
 import FAQSection from "@/components/career-hub/FAQSection";
@@ -109,11 +115,12 @@ export default function ChildcareCalculatorClient() {
           <div className="flex-1">
             <div className="mb-8">
               <h1 className="text-3xl font-bold text-foreground mb-4">
-                Childcare Cost Calculator
+                Is Working Worth It?
               </h1>
               <p className="text-lg text-muted-foreground">
-                Calculate if working makes financial sense after childcare
-                costs. See your true take-home pay.
+                Find out if your income covers childcare costs. Enter your
+                hourly rate, schedule, and childcare situation to see your real
+                take-home pay.
               </p>
             </div>
 
@@ -240,6 +247,98 @@ export default function ChildcareCalculatorClient() {
               </Card>
             </div>
 
+            {/* Verdict */}
+            {calculations.monthlyNetIncome > 500 && (
+              <Card className="mb-8 border-green-500 bg-green-50 dark:bg-green-950/20">
+                <CardContent className="pt-6">
+                  <div className="flex items-start gap-3">
+                    <CheckCircle2 className="h-6 w-6 text-green-600 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <h2 className="text-xl font-bold text-green-700 dark:text-green-400 mb-2">
+                        Yes, working is worth it
+                      </h2>
+                      <p className="text-green-800 dark:text-green-300">
+                        You&apos;re keeping <strong>${calculations.monthlyNetIncome.toFixed(0)}/month</strong> after
+                        childcare — that&apos;s ${(calculations.monthlyNetIncome * 12).toFixed(0)}/year toward
+                        savings, bills, and your family&apos;s future. Plus you&apos;re building work experience and
+                        career momentum that pays off long-term.
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {calculations.monthlyNetIncome >= 0 && calculations.monthlyNetIncome <= 500 && (
+              <Card className="mb-8 border-amber-500 bg-amber-50 dark:bg-amber-950/20">
+                <CardContent className="pt-6">
+                  <div className="flex items-start gap-3">
+                    <AlertTriangle className="h-6 w-6 text-amber-600 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <h2 className="text-xl font-bold text-amber-700 dark:text-amber-400 mb-2">
+                        Marginal — consider these options
+                      </h2>
+                      <p className="text-amber-800 dark:text-amber-300 mb-3">
+                        At ${calculations.monthlyNetIncome.toFixed(0)}/month net, you&apos;re close to
+                        break-even. Here&apos;s how to tip the balance in your favor:
+                      </p>
+                      <ul className="space-y-2 text-amber-800 dark:text-amber-300">
+                        <li className="flex items-start gap-2">
+                          <ArrowRight className="h-4 w-4 flex-shrink-0 mt-1" />
+                          <span>Target higher-paying shifts ($2-5/hr more can add $300-600/month)</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <ArrowRight className="h-4 w-4 flex-shrink-0 mt-1" />
+                          <span>Reduce childcare days by working when a partner or family member can watch your kids</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <ArrowRight className="h-4 w-4 flex-shrink-0 mt-1" />
+                          <span>Claim tax credits below — they can add $200-500/month to your effective income</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {calculations.monthlyNetIncome < 0 && (
+              <Card className="mb-8 border-red-500 bg-red-50 dark:bg-red-950/20">
+                <CardContent className="pt-6">
+                  <div className="flex items-start gap-3">
+                    <XCircle className="h-6 w-6 text-red-600 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <h2 className="text-xl font-bold text-red-700 dark:text-red-400 mb-2">
+                        Not yet — but here&apos;s how to make it work
+                      </h2>
+                      <p className="text-red-800 dark:text-red-300 mb-3">
+                        Right now you&apos;d lose ${Math.abs(calculations.monthlyNetIncome).toFixed(0)}/month.
+                        But that doesn&apos;t mean working is off the table:
+                      </p>
+                      <ul className="space-y-2 text-red-800 dark:text-red-300">
+                        <li className="flex items-start gap-2">
+                          <ArrowRight className="h-4 w-4 flex-shrink-0 mt-1" />
+                          <span>School-hour shifts (9AM-3PM) eliminate childcare costs entirely</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <ArrowRight className="h-4 w-4 flex-shrink-0 mt-1" />
+                          <span>Work opposite schedules with your partner — one works days, one works evenings</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <ArrowRight className="h-4 w-4 flex-shrink-0 mt-1" />
+                          <span>Apply for childcare assistance programs — many states cover 50-100% of costs for qualifying families</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <ArrowRight className="h-4 w-4 flex-shrink-0 mt-1" />
+                          <span>Start with fewer hours to keep childcare costs low while building toward higher-paying roles</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
             {/* Breakdown */}
             <Card className="mb-8">
               <CardHeader>
@@ -304,6 +403,109 @@ export default function ChildcareCalculatorClient() {
                     <span>Use pre-tax Dependent Care FSA ($5,000/year)</span>
                   </li>
                 </ul>
+              </CardContent>
+            </Card>
+
+            {/* Tax Credits */}
+            <Card className="mb-8 border-blue-200 dark:border-blue-800">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <DollarSign className="h-5 w-5 text-blue-600" />
+                  Tax Credits You May Qualify For
+                </CardTitle>
+                <CardDescription>
+                  These credits can add $200-500/month to your effective income
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="p-4 bg-blue-50 dark:bg-blue-950/20 rounded-lg">
+                    <div className="flex items-start justify-between gap-4">
+                      <div>
+                        <h3 className="font-semibold text-foreground">
+                          Child and Dependent Care Tax Credit
+                        </h3>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          Covers a percentage of childcare expenses you pay so you can work or look for work.
+                        </p>
+                      </div>
+                      <Badge variant="secondary" className="whitespace-nowrap">
+                        Up to $3,000/child
+                      </Badge>
+                    </div>
+                    <p className="text-sm text-muted-foreground mt-2">
+                      Maximum $6,000 for two or more children. Credit percentage ranges from 20-35% based on your income.
+                    </p>
+                  </div>
+                  <div className="p-4 bg-blue-50 dark:bg-blue-950/20 rounded-lg">
+                    <div className="flex items-start justify-between gap-4">
+                      <div>
+                        <h3 className="font-semibold text-foreground">
+                          Dependent Care FSA
+                        </h3>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          Set aside pre-tax dollars for childcare through your employer.
+                        </p>
+                      </div>
+                      <Badge variant="secondary" className="whitespace-nowrap">
+                        $5,000 pre-tax
+                      </Badge>
+                    </div>
+                    <p className="text-sm text-muted-foreground mt-2">
+                      Saves you $1,000-1,500/year in taxes depending on your tax bracket. Ask your employer if they offer this benefit.
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Smart Scheduling Tips */}
+            <Card className="mb-8">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Calendar className="h-5 w-5 text-primary" />
+                  Smart Scheduling Tips for Parents
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-3">
+                  <li className="flex items-start gap-3 p-3 bg-muted/50 rounded-lg">
+                    <Lightbulb className="h-5 w-5 text-amber-500 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <span className="font-medium">Morning warehouse shifts (6AM-2PM)</span>
+                      <p className="text-sm text-muted-foreground mt-0.5">
+                        Work while kids are at daycare, pick up early and save on afternoon care costs.
+                      </p>
+                    </div>
+                  </li>
+                  <li className="flex items-start gap-3 p-3 bg-muted/50 rounded-lg">
+                    <Lightbulb className="h-5 w-5 text-amber-500 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <span className="font-medium">School-hour shifts (9AM-3PM)</span>
+                      <p className="text-sm text-muted-foreground mt-0.5">
+                        Work while kids are in school — zero childcare needed.
+                      </p>
+                    </div>
+                  </li>
+                  <li className="flex items-start gap-3 p-3 bg-muted/50 rounded-lg">
+                    <Lightbulb className="h-5 w-5 text-amber-500 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <span className="font-medium">Evening/weekend shifts</span>
+                      <p className="text-sm text-muted-foreground mt-0.5">
+                        Work when your partner watches the kids — no childcare costs at all.
+                      </p>
+                    </div>
+                  </li>
+                </ul>
+                <div className="mt-4 pt-4 border-t">
+                  <Link
+                    href="/career-hub/tools/shift-planner"
+                    className="inline-flex items-center gap-2 text-primary font-medium hover:underline"
+                  >
+                    Plan your ideal shift schedule
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </div>
               </CardContent>
             </Card>
 

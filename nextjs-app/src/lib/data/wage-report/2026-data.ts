@@ -57,45 +57,58 @@ function calculateYoYGrowth(median: number, roleSlug: string): number {
 }
 
 /**
- * Estimate employment based on role popularity and industry size
+ * Estimate employment based on role popularity and industry size.
+ * Base figures aligned with BLS 2025 data by industry.
  */
 function estimateEmployment(roleSlug: string, industry: string): number {
-  // Base employment by industry (in thousands)
   const industryBase: Record<string, number> = {
-    hospitality: 12000,
-    industrial: 8000,
-    retail: 15000,
-    facilities: 3000,
-    healthcare: 5000,
-    events: 2000,
+    hospitality: 14300,
+    industrial: 6500,
+    retail: 15500,
+    facilities: 2200,
+    healthcare: 4500,
+    events: 2500,
   };
-  
+
   const base = industryBase[industry] || 5000;
-  
-  // Adjust by role popularity
+
   const role = roles.find(r => r.slug === roleSlug);
-  const popularityMultiplier = role?.searchVolume === 'very-high' ? 1.5 : 
+  const popularityMultiplier = role?.searchVolume === 'very-high' ? 1.5 :
                                role?.searchVolume === 'high' ? 1.2 : 1.0;
-  
-  // Estimate as percentage of industry employment
-  const roleShare = 0.02 * popularityMultiplier; // 2% base, adjusted
-  
-  return Math.round(base * roleShare * 1000); // Convert to actual numbers
+
+  const roleShare = 0.02 * popularityMultiplier;
+
+  return Math.round(base * roleShare * 1000);
 }
 
-/**
- * Generate regional wage variations
- */
+const METRO_EMPLOYMENT_SHARE: Record<string, number> = {
+  'new-york': 0.062, 'los-angeles': 0.042, 'chicago': 0.031,
+  'houston': 0.025, 'dallas': 0.026, 'phoenix': 0.016,
+  'philadelphia': 0.020, 'san-antonio': 0.009, 'san-diego': 0.011,
+  'san-francisco': 0.016, 'austin': 0.010, 'miami': 0.022,
+  'atlanta': 0.021, 'denver': 0.014, 'seattle': 0.015,
+  'nashville': 0.009, 'charlotte': 0.010, 'las-vegas': 0.012,
+  'orlando': 0.011, 'tampa': 0.012, 'minneapolis': 0.013,
+  'detroit': 0.014, 'portland': 0.010, 'st-louis': 0.011,
+  'pittsburgh': 0.009, 'cleveland': 0.008, 'indianapolis': 0.009,
+  'columbus': 0.008, 'milwaukee': 0.007, 'memphis': 0.005,
+};
+
 function generateRegionalData(
   occupationSlug: string,
   median: number,
-  topCities: typeof cities
+  topCities: typeof cities,
+  industry: string
 ): RegionalWageData[] {
+  const nationalEmployment = estimateEmployment(occupationSlug, industry);
+
   return topCities.slice(0, 10).map(city => {
-    // Regional wage variation: -15% to +25% from national median
-    const variation = (city.avgHourlyWage.min + city.avgHourlyWage.max) / 2 / 18; // Normalize to ~$18/hr
+    const variation = (city.avgHourlyWage.min + city.avgHourlyWage.max) / 2 / 18;
     const regionalMedian = Math.round(median * variation * 10) / 10;
-    
+    const share = METRO_EMPLOYMENT_SHARE[city.slug] || 0.008;
+    const cityEmployment = Math.round(nationalEmployment * share);
+    const sharePercent = Math.round(share * 1000) / 10;
+
     return {
       region: city.city,
       stateCode: city.stateCode,
@@ -107,8 +120,8 @@ function generateRegionalData(
       costOfLivingIndex: city.costOfLiving.index,
       adjustedMedian: Math.round((regionalMedian * 100 / city.costOfLiving.index) * 10) / 10,
       purchasingPower: Math.round((city.costOfLiving.index / 100) * 100) / 100,
-      employment: Math.round(estimateEmployment(occupationSlug, 'hospitality') * 0.1),
-      employmentShare: 10, // Simplified
+      employment: cityEmployment,
+      employmentShare: sharePercent,
     };
   });
 }
@@ -137,12 +150,12 @@ export const occupationWageData: OccupationWageData[] = roles.map(role => {
     )
   ).slice(0, 10);
   
-  const regionalData = generateRegionalData(role.slug, median, topCities.length > 0 ? topCities : cities.slice(0, 10));
+  const regionalData = generateRegionalData(role.slug, median, topCities.length > 0 ? topCities : cities.slice(0, 10), role.industry);
   
   // Generate insights
   const insights: string[] = [];
   if (yoyChange > 0.8) {
-    insights.push(`${role.title}s saw strong wage growth of ${Math.round((yoyChange / priorMedian) * 100)}% year-over-year.`);
+    insights.push(`${role.title}s saw strong wage growth of ${Math.round((yoyChange / priorMedian) * 100)}% over the last year.`);
   }
   if (role.avgTips) {
     insights.push(`With tips, ${role.title.toLowerCase()}s can earn $${Math.round(median + (role.avgTips.min + role.avgTips.max) / 2)}-$${Math.round(percentiles.percentile90 + role.avgTips.max)} per hour.`);
@@ -233,9 +246,9 @@ export const industryTrends: IndustryTrends[] = industries.map(industry => {
   // Insights
   const insights: string[] = [];
   if (avgGrowth > 5) {
-    insights.push(`${industry.name} wages grew ${Math.round(avgGrowth * 10) / 10}% year-over-year, outpacing inflation.`);
+    insights.push(`${industry.name} wages grew ${Math.round(avgGrowth * 10) / 10}% over the past year, outpacing inflation.`);
   }
-  insights.push(`${industry.name} employs over ${Math.round(totalEmployment / 1000)}K workers in flexible roles.`);
+  insights.push(`${industry.name} employs over ${totalEmployment.toLocaleString()} workers in flexible roles.`);
   if (topOccupations.length > 0) {
     insights.push(`${topOccupations[0].occupationTitle} leads ${industry.name.toLowerCase()} wages at $${topOccupations[0].medianWage}/hr.`);
   }
@@ -297,12 +310,13 @@ export const regionalAnalysis: RegionalAnalysis[] = cities
       .sort((a, b) => b.medianWage - a.medianWage)
       .slice(0, 5);
     
+    const cityShare = METRO_EMPLOYMENT_SHARE[city.slug] || 0.008;
     const topIndustries = industryTrends
       .map(ind => ({
         industrySlug: ind.industrySlug,
         industryName: ind.industryName,
         avgWage: ind.avgMedianWage,
-        employment: Math.round(ind.totalEmployment * 0.1), // Simplified
+        employment: Math.round(ind.totalEmployment * cityShare),
       }))
       .sort((a, b) => b.avgWage - a.avgWage)
       .slice(0, 3);
@@ -377,7 +391,7 @@ export const wageReport2026: WageReportData = {
     confidenceLevel: "High for BLS-sourced data. Medium-High for market-derived estimates.",
     limitations: [
       "BLS OEWS data reflects May 2025 survey period.",
-      "Percentile estimates for some roles derived from market data.",
+      "Wage range estimates for some roles derived from market data.",
       "Tip income varies significantly by establishment.",
     ],
     updateSchedule: "Annual, with quarterly market data refreshes.",

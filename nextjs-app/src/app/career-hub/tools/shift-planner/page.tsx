@@ -1,6 +1,5 @@
 import { Metadata } from "next";
 import ShiftPlannerClient from "./ShiftPlannerClient";
-import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
 import CTASection from "@/components/career-hub/CTASection";
 import { SoftwareApplicationSchema, FAQSchema } from "@/components/career-hub/seo";
 import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
@@ -72,14 +71,6 @@ export default function ShiftPlannerPage() {
         featureList={tool.inputs.map(i => i.name)}
       />
       <FAQSchema questions={shiftFAQs} />
-      <div className="container mx-auto px-4 py-4">
-        <Breadcrumbs
-          items={[
-            { label: "Tools", href: "/career-hub/tools" },
-            { label: tool.name },
-          ]}
-        />
-      </div>
       <ShiftPlannerClient />
       <div className="container mx-auto px-4 py-8">
         <AuthorByline

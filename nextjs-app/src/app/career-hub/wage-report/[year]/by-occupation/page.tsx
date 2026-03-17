@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: ByOccupationPageProps): Promi
 
   const canonical = `https://indeedflex.com/career-hub/wage-report/${year}/by-occupation`;
   const title = `Wage Report by Occupation ${year} | Role-Specific Wage Analysis`;
-  const description = `Detailed wage data for ${wageReport2026.summary.totalOccupations} occupations. Compare hourly rates, percentiles, and growth across all flexible work roles.`;
+  const description = `Detailed wage data for ${wageReport2026.summary.totalOccupations} occupations. Compare hourly rates, wages by experience level, and growth across all flexible work roles.`;
 
   return {
     title: `${title} | Indeed Flex`,
@@ -69,7 +69,7 @@ export default async function ByOccupationPage({ params }: ByOccupationPageProps
     { name: "By Occupation" },
   ];
 
-  // Sort occupations by median wage (descending)
+  // Sort occupations by average wage (descending)
   const sortedOccupations = [...wageReport2026.occupations].sort(
     (a, b) => b.currentYear.wagePercentiles.percentile50 - a.currentYear.wagePercentiles.percentile50
   );
@@ -104,7 +104,7 @@ export default async function ByOccupationPage({ params }: ByOccupationPageProps
         </h1>
         <p className="text-lg text-muted-foreground max-w-3xl">
           Detailed wage analysis for {wageReport2026.summary.totalOccupations} occupations across flexible work. 
-          Compare median wages, percentiles, and year-over-year growth.
+          Compare average wages, wages based on experience, and yearly wage growth.
         </p>
       </div>
 
@@ -142,7 +142,7 @@ export default async function ByOccupationPage({ params }: ByOccupationPageProps
                     <CardContent>
                       <div className="space-y-2">
                         <div className="flex items-center justify-between">
-                          <span className="text-sm text-muted-foreground">Median</span>
+                          <span className="text-sm text-muted-foreground">Average</span>
                           <span className="text-lg font-bold text-primary">
                             ${occupation.currentYear.wagePercentiles.percentile50.toFixed(2)}/hr
                           </span>
@@ -155,7 +155,7 @@ export default async function ByOccupationPage({ params }: ByOccupationPageProps
                           </span>
                         </div>
                         <div className="flex items-center justify-between text-sm">
-                          <span className="text-muted-foreground">Employment</span>
+                          <span className="text-muted-foreground">Workers Employed</span>
                           <span className="font-medium">
                             {occupation.currentYear.employment.toLocaleString()}
                           </span>
@@ -179,13 +179,13 @@ export default async function ByOccupationPage({ params }: ByOccupationPageProps
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <TrendingUp className="h-6 w-6 text-primary" />
-            Top Occupations
+            Roles Tracked
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid md:grid-cols-3 gap-6">
             <div>
-              <p className="text-sm text-muted-foreground mb-1">Highest Median Wage</p>
+              <p className="text-sm text-muted-foreground mb-1">Highest Average Wage</p>
               <p className="text-xl font-bold">
                 {sortedOccupations[0]?.occupationTitle || "N/A"}
               </p>

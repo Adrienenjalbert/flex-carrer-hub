@@ -20,7 +20,26 @@ import {
   DollarSign,
 } from "lucide-react";
 import CTASection from "@/components/career-hub/CTASection";
+import FAQSection from "@/components/career-hub/FAQSection";
 import RelatedToolsSidebar from "@/components/career-hub/RelatedToolsSidebar";
+
+const faqs = [
+  {
+    question: "Where does Career Hub data come from?",
+    answer:
+      "Primary sources include Bureau of Labor Statistics (BLS OEWS), Department of Labor, IRS, state labor agencies, and Indeed Flex internal data.",
+  },
+  {
+    question: "How often is the data updated?",
+    answer:
+      "Pay data updates annually with BLS OEWS releases. Tax rates update each tax year. State-specific data is verified quarterly.",
+  },
+  {
+    question: "Can I trust the pay ranges shown?",
+    answer:
+      "Pay ranges reflect BLS survey data and Indeed Flex market rates. Always check the specific shift listing for exact pay, as rates vary by employer and location.",
+  },
+];
 
 const dataSources = [
   {
@@ -71,7 +90,7 @@ const dataSources = [
       },
       {
         name: "State Revenue Departments",
-        url: "#",
+        url: "https://www.taxadmin.org/state-tax-agencies",
         description: "Individual state tax rates and requirements",
         lastUpdated: "Annually",
       },
@@ -244,6 +263,8 @@ export default function DataVerificationClient() {
                 </p>
               </CardContent>
             </Card>
+
+            <FAQSection faqs={faqs} />
           </div>
 
           {/* Sidebar */}

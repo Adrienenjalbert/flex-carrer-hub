@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: TrendsPageProps): Promise<Met
 
   const canonical = `https://indeedflex.com/career-hub/wage-report/${year}/trends`;
   const title = `Wage Trends & Analysis ${year} | Minimum Wage Impact & Inflation`;
-  const description = `Comprehensive analysis of wage trends, minimum wage impact, inflation effects, and seasonal patterns in flexible work. Data-driven insights for ${year}.`;
+  const description = `Analysis of wage trends, minimum wage impact, inflation effects, and seasonal patterns in flexible work. Data-driven insights for ${year}.`;
 
   return {
     title: `${title} | Indeed Flex`,
@@ -113,7 +113,7 @@ export default async function TrendsPage({ params }: TrendsPageProps) {
           </CardHeader>
           <CardContent>
             <p className="text-3xl font-bold text-primary">{avgGrowth}%</p>
-            <p className="text-sm text-muted-foreground">Year-over-year</p>
+            <p className="text-sm text-muted-foreground">Yearly growth</p>
           </CardContent>
         </Card>
         <Card>
@@ -161,10 +161,10 @@ export default async function TrendsPage({ params }: TrendsPageProps) {
         <CardContent>
           <div className="prose prose-gray max-w-none">
             <p className="text-base leading-relaxed mb-4">
-              Minimum wage increases across multiple states in 2025-2026 have created upward pressure 
-              on entry-level wages throughout flexible work. States with recent minimum wage hikes 
+              Minimum wage increases across multiple states in 2025-2026 have caused a spike 
+              in entry-level wages throughout flexible work. States with recent minimum wage hikes 
               (California, New York, Washington, Massachusetts) show stronger wage growth at the 
-              lower percentiles, with ripple effects extending to mid-tier roles.
+              lower end of the market, with ripple effects extending to more experienced roles.
             </p>
             <p className="text-base leading-relaxed mb-4">
               The federal minimum wage remains at $7.25/hour, but most flexible work roles now 
@@ -175,9 +175,8 @@ export default async function TrendsPage({ params }: TrendsPageProps) {
             <div className="bg-muted/50 rounded-lg p-4 mt-4">
               <p className="text-sm font-medium mb-2">Key Insight:</p>
               <p className="text-sm text-muted-foreground">
-                Minimum wage increases have compressed wage distributions, reducing the gap between 
-                entry-level and experienced workers. This benefits new workers but may slow wage growth 
-                for mid-career professionals.
+                Minimum wage increases have reduced the gap between entry-level and experienced workers. 
+                This benefits new workers but may slow wage growth for more experienced roles.
               </p>
             </div>
           </div>
@@ -202,22 +201,16 @@ export default async function TrendsPage({ params }: TrendsPageProps) {
             </p>
             <p className="text-base leading-relaxed mb-4">
               Industries with the strongest wage growth ({topIndustry.name} at +{topIndustry.growth}%) 
-              are outpacing inflation significantly, providing real purchasing power increases. 
-              However, some sectors with slower growth may see real wages stagnate or decline slightly.
+              are outpacing inflation significantly. However, some sectors with slower growth may 
+              see real wages stagnate or decline slightly.
             </p>
-            <div className="grid md:grid-cols-2 gap-4 mt-4">
+            <div className="mt-4">
               <div className="bg-green-50 border border-green-200 rounded-lg p-4">
                 <p className="text-sm font-medium text-green-800 mb-1">Above Inflation</p>
                 <p className="text-sm text-green-700">
-                  {wageReport2026.industries.filter(i => i.wageGrowth > 4).length} industries 
-                  showing real wage growth above inflation
-                </p>
-              </div>
-              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                <p className="text-sm font-medium text-yellow-800 mb-1">At Inflation</p>
-                <p className="text-sm text-yellow-700">
-                  {wageReport2026.industries.filter(i => i.wageGrowth >= 3 && i.wageGrowth <= 4).length} industries 
-                  keeping pace with inflation
+                  {wageReport2026.industries.filter(i => i.wageGrowth > 3).length} of {wageReport2026.industries.length} industries 
+                  are showing real wage growth above inflation, with {topIndustry.name} leading 
+                  at +{topIndustry.growth}% yearly growth.
                 </p>
               </div>
             </div>
@@ -281,7 +274,7 @@ export default async function TrendsPage({ params }: TrendsPageProps) {
                   <div>
                     <p className="font-semibold">{occ.occupationTitle}</p>
                     <p className="text-sm text-muted-foreground">
-                      ${occ.currentYear.wagePercentiles.percentile50.toFixed(2)}/hr median
+                      ${occ.currentYear.wagePercentiles.percentile50.toFixed(2)}/hr average
                     </p>
                   </div>
                 </div>
@@ -289,7 +282,7 @@ export default async function TrendsPage({ params }: TrendsPageProps) {
                   <p className="text-lg font-bold text-green-600">
                     +{occ.yoyChange.percentChange.toFixed(1)}%
                   </p>
-                  <p className="text-xs text-muted-foreground">YoY growth</p>
+                  <p className="text-xs text-muted-foreground">Yearly growth</p>
                 </div>
               </div>
             ))}

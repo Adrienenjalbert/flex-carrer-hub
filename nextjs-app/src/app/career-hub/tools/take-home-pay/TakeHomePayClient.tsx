@@ -27,22 +27,43 @@ import {
 
 const tool = getToolBySlug('take-home-pay')!;
 
-// Tax calculation functions
-const FEDERAL_TAX_BRACKETS_2026 = [
-  { min: 0, max: 12150, rate: 0.10 },
-  { min: 12150, max: 49400, rate: 0.12 },
-  { min: 49400, max: 105400, rate: 0.22 },
-  { min: 105400, max: 201200, rate: 0.24 },
-  { min: 201200, max: 255600, rate: 0.32 },
-  { min: 255600, max: 639200, rate: 0.35 },
-  { min: 639200, max: Infinity, rate: 0.37 },
-];
+// 2026 federal tax brackets by filing status (inflation-adjusted projections)
+const FEDERAL_TAX_BRACKETS_2026: Record<string, { min: number; max: number; rate: number }[]> = {
+  single: [
+    { min: 0, max: 12150, rate: 0.10 },
+    { min: 12150, max: 49400, rate: 0.12 },
+    { min: 49400, max: 105400, rate: 0.22 },
+    { min: 105400, max: 201200, rate: 0.24 },
+    { min: 201200, max: 255600, rate: 0.32 },
+    { min: 255600, max: 639200, rate: 0.35 },
+    { min: 639200, max: Infinity, rate: 0.37 },
+  ],
+  married: [
+    { min: 0, max: 24300, rate: 0.10 },
+    { min: 24300, max: 98800, rate: 0.12 },
+    { min: 98800, max: 210800, rate: 0.22 },
+    { min: 210800, max: 402400, rate: 0.24 },
+    { min: 402400, max: 511200, rate: 0.32 },
+    { min: 511200, max: 767000, rate: 0.35 },
+    { min: 767000, max: Infinity, rate: 0.37 },
+  ],
+  head: [
+    { min: 0, max: 17350, rate: 0.10 },
+    { min: 17350, max: 66200, rate: 0.12 },
+    { min: 66200, max: 105400, rate: 0.22 },
+    { min: 105400, max: 201200, rate: 0.24 },
+    { min: 201200, max: 255600, rate: 0.32 },
+    { min: 255600, max: 639200, rate: 0.35 },
+    { min: 639200, max: Infinity, rate: 0.37 },
+  ],
+};
 
-function calculateFederalTax(annualIncome: number): number {
+function calculateFederalTax(annualIncome: number, filingStatus: string): number {
+  const brackets = FEDERAL_TAX_BRACKETS_2026[filingStatus] || FEDERAL_TAX_BRACKETS_2026.single;
   let tax = 0;
   let remainingIncome = annualIncome;
   
-  for (const bracket of FEDERAL_TAX_BRACKETS_2026) {
+  for (const bracket of brackets) {
     if (remainingIncome <= 0) break;
     const taxableInBracket = Math.min(remainingIncome, bracket.max - bracket.min);
     tax += taxableInBracket * bracket.rate;
@@ -83,7 +104,7 @@ export default function TakeHomePayClient() {
     const annualGross = grossPay * frequency.divisor;
     
     // Taxes
-    const federalTax = calculateFederalTax(annualGross);
+    const federalTax = calculateFederalTax(annualGross, filingStatus);
     const stateTax = calculateStateTax(annualGross, state);
     const socialSecurityTax = Math.min(annualGross, 168600) * 0.062;
     const medicareTax = annualGross * 0.0145;
@@ -117,7 +138,7 @@ export default function TakeHomePayClient() {
       periodFica,
       periodDeductions: grossPay - periodNet,
     };
-  }, [grossPay, payFrequency, state]);
+  }, [grossPay, payFrequency, state, filingStatus]);
 
   const stateData = stateTaxData[state];
   const relatedTools = getRelatedTools('take-home-pay');

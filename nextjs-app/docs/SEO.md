@@ -370,6 +370,59 @@ import Image from "next/image";
 
 ---
 
+## Answer Engine Optimization (AEO)
+
+In addition to traditional SEO, the Career Hub optimizes for AI-powered answer engines (ChatGPT, Perplexity, Google AI Overviews, Gemini). See `BRAND.md` for full AEO content rules.
+
+### Technical AEO Requirements
+
+| Requirement | Implementation |
+|-------------|---------------|
+| **Answer-first content** | 40-60 word definitive answer in first paragraph of every article |
+| **Question-format H2s** | H2s phrased as questions matching PAA queries |
+| **FAQPage schema** | JSON-LD with `mainEntity` Q&A pairs |
+| **Article schema** | Add `speakable` property marking citable sections |
+| **Entity references** | Add `about` and `mentions` to schemas for semantic clarity |
+| **Fresh timestamps** | `dateModified` always current and ISO 8601 format |
+| **AI crawler access** | Allow `OAI-SearchBot`, `PerplexityBot`, `ClaudeBot`, `GoogleOther` in `robots.ts` |
+
+### Search Console Integration
+
+Use the `search-console-metrics` Supabase Edge Function to pull per-page performance data:
+
+```typescript
+const response = await fetch(
+  `${SUPABASE_URL}/functions/v1/search-console-metrics`,
+  {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+    },
+    body: JSON.stringify({
+      urlFilter: '/career-hub/',
+      startDate: '2026-01-01',
+      endDate: '2026-03-16',
+    }),
+  }
+);
+const { success, rows } = await response.json();
+// rows: [{ keys: [url], clicks, impressions, ctr, position }]
+```
+
+### Content Engine Quality Scoring
+
+The content engine (`src/lib/content-engine/`) provides automated scoring:
+
+- `quality-scorer.ts` — scores articles across Brand (25%), CRAFT (25%), SEO (20%), AEO (15%), Depth (15%)
+- `performance-tracker.ts` — tracks per-page health scores combining organic performance + quality + freshness
+- `decay-detector.ts` — auto-detects content decay and queues refresh actions
+- `strategy-learnings.ts` — extracts patterns from top-performing content
+
+Run `npm run audit:quality` to score all articles.
+
+---
+
 ## Monitoring & Tools
 
 ### Google Search Console

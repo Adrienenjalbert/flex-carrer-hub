@@ -29,3 +29,6 @@ verify_jwt = false
 
 [functions.semrush-keyword]
 verify_jwt = false
+
+[functions.search-console-metrics]
+verify_jwt = false

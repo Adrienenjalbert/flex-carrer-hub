@@ -29,19 +29,19 @@ export function WageDistributionChart({
       },
       {
         percentile: "25th",
-        label: "Lower Quartile",
+        label: "Mid-Level",
         value: percentiles.percentile25,
         color: "hsl(var(--secondary))",
       },
       {
         percentile: "50th",
-        label: "Median",
+        label: "Average",
         value: percentiles.percentile50,
         color: "hsl(var(--primary))",
       },
       {
         percentile: "75th",
-        label: "Upper Quartile",
+        label: "Experienced",
         value: percentiles.percentile75,
         color: "hsl(var(--primary))",
       },
@@ -56,7 +56,7 @@ export function WageDistributionChart({
     if (showTips) {
       data.push({
         percentile: "With Tips",
-        label: "Median + Tips",
+        label: "Average + Tips",
         value: percentiles.percentile50 + (showTips.min + showTips.max) / 2,
         color: "hsl(var(--success))",
       });
@@ -65,7 +65,9 @@ export function WageDistributionChart({
     return data;
   }, [percentiles, showTips]);
 
-  const maxValue = Math.max(...chartData.map(d => d.value)) * 1.1;
+  const maxValue = chartData.length > 0
+    ? Math.max(...chartData.map(d => d.value), 0) * 1.1
+    : 10;
 
   const CustomTooltip = ({ active, payload }: { active?: boolean; payload?: any[] }) => {
     if (active && payload && payload.length) {
@@ -85,6 +87,22 @@ export function WageDistributionChart({
     return null;
   };
 
+  if (!percentiles || chartData.length === 0) {
+    return (
+      <Card className={className}>
+        <CardHeader className="pb-4">
+          <CardTitle className="flex items-center gap-2 text-lg">
+            <DollarSign className="h-5 w-5 text-primary" />
+            {title}
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-sm text-muted-foreground">No wage data available.</p>
+        </CardContent>
+      </Card>
+    );
+  }
+
   return (
     <Card className={className}>
       <CardHeader className="pb-4">
@@ -97,8 +115,8 @@ export function WageDistributionChart({
         </p>
       </CardHeader>
       <CardContent>
-        <div className="h-64">
-          <ResponsiveContainer width="100%" height="100%">
+        <div className="h-64 min-w-[280px]">
+          <ResponsiveContainer width="100%" height="100%" initialDimension={{ width: 400, height: 256 }}>
             <BarChart
               data={chartData}
               layout="vertical"
@@ -121,7 +139,7 @@ export function WageDistributionChart({
                 x={percentiles.percentile50} 
                 stroke="hsl(var(--primary))" 
                 strokeDasharray="3 3"
-                label={{ value: "Median", position: "top" }}
+                label={{ value: "Average", position: "top" }}
               />
               <Bar dataKey="value" radius={[0, 4, 4, 0]}>
                 {chartData.map((entry, index) => (
@@ -134,15 +152,15 @@ export function WageDistributionChart({
         
         <div className="mt-4 grid grid-cols-2 md:grid-cols-3 gap-2 text-xs">
           <div>
-            <span className="text-muted-foreground">10th Percentile: </span>
+            <span className="text-muted-foreground">Entry Level: </span>
             <span className="font-medium">${percentiles.percentile10}/hr</span>
           </div>
           <div>
-            <span className="text-muted-foreground">Median: </span>
+            <span className="text-muted-foreground">Average: </span>
             <span className="font-medium text-primary">${percentiles.percentile50}/hr</span>
           </div>
           <div>
-            <span className="text-muted-foreground">90th Percentile: </span>
+            <span className="text-muted-foreground">Top Earners: </span>
             <span className="font-medium">${percentiles.percentile90}/hr</span>
           </div>
         </div>

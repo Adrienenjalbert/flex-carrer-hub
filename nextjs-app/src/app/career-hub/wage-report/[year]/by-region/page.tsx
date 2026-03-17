@@ -69,7 +69,7 @@ export default async function ByRegionPage({ params }: ByRegionPageProps) {
     { name: "By Region" },
   ];
 
-  // Sort regions by median wage (descending)
+  // Sort regions by average wage (descending)
   const sortedRegions = [...wageReport2026.regions].sort(
     (a, b) => b.avgMedianWage - a.avgMedianWage
   );
@@ -107,18 +107,18 @@ export default async function ByRegionPage({ params }: ByRegionPageProps) {
               <CardContent>
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">Median Wage</span>
+                    <span className="text-sm text-muted-foreground">Average Wage</span>
                     <span className="text-lg font-bold text-primary">
                       ${region.avgMedianWage.toFixed(2)}/hr
                     </span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">Top Occupations</span>
+                    <span className="text-sm text-muted-foreground">Roles Tracked</span>
                     <span className="text-sm font-medium">{region.topOccupations.length}</span>
                   </div>
                   {region.totalEmployment && (
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-muted-foreground">Employment</span>
+                      <span className="text-sm text-muted-foreground">Workers Employed</span>
                       <span className="text-sm font-medium">
                         {region.totalEmployment.toLocaleString()}
                       </span>
@@ -146,7 +146,7 @@ export default async function ByRegionPage({ params }: ByRegionPageProps) {
         <CardContent>
           <div className="grid md:grid-cols-3 gap-6">
             <div>
-              <p className="text-sm text-muted-foreground mb-1">Highest Median Wage</p>
+              <p className="text-sm text-muted-foreground mb-1">Average Wage</p>
               <p className="text-2xl font-bold">
                 {sortedRegions[0]?.region || "N/A"}
               </p>
@@ -160,9 +160,9 @@ export default async function ByRegionPage({ params }: ByRegionPageProps) {
               <p className="text-sm text-muted-foreground">Metro areas</p>
             </div>
             <div>
-              <p className="text-sm text-muted-foreground mb-1">Total Regions</p>
-              <p className="text-2xl font-bold">{wageReport2026.regions.length}</p>
-              <p className="text-sm text-muted-foreground">Regions analyzed</p>
+              <p className="text-sm text-muted-foreground mb-1">Total Employment</p>
+              <p className="text-2xl font-bold">{wageReport2026.summary.totalEmployment.toLocaleString()}</p>
+              <p className="text-sm text-muted-foreground">Workers across all regions</p>
             </div>
           </div>
         </CardContent>

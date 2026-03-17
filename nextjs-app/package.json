@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "audit:pages": "node --loader ts-node/esm scripts/audit-pages.ts || node -r ts-node/register scripts/audit-pages.ts || echo 'Install ts-node: npm install -D ts-node'"
+    "audit:pages": "node --loader ts-node/esm scripts/audit-pages.ts || node -r ts-node/register scripts/audit-pages.ts || echo 'Install ts-node: npm install -D ts-node'",
+    "audit:quality": "node --loader ts-node/esm scripts/audit-content-quality.ts || node -r ts-node/register scripts/audit-content-quality.ts || echo 'Install ts-node: npm install -D ts-node'"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

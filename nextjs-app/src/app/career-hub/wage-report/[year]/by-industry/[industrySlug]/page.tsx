@@ -115,20 +115,20 @@ export default async function IndustryPage({ params }: IndustryPageProps) {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
             <Card className="border-2 border-primary/20 hover:shadow-lg transition-shadow">
               <CardContent className="p-6 md:p-8">
-                <p className="text-xs md:text-sm text-muted-foreground mb-2">Median Wage</p>
+                <p className="text-xs md:text-sm text-muted-foreground mb-2">Average Wage</p>
                 <p className="text-2xl md:text-3xl font-bold text-primary">${industry.avgMedianWage}/hr</p>
               </CardContent>
             </Card>
             <Card className="border-2 border-success/20 hover:shadow-lg transition-shadow">
               <CardContent className="p-6 md:p-8">
-                <p className="text-xs md:text-sm text-muted-foreground mb-2">Wage Growth</p>
+                <p className="text-xs md:text-sm text-muted-foreground mb-2">Yearly Wage Growth</p>
                 <p className="text-2xl md:text-3xl font-bold text-success">+{industry.wageGrowth}%</p>
               </CardContent>
             </Card>
             <Card className="border-2 border-primary/20 hover:shadow-lg transition-shadow">
               <CardContent className="p-6 md:p-8">
                 <p className="text-xs md:text-sm text-muted-foreground mb-2">Total Employment</p>
-                <p className="text-2xl md:text-3xl font-bold">{Math.round(industry.totalEmployment / 1000)}K</p>
+                <p className="text-2xl md:text-3xl font-bold">{industry.totalEmployment.toLocaleString()}</p>
               </CardContent>
             </Card>
           </div>
@@ -155,7 +155,7 @@ export default async function IndustryPage({ params }: IndustryPageProps) {
             <CardHeader className="pb-4">
               <CardTitle className="flex items-center gap-2 text-xl">
                 <Briefcase className="h-6 w-6 text-primary" />
-                Top Occupations
+                Roles Available
               </CardTitle>
               <p className="text-sm text-muted-foreground mt-2">Highest-paying roles in {industry.industryName.toLowerCase()}</p>
             </CardHeader>
@@ -220,27 +220,6 @@ export default async function IndustryPage({ params }: IndustryPageProps) {
             </Card>
           )}
 
-          {/* Industry Insights */}
-          {industry.insights.length > 0 && (
-            <Card className="shadow-md bg-gradient-to-br from-primary/5 to-transparent">
-              <CardHeader className="pb-4">
-                <CardTitle className="text-xl flex items-center gap-2">
-                  <TrendingUp className="h-5 w-5 text-primary" />
-                  Industry Analysis
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-3">
-                  {industry.insights.map((insight, index) => (
-                    <li key={index} className="flex items-start gap-3 text-base">
-                      <span className="text-primary mt-1.5 font-bold">•</span>
-                      <span className="text-gray-700 leading-relaxed">{insight}</span>
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
-          )}
         </div>
 
         <aside className="lg:col-span-1">

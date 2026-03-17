@@ -24,8 +24,27 @@ import {
   ShoppingBag,
 } from "lucide-react";
 import CTASection from "@/components/career-hub/CTASection";
+import FAQSection from "@/components/career-hub/FAQSection";
 import RelatedToolsSidebar from "@/components/career-hub/RelatedToolsSidebar";
 import { safetyScenarios } from "@/lib/data/safety-scenarios";
+
+const faqs = [
+  {
+    question: "What does the Safety First quiz cover?",
+    answer:
+      "It tests workplace safety knowledge for warehouse, industrial, and facilities roles. Topics include hazard identification, PPE requirements, and emergency procedures.",
+  },
+  {
+    question: "Do I need safety training for warehouse jobs?",
+    answer:
+      "Most warehouse employers require basic safety awareness. OSHA 10 certification is a plus. This quiz helps you prepare for on-the-job safety expectations.",
+  },
+  {
+    question: "Is this a replacement for OSHA training?",
+    answer:
+      "No. This is a practice quiz to test your knowledge. For official certification, complete the OSHA 10-Hour or 30-Hour training course.",
+  },
+];
 
 const industries = [
   { id: "warehouse", name: "Warehouse", icon: HardHat },
@@ -252,6 +271,8 @@ export default function SafetyFirstClient() {
                 </ul>
               </CardContent>
             </Card>
+
+            <FAQSection faqs={faqs} />
           </div>
 
           {/* Sidebar */}

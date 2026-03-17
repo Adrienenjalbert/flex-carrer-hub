@@ -22,8 +22,27 @@ import {
   RotateCcw,
 } from "lucide-react";
 import CTASection from "@/components/career-hub/CTASection";
+import FAQSection from "@/components/career-hub/FAQSection";
 import RelatedToolsSidebar from "@/components/career-hub/RelatedToolsSidebar";
 import { roles } from "@/lib/data/roles";
+
+const faqs = [
+  {
+    question: "How does the Skills Analyzer work?",
+    answer:
+      "Rate your proficiency in key skills across categories like communication, physical abilities, technical skills, and teamwork. The tool matches your strengths to roles that fit.",
+  },
+  {
+    question: "What roles does it recommend?",
+    answer:
+      "It recommends from 47 flexible work roles across hospitality, warehouse, retail, facilities, events, and healthcare based on your skill ratings.",
+  },
+  {
+    question: "Should I rate myself honestly or optimistically?",
+    answer:
+      "Be honest. Accurate self-assessment leads to better role matches and helps you identify skills worth developing for higher-paying positions.",
+  },
+];
 
 const skillCategories = [
   {
@@ -148,7 +167,7 @@ export default function SkillsAnalyzerClient() {
         <Breadcrumbs
           items={[
             { label: "Tools", href: "/career-hub/tools" },
-            { label: "Skills Analyzer" },
+            { label: "Career Change Skills Quiz" },
           ]}
         />
 
@@ -157,11 +176,11 @@ export default function SkillsAnalyzerClient() {
           <div className="flex-1">
             <div className="mb-8">
               <h1 className="text-3xl font-bold text-foreground mb-4">
-                Skills Analyzer
+                Career Change Skills Quiz
               </h1>
               <p className="text-lg text-muted-foreground">
-                Discover which flexible jobs match your skills and experience.
-                Answer a few questions to get personalized recommendations.
+                Rate your skills honestly and we&apos;ll match you to flexible
+                roles that fit. Takes 2 minutes. No sign-up needed.
               </p>
             </div>
 
@@ -304,12 +323,74 @@ export default function SkillsAnalyzerClient() {
                   </CardContent>
                 </Card>
 
+                {/* Career Change Plan */}
+                <Card className="mb-8 border-green-200 bg-green-50/50 dark:border-green-800 dark:bg-green-950/20">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Target className="h-5 w-5 text-green-600" />
+                      Your Career Change Plan
+                    </CardTitle>
+                    <CardDescription>
+                      Based on your skills, here&apos;s how to get started:
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <ol className="space-y-4">
+                      <li className="flex items-start gap-3">
+                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-green-600 text-white text-sm font-medium">
+                          1
+                        </span>
+                        <div>
+                          <p className="font-medium">Download Indeed Flex and create your profile</p>
+                          <Link
+                            href="https://indeedflex.com/download-app/"
+                            className="text-sm text-primary hover:underline"
+                          >
+                            Get the app →
+                          </Link>
+                        </div>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-green-600 text-white text-sm font-medium">
+                          2
+                        </span>
+                        <div>
+                          <p className="font-medium">
+                            Check out the {getMatchingRoles()[0]?.title ?? "top role"} guide
+                          </p>
+                          <Link
+                            href={`/career-hub/roles/${getMatchingRoles()[0]?.slug ?? ""}`}
+                            className="text-sm text-primary hover:underline"
+                          >
+                            Read the guide →
+                          </Link>
+                        </div>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-green-600 text-white text-sm font-medium">
+                          3
+                        </span>
+                        <div>
+                          <p className="font-medium">Get certified to unlock higher-paying roles</p>
+                          <Link
+                            href="/career-hub/guides/certifications"
+                            className="text-sm text-primary hover:underline"
+                          >
+                            Explore certifications →
+                          </Link>
+                        </div>
+                      </li>
+                    </ol>
+                  </CardContent>
+                </Card>
+
                 <Button onClick={resetQuiz} variant="outline" className="mb-8">
                   <RotateCcw className="h-4 w-4 mr-2" />
                   Take Quiz Again
                 </Button>
               </>
             )}
+            <FAQSection faqs={faqs} />
           </div>
 
           {/* Sidebar */}

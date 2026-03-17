@@ -237,7 +237,7 @@ export default function WageReportHubPage() {
                         <MapPin className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
                         <div>
                           <h3 className="font-semibold mb-2 text-base">By Region</h3>
-                          <p className="text-sm text-muted-foreground">Regional wage variations and COL adjustments</p>
+                          <p className="text-sm text-muted-foreground">Regional wage variations and Cost of Living adjustments</p>
                         </div>
                       </div>
                     </CardContent>
