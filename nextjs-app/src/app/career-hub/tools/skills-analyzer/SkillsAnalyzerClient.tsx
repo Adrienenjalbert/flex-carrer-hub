@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
 import { Button } from "@/components/ui/button";
@@ -86,6 +86,21 @@ const skillCategories = [
   },
 ];
 
+const likertOptions = [
+  { score: 1, label: "Never" },
+  { score: 2, label: "Rarely" },
+  { score: 3, label: "Sometimes" },
+  { score: 4, label: "Often" },
+  { score: 5, label: "Always" },
+] as const;
+
+const industryWeights: Record<string, Record<string, number>> = {
+  "customer-service": { hospitality: 5, retail: 5, events: 4, healthcare: 3, facilities: 1, industrial: 1 },
+  "physical-work": { industrial: 5, facilities: 4, events: 3, hospitality: 2, retail: 2, healthcare: 2 },
+  "attention-to-detail": { industrial: 4, healthcare: 5, facilities: 4, retail: 3, hospitality: 3, events: 2 },
+  "teamwork": { hospitality: 4, events: 5, retail: 3, industrial: 3, healthcare: 4, facilities: 3 },
+};
+
 const SA_STORAGE_KEY = "skills-analyzer-results";
 
 function loadSavedResults() {
@@ -98,10 +113,28 @@ function loadSavedResults() {
   }
 }
 
+function computePositionFromAnswers(answers: Record<string, number[]>) {
+  let totalAnswered = 0;
+  for (const category of skillCategories) {
+    const catAnswers = answers[category.id];
+    if (!catAnswers) break;
+    const answeredInCat = catAnswers.filter((v) => v !== undefined).length;
+    totalAnswered += answeredInCat;
+    if (answeredInCat < category.questions.length) break;
+  }
+
+  let remaining = totalAnswered;
+  for (let catIdx = 0; catIdx < skillCategories.length; catIdx++) {
+    const qCount = skillCategories[catIdx].questions.length;
+    if (remaining < qCount) {
+      return { category: catIdx, question: remaining };
+    }
+    remaining -= qCount;
+  }
+  return { category: skillCategories.length - 1, question: skillCategories[skillCategories.length - 1].questions.length - 1 };
+}
+
 export default function SkillsAnalyzerClient() {
-  const [_hasSavedResults] = useState(() => !!loadSavedResults());
-  const [currentCategory, setCurrentCategory] = useState(0);
-  const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<Record<string, number[]>>(() => {
     const saved = loadSavedResults();
     return saved?.answers ?? {};
@@ -111,15 +144,19 @@ export default function SkillsAnalyzerClient() {
     return saved?.isComplete ?? false;
   });
 
+  const initialPosition = useMemo(() => computePositionFromAnswers(answers), []);// eslint-disable-line react-hooks/exhaustive-deps
+  const [currentCategory, setCurrentCategory] = useState(initialPosition.category);
+  const [currentQuestion, setCurrentQuestion] = useState(initialPosition.question);
+
   useEffect(() => {
-    if (isComplete) {
+    if (Object.keys(answers).length > 0 || isComplete) {
       localStorage.setItem(SA_STORAGE_KEY, JSON.stringify({ answers, isComplete }));
     }
   }, [answers, isComplete]);
 
   const handleAnswer = (score: number) => {
     const category = skillCategories[currentCategory];
-    const categoryAnswers = answers[category.id] || [];
+    const categoryAnswers = [...(answers[category.id] || [])];
     categoryAnswers[currentQuestion] = score;
 
     setAnswers({
@@ -127,7 +164,6 @@ export default function SkillsAnalyzerClient() {
       [category.id]: categoryAnswers,
     });
 
-    // Move to next question or category
     if (currentQuestion < category.questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
     } else if (currentCategory < skillCategories.length - 1) {
@@ -158,17 +194,25 @@ export default function SkillsAnalyzerClient() {
   };
 
   const getMatchingRoles = () => {
-    const topSkills = getTopSkills();
-    // Simple matching logic - in real app would be more sophisticated
-    if (topSkills.some((s) => s.id === "customer-service")) {
-      return roles.filter(
-        (r) => r.industry === "hospitality" || r.industry === "retail"
-      );
-    }
-    if (topSkills.some((s) => s.id === "physical-work")) {
-      return roles.filter((r) => r.industry === "industrial");
-    }
-    return roles.slice(0, 6);
+    const results = calculateResults();
+
+    const scoredRoles = roles.map((role) => {
+      let fitScore = 0;
+      for (const category of skillCategories) {
+        const userScore = results[category.id] || 0;
+        const weight = industryWeights[category.id]?.[role.industry] || 1;
+        fitScore += userScore * weight;
+      }
+      if (role.physicalDemand === "high" && (results["physical-work"] || 0) >= 4) fitScore += 10;
+      if (role.physicalDemand === "low" && (results["physical-work"] || 0) <= 2) fitScore += 5;
+
+      return { role, fitScore };
+    });
+
+    return scoredRoles
+      .sort((a, b) => b.fitScore - a.fitScore)
+      .slice(0, 8)
+      .map((r) => ({ ...r.role, fitScore: r.fitScore }));
   };
 
   const resetQuiz = () => {
@@ -243,21 +287,18 @@ export default function SkillsAnalyzerClient() {
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="grid grid-cols-5 gap-2">
-                      {[1, 2, 3, 4, 5].map((score) => (
+                    <div className="space-y-2">
+                      {likertOptions.map(({ score, label }) => (
                         <Button
                           key={score}
                           variant="outline"
-                          className="h-16 text-lg"
+                          className="w-full h-12 justify-start text-left px-4"
                           onClick={() => handleAnswer(score)}
                         >
-                          {score}
+                          <span className="text-muted-foreground w-6">{score}</span>
+                          <span className="font-medium">{label}</span>
                         </Button>
                       ))}
-                    </div>
-                    <div className="flex justify-between text-sm text-muted-foreground mt-2">
-                      <span>Not at all</span>
-                      <span>Very much</span>
                     </div>
                   </CardContent>
                 </Card>
@@ -327,25 +368,46 @@ export default function SkillsAnalyzerClient() {
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {getMatchingRoles()
-                        .slice(0, 6)
-                        .map((role) => (
-                          <Link
-                            key={role.slug}
-                            href={`/career-hub/roles/${role.slug}`}
-                            className="flex items-center justify-between p-4 bg-muted rounded-lg hover:bg-muted/80 transition-colors"
-                          >
-                            <div>
-                              <p className="font-medium">{role.title}</p>
-                              <p className="text-sm text-muted-foreground">
-                                ${role.avgHourlyRate.min}-${role.avgHourlyRate.max}/hr
-                              </p>
-                            </div>
-                            <ArrowRight className="h-4 w-4 text-primary" />
-                          </Link>
-                        ))}
-                    </div>
+                    {(() => {
+                      const matchedRoles = getMatchingRoles();
+                      const topFitScore = matchedRoles[0]?.fitScore || 1;
+
+                      return (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          {matchedRoles.map((role) => {
+                            const fitPercent = Math.round((role.fitScore / topFitScore) * 100);
+
+                            return (
+                              <Link
+                                key={role.slug}
+                                href={`/career-hub/roles/${role.slug}`}
+                                className="flex items-center justify-between p-4 bg-muted rounded-lg hover:bg-muted/80 transition-colors"
+                              >
+                                <div className="flex-1 min-w-0">
+                                  <div className="flex items-center gap-2 mb-1">
+                                    <p className="font-medium truncate">{role.title}</p>
+                                    <Badge
+                                      variant="secondary"
+                                      className="shrink-0 text-xs"
+                                    >
+                                      {fitPercent}% fit
+                                    </Badge>
+                                  </div>
+                                  <p className="text-sm text-muted-foreground">
+                                    ${role.avgHourlyRate.min}-${role.avgHourlyRate.max}/hr
+                                  </p>
+                                  <Progress
+                                    value={fitPercent}
+                                    className="h-1 mt-2"
+                                  />
+                                </div>
+                                <ArrowRight className="h-4 w-4 text-primary ml-3 shrink-0" />
+                              </Link>
+                            );
+                          })}
+                        </div>
+                      );
+                    })()}
                   </CardContent>
                 </Card>
 
@@ -430,4 +492,3 @@ export default function SkillsAnalyzerClient() {
     </div>
   );
 }
-

@@ -177,7 +177,7 @@ export default async function RolePage({
     ],
     healthcare: [
       { slug: "pay-calculator", title: "Pay Calculator" },
-      { slug: "certification-roi", title: "Certification ROI Calculator" },
+      { slug: "career-path", title: "Career Path Explorer" },
     ],
   };
 

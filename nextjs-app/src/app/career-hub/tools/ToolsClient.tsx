@@ -104,14 +104,6 @@ const allTools = [
     popular: false,
   },
   {
-    slug: "job-offer-analyzer",
-    name: "Job Offer Analyzer",
-    description: "Compare job offers side by side. Evaluate pay, benefits, commute, and growth potential.",
-    category: "Career Planning",
-    icon: "Briefcase",
-    popular: false,
-  },
-  {
     slug: "skills-analyzer",
     name: "Skills Analyzer",
     description: "Identify your transferable skills and find matching job opportunities in flexible work.",
@@ -128,14 +120,6 @@ const allTools = [
     popular: false,
   },
   // === Certification & Benefits ===
-  {
-    slug: "certification-roi",
-    name: "Certification ROI Calculator",
-    description: "Calculate the return on investment for professional certifications and training programs.",
-    category: "Certification & Benefits",
-    icon: "GraduationCap",
-    popular: false,
-  },
   {
     slug: "benefits-checker",
     name: "Benefits Eligibility Checker",
@@ -175,14 +159,6 @@ const allTools = [
     description: "Workplace safety training quiz covering OSHA standards and best practices.",
     category: "Industry Tools",
     icon: "Shield",
-    popular: false,
-  },
-  {
-    slug: "data-verification",
-    name: "Data Verification Tool",
-    description: "Verify and validate your employment documents and work eligibility information.",
-    category: "Industry Tools",
-    icon: "CheckCircle",
     popular: false,
   },
   {

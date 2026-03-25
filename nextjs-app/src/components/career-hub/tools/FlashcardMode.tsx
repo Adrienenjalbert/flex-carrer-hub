@@ -137,8 +137,8 @@ const FlashcardMode: React.FC<FlashcardModeProps> = ({
             Card {currentIndex + 1} of {shuffledPhrases.length}
           </span>
           <div className="flex items-center gap-2 text-sm">
-            <span className="text-green-600">✓ {correctCount}</span>
-            <span className="text-amber-600">✗ {incorrectCount}</span>
+            <span className="text-green-600">✓ <span className="sr-only">correct</span>{correctCount}</span>
+            <span className="text-amber-600">✗ <span className="sr-only">incorrect</span>{incorrectCount}</span>
           </div>
         </div>
         <Progress value={progress} className="h-2" />
@@ -146,7 +146,10 @@ const FlashcardMode: React.FC<FlashcardModeProps> = ({
 
       {/* Flashcard */}
       <div className="flex-1 flex items-center justify-center p-4">
-        <div 
+        <button
+          type="button"
+          aria-label="Flip flashcard"
+          aria-expanded={isFlipped}
           className={cn(
             "relative w-full max-w-md aspect-[3/4] cursor-pointer perspective-1000",
           )}
@@ -179,6 +182,7 @@ const FlashcardMode: React.FC<FlashcardModeProps> = ({
                   e.stopPropagation();
                   onPlayEnglish(currentPhrase.english);
                 }}
+                aria-label="Play English pronunciation"
                 className={cn(
                   "self-center p-4 rounded-full transition-colors",
                   isSpeaking 
@@ -218,6 +222,7 @@ const FlashcardMode: React.FC<FlashcardModeProps> = ({
                   e.stopPropagation();
                   onPlaySpanish(currentPhrase.spanish);
                 }}
+                aria-label="Play Spanish pronunciation"
                 className="self-center p-4 rounded-full bg-accent/10 text-accent hover:bg-accent hover:text-accent-foreground transition-colors"
               >
                 <Volume2 size={24} />
@@ -228,7 +233,7 @@ const FlashcardMode: React.FC<FlashcardModeProps> = ({
               </p>
             </div>
           </div>
-        </div>
+        </button>
       </div>
 
       {/* Action buttons */}
@@ -239,6 +244,7 @@ const FlashcardMode: React.FC<FlashcardModeProps> = ({
               variant="outline" 
               className="flex-1 h-14 border-amber-300 text-amber-700 hover:bg-amber-50"
               onClick={() => handleResult(false)}
+              aria-label="Need Practice - Necesito practicar"
             >
               <X size={20} className="mr-2" />
               <span className="flex flex-col items-start">
@@ -249,6 +255,7 @@ const FlashcardMode: React.FC<FlashcardModeProps> = ({
             <Button 
               className="flex-1 h-14 bg-green-600 hover:bg-green-700"
               onClick={() => handleResult(true)}
+              aria-label="Got it - Lo sé"
             >
               <Check size={20} className="mr-2" />
               <span className="flex flex-col items-start">
@@ -259,13 +266,13 @@ const FlashcardMode: React.FC<FlashcardModeProps> = ({
           </div>
         ) : (
           <div className="flex gap-3 justify-center">
-            <Button variant="ghost" size="icon" onClick={handleShuffle}>
+            <Button variant="ghost" size="icon" onClick={handleShuffle} aria-label="Shuffle cards">
               <Shuffle size={18} />
             </Button>
             <Button variant="outline" onClick={handleFlip} className="px-8">
               Flip Card / Voltear
             </Button>
-            <Button variant="ghost" size="icon" onClick={onExit}>
+            <Button variant="ghost" size="icon" onClick={onExit} aria-label="Exit practice mode">
               <X size={18} />
             </Button>
           </div>

@@ -26,7 +26,6 @@ const toolKeywords: Record<string, string> = {
   "unemployment calculator": "/career-hub/tools/unemployment-calculator",
   "career path": "/career-hub/tools/career-path",
   "career path explorer": "/career-hub/tools/career-path",
-  "job offer analyzer": "/career-hub/tools/job-offer-analyzer",
   "skills analyzer": "/career-hub/tools/skills-analyzer",
   "commute calculator": "/career-hub/tools/commute-calculator",
   "childcare calculator": "/career-hub/tools/childcare-calculator",

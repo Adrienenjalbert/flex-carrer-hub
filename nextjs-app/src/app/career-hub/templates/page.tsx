@@ -16,6 +16,8 @@ import {
   Users
 } from "lucide-react";
 import { resumeTemplates, type ResumeTemplate } from "@/lib/data/resume-templates";
+import ResumePreview from "@/components/career-hub/interactive/ResumePreview";
+import ResumeBuilderCTA from "@/components/career-hub/cta/ResumeBuilderCTA";
 
 export const metadata: Metadata = {
   title: "Free Resume Templates for Hourly Workers | ATS-Friendly | Indeed Flex",
@@ -46,25 +48,19 @@ export const metadata: Metadata = {
 };
 
 function TemplateCard({ template }: { template: ResumeTemplate }) {
-  const styleColors = {
-    modern: "from-blue-500 to-blue-600",
-    professional: "from-slate-600 to-slate-700",
-    minimal: "from-gray-500 to-gray-600",
-    creative: "from-purple-500 to-purple-600",
-  };
-
   return (
     <div className="bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden hover:shadow-xl transition-all group">
-      {/* Preview Header */}
-      <div className={`bg-gradient-to-br ${styleColors[template.style]} p-6 text-white`}>
-        <div className="flex justify-between items-start mb-4">
-          <FileText className="h-8 w-8" />
-          <span className="px-2 py-1 bg-white/20 rounded text-xs font-medium">
+      {/* Visual Preview */}
+      <div className="bg-gray-50 p-4 border-b relative">
+        <ResumePreview template={template} size="thumbnail" />
+        <div className="absolute top-4 right-4 flex gap-2">
+          <span className="px-2 py-1 bg-white shadow-sm rounded text-xs font-medium text-gray-600">
             {template.layout === "two-column" ? "2-Column" : "1-Column"}
           </span>
         </div>
-        <h3 className="text-xl font-bold mb-2">{template.name}</h3>
-        <p className="text-white/80 text-sm line-clamp-2">{template.description}</p>
+        <div className="absolute bottom-4 left-4 right-4">
+          <h3 className="text-lg font-bold text-gray-900">{template.name}</h3>
+        </div>
       </div>
 
       {/* Content */}
@@ -176,6 +172,9 @@ export default function TemplatesPage() {
             ))}
           </div>
         </div>
+
+        {/* Resume Builder CTA */}
+        <ResumeBuilderCTA className="mb-16" />
 
         {/* Template Selection Guide */}
         <div className="bg-white rounded-xl border p-8 mb-16">
@@ -306,7 +305,7 @@ export default function TemplatesPage() {
           }),
         }}
       />
-      <CTASection />
+      <CTASection variant="resume-builder" />
     </>
   );
 }

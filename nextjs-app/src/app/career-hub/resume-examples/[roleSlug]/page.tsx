@@ -24,9 +24,63 @@ import {
   BreadcrumbSchema,
 } from "@/components/career-hub/seo";
 import FAQSection from "@/components/career-hub/FAQSection";
+import CopyButton from "@/components/career-hub/interactive/CopyButton";
 import { resumeExamples, getResumeExampleByRole, type ResumeExample } from "@/lib/data/resume-examples";
 import { resumeTemplates } from "@/lib/data/resume-templates";
 import { coverLetterTemplates } from "@/lib/data/cover-letter-templates";
+
+function buildFullResumeText(example: ResumeExample): string {
+  const lines: string[] = [];
+  lines.push(`[Your Name]`);
+  lines.push(`${example.roleName}`);
+  lines.push(`[City, State] | [Phone] | [Email]`);
+  lines.push("");
+  lines.push("PROFESSIONAL SUMMARY");
+  lines.push(example.summary);
+  if (example.objective) {
+    lines.push("");
+    lines.push("OBJECTIVE");
+    lines.push(example.objective);
+  }
+  lines.push("");
+  lines.push("SKILLS");
+  lines.push(example.skills.join(" | "));
+  lines.push("");
+  lines.push("WORK EXPERIENCE");
+  for (const exp of example.experience) {
+    lines.push(`${exp.title} — ${exp.company}`);
+    lines.push(`${exp.location} | ${exp.dates}`);
+    for (const bullet of exp.bullets) {
+      lines.push(`• ${bullet}`);
+    }
+    lines.push("");
+  }
+  if (example.education && example.education.length > 0) {
+    lines.push("EDUCATION");
+    for (const edu of example.education) {
+      lines.push(`${edu.degree} — ${edu.school}, ${edu.year}`);
+      if (edu.details) lines.push(edu.details);
+    }
+    lines.push("");
+  }
+  if (example.certifications && example.certifications.length > 0) {
+    lines.push("CERTIFICATIONS");
+    for (const cert of example.certifications) {
+      lines.push(`• ${cert}`);
+    }
+    lines.push("");
+  }
+  if (example.additionalSections) {
+    for (const section of example.additionalSections) {
+      lines.push(section.title.toUpperCase());
+      for (const item of section.items) {
+        lines.push(`• ${item}`);
+      }
+      lines.push("");
+    }
+  }
+  return lines.join("\n");
+}
 
 interface PageProps {
   params: Promise<{ roleSlug: string }>;
@@ -217,6 +271,7 @@ export default async function ResumeExamplePage({ params }: PageProps) {
                   <h3 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2 border-b pb-2">
                     <User className="h-5 w-5 text-blue-600" />
                     Professional Summary
+                    <CopyButton text={example.summary} label="Copy summary" className="ml-auto" />
                   </h3>
                   <p className="text-gray-700 leading-relaxed">{example.summary}</p>
                 </section>
@@ -237,6 +292,7 @@ export default async function ResumeExamplePage({ params }: PageProps) {
                   <h3 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2 border-b pb-2">
                     <CheckCircle className="h-5 w-5 text-purple-600" />
                     Skills
+                    <CopyButton text={example.skills.join(", ")} label="Copy all skills" className="ml-auto" />
                   </h3>
                   <div className="flex flex-wrap gap-2">
                     {example.skills.map((skill) => (
@@ -271,9 +327,10 @@ export default async function ResumeExamplePage({ params }: PageProps) {
                         </div>
                         <ul className="space-y-2">
                           {exp.bullets.map((bullet, bulletIndex) => (
-                            <li key={bulletIndex} className="flex items-start gap-2 text-gray-700 text-sm">
+                            <li key={bulletIndex} className="group/bullet flex items-start gap-2 text-gray-700 text-sm">
                               <span className="w-1.5 h-1.5 bg-gray-400 rounded-full mt-2 flex-shrink-0"></span>
-                              {bullet}
+                              <span className="flex-1">{bullet}</span>
+                              <CopyButton text={bullet} label="Copy bullet" className="opacity-0 group-hover/bullet:opacity-100 flex-shrink-0 mt-0.5" />
                             </li>
                           ))}
                         </ul>
@@ -335,6 +392,15 @@ export default async function ResumeExamplePage({ params }: PageProps) {
                     </ul>
                   </section>
                 ))}
+              </div>
+
+              {/* Copy Full Resume */}
+              <div className="p-4 border-t bg-gray-50">
+                <CopyButton
+                  text={buildFullResumeText(example)}
+                  label="Copy Full Resume Content"
+                  variant="block"
+                />
               </div>
             </div>
 
@@ -514,7 +580,7 @@ export default async function ResumeExamplePage({ params }: PageProps) {
           }),
         }}
       />
-      <CTASection />
+      <CTASection variant="resume-builder" />
     </div>
   );
 }

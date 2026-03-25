@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
+import { useEngagement } from "@/hooks/useEngagement";
+import DailyChallenge from "@/components/career-hub/tools/DailyChallenge";
 import {
   Shield, CheckCircle2, XCircle,
   RotateCcw, BookOpen, GraduationCap, HardHat,
@@ -79,6 +81,17 @@ export default function SafetyFirstClient() {
   const [showResult, setShowResult] = useState(false);
   const [quizScore, setQuizScore] = useState(0);
   const [quizComplete, setQuizComplete] = useState(false);
+
+  const { getStreak, getDailyChallenge, recordActivity, isActiveToday } = useEngagement();
+
+  const dailyChallengeItems = useMemo(() => {
+    return getDailyChallenge(safetyScenarios, 5).map(s => ({
+      id: s.id,
+      question: s.scenario,
+      answer: s.options.find(o => o.correct)?.text || "",
+      hint: s.question,
+    }));
+  }, [getDailyChallenge]);
 
   useEffect(() => {
     localStorage.setItem(COMPLETED_KEY, JSON.stringify(Array.from(completedScenarios)));
@@ -179,6 +192,14 @@ export default function SafetyFirstClient() {
                 </div>
               </div>
             </div>
+
+            <DailyChallenge
+              toolName="Safety"
+              items={dailyChallengeItems}
+              streak={getStreak()}
+              isActiveToday={isActiveToday}
+              onComplete={() => recordActivity("safety-first")}
+            />
 
             {/* Mode Tabs */}
             <Tabs value={mode} onValueChange={(v) => setMode(v as Mode)} className="mb-6">
@@ -455,12 +476,18 @@ export default function SafetyFirstClient() {
                                 <span className="flex flex-col items-start gap-0.5">
                                   <span className="flex items-center gap-2">
                                     {showResult && option.correct && (
-                                      <CheckCircle2 className="h-4 w-4 text-green-600 flex-shrink-0" />
+                                      <>
+                                        <CheckCircle2 className="h-4 w-4 text-green-600 flex-shrink-0" />
+                                        <span className="sr-only">Correct</span>
+                                      </>
                                     )}
                                     {showResult &&
                                       option.text === selectedAnswer &&
                                       !option.correct && (
-                                        <XCircle className="h-4 w-4 text-red-600 flex-shrink-0" />
+                                        <>
+                                          <XCircle className="h-4 w-4 text-red-600 flex-shrink-0" />
+                                          <span className="sr-only">Incorrect</span>
+                                        </>
                                       )}
                                     {option.text}
                                   </span>

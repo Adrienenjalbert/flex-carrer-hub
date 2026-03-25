@@ -243,10 +243,7 @@ function generateToolsSitemap(now: Date): MetadataRoute.Sitemap {
     "cocktail-quiz",
     "menu-master",
     "childcare-calculator",
-    "certification-roi",
-    "job-offer-analyzer",
     "skills-analyzer",
-    "data-verification",
     "w2-vs-1099",
   ];
 

@@ -8,6 +8,8 @@ import FAQSection from "@/components/career-hub/FAQSection";
 import RelatedToolsSidebar from "@/components/career-hub/RelatedToolsSidebar";
 import PhraseCard from "@/components/career-hub/tools/PhraseCard";
 import FlashcardMode from "@/components/career-hub/tools/FlashcardMode";
+import { useEngagement } from "@/hooks/useEngagement";
+import DailyChallenge from "@/components/career-hub/tools/DailyChallenge";
 import { useSpeechSynthesis } from "@/hooks/useSpeechSynthesis";
 import { industries, categoryInfo, type JobPhrase, type IndustryVocabulary } from "@/lib/data/job-english-phrases";
 import { Button } from "@/components/ui/button";
@@ -57,6 +59,17 @@ export default function WorkTalkClient() {
   const [speakingPhraseId, setSpeakingPhraseId] = useState<string | null>(null);
 
   const { speak, stop, isSpeaking, isSupported } = useSpeechSynthesis({ defaultRate: 0.8 });
+  const { getStreak, getDailyChallenge, recordActivity, isActiveToday } = useEngagement();
+
+  const dailyChallengeItems = useMemo(() => {
+    const allPhrases = industries.flatMap(i => i.phrases);
+    return getDailyChallenge(allPhrases, 5).map(p => ({
+      id: p.id,
+      question: p.spanish,
+      answer: p.english,
+      hint: p.context,
+    }));
+  }, [getDailyChallenge]);
 
   useEffect(() => {
     localStorage.setItem(FAVORITES_KEY, JSON.stringify(Array.from(favorites)));
@@ -209,6 +222,14 @@ export default function WorkTalkClient() {
                 Learn essential workplace English with audio pronunciation &bull; 100% Free &bull; No signup required
               </p>
             </div>
+
+            <DailyChallenge
+              toolName="WorkTalk"
+              items={dailyChallengeItems}
+              streak={getStreak()}
+              isActiveToday={isActiveToday}
+              onComplete={() => recordActivity("worktalk")}
+            />
 
             {!isSupported && (
               <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6 flex items-center gap-3">

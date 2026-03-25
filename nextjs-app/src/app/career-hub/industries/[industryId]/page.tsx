@@ -291,10 +291,10 @@ export default async function IndustryPage({
                         <span className="font-medium">{cert}</span>
                       </div>
                       <Link
-                        href="/career-hub/tools/certification-roi"
+                        href="/certifications"
                         className="text-primary text-sm hover:underline"
                       >
-                        Calculate ROI →
+                        Learn more →
                       </Link>
                     </div>
                   </CardContent>

@@ -10,6 +10,8 @@ import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
 import CTASection from "@/components/career-hub/CTASection";
 import FAQSection from "@/components/career-hub/FAQSection";
 import RelatedToolsSidebar from "@/components/career-hub/RelatedToolsSidebar";
+import { useEngagement } from "@/hooks/useEngagement";
+import DailyChallenge from "@/components/career-hub/tools/DailyChallenge";
 import { cocktails, type Cocktail } from "@/lib/data/cocktails";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -28,7 +30,7 @@ const MASTERED_KEY = "cocktail-quiz-mastered";
 
 const spiritIcons: Record<Cocktail["baseSpirit"], string> = {
   vodka: "🍸", gin: "🌿", rum: "🥥", tequila: "🌵",
-  whiskey: "🥃", brandy: "🍷", champagne: "🍾",
+  whiskey: "🥃", brandy: "🍷", champagne: "🍾", "non-alcoholic": "🧃",
 };
 
 const faqs = [
@@ -80,6 +82,8 @@ export default function CocktailQuizClient() {
   const [spiritFilter, setSpiritFilter] = useState<SpiritFilter>("all");
   const [masteredCocktails, setMasteredCocktails] = useState<Set<string>>(() => loadMastered());
 
+  const { getStreak, getDailyChallenge, recordActivity, isActiveToday } = useEngagement();
+
   // Flashcard state
   const [flashcardIndex, setFlashcardIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
@@ -98,6 +102,15 @@ export default function CocktailQuizClient() {
   const [speedScore, setSpeedScore] = useState(0);
   const [speedCurrent, setSpeedCurrent] = useState<Cocktail | null>(null);
   const [speedAnswered, setSpeedAnswered] = useState(false);
+
+  const dailyChallengeItems = useMemo(() => {
+    return getDailyChallenge(cocktails, 5).map(c => ({
+      id: c.id,
+      question: `What are the ingredients in a ${c.name}?`,
+      answer: c.ingredients.map(i => `${i.amount} ${i.name}`).join(", "),
+      hint: `${c.baseSpirit} · ${c.technique} · ${c.glass}`,
+    }));
+  }, [getDailyChallenge]);
 
   const filteredCocktails = useMemo(
     () =>
@@ -274,9 +287,17 @@ export default function CocktailQuizClient() {
               </div>
             </div>
 
+            <DailyChallenge
+              toolName="Cocktail"
+              items={dailyChallengeItems}
+              streak={getStreak()}
+              isActiveToday={isActiveToday}
+              onComplete={() => recordActivity("cocktail-quiz")}
+            />
+
             {/* Mode Tabs */}
             <Tabs value={mode} onValueChange={(v) => setMode(v as Mode)} className="mb-6">
-              <TabsList className="grid grid-cols-4 w-full">
+              <TabsList className="grid grid-cols-2 sm:grid-cols-4 w-full">
                 <TabsTrigger value="learn">
                   <BookOpen className="h-4 w-4 mr-1.5" />
                   Learn
@@ -326,6 +347,7 @@ export default function CocktailQuizClient() {
                         </CardTitle>
                         <button
                           onClick={() => toggleMastered(cocktail.id)}
+                          aria-label={masteredCocktails.has(cocktail.id) ? "Unmark as mastered" : "Mark as mastered"}
                           className={cn(
                             "p-1.5 rounded-full transition-colors",
                             masteredCocktails.has(cocktail.id)
@@ -412,9 +434,12 @@ export default function CocktailQuizClient() {
                   </Button>
                 </div>
 
-                <div
-                  className="relative w-full aspect-[3/4] cursor-pointer perspective-1000"
+                <button
+                  type="button"
+                  className="relative w-full aspect-[3/4] cursor-pointer perspective-1000 bg-transparent border-none p-0 text-left block"
                   onClick={() => setIsFlipped(!isFlipped)}
+                  aria-label="Flip cocktail card"
+                  aria-expanded={isFlipped}
                 >
                   <div
                     className={cn(
@@ -466,7 +491,7 @@ export default function CocktailQuizClient() {
                       </p>
                     </div>
                   </div>
-                </div>
+                </button>
 
                 <div className="flex items-center justify-between mt-6">
                   <Button
@@ -477,6 +502,7 @@ export default function CocktailQuizClient() {
                       setIsFlipped(false);
                     }}
                     disabled={flashcardIndex === 0}
+                    aria-label="Previous card"
                   >
                     ←
                   </Button>
@@ -515,6 +541,7 @@ export default function CocktailQuizClient() {
                       setIsFlipped(false);
                     }}
                     disabled={flashcardIndex === flashcardDeck.length - 1}
+                    aria-label="Next card"
                   >
                     →
                   </Button>
@@ -592,6 +619,12 @@ export default function CocktailQuizClient() {
                                 disabled={selectedAnswer !== null}
                               >
                                 {option}
+                                {selectedAnswer !== null && option === quizQuestions[quizIndex].correctAnswer && (
+                                  <span className="sr-only">Correct answer</span>
+                                )}
+                                {selectedAnswer !== null && i === selectedAnswer && option !== quizQuestions[quizIndex].correctAnswer && (
+                                  <span className="sr-only">Incorrect answer</span>
+                                )}
                               </Button>
                             );
                           })}

@@ -18,6 +18,8 @@ import {
 } from "lucide-react";
 import { resumeTemplates, getTemplateBySlug } from "@/lib/data/resume-templates";
 import { resumeExamples } from "@/lib/data/resume-examples";
+import ResumePreview from "@/components/career-hub/interactive/ResumePreview";
+import ResumeBuilderCTA from "@/components/career-hub/cta/ResumeBuilderCTA";
 
 interface PageProps {
   params: Promise<{ templateId: string }>;
@@ -299,6 +301,12 @@ export default async function TemplatePage({ params }: PageProps) {
 
           {/* Sidebar */}
           <div className="lg:col-span-1">
+            {/* Template Preview */}
+            <div className="bg-white rounded-xl border p-4 mb-6">
+              <h3 className="font-bold text-gray-900 mb-3">Template Preview</h3>
+              <ResumePreview template={template} size="full" className="mx-auto" />
+            </div>
+
             {/* Related Examples */}
             {relatedExamples.length > 0 && (
               <div className="bg-white rounded-xl border p-6 mb-6">
@@ -348,6 +356,9 @@ export default async function TemplatePage({ params }: PageProps) {
                 View All Templates
               </Link>
             </div>
+
+            {/* Resume Builder CTA */}
+            <ResumeBuilderCTA variant="card" className="mb-6" />
 
             {/* Cover Letters CTA */}
             <div className="bg-emerald-50 rounded-xl border border-emerald-200 p-6">
@@ -406,7 +417,7 @@ export default async function TemplatePage({ params }: PageProps) {
           }),
         }}
       />
-      <CTASection />
+      <CTASection variant="resume-builder" />
     </div>
   );
 }

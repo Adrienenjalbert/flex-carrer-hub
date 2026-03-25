@@ -1,6 +1,6 @@
 export interface SafetyScenario {
   id: string;
-  industry: 'warehouse' | 'hospitality' | 'general';
+  industry: 'warehouse' | 'hospitality' | 'retail' | 'general';
   scenario: string;
   scenarioSpanish: string;
   question: string;
@@ -23,7 +23,7 @@ export interface PPEItem {
   nameSpanish: string;
   description: string;
   descriptionSpanish: string;
-  industries: ('warehouse' | 'hospitality' | 'general')[];
+  industries: ('warehouse' | 'hospitality' | 'retail' | 'general')[];
   hazards: string[];
   hazardsSpanish: string[];
   icon: string;
@@ -80,7 +80,7 @@ export const ppeItems: PPEItem[] = [
     nameSpanish: 'Guantes Resistentes a Cortes',
     description: 'Protect hands from sharp edges and blades',
     descriptionSpanish: 'Protegen las manos de bordes afilados y cuchillas',
-    industries: ['warehouse', 'hospitality', 'general'],
+    industries: ['warehouse', 'hospitality', 'retail', 'general'],
     hazards: ['Sharp edges', 'Box cutters', 'Knives'],
     hazardsSpanish: ['Bordes afilados', 'Cortadores', 'Cuchillos'],
     icon: '🧤'
@@ -102,7 +102,7 @@ export const ppeItems: PPEItem[] = [
     nameSpanish: 'Zapatos Antideslizantes',
     description: 'Prevent slips on wet or greasy floors',
     descriptionSpanish: 'Previenen resbalones en pisos mojados o grasosos',
-    industries: ['hospitality', 'general'],
+    industries: ['hospitality', 'retail', 'general'],
     hazards: ['Wet floors', 'Grease', 'Spills'],
     hazardsSpanish: ['Pisos mojados', 'Grasa', 'Derrames'],
     icon: '👟'
@@ -135,7 +135,7 @@ export const ppeItems: PPEItem[] = [
     nameSpanish: 'Cinturón de Soporte Lumbar',
     description: 'Supports lower back during heavy lifting',
     descriptionSpanish: 'Apoya la espalda baja durante levantamiento pesado',
-    industries: ['warehouse', 'general'],
+    industries: ['warehouse', 'retail', 'general'],
     hazards: ['Heavy lifting', 'Repetitive motion', 'Strain'],
     hazardsSpanish: ['Levantamiento pesado', 'Movimiento repetitivo', 'Tensión'],
     icon: '🏋️'
@@ -514,7 +514,8 @@ export const safetyScenarios: SafetyScenario[] = [
         explanation: 'While falling is also a risk, the outward-facing blade is the primary hazard here.',
         explanationSpanish: 'Aunque caerse también es un riesgo, la hoja hacia afuera es el peligro principal aquí.'
       }
-    ]
+    ],
+    oshaReference: 'OSHA General Duty Clause, Section 5(a)(1)'
   },
   // HOSPITALITY - PPE
   {
@@ -555,7 +556,8 @@ export const safetyScenarios: SafetyScenario[] = [
         explanation: 'Comfort matters but safety features are essential in kitchen environments.',
         explanationSpanish: 'La comodidad importa pero las características de seguridad son esenciales en ambientes de cocina.'
       }
-    ]
+    ],
+    oshaReference: 'OSHA 29 CFR 1910.132'
   },
   {
     id: 'hosp-ppe-2',
@@ -595,7 +597,8 @@ export const safetyScenarios: SafetyScenario[] = [
         explanation: 'Not all towels provide adequate protection. Use proper oven mitts.',
         explanationSpanish: 'No todas las toallas proporcionan protección adecuada. Usa guantes de horno apropiados.'
       }
-    ]
+    ],
+    oshaReference: 'OSHA 29 CFR 1910.132'
   },
   // HOSPITALITY - EMERGENCY
   {
@@ -636,7 +639,8 @@ export const safetyScenarios: SafetyScenario[] = [
         explanation: 'Fanning adds oxygen and makes the fire worse.',
         explanationSpanish: 'Abanicar añade oxígeno y empeora el fuego.'
       }
-    ]
+    ],
+    oshaReference: 'OSHA 29 CFR 1910.157'
   },
   // HOSPITALITY - PROCEDURE
   {
@@ -677,7 +681,8 @@ export const safetyScenarios: SafetyScenario[] = [
         explanation: 'Moving quickly with sharp objects increases accident risk.',
         explanationSpanish: 'Moverse rápido con objetos afilados aumenta el riesgo de accidentes.'
       }
-    ]
+    ],
+    oshaReference: 'OSHA General Duty Clause, Section 5(a)(1)'
   },
   {
     id: 'hosp-procedure-2',
@@ -759,7 +764,8 @@ export const safetyScenarios: SafetyScenario[] = [
         explanation: 'Stop the bleeding first, then clean and properly bandage the wound.',
         explanationSpanish: 'Detén el sangrado primero, luego limpia y venda la herida apropiadamente.'
       }
-    ]
+    ],
+    oshaReference: 'OSHA 29 CFR 1910.151'
   },
   // GENERAL - PROCEDURE
   {
@@ -800,7 +806,8 @@ export const safetyScenarios: SafetyScenario[] = [
         explanation: 'Prevention is always better than reaction. Speak up before an injury occurs.',
         explanationSpanish: 'La prevención siempre es mejor que la reacción. Habla antes de que ocurra una lesión.'
       }
-    ]
+    ],
+    oshaReference: 'OSHA 29 CFR 1910.132'
   },
   {
     id: 'gen-procedure-2',
@@ -842,6 +849,956 @@ export const safetyScenarios: SafetyScenario[] = [
       }
     ],
     oshaReference: 'OSHA Act Section 11(c)'
+  },
+  // RETAIL - HAZARD IDENTIFICATION
+  {
+    id: 'ret-hazard-1',
+    industry: 'retail',
+    category: 'hazard',
+    difficulty: 'beginner',
+    scenario: 'You need to open a case of merchandise using a box cutter.',
+    scenarioSpanish: 'Necesitas abrir una caja de mercancía usando un cortador.',
+    question: 'What is the safest way to use the box cutter?',
+    questionSpanish: '¿Cuál es la forma más segura de usar el cortador?',
+    options: [
+      {
+        text: 'Cut toward your body for better control',
+        textSpanish: 'Cortar hacia tu cuerpo para mejor control',
+        correct: false,
+        explanation: 'Never cut toward yourself. Always cut away from your body to prevent injury.',
+        explanationSpanish: 'Nunca cortes hacia ti. Siempre corta alejándote de tu cuerpo para prevenir lesiones.'
+      },
+      {
+        text: 'Cut away from your body and retract the blade when not in use',
+        textSpanish: 'Cortar alejándote de tu cuerpo y retraer la hoja cuando no esté en uso',
+        correct: true,
+        explanation: 'Correct! Always cut away from your body, use only enough blade to cut the material, and retract or sheathe the blade immediately after each use.',
+        explanationSpanish: '¡Correcto! Siempre corta alejándote de tu cuerpo, usa solo suficiente hoja para cortar el material, y retrae o enfunda la hoja inmediatamente después de cada uso.'
+      },
+      {
+        text: 'Leave the blade extended to save time between cuts',
+        textSpanish: 'Dejar la hoja extendida para ahorrar tiempo entre cortes',
+        correct: false,
+        explanation: 'An exposed blade is a serious hazard. Retract it between every cut.',
+        explanationSpanish: 'Una hoja expuesta es un peligro serio. Retráela entre cada corte.'
+      },
+      {
+        text: 'Use scissors instead — box cutters are too dangerous',
+        textSpanish: 'Usar tijeras en su lugar — los cortadores son muy peligrosos',
+        correct: false,
+        explanation: 'Box cutters are safe when used correctly. Proper technique is the key.',
+        explanationSpanish: 'Los cortadores son seguros cuando se usan correctamente. La técnica apropiada es la clave.'
+      }
+    ],
+    oshaReference: 'OSHA General Duty Clause, Section 5(a)(1)'
+  },
+  {
+    id: 'ret-hazard-2',
+    industry: 'retail',
+    category: 'hazard',
+    difficulty: 'beginner',
+    scenario: 'A customer drops a bottle of liquid on the sales floor, creating a spill.',
+    scenarioSpanish: 'Un cliente deja caer una botella de líquido en el piso de ventas, creando un derrame.',
+    question: 'What should you do FIRST?',
+    questionSpanish: '¿Qué debes hacer PRIMERO?',
+    options: [
+      {
+        text: 'Go find a mop and leave the area unattended',
+        textSpanish: 'Ir a buscar un trapeador y dejar el área desatendida',
+        correct: false,
+        explanation: 'Leaving the spill unmarked while getting supplies puts customers at risk of slipping.',
+        explanationSpanish: 'Dejar el derrame sin marcar mientras buscas suministros pone a los clientes en riesgo de resbalar.'
+      },
+      {
+        text: 'Place a wet floor sign and guard the area, then clean or call for cleanup',
+        textSpanish: 'Colocar un letrero de piso mojado y vigilar el área, luego limpiar o llamar para limpieza',
+        correct: true,
+        explanation: 'Correct! Immediately mark the hazard to warn others, then clean up or request assistance. Protecting people from the hazard comes first.',
+        explanationSpanish: '¡Correcto! Marca el peligro inmediatamente para advertir a otros, luego limpia o solicita asistencia. Proteger a las personas del peligro es lo primero.'
+      },
+      {
+        text: 'Ask the customer to clean it up',
+        textSpanish: 'Pedirle al cliente que lo limpie',
+        correct: false,
+        explanation: 'Store employees are responsible for maintaining a safe environment for customers.',
+        explanationSpanish: 'Los empleados de la tienda son responsables de mantener un ambiente seguro para los clientes.'
+      },
+      {
+        text: 'Put a box or merchandise over the spill as a temporary fix',
+        textSpanish: 'Poner una caja o mercancía sobre el derrame como solución temporal',
+        correct: false,
+        explanation: 'Covering a spill with merchandise creates a new tripping hazard and does not clean the floor.',
+        explanationSpanish: 'Cubrir un derrame con mercancía crea un nuevo peligro de tropiezo y no limpia el piso.'
+      }
+    ],
+    oshaReference: 'OSHA 29 CFR 1910.22'
+  },
+  {
+    id: 'ret-hazard-3',
+    industry: 'retail',
+    category: 'hazard',
+    difficulty: 'beginner',
+    scenario: 'You notice extension cords running across a walkway and a loose floor mat curled up at the corner in the sales area.',
+    scenarioSpanish: 'Notas cables de extensión cruzando un pasillo y un tapete suelto enrollado en la esquina del área de ventas.',
+    question: 'What hazard does this create?',
+    questionSpanish: '¿Qué peligro crea esto?',
+    options: [
+      {
+        text: 'It looks untidy but is not dangerous',
+        textSpanish: 'Se ve desordenado pero no es peligroso',
+        correct: false,
+        explanation: 'Trip hazards are one of the most common causes of workplace injuries.',
+        explanationSpanish: 'Los peligros de tropiezo son una de las causas más comunes de lesiones en el trabajo.'
+      },
+      {
+        text: 'Tripping hazard — cords should be covered or rerouted, and mats secured flat',
+        textSpanish: 'Peligro de tropiezo — los cables deben cubrirse o redirigirse, y los tapetes asegurarse planos',
+        correct: true,
+        explanation: 'Correct! Loose cords and curled mats are serious trip hazards. Use cord covers or tape, reroute cables away from walkways, and replace or secure mats so edges lie flat.',
+        explanationSpanish: '¡Correcto! Los cables sueltos y tapetes enrollados son peligros serios de tropiezo. Usa cubrecables o cinta, redirige cables lejos de pasillos, y reemplaza o asegura tapetes para que los bordes estén planos.'
+      },
+      {
+        text: 'Only a hazard after hours when the lights are dim',
+        textSpanish: 'Solo es un peligro después de horas cuando las luces están tenues',
+        correct: false,
+        explanation: 'Trip hazards are dangerous at all times, especially in busy retail environments.',
+        explanationSpanish: 'Los peligros de tropiezo son peligrosos en todo momento, especialmente en ambientes de comercio ocupados.'
+      },
+      {
+        text: 'Customers should watch where they walk',
+        textSpanish: 'Los clientes deberían ver por dónde caminan',
+        correct: false,
+        explanation: 'Employers are responsible for maintaining a hazard-free environment for workers and the public.',
+        explanationSpanish: 'Los empleadores son responsables de mantener un ambiente libre de peligros para trabajadores y el público.'
+      }
+    ],
+    oshaReference: 'OSHA 29 CFR 1910.22'
+  },
+  // RETAIL - PPE
+  {
+    id: 'ret-ppe-1',
+    industry: 'retail',
+    category: 'ppe',
+    difficulty: 'beginner',
+    scenario: 'You work an 8-hour shift at the checkout register standing on a hard tile floor.',
+    scenarioSpanish: 'Trabajas un turno de 8 horas en la caja registradora parado en un piso de azulejo duro.',
+    question: 'What should you use to reduce fatigue and injury?',
+    questionSpanish: '¿Qué debes usar para reducir la fatiga y lesiones?',
+    options: [
+      {
+        text: 'Lean against the counter when tired',
+        textSpanish: 'Recargarte en el mostrador cuando estés cansado',
+        correct: false,
+        explanation: 'Leaning creates poor posture and does not address the root cause of fatigue.',
+        explanationSpanish: 'Recargarte crea mala postura y no aborda la causa raíz de la fatiga.'
+      },
+      {
+        text: 'Use an anti-fatigue standing mat and maintain good posture',
+        textSpanish: 'Usar un tapete anti-fatiga y mantener buena postura',
+        correct: true,
+        explanation: 'Correct! Anti-fatigue mats reduce strain on legs and back. Combine with supportive shoes, neutral posture, and periodic stretching to prevent musculoskeletal injuries.',
+        explanationSpanish: '¡Correcto! Los tapetes anti-fatiga reducen la tensión en piernas y espalda. Combina con zapatos de soporte, postura neutral, y estiramiento periódico para prevenir lesiones musculoesqueléticas.'
+      },
+      {
+        text: 'Wear high heels for better posture',
+        textSpanish: 'Usar tacones altos para mejor postura',
+        correct: false,
+        explanation: 'High heels increase fatigue and injury risk during long standing shifts.',
+        explanationSpanish: 'Los tacones altos aumentan la fatiga y el riesgo de lesiones durante turnos largos de pie.'
+      },
+      {
+        text: 'Standing all day is normal and no equipment is needed',
+        textSpanish: 'Estar de pie todo el día es normal y no se necesita equipo',
+        correct: false,
+        explanation: 'Prolonged standing without support contributes to back pain, varicose veins, and joint problems.',
+        explanationSpanish: 'Estar de pie prolongadamente sin soporte contribuye a dolor de espalda, venas varicosas, y problemas articulares.'
+      }
+    ],
+    oshaReference: 'OSHA Ergonomics Guidelines'
+  },
+  // RETAIL - EMERGENCY
+  {
+    id: 'ret-emergency-1',
+    industry: 'retail',
+    category: 'emergency',
+    difficulty: 'advanced',
+    scenario: 'An armed person approaches your register and demands you hand over the cash.',
+    scenarioSpanish: 'Una persona armada se acerca a tu caja y exige que le entregues el dinero.',
+    question: 'What should you do?',
+    questionSpanish: '¿Qué debes hacer?',
+    options: [
+      {
+        text: 'Refuse to hand over the money to protect the store',
+        textSpanish: 'Negarse a entregar el dinero para proteger la tienda',
+        correct: false,
+        explanation: 'Resisting a robbery dramatically increases the risk of injury or death. No amount of money is worth your life.',
+        explanationSpanish: 'Resistir un robo aumenta dramáticamente el riesgo de lesión o muerte. Ninguna cantidad de dinero vale tu vida.'
+      },
+      {
+        text: 'Comply calmly, do not resist, and activate the silent alarm if safe to do so',
+        textSpanish: 'Obedecer con calma, no resistir, y activar la alarma silenciosa si es seguro hacerlo',
+        correct: true,
+        explanation: 'Correct! Stay calm, hand over the money, avoid sudden movements, and try to remember details about the person. Call 911 after they leave. Use the drop safe during shifts to minimize available cash.',
+        explanationSpanish: '¡Correcto! Mantén la calma, entrega el dinero, evita movimientos repentinos, e intenta recordar detalles sobre la persona. Llama al 911 después de que se vayan. Usa la caja fuerte durante turnos para minimizar el efectivo disponible.'
+      },
+      {
+        text: 'Try to physically stop them',
+        textSpanish: 'Intentar detenerlos físicamente',
+        correct: false,
+        explanation: 'Physical resistance against an armed individual puts you and others in extreme danger.',
+        explanationSpanish: 'La resistencia física contra una persona armada te pone a ti y a otros en peligro extremo.'
+      },
+      {
+        text: 'Chase them out of the store after they take the money',
+        textSpanish: 'Perseguirlos fuera de la tienda después de que tomen el dinero',
+        correct: false,
+        explanation: 'Never chase a robber. Secure the scene, call 911, and wait for law enforcement.',
+        explanationSpanish: 'Nunca persigas a un ladrón. Asegura la escena, llama al 911, y espera a las autoridades.'
+      }
+    ],
+    oshaReference: 'OSHA Recommendations for Workplace Violence Prevention in Late-Night Retail'
+  },
+  {
+    id: 'ret-emergency-2',
+    industry: 'retail',
+    category: 'emergency',
+    difficulty: 'intermediate',
+    scenario: 'It\'s Black Friday and the store is at maximum capacity. You notice a fire exit is blocked by a merchandise display.',
+    scenarioSpanish: 'Es Black Friday y la tienda está a máxima capacidad. Notas que una salida de emergencia está bloqueada por un exhibidor de mercancía.',
+    question: 'What should you do?',
+    questionSpanish: '¿Qué debes hacer?',
+    options: [
+      {
+        text: 'Leave it — moving the display would look bad during the sale',
+        textSpanish: 'Dejarlo — mover el exhibidor se vería mal durante la venta',
+        correct: false,
+        explanation: 'A blocked fire exit is a life-safety violation regardless of sales priorities.',
+        explanationSpanish: 'Una salida de emergencia bloqueada es una violación de seguridad sin importar las prioridades de ventas.'
+      },
+      {
+        text: 'Immediately clear the exit and report it to management',
+        textSpanish: 'Despejar la salida inmediatamente y reportarlo a gerencia',
+        correct: true,
+        explanation: 'Correct! Fire exits must remain clear and accessible at all times. In crowded conditions, blocked exits can lead to crushes and fatalities. Report to management to prevent it from happening again.',
+        explanationSpanish: '¡Correcto! Las salidas de emergencia deben permanecer despejadas y accesibles en todo momento. En condiciones de multitud, las salidas bloqueadas pueden causar aplastamientos y fatalidades. Reporta a gerencia para prevenir que vuelva a ocurrir.'
+      },
+      {
+        text: 'Wait until the crowd thins out, then move it',
+        textSpanish: 'Esperar hasta que la multitud disminuya, luego moverlo',
+        correct: false,
+        explanation: 'Emergencies don\'t wait for convenient timing. The exit must be clear now.',
+        explanationSpanish: 'Las emergencias no esperan un momento conveniente. La salida debe estar despejada ahora.'
+      },
+      {
+        text: 'Post a sign saying "use other exit"',
+        textSpanish: 'Poner un letrero que diga "use otra salida"',
+        correct: false,
+        explanation: 'In a panic, people will head for the nearest visible exit. A sign is not a substitute for a clear exit.',
+        explanationSpanish: 'En un pánico, las personas irán a la salida visible más cercana. Un letrero no sustituye una salida despejada.'
+      }
+    ],
+    oshaReference: 'OSHA 29 CFR 1910.36'
+  },
+  // RETAIL - PROCEDURE
+  {
+    id: 'ret-procedure-1',
+    industry: 'retail',
+    category: 'procedure',
+    difficulty: 'intermediate',
+    scenario: 'You need to retrieve a product from a high shelf in the stockroom using a ladder.',
+    scenarioSpanish: 'Necesitas recuperar un producto de un estante alto en la bodega usando una escalera.',
+    question: 'What is the correct ladder safety practice?',
+    questionSpanish: '¿Cuál es la práctica correcta de seguridad con escaleras?',
+    options: [
+      {
+        text: 'Climb quickly and reach as far as you can',
+        textSpanish: 'Subir rápido y alcanzar lo más lejos posible',
+        correct: false,
+        explanation: 'Overreaching shifts your center of gravity and can cause falls.',
+        explanationSpanish: 'Estirarse demasiado desplaza tu centro de gravedad y puede causar caídas.'
+      },
+      {
+        text: 'Maintain three points of contact and never exceed the weight limit',
+        textSpanish: 'Mantener tres puntos de contacto y nunca exceder el límite de peso',
+        correct: true,
+        explanation: 'Correct! Always keep two hands and one foot, or two feet and one hand, on the ladder. Check the weight rating and never stand on the top two rungs.',
+        explanationSpanish: '¡Correcto! Siempre mantén dos manos y un pie, o dos pies y una mano, en la escalera. Verifica la capacidad de peso y nunca te pares en los dos peldaños superiores.'
+      },
+      {
+        text: 'Have a coworker hold the ladder so you can lean freely',
+        textSpanish: 'Que un compañero sostenga la escalera para que puedas inclinarte libremente',
+        correct: false,
+        explanation: 'A spotter helps but does not replace proper climbing technique.',
+        explanationSpanish: 'Un asistente ayuda pero no reemplaza la técnica correcta de escalada.'
+      },
+      {
+        text: 'Use a chair or stack of boxes if no ladder is available',
+        textSpanish: 'Usar una silla o pila de cajas si no hay escalera disponible',
+        correct: false,
+        explanation: 'Makeshift platforms are unstable and a leading cause of falls. Always use a proper ladder.',
+        explanationSpanish: 'Las plataformas improvisadas son inestables y una causa principal de caídas. Siempre usa una escalera apropiada.'
+      }
+    ],
+    oshaReference: 'OSHA 29 CFR 1910.23'
+  },
+  {
+    id: 'ret-procedure-2',
+    industry: 'retail',
+    category: 'procedure',
+    difficulty: 'intermediate',
+    scenario: 'You see a customer concealing merchandise inside their bag.',
+    scenarioSpanish: 'Ves a un cliente ocultando mercancía dentro de su bolsa.',
+    question: 'What is the safest response?',
+    questionSpanish: '¿Cuál es la respuesta más segura?',
+    options: [
+      {
+        text: 'Confront the customer and demand they return the item',
+        textSpanish: 'Confrontar al cliente y exigir que devuelva el artículo',
+        correct: false,
+        explanation: 'Direct confrontation can escalate to verbal or physical violence. This is never safe.',
+        explanationSpanish: 'La confrontación directa puede escalar a violencia verbal o física. Esto nunca es seguro.'
+      },
+      {
+        text: 'Do not confront — notify your manager or loss prevention immediately',
+        textSpanish: 'No confrontar — notificar a tu gerente o prevención de pérdidas inmediatamente',
+        correct: true,
+        explanation: 'Correct! Your safety is more important than any merchandise. Report the incident to a manager or loss prevention and let trained personnel handle it.',
+        explanationSpanish: '¡Correcto! Tu seguridad es más importante que cualquier mercancía. Reporta el incidente a un gerente o prevención de pérdidas y deja que personal capacitado lo maneje.'
+      },
+      {
+        text: 'Block the exit so they cannot leave',
+        textSpanish: 'Bloquear la salida para que no puedan salir',
+        correct: false,
+        explanation: 'Blocking a person\'s path can provoke a dangerous situation and may have legal consequences for you.',
+        explanationSpanish: 'Bloquear el camino de una persona puede provocar una situación peligrosa y puede tener consecuencias legales para ti.'
+      },
+      {
+        text: 'Ignore it — it\'s not your responsibility',
+        textSpanish: 'Ignorarlo — no es tu responsabilidad',
+        correct: false,
+        explanation: 'You should still report what you observed. Just avoid confronting the person directly.',
+        explanationSpanish: 'Aún debes reportar lo que observaste. Solo evita confrontar a la persona directamente.'
+      }
+    ],
+    oshaReference: 'OSHA Guidelines on Workplace Violence Prevention'
+  },
+  // WAREHOUSE - NEW SCENARIOS
+  {
+    id: 'wh-procedure-2',
+    industry: 'warehouse',
+    category: 'procedure',
+    difficulty: 'advanced',
+    scenario: 'A conveyor belt has jammed and you need to clear the blockage. The machine is still powered on.',
+    scenarioSpanish: 'Una banda transportadora se ha atascado y necesitas despejar el bloqueo. La máquina todavía está encendida.',
+    question: 'What must happen before you reach into the machine?',
+    questionSpanish: '¿Qué debe ocurrir antes de que metas la mano en la máquina?',
+    options: [
+      {
+        text: 'Ask a coworker to watch the power switch while you work',
+        textSpanish: 'Pedirle a un compañero que vigile el interruptor mientras trabajas',
+        correct: false,
+        explanation: 'Verbal agreements are not a substitute for lockout/tagout. The machine could restart accidentally.',
+        explanationSpanish: 'Los acuerdos verbales no sustituyen el bloqueo/etiquetado. La máquina podría reiniciarse accidentalmente.'
+      },
+      {
+        text: 'Perform lockout/tagout: de-energize, lock, tag, and verify zero energy',
+        textSpanish: 'Realizar bloqueo/etiquetado: desenergizar, bloquear, etiquetar, y verificar energía cero',
+        correct: true,
+        explanation: 'Correct! Lockout/tagout (LOTO) requires isolating all energy sources, applying your personal lock and tag, and verifying the machine cannot restart before any maintenance work.',
+        explanationSpanish: '¡Correcto! El bloqueo/etiquetado (LOTO) requiere aislar todas las fuentes de energía, aplicar tu candado y etiqueta personal, y verificar que la máquina no pueda reiniciarse antes de cualquier trabajo de mantenimiento.'
+      },
+      {
+        text: 'Just press the stop button — that\'s enough',
+        textSpanish: 'Solo presionar el botón de parada — eso es suficiente',
+        correct: false,
+        explanation: 'Stop buttons can be accidentally pressed again. Only lockout/tagout guarantees the machine stays off.',
+        explanationSpanish: 'Los botones de parada pueden presionarse accidentalmente de nuevo. Solo el bloqueo/etiquetado garantiza que la máquina permanezca apagada.'
+      },
+      {
+        text: 'Work quickly so the machine doesn\'t have time to restart',
+        textSpanish: 'Trabajar rápidamente para que la máquina no tenga tiempo de reiniciarse',
+        correct: false,
+        explanation: 'Speed does not prevent machine activation. This approach has caused fatalities.',
+        explanationSpanish: 'La velocidad no previene la activación de la máquina. Este enfoque ha causado fatalidades.'
+      }
+    ],
+    oshaReference: 'OSHA 29 CFR 1910.147'
+  },
+  {
+    id: 'wh-procedure-3',
+    industry: 'warehouse',
+    category: 'procedure',
+    difficulty: 'beginner',
+    scenario: 'Your shift involves 8 hours of repetitive lifting, bending, and carrying.',
+    scenarioSpanish: 'Tu turno implica 8 horas de levantamiento, agachamiento y carga repetitivos.',
+    question: 'What should you do at the start of your shift to reduce injury risk?',
+    questionSpanish: '¿Qué debes hacer al inicio de tu turno para reducir el riesgo de lesión?',
+    options: [
+      {
+        text: 'Start working immediately to build up momentum',
+        textSpanish: 'Comenzar a trabajar inmediatamente para ganar impulso',
+        correct: false,
+        explanation: 'Cold muscles are more prone to strains and tears.',
+        explanationSpanish: 'Los músculos fríos son más propensos a distensiones y desgarros.'
+      },
+      {
+        text: 'Perform warm-up stretches targeting your back, legs, and shoulders',
+        textSpanish: 'Realizar estiramientos de calentamiento enfocados en espalda, piernas y hombros',
+        correct: true,
+        explanation: 'Correct! Pre-shift stretching warms up muscles, increases flexibility, and significantly reduces the risk of musculoskeletal injuries during physical work.',
+        explanationSpanish: '¡Correcto! El estiramiento previo al turno calienta los músculos, aumenta la flexibilidad, y reduce significativamente el riesgo de lesiones musculoesqueléticas durante el trabajo físico.'
+      },
+      {
+        text: 'Stretching is only for athletes, not warehouse workers',
+        textSpanish: 'El estiramiento es solo para atletas, no para trabajadores de almacén',
+        correct: false,
+        explanation: 'Warehouse work is physically demanding. Stretching is essential for anyone doing repetitive physical tasks.',
+        explanationSpanish: 'El trabajo de almacén es físicamente exigente. El estiramiento es esencial para cualquiera que realice tareas físicas repetitivas.'
+      },
+      {
+        text: 'Take a pain reliever before work instead',
+        textSpanish: 'Tomar un analgésico antes del trabajo en su lugar',
+        correct: false,
+        explanation: 'Medication masks pain signals that warn you of injury. Prevention through stretching is always better.',
+        explanationSpanish: 'Los medicamentos enmascaran señales de dolor que te advierten de lesiones. La prevención a través del estiramiento siempre es mejor.'
+      }
+    ],
+    oshaReference: 'OSHA Ergonomics Guidelines'
+  },
+  {
+    id: 'wh-hazard-4',
+    industry: 'warehouse',
+    category: 'hazard',
+    difficulty: 'intermediate',
+    scenario: 'You\'re assigned to charge forklift batteries in the designated charging area.',
+    scenarioSpanish: 'Te asignan cargar baterías de montacargas en el área designada de carga.',
+    question: 'What is the main hidden hazard in battery charging areas?',
+    questionSpanish: '¿Cuál es el principal peligro oculto en las áreas de carga de baterías?',
+    options: [
+      {
+        text: 'The batteries might overheat and melt',
+        textSpanish: 'Las baterías podrían sobrecalentarse y derretirse',
+        correct: false,
+        explanation: 'While overheating can occur, it\'s not the primary hidden hazard.',
+        explanationSpanish: 'Aunque el sobrecalentamiento puede ocurrir, no es el principal peligro oculto.'
+      },
+      {
+        text: 'Charging produces hydrogen gas, which is explosive in poorly ventilated areas',
+        textSpanish: 'La carga produce gas hidrógeno, que es explosivo en áreas mal ventiladas',
+        correct: true,
+        explanation: 'Correct! Lead-acid batteries release hydrogen gas during charging. Without proper ventilation, hydrogen can accumulate to explosive levels. No smoking, sparks, or open flames are allowed in charging areas.',
+        explanationSpanish: '¡Correcto! Las baterías de plomo-ácido liberan gas hidrógeno durante la carga. Sin ventilación adecuada, el hidrógeno puede acumularse a niveles explosivos. No se permite fumar, chispas, ni llamas abiertas en áreas de carga.'
+      },
+      {
+        text: 'The cables could trip someone',
+        textSpanish: 'Los cables podrían hacer tropezar a alguien',
+        correct: false,
+        explanation: 'Cable management is important but the primary hazard is the explosive gas.',
+        explanationSpanish: 'El manejo de cables es importante pero el peligro principal es el gas explosivo.'
+      },
+      {
+        text: 'There are no special hazards — just plug in and charge',
+        textSpanish: 'No hay peligros especiales — solo conectar y cargar',
+        correct: false,
+        explanation: 'Battery charging areas have specific hazards requiring ventilation, PPE, and no-ignition-source rules.',
+        explanationSpanish: 'Las áreas de carga de baterías tienen peligros específicos que requieren ventilación, EPP, y reglas de no fuentes de ignición.'
+      }
+    ],
+    oshaReference: 'OSHA 29 CFR 1910.178(g)'
+  },
+  {
+    id: 'wh-procedure-4',
+    industry: 'warehouse',
+    category: 'procedure',
+    difficulty: 'intermediate',
+    scenario: 'A container of cleaning chemical arrives at the warehouse with a GHS label showing a skull-and-crossbones pictogram.',
+    scenarioSpanish: 'Un contenedor de químico de limpieza llega al almacén con una etiqueta GHS que muestra un pictograma de calavera con huesos cruzados.',
+    question: 'What should you do before handling this chemical?',
+    questionSpanish: '¿Qué debes hacer antes de manejar este químico?',
+    options: [
+      {
+        text: 'Wear gloves and handle it normally',
+        textSpanish: 'Usar guantes y manejarlo normalmente',
+        correct: false,
+        explanation: 'The skull-and-crossbones indicates acute toxicity. Gloves alone may not be enough.',
+        explanationSpanish: 'La calavera con huesos cruzados indica toxicidad aguda. Los guantes solos pueden no ser suficientes.'
+      },
+      {
+        text: 'Read the Safety Data Sheet (SDS) to learn required PPE and handling procedures',
+        textSpanish: 'Leer la Hoja de Datos de Seguridad (HDS) para conocer el EPP requerido y procedimientos de manejo',
+        correct: true,
+        explanation: 'Correct! The SDS provides 16 sections of safety information including required PPE, first aid measures, and safe handling. Employers must keep SDS accessible for every hazardous chemical on-site.',
+        explanationSpanish: '¡Correcto! La HDS proporciona 16 secciones de información de seguridad incluyendo EPP requerido, medidas de primeros auxilios, y manejo seguro. Los empleadores deben mantener las HDS accesibles para cada químico peligroso en el sitio.'
+      },
+      {
+        text: 'If it\'s sealed, it\'s safe to handle without precautions',
+        textSpanish: 'Si está sellado, es seguro manejarlo sin precauciones',
+        correct: false,
+        explanation: 'Sealed containers can leak or break. You must know the hazards before handling.',
+        explanationSpanish: 'Los contenedores sellados pueden tener fugas o romperse. Debes conocer los peligros antes de manejar.'
+      },
+      {
+        text: 'Ask a coworker what to do',
+        textSpanish: 'Preguntar a un compañero qué hacer',
+        correct: false,
+        explanation: 'Coworkers may not have accurate information. The SDS is the authoritative source.',
+        explanationSpanish: 'Los compañeros pueden no tener información precisa. La HDS es la fuente autorizada.'
+      }
+    ],
+    oshaReference: 'OSHA 29 CFR 1910.1200'
+  },
+  {
+    id: 'wh-hazard-5',
+    industry: 'warehouse',
+    category: 'hazard',
+    difficulty: 'intermediate',
+    scenario: 'You notice a power cord with exposed wires plugged into an outlet near your workstation.',
+    scenarioSpanish: 'Notas un cable de corriente con cables expuestos conectado a un enchufe cerca de tu estación de trabajo.',
+    question: 'What should you do?',
+    questionSpanish: '¿Qué debes hacer?',
+    options: [
+      {
+        text: 'Wrap it with regular tape and keep using it',
+        textSpanish: 'Envolverlo con cinta regular y seguir usándolo',
+        correct: false,
+        explanation: 'Regular tape is not rated for electrical insulation and can catch fire.',
+        explanationSpanish: 'La cinta regular no está clasificada para aislamiento eléctrico y puede incendiarse.'
+      },
+      {
+        text: 'Do not touch it — unplug safely using the plug (not the cord), tag it out of service, and report it',
+        textSpanish: 'No tocarlo — desenchufar de forma segura usando el enchufe (no el cable), etiquetarlo fuera de servicio, y reportarlo',
+        correct: true,
+        explanation: 'Correct! Damaged cords can cause electrocution or fire. Unplug by gripping the plug, never yank the cord. Remove the equipment from use and report immediately.',
+        explanationSpanish: '¡Correcto! Los cables dañados pueden causar electrocución o incendio. Desenchufa sujetando el enchufe, nunca jales el cable. Retira el equipo del uso y reporta inmediatamente.'
+      },
+      {
+        text: 'It\'s fine as long as you don\'t touch the exposed part',
+        textSpanish: 'Está bien mientras no toques la parte expuesta',
+        correct: false,
+        explanation: 'Exposed wires can arc, spark, or cause fire even without direct contact.',
+        explanationSpanish: 'Los cables expuestos pueden generar arcos, chispas, o causar incendios incluso sin contacto directo.'
+      },
+      {
+        text: 'Unplug it by pulling the cord',
+        textSpanish: 'Desenchufarlo jalando el cable',
+        correct: false,
+        explanation: 'Pulling the cord can further damage the wiring or cause a shock. Always grip the plug itself.',
+        explanationSpanish: 'Jalar el cable puede dañar más el cableado o causar una descarga. Siempre sujeta el enchufe.'
+      }
+    ],
+    oshaReference: 'OSHA 29 CFR 1910.303'
+  },
+  {
+    id: 'wh-hazard-6',
+    industry: 'warehouse',
+    category: 'hazard',
+    difficulty: 'beginner',
+    scenario: 'You\'re storing pallets on warehouse racking. A coworker says to stack them above the rack\'s marked load capacity to save space.',
+    scenarioSpanish: 'Estás almacenando tarimas en estanterías del almacén. Un compañero dice que las apiles por encima de la capacidad de carga marcada para ahorrar espacio.',
+    question: 'What should you do?',
+    questionSpanish: '¿Qué debes hacer?',
+    options: [
+      {
+        text: 'Follow the coworker\'s advice if they have more experience',
+        textSpanish: 'Seguir el consejo del compañero si tiene más experiencia',
+        correct: false,
+        explanation: 'Experience does not override rated weight limits. Overloading can cause rack collapse.',
+        explanationSpanish: 'La experiencia no anula los límites de peso clasificados. La sobrecarga puede causar el colapso de la estantería.'
+      },
+      {
+        text: 'Never exceed the rack\'s posted load capacity — report the space issue to a supervisor',
+        textSpanish: 'Nunca exceder la capacidad de carga publicada de la estantería — reportar el problema de espacio a un supervisor',
+        correct: true,
+        explanation: 'Correct! Rack load limits exist to prevent catastrophic collapse. Overloading is a leading cause of warehouse fatalities. If space is tight, a supervisor can find a safe solution.',
+        explanationSpanish: '¡Correcto! Los límites de carga de estanterías existen para prevenir colapsos catastróficos. La sobrecarga es una causa principal de fatalidades en almacenes. Si el espacio es limitado, un supervisor puede encontrar una solución segura.'
+      },
+      {
+        text: 'Go ahead if the pallets look stable',
+        textSpanish: 'Continuar si las tarimas se ven estables',
+        correct: false,
+        explanation: 'Visual stability does not mean the rack can handle the load. Structural failure can be sudden.',
+        explanationSpanish: 'La estabilidad visual no significa que la estantería pueda soportar la carga. La falla estructural puede ser repentina.'
+      },
+      {
+        text: 'Stack them on the floor next to the rack instead',
+        textSpanish: 'Apilarlas en el piso junto a la estantería en su lugar',
+        correct: false,
+        explanation: 'Floor stacking can block aisles and create additional hazards. Consult your supervisor for proper storage.',
+        explanationSpanish: 'Apilar en el piso puede bloquear pasillos y crear peligros adicionales. Consulta a tu supervisor para almacenamiento apropiado.'
+      }
+    ],
+    oshaReference: 'OSHA 29 CFR 1910.176'
+  },
+  // HOSPITALITY - NEW SCENARIOS
+  {
+    id: 'hosp-procedure-3',
+    industry: 'hospitality',
+    category: 'procedure',
+    difficulty: 'intermediate',
+    scenario: 'You need to use a cleaning chemical in the kitchen. The bottle has a GHS label with a corrosion pictogram.',
+    scenarioSpanish: 'Necesitas usar un químico de limpieza en la cocina. La botella tiene una etiqueta GHS con un pictograma de corrosión.',
+    question: 'What does this pictogram tell you?',
+    questionSpanish: '¿Qué te indica este pictograma?',
+    options: [
+      {
+        text: 'The chemical is flammable',
+        textSpanish: 'El químico es inflamable',
+        correct: false,
+        explanation: 'The corrosion pictogram indicates tissue or metal damage, not flammability.',
+        explanationSpanish: 'El pictograma de corrosión indica daño a tejidos o metales, no inflamabilidad.'
+      },
+      {
+        text: 'The chemical can cause severe burns to skin or eyes — wear gloves and eye protection',
+        textSpanish: 'El químico puede causar quemaduras severas en piel u ojos — usar guantes y protección ocular',
+        correct: true,
+        explanation: 'Correct! The corrosion pictogram means the chemical can destroy living tissue on contact. Always wear chemical-resistant gloves and eye protection. Store corrosives separately from other chemicals.',
+        explanationSpanish: '¡Correcto! El pictograma de corrosión significa que el químico puede destruir tejido vivo al contacto. Siempre usa guantes resistentes a químicos y protección ocular. Almacena los corrosivos separados de otros químicos.'
+      },
+      {
+        text: 'It\'s a mild cleaner safe for bare hands',
+        textSpanish: 'Es un limpiador suave seguro para manos desnudas',
+        correct: false,
+        explanation: 'Any chemical with a GHS hazard pictogram requires PPE. The corrosion symbol is especially serious.',
+        explanationSpanish: 'Cualquier químico con un pictograma de peligro GHS requiere EPP. El símbolo de corrosión es especialmente serio.'
+      },
+      {
+        text: 'Pictograms are just for shipping and don\'t apply to end users',
+        textSpanish: 'Los pictogramas son solo para envío y no aplican a usuarios finales',
+        correct: false,
+        explanation: 'GHS pictograms apply to everyone who handles the chemical, not just shippers.',
+        explanationSpanish: 'Los pictogramas GHS aplican a todos los que manejan el químico, no solo a los transportistas.'
+      }
+    ],
+    oshaReference: 'OSHA 29 CFR 1910.1200'
+  },
+  {
+    id: 'hosp-procedure-4',
+    industry: 'hospitality',
+    category: 'procedure',
+    difficulty: 'intermediate',
+    scenario: 'A customer informs the server they have a severe peanut allergy. The order reaches the kitchen.',
+    scenarioSpanish: 'Un cliente informa al mesero que tiene una alergia severa a los cacahuetes. La orden llega a la cocina.',
+    question: 'How should the kitchen handle this order?',
+    questionSpanish: '¿Cómo debe la cocina manejar esta orden?',
+    options: [
+      {
+        text: 'Just avoid adding peanuts to the dish',
+        textSpanish: 'Solo evitar agregar cacahuetes al platillo',
+        correct: false,
+        explanation: 'Cross-contact from shared utensils, surfaces, or oils can trigger a life-threatening reaction.',
+        explanationSpanish: 'El contacto cruzado de utensilios, superficies, o aceites compartidos puede desencadenar una reacción potencialmente mortal.'
+      },
+      {
+        text: 'Use clean utensils, sanitized surfaces, and verify all ingredients are peanut-free',
+        textSpanish: 'Usar utensilios limpios, superficies sanitizadas, y verificar que todos los ingredientes estén libres de cacahuetes',
+        correct: true,
+        explanation: 'Correct! Allergen cross-contact prevention requires clean equipment, sanitized prep areas, ingredient verification (including sauces and oils), and clear communication between all staff handling the order.',
+        explanationSpanish: '¡Correcto! La prevención de contacto cruzado de alérgenos requiere equipo limpio, áreas de preparación sanitizadas, verificación de ingredientes (incluyendo salsas y aceites), y comunicación clara entre todo el personal que maneje la orden.'
+      },
+      {
+        text: 'The server should have recommended a different restaurant',
+        textSpanish: 'El mesero debió haber recomendado un restaurante diferente',
+        correct: false,
+        explanation: 'Restaurants must be able to accommodate allergen requests safely. Turning away a customer is not the answer.',
+        explanationSpanish: 'Los restaurantes deben poder acomodar solicitudes de alérgenos de forma segura. Rechazar a un cliente no es la respuesta.'
+      },
+      {
+        text: 'Cook the food at a higher temperature to neutralize the allergen',
+        textSpanish: 'Cocinar la comida a mayor temperatura para neutralizar el alérgeno',
+        correct: false,
+        explanation: 'Cooking does NOT destroy most food allergens. Peanut proteins remain allergenic even after high heat.',
+        explanationSpanish: 'Cocinar NO destruye la mayoría de los alérgenos alimentarios. Las proteínas de cacahuete permanecen alergénicas incluso después del calor alto.'
+      }
+    ],
+    oshaReference: 'FDA Food Code & Food Allergen Labeling (FALCPA)'
+  },
+  {
+    id: 'hosp-emergency-2',
+    industry: 'hospitality',
+    category: 'emergency',
+    difficulty: 'beginner',
+    scenario: 'A coworker accidentally spills hot oil on their forearm, causing a red, blistering burn about 3 inches wide.',
+    scenarioSpanish: 'Un compañero accidentalmente derrama aceite caliente en su antebrazo, causando una quemadura roja con ampollas de unas 3 pulgadas de ancho.',
+    question: 'What is the correct first aid?',
+    questionSpanish: '¿Cuál es el primer auxilio correcto?',
+    options: [
+      {
+        text: 'Apply ice directly to the burn',
+        textSpanish: 'Aplicar hielo directamente a la quemadura',
+        correct: false,
+        explanation: 'Ice can cause frostbite on burned skin and worsen the injury. Never apply ice to burns.',
+        explanationSpanish: 'El hielo puede causar congelamiento en piel quemada y empeorar la lesión. Nunca apliques hielo a quemaduras.'
+      },
+      {
+        text: 'Run cool (not cold) water over the burn for 10-20 minutes, then seek medical attention',
+        textSpanish: 'Pasar agua fresca (no fría) sobre la quemadura por 10-20 minutos, luego buscar atención médica',
+        correct: true,
+        explanation: 'Correct! Cool running water reduces pain and limits tissue damage. Do not use ice, butter, or ointments. A burn this size with blisters (second-degree) requires medical evaluation. Call 911 for burns larger than 3 inches or on the face, hands, or joints.',
+        explanationSpanish: '¡Correcto! El agua fresca corriente reduce el dolor y limita el daño al tejido. No uses hielo, mantequilla, ni pomadas. Una quemadura de este tamaño con ampollas (segundo grado) requiere evaluación médica. Llama al 911 para quemaduras mayores de 3 pulgadas o en cara, manos, o articulaciones.'
+      },
+      {
+        text: 'Apply butter or petroleum jelly to soothe the burn',
+        textSpanish: 'Aplicar mantequilla o vaselina para aliviar la quemadura',
+        correct: false,
+        explanation: 'Butter and grease trap heat in the skin and increase infection risk. Only use cool water.',
+        explanationSpanish: 'La mantequilla y grasa atrapan el calor en la piel y aumentan el riesgo de infección. Solo usa agua fresca.'
+      },
+      {
+        text: 'Pop the blisters to relieve pressure',
+        textSpanish: 'Reventar las ampollas para aliviar presión',
+        correct: false,
+        explanation: 'Blisters protect the skin underneath. Breaking them increases infection risk significantly.',
+        explanationSpanish: 'Las ampollas protegen la piel debajo. Romperlas aumenta significativamente el riesgo de infección.'
+      }
+    ],
+    oshaReference: 'OSHA 29 CFR 1910.151'
+  },
+  {
+    id: 'hosp-procedure-5',
+    industry: 'hospitality',
+    category: 'procedure',
+    difficulty: 'intermediate',
+    scenario: 'A food delivery truck arrives with a shipment of frozen chicken and fresh produce.',
+    scenarioSpanish: 'Un camión de entrega de alimentos llega con un envío de pollo congelado y productos frescos.',
+    question: 'What must you check before accepting the delivery?',
+    questionSpanish: '¿Qué debes verificar antes de aceptar la entrega?',
+    options: [
+      {
+        text: 'Just count the boxes and sign the receipt',
+        textSpanish: 'Solo contar las cajas y firmar el recibo',
+        correct: false,
+        explanation: 'Quantity checks alone don\'t ensure food safety. Temperature and quality matter.',
+        explanationSpanish: 'Las verificaciones de cantidad solas no aseguran la seguridad alimentaria. La temperatura y calidad importan.'
+      },
+      {
+        text: 'Check temperatures (frozen \u2264 0\u00B0F, refrigerated \u2264 41\u00B0F), inspect for damage, and reject items that fail',
+        textSpanish: 'Verificar temperaturas (congelado \u2264 0\u00B0F, refrigerado \u2264 41\u00B0F), inspeccionar por da\u00F1os, y rechazar art\u00EDculos que fallen',
+        correct: true,
+        explanation: 'Correct! Frozen items must arrive at 0\u00B0F or below, and refrigerated items at 41\u00B0F or below. Reject items with torn packaging, off odors, signs of thawing and refreezing, or pest contamination.',
+        explanationSpanish: '\u00A1Correcto! Los art\u00EDculos congelados deben llegar a 0\u00B0F o menos, y los refrigerados a 41\u00B0F o menos. Rechaza art\u00EDculos con empaques rotos, olores extra\u00F1os, signos de descongelamiento y recongelamiento, o contaminaci\u00F3n por plagas.'
+      },
+      {
+        text: 'Accept everything and sort out problems later in the walk-in cooler',
+        textSpanish: 'Aceptar todo y resolver problemas despu\u00E9s en el refrigerador',
+        correct: false,
+        explanation: 'Once you accept a delivery, returning items becomes difficult. Inspect before signing.',
+        explanationSpanish: 'Una vez que aceptas una entrega, devolver art\u00EDculos se vuelve dif\u00EDcil. Inspecciona antes de firmar.'
+      },
+      {
+        text: 'Only check the items on the top of the stack',
+        textSpanish: 'Solo verificar los art\u00EDculos en la parte superior de la pila',
+        correct: false,
+        explanation: 'Items deeper in the shipment may have been exposed to temperature abuse during transport.',
+        explanationSpanish: 'Los art\u00EDculos m\u00E1s profundos en el env\u00EDo pueden haber estado expuestos a abuso de temperatura durante el transporte.'
+      }
+    ],
+    oshaReference: 'FDA Food Code 3-202.11'
+  },
+  {
+    id: 'hosp-hazard-3',
+    industry: 'hospitality',
+    category: 'hazard',
+    difficulty: 'intermediate',
+    scenario: 'You\'re about to lower a basket of frozen french fries into a deep fryer filled with 350\u00B0F oil.',
+    scenarioSpanish: 'Est\u00E1s a punto de bajar una canasta de papas fritas congeladas a una freidora llena de aceite a 350\u00B0F.',
+    question: 'What precaution is most important?',
+    questionSpanish: '\u00BFQu\u00E9 precauci\u00F3n es m\u00E1s importante?',
+    options: [
+      {
+        text: 'Drop them in quickly so it doesn\'t splash',
+        textSpanish: 'Dejarlas caer r\u00E1pidamente para que no salpique',
+        correct: false,
+        explanation: 'Dropping food quickly into hot oil causes dangerous splashing and burns.',
+        explanationSpanish: 'Dejar caer comida r\u00E1pidamente en aceite caliente causa salpicaduras peligrosas y quemaduras.'
+      },
+      {
+        text: 'Lower the basket slowly, stand back, and wear long sleeves and heat-resistant gloves',
+        textSpanish: 'Bajar la canasta lentamente, mantenerte alejado, y usar mangas largas y guantes resistentes al calor',
+        correct: true,
+        explanation: 'Correct! Frozen food causes oil to bubble violently. Lower the basket slowly to minimize splashing, keep your face and arms away, and wear PPE. Never fill the fryer above the fill line.',
+        explanationSpanish: '\u00A1Correcto! La comida congelada causa que el aceite burbujee violentamente. Baja la canasta lentamente para minimizar salpicaduras, mant\u00E9n tu cara y brazos alejados, y usa EPP. Nunca llenes la freidora por encima de la l\u00EDnea de llenado.'
+      },
+      {
+        text: 'Shake off the ice crystals and toss them in by hand',
+        textSpanish: 'Sacudir los cristales de hielo y echarlas con la mano',
+        correct: false,
+        explanation: 'Tossing food by hand near a fryer is extremely dangerous. Always use the basket.',
+        explanationSpanish: 'Lanzar comida con la mano cerca de una freidora es extremadamente peligroso. Siempre usa la canasta.'
+      },
+      {
+        text: 'Overfill the fryer to cook more at once',
+        textSpanish: 'Sobrecargar la freidora para cocinar m\u00E1s a la vez',
+        correct: false,
+        explanation: 'Overfilling causes oil to overflow and can ignite on the burner.',
+        explanationSpanish: 'Sobrecargar causa que el aceite se desborde y puede encenderse en el quemador.'
+      }
+    ],
+    oshaReference: 'OSHA General Duty Clause, Section 5(a)(1)'
+  },
+  {
+    id: 'hosp-ppe-3',
+    industry: 'hospitality',
+    category: 'ppe',
+    difficulty: 'beginner',
+    scenario: 'You\'re asked to slice vegetables using a mandoline slicer.',
+    scenarioSpanish: 'Te piden rebanar vegetales usando una mandolina.',
+    question: 'What PPE is essential for this task?',
+    questionSpanish: '\u00BFQu\u00E9 EPP es esencial para esta tarea?',
+    options: [
+      {
+        text: 'No PPE needed if you use the hand guard',
+        textSpanish: 'No se necesita EPP si usas el protector de mano',
+        correct: false,
+        explanation: 'Hand guards can slip. A cut-resistant glove adds a critical layer of protection.',
+        explanationSpanish: 'Los protectores de mano pueden resbalarse. Un guante resistente a cortes agrega una capa cr\u00EDtica de protecci\u00F3n.'
+      },
+      {
+        text: 'A cut-resistant glove on the hand holding the food',
+        textSpanish: 'Un guante resistente a cortes en la mano que sostiene la comida',
+        correct: true,
+        explanation: 'Correct! Always wear a cut-resistant glove on the hand feeding food into the mandoline. Mandoline injuries are among the most common serious kitchen cuts.',
+        explanationSpanish: '\u00A1Correcto! Siempre usa un guante resistente a cortes en la mano que alimenta la comida en la mandolina. Las lesiones con mandolina est\u00E1n entre los cortes de cocina graves m\u00E1s comunes.'
+      },
+      {
+        text: 'Latex gloves for hygiene',
+        textSpanish: 'Guantes de l\u00E1tex para higiene',
+        correct: false,
+        explanation: 'Latex gloves provide no cut protection. You need a cut-resistant glove for blade safety.',
+        explanationSpanish: 'Los guantes de l\u00E1tex no proporcionan protecci\u00F3n contra cortes. Necesitas un guante resistente a cortes para seguridad con hojas.'
+      },
+      {
+        text: 'Heat-resistant gloves',
+        textSpanish: 'Guantes resistentes al calor',
+        correct: false,
+        explanation: 'Heat-resistant gloves protect from burns, not cuts. Use the right PPE for the hazard.',
+        explanationSpanish: 'Los guantes resistentes al calor protegen de quemaduras, no de cortes. Usa el EPP correcto para el peligro.'
+      }
+    ],
+    oshaReference: 'OSHA 29 CFR 1910.132'
+  },
+  // GENERAL - NEW SCENARIOS
+  {
+    id: 'gen-emergency-2',
+    industry: 'general',
+    category: 'emergency',
+    difficulty: 'intermediate',
+    scenario: 'You hear gunshots inside your workplace.',
+    scenarioSpanish: 'Escuchas disparos dentro de tu lugar de trabajo.',
+    question: 'What is the recommended response protocol?',
+    questionSpanish: '\u00BFCu\u00E1l es el protocolo de respuesta recomendado?',
+    options: [
+      {
+        text: 'Freeze and wait for instructions over the intercom',
+        textSpanish: 'Quedarse quieto y esperar instrucciones por el altavoz',
+        correct: false,
+        explanation: 'Waiting makes you a stationary target. Immediate action improves survival chances.',
+        explanationSpanish: 'Esperar te hace un blanco estacionario. La acci\u00F3n inmediata mejora las probabilidades de supervivencia.'
+      },
+      {
+        text: 'Run-Hide-Fight: evacuate if possible, hide if you can\'t run, fight only as a last resort',
+        textSpanish: 'Correr-Esconderse-Pelear: evacuar si es posible, esconderse si no puedes correr, pelear solo como \u00FAltimo recurso',
+        correct: true,
+        explanation: 'Correct! RUN: escape if a safe path exists, leave belongings behind. HIDE: if you can\'t run, lock and barricade doors, silence your phone. FIGHT: only as a last resort, use any available object to defend yourself.',
+        explanationSpanish: '\u00A1Correcto! CORRER: escapa si existe un camino seguro, deja tus pertenencias. ESCONDERSE: si no puedes correr, cierra con llave y barrica puertas, silencia tu tel\u00E9fono. PELEAR: solo como \u00FAltimo recurso, usa cualquier objeto disponible para defenderte.'
+      },
+      {
+        text: 'Call 911 before doing anything else',
+        textSpanish: 'Llamar al 911 antes de hacer cualquier otra cosa',
+        correct: false,
+        explanation: 'Your first priority is getting to safety. Call 911 once you are safe, not while in danger.',
+        explanationSpanish: 'Tu primera prioridad es ponerte a salvo. Llama al 911 una vez que est\u00E9s seguro, no mientras est\u00E9s en peligro.'
+      },
+      {
+        text: 'Go toward the sound to help others',
+        textSpanish: 'Ir hacia el sonido para ayudar a otros',
+        correct: false,
+        explanation: 'Moving toward the threat puts you in extreme danger. Help others evacuate in the opposite direction.',
+        explanationSpanish: 'Moverte hacia la amenaza te pone en peligro extremo. Ayuda a otros a evacuar en la direcci\u00F3n opuesta.'
+      }
+    ],
+    oshaReference: 'DHS Active Shooter Preparedness & OSHA Workplace Violence Guidelines'
+  },
+  {
+    id: 'gen-hazard-1',
+    industry: 'general',
+    category: 'hazard',
+    difficulty: 'beginner',
+    scenario: 'You\'re working during a heat wave. A coworker starts to feel dizzy, stops sweating, and has hot, dry skin.',
+    scenarioSpanish: 'Est\u00E1s trabajando durante una ola de calor. Un compa\u00F1ero comienza a sentirse mareado, deja de sudar, y tiene piel caliente y seca.',
+    question: 'What is happening and what should you do?',
+    questionSpanish: '\u00BFQu\u00E9 est\u00E1 pasando y qu\u00E9 debes hacer?',
+    options: [
+      {
+        text: 'They\'re just tired \u2014 let them rest for a few minutes',
+        textSpanish: 'Solo est\u00E1n cansados \u2014 dejarlos descansar unos minutos',
+        correct: false,
+        explanation: 'These symptoms indicate heat stroke, not simple fatigue. Delayed action can be fatal.',
+        explanationSpanish: 'Estos s\u00EDntomas indican golpe de calor, no simple fatiga. La acci\u00F3n retrasada puede ser fatal.'
+      },
+      {
+        text: 'This is heat stroke \u2014 call 911 immediately and move them to a cool area',
+        textSpanish: 'Esto es golpe de calor \u2014 llamar al 911 inmediatamente y moverlos a un \u00E1rea fresca',
+        correct: true,
+        explanation: 'Correct! Hot dry skin and confusion are signs of heat stroke, a life-threatening emergency. Call 911, move the person to shade or AC, cool them with water or wet cloths, and do not give fluids if they\'re confused or unconscious. Prevention: hydrate, take breaks, and watch for early symptoms.',
+        explanationSpanish: '\u00A1Correcto! Piel caliente y seca y confusi\u00F3n son se\u00F1ales de golpe de calor, una emergencia potencialmente mortal. Llama al 911, mueve a la persona a la sombra o AC, enfr\u00EDalos con agua o pa\u00F1os h\u00FAmedos, y no des l\u00EDquidos si est\u00E1n confundidos o inconscientes. Prevenci\u00F3n: hidratarse, tomar descansos, y vigilar s\u00EDntomas tempranos.'
+      },
+      {
+        text: 'Give them a cold energy drink',
+        textSpanish: 'Darles una bebida energ\u00E9tica fr\u00EDa',
+        correct: false,
+        explanation: 'Caffeine and sugar can worsen dehydration. If conscious, offer small sips of plain water only.',
+        explanationSpanish: 'La cafe\u00EDna y el az\u00FAcar pueden empeorar la deshidrataci\u00F3n. Si est\u00E1n conscientes, ofrece solo peque\u00F1os sorbos de agua simple.'
+      },
+      {
+        text: 'Have them keep working in the shade',
+        textSpanish: 'Que sigan trabajando en la sombra',
+        correct: false,
+        explanation: 'Heat stroke requires emergency medical treatment, not reduced activity.',
+        explanationSpanish: 'El golpe de calor requiere tratamiento m\u00E9dico de emergencia, no actividad reducida.'
+      }
+    ],
+    oshaReference: 'OSHA Heat Illness Prevention Campaign (Water, Rest, Shade)'
+  },
+  {
+    id: 'gen-procedure-3',
+    industry: 'general',
+    category: 'procedure',
+    difficulty: 'beginner',
+    scenario: 'A coworker has been making repeated offensive comments about your race during shifts.',
+    scenarioSpanish: 'Un compa\u00F1ero ha hecho comentarios ofensivos repetidos sobre tu raza durante los turnos.',
+    question: 'What is the correct way to handle this?',
+    questionSpanish: '\u00BFCu\u00E1l es la forma correcta de manejar esto?',
+    options: [
+      {
+        text: 'Ignore it \u2014 they\'re probably just joking',
+        textSpanish: 'Ignorarlo \u2014 probablemente solo est\u00E1n bromeando',
+        correct: false,
+        explanation: 'Repeated offensive comments create a hostile work environment, regardless of intent.',
+        explanationSpanish: 'Los comentarios ofensivos repetidos crean un ambiente laboral hostil, sin importar la intenci\u00F3n.'
+      },
+      {
+        text: 'Document what happened and report it to HR, a manager, or the EEOC',
+        textSpanish: 'Documentar lo que pas\u00F3 y reportarlo a Recursos Humanos, un gerente, o la EEOC',
+        correct: true,
+        explanation: 'Correct! Write down dates, times, witnesses, and exact words used. Report to your employer\'s HR or management. If the employer does not act, you can file a complaint with the EEOC. You are protected from retaliation by law.',
+        explanationSpanish: '\u00A1Correcto! Anota fechas, horas, testigos, y las palabras exactas usadas. Reporta a Recursos Humanos o gerencia de tu empleador. Si el empleador no act\u00FAa, puedes presentar una queja ante la EEOC. Est\u00E1s protegido contra represalias por ley.'
+      },
+      {
+        text: 'Confront the coworker aggressively to make them stop',
+        textSpanish: 'Confrontar al compa\u00F1ero agresivamente para hacer que se detengan',
+        correct: false,
+        explanation: 'Aggressive confrontation can escalate the situation and may put your own employment at risk.',
+        explanationSpanish: 'La confrontaci\u00F3n agresiva puede escalar la situaci\u00F3n y puede poner en riesgo tu propio empleo.'
+      },
+      {
+        text: 'Just quit \u2014 there\'s nothing you can do',
+        textSpanish: 'Solo renunciar \u2014 no hay nada que puedas hacer',
+        correct: false,
+        explanation: 'You have legal protections. Federal and state laws prohibit workplace discrimination and harassment.',
+        explanationSpanish: 'Tienes protecciones legales. Las leyes federales y estatales proh\u00EDben la discriminaci\u00F3n y acoso en el lugar de trabajo.'
+      }
+    ],
+    oshaReference: 'Title VII of the Civil Rights Act & EEOC Guidelines'
   }
 ];
 
@@ -875,5 +1832,6 @@ export const categoryLabels: Record<string, { en: string; es: string; icon: stri
 export const industryLabels: Record<string, { en: string; es: string; icon: string }> = {
   warehouse: { en: 'Warehouse', es: 'Almacén', icon: '📦' },
   hospitality: { en: 'Hospitality', es: 'Hospitalidad', icon: '🍽️' },
+  retail: { en: 'Retail', es: 'Comercio', icon: '🛒' },
   general: { en: 'General', es: 'General', icon: '🏢' }
 };

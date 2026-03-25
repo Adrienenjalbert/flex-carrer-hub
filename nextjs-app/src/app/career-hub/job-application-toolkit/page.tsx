@@ -5,6 +5,7 @@ import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
 import { AuthorByline } from "@/components/career-hub/AuthorByline";
 import { getLastUpdated } from "@/lib/utils/date-variation";
 import { Card, CardContent } from "@/components/ui/card";
+import CTASection from "@/components/career-hub/CTASection";
 import { 
   FileText, 
   Briefcase, 
@@ -13,7 +14,8 @@ import {
   CheckCircle, 
   ArrowRight,
   Wrench,
-  MessageSquare
+  MessageSquare,
+  Sparkles
 } from "lucide-react";
 import { resumeTemplates } from "@/lib/data/resume-templates";
 import { coverLetterTemplates } from "@/lib/data/cover-letter-templates";
@@ -190,39 +192,92 @@ export default function JobApplicationToolkitPage() {
           </div>
         </div>
 
+        {/* Resume Builder Banner */}
+        <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl p-8 mb-16 text-white">
+          <div className="flex flex-col md:flex-row items-center gap-6">
+            <div className="flex-shrink-0">
+              <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center">
+                <Sparkles className="h-8 w-8" />
+              </div>
+            </div>
+            <div className="flex-1 text-center md:text-left">
+              <h2 className="text-2xl font-bold mb-2">Want to skip the templates? Build your resume with AI</h2>
+              <p className="text-blue-100">
+                Our free AI-powered resume builder creates a polished, ATS-friendly resume in minutes.
+              </p>
+            </div>
+            <a
+              href="https://indeedflex.com/resume-builder/ai-resume-generator/build-your-resume/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-shrink-0 inline-flex items-center gap-2 px-6 py-3 bg-white text-blue-700 rounded-xl font-semibold hover:bg-blue-50 transition-colors"
+            >
+              <FileText className="h-5 w-5" />
+              Build Your Resume
+              <ArrowRight className="h-4 w-4" />
+            </a>
+          </div>
+        </div>
+
         {/* Quick Start Section */}
         <div className="bg-slate-50 rounded-2xl p-8 mb-16">
           <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
-            Quick Start: Build Your Application in 3 Steps
+            Quick Start: Build Your Application
           </h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="text-center">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="grid md:grid-cols-4 gap-6">
+            <Link href="/career-hub/templates" className="group text-center">
+              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-200 transition-colors">
                 <span className="text-xl font-bold text-blue-600">1</span>
               </div>
-              <h3 className="font-semibold text-gray-900 mb-2">Choose Your Template</h3>
-              <p className="text-gray-600 text-sm">
+              <h3 className="font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">Choose Your Template</h3>
+              <p className="text-gray-600 text-sm mb-3">
                 Pick a resume template that matches your industry and experience level
               </p>
-            </div>
-            <div className="text-center">
-              <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <span className="text-blue-600 text-sm font-medium inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+                Browse Templates <ArrowRight className="h-3 w-3" />
+              </span>
+            </Link>
+            <Link href="/career-hub/resume-examples" className="group text-center">
+              <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-emerald-200 transition-colors">
                 <span className="text-xl font-bold text-emerald-600">2</span>
               </div>
-              <h3 className="font-semibold text-gray-900 mb-2">Use Real Examples</h3>
-              <p className="text-gray-600 text-sm">
-                Reference our role-specific examples for content ideas and bullet points
+              <h3 className="font-semibold text-gray-900 mb-2 group-hover:text-emerald-600 transition-colors">Use Real Examples</h3>
+              <p className="text-gray-600 text-sm mb-3">
+                Copy bullet points and summaries from role-specific resume examples
               </p>
-            </div>
-            <div className="text-center">
-              <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <span className="text-emerald-600 text-sm font-medium inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+                View Examples <ArrowRight className="h-3 w-3" />
+              </span>
+            </Link>
+            <Link href="/career-hub/cover-letters" className="group text-center">
+              <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-purple-200 transition-colors">
                 <span className="text-xl font-bold text-purple-600">3</span>
               </div>
-              <h3 className="font-semibold text-gray-900 mb-2">Add a Cover Letter</h3>
-              <p className="text-gray-600 text-sm">
+              <h3 className="font-semibold text-gray-900 mb-2 group-hover:text-purple-600 transition-colors">Add a Cover Letter</h3>
+              <p className="text-gray-600 text-sm mb-3">
                 Customize an industry cover letter to complete your application
               </p>
-            </div>
+              <span className="text-purple-600 text-sm font-medium inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+                View Cover Letters <ArrowRight className="h-3 w-3" />
+              </span>
+            </Link>
+            <a
+              href="https://indeedflex.com/resume-builder/ai-resume-generator/build-your-resume/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group text-center"
+            >
+              <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-orange-200 transition-colors">
+                <Sparkles className="h-6 w-6 text-orange-600" />
+              </div>
+              <h3 className="font-semibold text-gray-900 mb-2 group-hover:text-orange-600 transition-colors">Build with AI</h3>
+              <p className="text-gray-600 text-sm mb-3">
+                Use our free AI resume builder to create a polished resume in minutes
+              </p>
+              <span className="text-orange-600 text-sm font-medium inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+                Start Building <ArrowRight className="h-3 w-3" />
+              </span>
+            </a>
           </div>
         </div>
 
@@ -585,6 +640,16 @@ export default function JobApplicationToolkitPage() {
               <p className="text-gray-600">
                 Start with a template that fits your experience level, then use our role-specific examples 
                 for content inspiration. Replace the placeholder text with your own information and achievements.
+                For the fastest option, try our{" "}
+                <a
+                  href="https://indeedflex.com/resume-builder/ai-resume-generator/build-your-resume/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 hover:underline"
+                >
+                  free AI resume builder
+                </a>{" "}
+                which creates a polished resume in minutes.
               </p>
             </div>
           </div>
@@ -633,6 +698,7 @@ export default function JobApplicationToolkitPage() {
           }),
         }}
       />
+      <CTASection />
     </div>
   );
 }

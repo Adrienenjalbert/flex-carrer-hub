@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useMemo, useEffect, useCallback } from "react";
+import { useEngagement } from "@/hooks/useEngagement";
+import DailyChallenge from "@/components/career-hub/tools/DailyChallenge";
 import {
   BookOpen, Dices, ShieldCheck, Check, X,
   RotateCcw, Volume2, VolumeX, ChefHat, Utensils,
@@ -93,6 +95,16 @@ export default function MenuMasterClient() {
   const [safetyQuestions, setSafetyQuestions] = useState<FoodSafetyQuestion[]>([]);
 
   const { speak, stop, isSpeaking, isSupported } = useSpeechSynthesis({ defaultRate: 0.85 });
+  const { getStreak, getDailyChallenge, recordActivity, isActiveToday } = useEngagement();
+
+  const dailyChallengeItems = useMemo(() => {
+    return getDailyChallenge(culinaryTerms, 5).map(t => ({
+      id: t.id,
+      question: `What does "${t.term}" mean?`,
+      answer: t.definition,
+      hint: t.termSpanish || undefined,
+    }));
+  }, [getDailyChallenge]);
 
   const masteredTermsSet = useMemo(() => new Set(progress.masteredTerms), [progress.masteredTerms]);
   const masteredCutsSet = useMemo(() => new Set(progress.masteredCuts), [progress.masteredCuts]);
@@ -227,9 +239,17 @@ export default function MenuMasterClient() {
               </div>
             </div>
 
+            <DailyChallenge
+              toolName="Menu Master"
+              items={dailyChallengeItems}
+              streak={getStreak()}
+              isActiveToday={isActiveToday}
+              onComplete={() => recordActivity("menu-master")}
+            />
+
             {/* Mode Tabs */}
             <Tabs value={mode} onValueChange={(v) => setMode(v as Mode)} className="mb-6">
-              <TabsList className="grid grid-cols-4 w-full">
+              <TabsList className="grid grid-cols-2 sm:grid-cols-4 w-full">
                 <TabsTrigger value="learn">
                   <BookOpen className="h-4 w-4 mr-1.5" />
                   Learn
@@ -310,6 +330,7 @@ export default function MenuMasterClient() {
                           <CardTitle className="text-lg">{term.term}</CardTitle>
                           <button
                             onClick={() => toggleTermMastered(term.id)}
+                            aria-label={masteredTermsSet.has(term.id) ? "Unmark as mastered" : "Mark as mastered"}
                             className={cn(
                               "p-1.5 rounded-full transition-colors",
                               masteredTermsSet.has(term.id)
@@ -339,6 +360,7 @@ export default function MenuMasterClient() {
                                 stop();
                                 speak(term.term, "en-US");
                               }}
+                              aria-label="Play pronunciation"
                               className="p-1 rounded-full hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors"
                             >
                               {isSpeaking ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
@@ -396,9 +418,12 @@ export default function MenuMasterClient() {
                   </Button>
                 </div>
 
-                <div
-                  className="relative w-full aspect-[3/4] cursor-pointer perspective-1000"
+                <button
+                  type="button"
+                  className="relative w-full aspect-[3/4] cursor-pointer perspective-1000 bg-transparent border-none p-0 text-left block"
                   onClick={() => setIsFlipped(!isFlipped)}
+                  aria-label="Flip card"
+                  aria-expanded={isFlipped}
                 >
                   <div
                     className={cn(
@@ -448,7 +473,7 @@ export default function MenuMasterClient() {
                       )}
                     </div>
                   </div>
-                </div>
+                </button>
 
                 <div className="flex items-center justify-between mt-6">
                   <Button
@@ -459,6 +484,7 @@ export default function MenuMasterClient() {
                       setIsFlipped(false);
                     }}
                     disabled={flashcardIndex === 0}
+                    aria-label="Previous card"
                   >
                     ←
                   </Button>
@@ -491,6 +517,7 @@ export default function MenuMasterClient() {
                       setIsFlipped(false);
                     }}
                     disabled={flashcardIndex === flashcardDeck.length - 1}
+                    aria-label="Next card"
                   >
                     →
                   </Button>
@@ -508,15 +535,16 @@ export default function MenuMasterClient() {
                         <CardTitle className="text-lg">
                           🔪 {cut.name}
                         </CardTitle>
-                        <button
-                          onClick={() => toggleCutMastered(cut.id)}
-                          className={cn(
-                            "p-1.5 rounded-full transition-colors",
-                            masteredCutsSet.has(cut.id)
-                              ? "text-green-600"
-                              : "text-muted-foreground hover:text-green-600"
-                          )}
-                        >
+                          <button
+                            onClick={() => toggleCutMastered(cut.id)}
+                            aria-label={masteredCutsSet.has(cut.id) ? "Unmark as mastered" : "Mark as mastered"}
+                            className={cn(
+                              "p-1.5 rounded-full transition-colors",
+                              masteredCutsSet.has(cut.id)
+                                ? "text-green-600"
+                                : "text-muted-foreground hover:text-green-600"
+                            )}
+                          >
                           {masteredCutsSet.has(cut.id) ? (
                             <Check className="h-5 w-5" />
                           ) : (
@@ -539,6 +567,7 @@ export default function MenuMasterClient() {
                               stop();
                               speak(cut.name, "en-US");
                             }}
+                            aria-label="Play pronunciation"
                             className="p-1 rounded-full hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors"
                           >
                             <Volume2 className="h-4 w-4" />

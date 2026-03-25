@@ -36,7 +36,6 @@ import {
   Receipt,
   // Career Tools – Planning
   Target,
-  Scale,
   Clock,
   Wrench,
   // Career Tools – Life & Benefits
@@ -173,7 +172,6 @@ const contentPillars = [
           label: "Planning & Career",
           items: [
             { title: "Career Path Explorer", href: "/career-hub/tools/career-path", icon: Target },
-            { title: "Job Offer Analyzer", href: "/career-hub/tools/job-offer-analyzer", icon: Scale },
             { title: "Shift Planner", href: "/career-hub/tools/shift-planner", icon: Clock },
             { title: "Skills Analyzer", href: "/career-hub/tools/skills-analyzer", icon: Wrench },
           ],
@@ -186,7 +184,6 @@ const contentPillars = [
             { title: "Childcare Calculator", href: "/career-hub/tools/childcare-calculator", icon: Baby },
             { title: "Benefits Checker", href: "/career-hub/tools/benefits-checker", icon: Shield },
             { title: "Unemployment Calculator", href: "/career-hub/tools/unemployment-calculator", icon: AlertCircle },
-            { title: "Certification ROI", href: "/career-hub/tools/certification-roi", icon: Award },
           ],
         },
         {

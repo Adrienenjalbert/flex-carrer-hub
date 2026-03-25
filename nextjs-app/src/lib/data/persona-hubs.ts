@@ -159,9 +159,8 @@ export const personaHubs: PersonaHub[] = [
     recommendedTools: [
       'career-path',
       'skills-analyzer',
-      'certification-roi',
-      'job-offer-analyzer',
       'pay-calculator',
+      'shift-planner',
     ],
     suggestedRoles: [
       'warehouse-operative',

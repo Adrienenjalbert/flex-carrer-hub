@@ -250,8 +250,8 @@ export const skillRecommendations: Record<string, SkillRecommendation> = {
     ],
     resources: [
       { name: "OSHA Forklift Requirements", url: "https://www.osha.gov/powered-industrial-trucks", cost: "Free info", duration: "Reference", highlight: "Official requirements" },
-      { name: "Local Training Schools", url: "https://www.google.com/search?q=forklift+certification+training+near+me", cost: "$150-300", duration: "1-2 days" },
-      { name: "Employer-Provided Training", url: "#", cost: "Often free", duration: "1-2 days", highlight: "Ask your employer first" }
+      { name: "Local Training Schools", url: "https://www.osha.gov/training/outreach#authorized-trainers", cost: "$150-300", duration: "1-2 days" },
+      { name: "Employer-Provided Training", url: "https://www.osha.gov/powered-industrial-trucks/training", cost: "Often free", duration: "1-2 days", highlight: "Ask your employer first" }
     ],
     timeEstimate: "1-2 days",
     costRange: "Free (employer) - $300",

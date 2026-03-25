@@ -26,7 +26,7 @@ const PhraseCard: React.FC<PhraseCardProps> = ({
   
   if (compact) {
     return (
-      <div className="bg-card rounded-lg border border-border p-3 hover:shadow-soft transition-shadow">
+      <div role="article" className="bg-card rounded-lg border border-border p-3 hover:shadow-soft transition-shadow">
         <div className="flex items-start justify-between gap-2">
           <div className="flex-1 min-w-0">
             <p className="font-medium text-foreground text-sm truncate">{phrase.english}</p>
@@ -50,7 +50,7 @@ const PhraseCard: React.FC<PhraseCardProps> = ({
   }
 
   return (
-    <div className="bg-card rounded-xl border border-border p-4 hover:shadow-soft transition-all group">
+    <div role="article" className="bg-card rounded-xl border border-border p-4 hover:shadow-soft transition-all group">
       {/* Header with category and favorite */}
       <div className="flex items-center justify-between mb-3">
         <span className={cn("text-xs px-2 py-0.5 rounded-full border", category.color)}>
@@ -100,6 +100,7 @@ const PhraseCard: React.FC<PhraseCardProps> = ({
       <div className="flex gap-2">
         <button
           onClick={onPlayEnglish}
+          aria-label="Play English pronunciation"
           className={cn(
             "flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-lg font-medium text-sm transition-all",
             isSpeaking
@@ -112,6 +113,7 @@ const PhraseCard: React.FC<PhraseCardProps> = ({
         </button>
         <button
           onClick={onPlaySpanish}
+          aria-label="Play Spanish pronunciation"
           className="flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-lg font-medium text-sm bg-muted text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-all"
         >
           <Volume2 size={16} />

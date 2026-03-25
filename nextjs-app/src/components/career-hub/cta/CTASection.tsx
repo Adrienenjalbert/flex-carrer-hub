@@ -1,8 +1,9 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Download } from "lucide-react";
+import { ArrowRight, Download, FileText } from "lucide-react";
 import Link from "next/link";
 
 interface CTASectionProps {
+  variant?: "app-download" | "resume-builder";
   title?: string;
   subtitle?: string;
   primaryCTA?: string;
@@ -10,21 +11,44 @@ interface CTASectionProps {
   secondaryCTAHref?: string;
 }
 
+const RESUME_BUILDER_URL = "https://indeedflex.com/resume-builder/ai-resume-generator/build-your-resume/";
+
 const CTASection = ({ 
-  title = "Ready to Find Your Next Shift?",
-  subtitle = "Download the Indeed Flex app and start earning today. Flexible work, on your schedule.",
-  primaryCTA = "Get the App",
+  variant = "app-download",
+  title,
+  subtitle,
+  primaryCTA,
   secondaryCTA = "Learn More",
   secondaryCTAHref = "/career-hub"
 }: CTASectionProps) => {
+  const isResumeBuilder = variant === "resume-builder";
+
+  const resolvedTitle = title || (isResumeBuilder
+    ? "Ready to Build Your Resume?"
+    : "Ready to Find Your Next Shift?");
+
+  const resolvedSubtitle = subtitle || (isResumeBuilder
+    ? "Create a polished, ATS-friendly resume in minutes with our free AI-powered tool."
+    : "Download the Indeed Flex app and start earning today. Flexible work, on your schedule.");
+
+  const resolvedPrimaryCTA = primaryCTA || (isResumeBuilder
+    ? "Build Your Resume for Free"
+    : "Get the App");
+
+  const primaryHref = isResumeBuilder
+    ? RESUME_BUILDER_URL
+    : "https://indeedflex.onelink.me/4jvh/x7l4jms3";
+
+  const PrimaryIcon = isResumeBuilder ? FileText : Download;
+
   return (
     <section className="bg-primary text-primary-foreground py-20">
       <div className="container mx-auto px-4 md:px-6 text-center">
         <h2 className="text-3xl md:text-4xl font-bold mb-6">
-          {title}
+          {resolvedTitle}
         </h2>
         <p className="text-xl text-primary-foreground/90 mb-10 max-w-2xl mx-auto leading-relaxed">
-          {subtitle}
+          {resolvedSubtitle}
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button 
@@ -32,9 +56,9 @@ const CTASection = ({
             className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold text-lg px-8 rounded-xl"
             asChild
           >
-            <a href="https://indeedflex.onelink.me/4jvh/x7l4jms3" target="_blank" rel="noopener noreferrer">
-              <Download className="mr-2 h-5 w-5" />
-              {primaryCTA}
+            <a href={primaryHref} target="_blank" rel="noopener noreferrer">
+              <PrimaryIcon className="mr-2 h-5 w-5" />
+              {resolvedPrimaryCTA}
             </a>
           </Button>
           <Button 

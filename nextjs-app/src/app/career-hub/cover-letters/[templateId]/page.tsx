@@ -12,10 +12,26 @@ import {
   ArrowRight,
   ArrowLeft,
   Lightbulb,
-  Copy
 } from "lucide-react";
-import { coverLetterTemplates, getCoverLetterBySlug } from "@/lib/data/cover-letter-templates";
+import CopyButton from "@/components/career-hub/interactive/CopyButton";
+import ResumeBuilderCTA from "@/components/career-hub/cta/ResumeBuilderCTA";
+import { coverLetterTemplates, getCoverLetterBySlug, type CoverLetterTemplate } from "@/lib/data/cover-letter-templates";
 import { resumeExamples } from "@/lib/data/resume-examples";
+
+function buildFullCoverLetterText(template: CoverLetterTemplate): string {
+  const lines: string[] = [];
+  lines.push("Dear Hiring Manager,");
+  lines.push("");
+  for (const section of template.structure) {
+    lines.push(section.example);
+    lines.push("");
+  }
+  lines.push("Sincerely,");
+  lines.push("[Your Name]");
+  lines.push("[Phone Number]");
+  lines.push("[Email Address]");
+  return lines.join("\n");
+}
 
 interface PageProps {
   params: Promise<{ templateId: string }>;
@@ -158,15 +174,12 @@ export default async function CoverLetterPage({ params }: PageProps) {
                     <p className="text-gray-600 mb-3">{section.purpose}</p>
                     
                     <div className="bg-slate-50 rounded-lg p-4 relative group">
-                      <p className="text-gray-700 italic text-sm leading-relaxed">
+                      <p className="text-gray-700 italic text-sm leading-relaxed pr-10">
                         &ldquo;{section.example}&rdquo;
                       </p>
-                      <button 
-                        className="absolute top-2 right-2 p-2 bg-white rounded shadow opacity-0 group-hover:opacity-100 transition-opacity"
-                        title="Copy to clipboard"
-                      >
-                        <Copy className="h-4 w-4 text-gray-500" />
-                      </button>
+                      <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <CopyButton text={section.example} label={`Copy ${section.section.toLowerCase()}`} />
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -229,10 +242,20 @@ export default async function CoverLetterPage({ params }: PageProps) {
                 </p>
               </div>
               
-              <p className="text-sm text-gray-500 mt-4 text-center">
-                Remember to replace the bracketed text with your own information
-              </p>
+              <div className="mt-4 space-y-3">
+                <CopyButton
+                  text={buildFullCoverLetterText(template)}
+                  label="Copy Full Cover Letter"
+                  variant="block"
+                />
+                <p className="text-sm text-gray-500 text-center">
+                  Remember to replace the bracketed text with your own information
+                </p>
+              </div>
             </div>
+
+            {/* Resume Builder CTA */}
+            <ResumeBuilderCTA industry={template.industry} className="mb-8" />
           </div>
 
           {/* Sidebar */}
@@ -328,7 +351,7 @@ export default async function CoverLetterPage({ params }: PageProps) {
           }),
         }}
       />
-      <CTASection />
+      <CTASection variant="resume-builder" />
     </div>
   );
 }

@@ -235,7 +235,7 @@ export const culinaryTerms: CulinaryTerm[] = [
     pronunciation: 'ban-mah-REE',
     definition: 'Water bath for gentle, even cooking or keeping food warm',
     definitionSpanish: 'Baño de agua para cocción suave y uniforme o mantener la comida caliente',
-    category: 'term',
+    category: 'technique',
     difficulty: 'intermediate'
   },
   {
@@ -293,7 +293,7 @@ export const culinaryTerms: CulinaryTerm[] = [
   {
     id: 'trinity',
     term: 'Trinity',
-    termSpanish: 'Trinidad',
+    termSpanish: 'Trinidad cajún',
     pronunciation: 'TRIN-ih-tee',
     definition: 'Cajun/Creole base of onion, celery, and bell pepper',
     definitionSpanish: 'Base Cajún/Criolla de cebolla, apio y pimiento',
@@ -309,6 +309,259 @@ export const culinaryTerms: CulinaryTerm[] = [
     definitionSpanish: 'Base latina de cebolla, ajo, pimientos y tomates salteados',
     category: 'cuisine',
     difficulty: 'intermediate'
+  },
+  // Kitchen/Restaurant Terms - Beginner
+  {
+    id: 'eighty-six',
+    term: '86\'d',
+    termSpanish: 'Agotado / Cancelado',
+    pronunciation: 'AY-tee-SIX',
+    definition: 'To be out of a menu item or to remove/cancel an order',
+    definitionSpanish: 'Estar sin un artículo del menú o eliminar/cancelar un pedido',
+    category: 'term',
+    difficulty: 'beginner'
+  },
+  {
+    id: 'in-the-weeds',
+    term: 'In the Weeds',
+    termSpanish: 'En las malezas',
+    pronunciation: 'in-thuh-WEEDZ',
+    definition: 'Overwhelmed with orders or tasks, falling behind during service',
+    definitionSpanish: 'Abrumado con pedidos o tareas, quedándose atrás durante el servicio',
+    category: 'term',
+    difficulty: 'beginner'
+  },
+  {
+    id: 'on-the-fly',
+    term: 'On the Fly',
+    termSpanish: 'Al instante',
+    pronunciation: 'on-thuh-FLY',
+    definition: 'A rush order that needs to be prepared immediately',
+    definitionSpanish: 'Un pedido urgente que necesita ser preparado inmediatamente',
+    category: 'term',
+    difficulty: 'beginner'
+  },
+  {
+    id: 'all-day',
+    term: 'All Day',
+    termSpanish: 'En total',
+    pronunciation: 'AWL-DAY',
+    definition: 'The total count of a particular item needed across all current orders',
+    definitionSpanish: 'La cantidad total de un artículo particular necesario en todos los pedidos actuales',
+    category: 'term',
+    difficulty: 'beginner'
+  },
+  {
+    id: 'fire',
+    term: 'Fire',
+    termSpanish: 'Fuego / Arranca',
+    pronunciation: 'FY-er',
+    definition: 'Command to begin cooking a course or specific dish',
+    definitionSpanish: 'Comando para comenzar a cocinar un plato o curso específico',
+    category: 'term',
+    difficulty: 'beginner'
+  },
+  {
+    id: 'heard',
+    term: 'Heard',
+    termSpanish: 'Escuchado',
+    pronunciation: 'HERD',
+    definition: 'Acknowledgment that an order or instruction has been received and understood',
+    definitionSpanish: 'Reconocimiento de que un pedido o instrucción ha sido recibido y entendido',
+    category: 'term',
+    difficulty: 'beginner'
+  },
+  {
+    id: 'behind',
+    term: 'Behind',
+    termSpanish: 'Atrás',
+    pronunciation: 'bee-HYND',
+    definition: 'Announcement when walking behind someone in the kitchen for safety',
+    definitionSpanish: 'Anuncio al caminar detrás de alguien en la cocina por seguridad',
+    category: 'term',
+    difficulty: 'beginner'
+  },
+  {
+    id: 'corner',
+    term: 'Corner',
+    termSpanish: 'Esquina',
+    pronunciation: 'KOR-ner',
+    definition: 'Announcement when approaching a blind corner to prevent collisions',
+    definitionSpanish: 'Anuncio al acercarse a una esquina ciega para prevenir colisiones',
+    category: 'term',
+    difficulty: 'beginner'
+  },
+  {
+    id: 'comps',
+    term: 'Comps',
+    termSpanish: 'Cortesía',
+    pronunciation: 'KOMPS',
+    definition: 'Complimentary items given to guests at no charge',
+    definitionSpanish: 'Artículos de cortesía dados a los huéspedes sin cargo',
+    category: 'term',
+    difficulty: 'beginner'
+  },
+  {
+    id: 'fifo',
+    term: 'FIFO',
+    termSpanish: 'PEPS (Primero en Entrar, Primero en Salir)',
+    pronunciation: 'FY-foh',
+    definition: 'First In, First Out — stock rotation method using oldest products first',
+    definitionSpanish: 'Primero en Entrar, Primero en Salir — método de rotación usando los productos más antiguos primero',
+    category: 'term',
+    difficulty: 'beginner'
+  },
+  {
+    id: 'two-top',
+    term: 'Two-Top',
+    termSpanish: 'Mesa para dos',
+    pronunciation: 'TOO-top',
+    definition: 'A table set for two guests; similarly, a four-top seats four',
+    definitionSpanish: 'Una mesa para dos comensales; de manera similar, una mesa para cuatro sienta a cuatro',
+    category: 'term',
+    difficulty: 'beginner'
+  },
+  {
+    id: 'pos',
+    term: 'POS',
+    termSpanish: 'Punto de Venta',
+    pronunciation: 'P-O-S',
+    definition: 'Point of Sale system used to enter orders and process payments',
+    definitionSpanish: 'Sistema de Punto de Venta usado para ingresar pedidos y procesar pagos',
+    category: 'term',
+    difficulty: 'beginner'
+  },
+  {
+    id: 'window',
+    term: 'Window',
+    termSpanish: 'Ventana / Pasaplatos',
+    pronunciation: 'WIN-doh',
+    definition: 'The shelf or counter where finished dishes wait for servers to pick up',
+    definitionSpanish: 'El estante o mostrador donde los platos terminados esperan a que los meseros los recojan',
+    category: 'term',
+    difficulty: 'beginner'
+  },
+  // Kitchen/Restaurant Terms - Intermediate
+  {
+    id: 'expo',
+    term: 'Expo',
+    termSpanish: 'Expedidor',
+    pronunciation: 'EX-poh',
+    definition: 'The expeditor who organizes, garnishes, and quality-checks finished dishes before service',
+    definitionSpanish: 'El expedidor que organiza, decora y verifica la calidad de los platos terminados antes del servicio',
+    category: 'term',
+    difficulty: 'intermediate'
+  },
+  {
+    id: 'dupes',
+    term: 'Dupes',
+    termSpanish: 'Duplicados / Comandas',
+    pronunciation: 'DOOPS',
+    definition: 'Duplicate order tickets sent from the POS to the kitchen',
+    definitionSpanish: 'Tickets de pedido duplicados enviados del punto de venta a la cocina',
+    category: 'term',
+    difficulty: 'intermediate'
+  },
+  {
+    id: 'turn-tables',
+    term: 'Turn Tables',
+    termSpanish: 'Rotación de mesas',
+    pronunciation: 'TERN TAY-bulz',
+    definition: 'How quickly tables are cleared, cleaned, and reseated with new guests',
+    definitionSpanish: 'Qué tan rápido se limpian y se vuelven a sentar las mesas con nuevos comensales',
+    category: 'term',
+    difficulty: 'intermediate'
+  },
+  {
+    id: 'covers',
+    term: 'Covers',
+    termSpanish: 'Cubiertos / Comensales',
+    pronunciation: 'KUH-verz',
+    definition: 'The number of diners served during a service period',
+    definitionSpanish: 'El número de comensales atendidos durante un período de servicio',
+    category: 'term',
+    difficulty: 'intermediate'
+  },
+  {
+    id: 'drop-food',
+    term: 'Drop Food',
+    termSpanish: 'Sirve la comida',
+    pronunciation: 'DROP FOOD',
+    definition: 'Command to begin plating or delivering food to the table now',
+    definitionSpanish: 'Comando para comenzar a emplatar o entregar la comida a la mesa ahora',
+    category: 'term',
+    difficulty: 'intermediate'
+  },
+  // Temperature Terms
+  {
+    id: 'danger-zone',
+    term: 'Danger Zone',
+    termSpanish: 'Zona de Peligro',
+    pronunciation: 'DAYN-jer ZOHN',
+    definition: 'The 41\u00B0F\u2013135\u00B0F (5\u00B0C\u201357\u00B0C) temperature range where bacteria multiply rapidly in food',
+    definitionSpanish: 'El rango de temperatura de 5\u00B0C\u201357\u00B0C donde las bacterias se multiplican r\u00E1pidamente en los alimentos',
+    category: 'temperature',
+    difficulty: 'beginner'
+  },
+  {
+    id: 'temp-poultry',
+    term: 'Poultry Safe Temp',
+    termSpanish: 'Temperatura Segura para Aves',
+    pronunciation: 'POHL-tree SAYF TEMP',
+    definition: '165\u00B0F (74\u00B0C) minimum internal temperature required for all poultry',
+    definitionSpanish: '74\u00B0C temperatura interna m\u00EDnima requerida para todas las aves',
+    category: 'temperature',
+    difficulty: 'beginner'
+  },
+  {
+    id: 'temp-beef',
+    term: 'Beef/Pork Safe Temp',
+    termSpanish: 'Temperatura Segura para Res/Cerdo',
+    pronunciation: 'BEEF PORK SAYF TEMP',
+    definition: '145\u00B0F (63\u00B0C) minimum internal temperature for whole cuts of beef, pork, veal, and lamb',
+    definitionSpanish: '63\u00B0C temperatura interna m\u00EDnima para cortes enteros de res, cerdo, ternera y cordero',
+    category: 'temperature',
+    difficulty: 'beginner'
+  },
+  {
+    id: 'temp-ground',
+    term: 'Ground Meat Safe Temp',
+    termSpanish: 'Temperatura Segura para Carne Molida',
+    pronunciation: 'GROWND MEET SAYF TEMP',
+    definition: '155\u00B0F (68\u00B0C) minimum internal temperature for ground meats',
+    definitionSpanish: '68\u00B0C temperatura interna m\u00EDnima para carnes molidas',
+    category: 'temperature',
+    difficulty: 'beginner'
+  },
+  {
+    id: 'temp-holding',
+    term: 'Hot Holding',
+    termSpanish: 'Mantenimiento en Caliente',
+    pronunciation: 'HOT HOLD-ing',
+    definition: 'Hot food must be maintained at 135\u00B0F (57\u00B0C) or above during service',
+    definitionSpanish: 'La comida caliente debe mantenerse a 57\u00B0C o m\u00E1s durante el servicio',
+    category: 'temperature',
+    difficulty: 'intermediate'
+  },
+  {
+    id: 'temp-cold-hold',
+    term: 'Cold Holding',
+    termSpanish: 'Mantenimiento en Fr\u00EDo',
+    pronunciation: 'KOHLD HOLD-ing',
+    definition: 'Cold food must be maintained at 41\u00B0F (5\u00B0C) or below during service',
+    definitionSpanish: 'La comida fr\u00EDa debe mantenerse a 5\u00B0C o menos durante el servicio',
+    category: 'temperature',
+    difficulty: 'intermediate'
+  },
+  {
+    id: 'two-stage-cooling',
+    term: 'Two-Stage Cooling',
+    termSpanish: 'Enfriamiento en Dos Etapas',
+    pronunciation: 'TOO-stayj KOOL-ing',
+    definition: 'Cool food from 135\u00B0F to 70\u00B0F within 2 hours, then from 70\u00B0F to 41\u00B0F within 4 more hours',
+    definitionSpanish: 'Enfriar alimentos de 57\u00B0C a 21\u00B0C en 2 horas, luego de 21\u00B0C a 5\u00B0C en 4 horas m\u00E1s',
+    category: 'temperature',
+    difficulty: 'advanced'
   }
 ];
 
@@ -446,8 +699,8 @@ export const foodSafetyQuestions: FoodSafetyQuestion[] = [
     correctAnswer: '155°F (68°C)',
     options: ['145°F (63°C)', '155°F (68°C)', '165°F (74°C)', '135°F (57°C)'],
     optionsSpanish: ['63°C', '68°C', '74°C', '57°C'],
-    explanation: 'Ground beef must reach 155°F (68°C) for 15 seconds. Grinding spreads bacteria throughout the meat.',
-    explanationSpanish: 'La carne molida debe alcanzar 68°C durante 15 segundos. Moler esparce las bacterias por toda la carne.',
+    explanation: 'Ground beef must reach 155°F (68°C) for 15 seconds per FDA Food Code. Note: some training programs reference 160°F — follow your employer\'s standard.',
+    explanationSpanish: 'La carne molida debe alcanzar 68°C durante 15 segundos según el Código Alimentario de la FDA. Nota: algunos programas usan 71°C — siga el estándar de su empleador.',
     category: 'temperature'
   },
   {
@@ -525,8 +778,8 @@ export const foodSafetyQuestions: FoodSafetyQuestion[] = [
     correctAnswer: 'Yellow',
     options: ['Red', 'Yellow', 'Green', 'White'],
     optionsSpanish: ['Rojo', 'Amarillo', 'Verde', 'Blanco'],
-    explanation: 'Color-coded cutting boards: Yellow=poultry, Red=raw meat, Green=vegetables, White=dairy/bread, Blue=fish, Brown=cooked meat.',
-    explanationSpanish: 'Tablas de cortar codificadas por color: Amarillo=aves, Rojo=carne cruda, Verde=vegetales, Blanco=lácteos/pan, Azul=pescado.',
+    explanation: 'Common color-coded cutting boards: Yellow=poultry, Red=raw meat, Green=vegetables, White=dairy/bread, Blue=fish, Brown=cooked meat. Note: your employer\'s color system may differ.',
+    explanationSpanish: 'Código de colores común: Amarillo=aves, Rojo=carne cruda, Verde=vegetales, Blanco=lácteos/pan, Azul=pescado. Nota: el sistema de colores de su empleador puede ser diferente.',
     category: 'contamination'
   },
   {
@@ -583,6 +836,126 @@ export const foodSafetyQuestions: FoodSafetyQuestion[] = [
     optionsSpanish: ['Dolor de cabeza', 'Solo dolor de garganta', 'Vómitos o diarrea', 'Corte menor en el dedo (vendado)'],
     explanation: 'Food handlers with vomiting, diarrhea, jaundice, or diagnosed with certain illnesses (Norovirus, Salmonella, Hepatitis A, E. coli, Shigella) must be excluded from work.',
     explanationSpanish: 'Los manipuladores de alimentos con vómitos, diarrea, ictericia o diagnosticados con ciertas enfermedades deben ser excluidos del trabajo.',
+    category: 'hygiene'
+  },
+  // Contamination - Allergen Cross-Contact
+  {
+    id: 'contam-cross-contact',
+    question: 'What is the best way to prevent allergen cross-contact in a kitchen?',
+    questionSpanish: '¿Cuál es la mejor manera de prevenir el contacto cruzado de alérgenos en una cocina?',
+    correctAnswer: 'Use separate, cleaned utensils and prep areas for allergen-free orders',
+    options: ['Simply wipe the cutting board with a towel', 'Use separate, cleaned utensils and prep areas for allergen-free orders', 'Cook allergens at higher temperatures to neutralize them', 'Only worry about allergens if the customer mentions them'],
+    optionsSpanish: ['Simplemente limpiar la tabla con un trapo', 'Usar utensilios y áreas de preparación separados y limpios para pedidos sin alérgenos', 'Cocinar los alérgenos a temperaturas más altas para neutralizarlos', 'Solo preocuparse por los alérgenos si el cliente los menciona'],
+    explanation: 'Cross-contact occurs when allergens transfer to allergen-free food. Prevent it by using separate, cleaned and sanitized equipment, utensils, and prep surfaces. Cooking does NOT destroy most allergens.',
+    explanationSpanish: 'El contacto cruzado ocurre cuando los alérgenos se transfieren a alimentos sin alérgenos. Prevenga usando equipo, utensilios y superficies separados, limpios y desinfectados. Cocinar NO destruye la mayoría de los alérgenos.',
+    category: 'contamination'
+  },
+  // Storage - Date Marking
+  {
+    id: 'storage-date-marking',
+    question: 'How long can ready-to-eat TCS food be stored in a refrigerator at 41°F (5°C)?',
+    questionSpanish: '¿Cuánto tiempo se puede almacenar la comida TCS lista para comer en un refrigerador a 5°C?',
+    correctAnswer: '7 days, including the day it was prepared',
+    options: ['3 days', '5 days', '7 days, including the day it was prepared', '10 days if properly sealed'],
+    optionsSpanish: ['3 días', '5 días', '7 días, incluyendo el día en que se preparó', '10 días si está correctamente sellada'],
+    explanation: 'Per the FDA Food Code, ready-to-eat TCS food held at 41°F (5°C) or below must be discarded after 7 days. Day 1 is the day the food was prepared or opened.',
+    explanationSpanish: 'Según el Código Alimentario de la FDA, la comida TCS lista para comer mantenida a 5°C o menos debe descartarse después de 7 días. El día 1 es el día en que se preparó o abrió.',
+    category: 'storage'
+  },
+  // Temperature - Reheating
+  {
+    id: 'temp-reheating',
+    question: 'To what temperature must previously cooked TCS food be reheated for hot holding?',
+    questionSpanish: '¿A qué temperatura se debe recalentar la comida TCS previamente cocida para mantenimiento en caliente?',
+    correctAnswer: '165°F (74°C) within 2 hours',
+    options: ['135°F (57°C) within 1 hour', '145°F (63°C) within 2 hours', '165°F (74°C) within 2 hours', '155°F (68°C) within 30 minutes'],
+    optionsSpanish: ['57°C en 1 hora', '63°C en 2 horas', '74°C en 2 horas', '68°C en 30 minutos'],
+    explanation: 'Food being reheated for hot holding must reach 165°F (74°C) for 15 seconds within 2 hours. If it does not reach this temperature in time, it must be discarded.',
+    explanationSpanish: 'La comida que se recalienta para mantenimiento en caliente debe alcanzar 74°C durante 15 segundos en un plazo de 2 horas. Si no alcanza esta temperatura a tiempo, debe descartarse.',
+    category: 'temperature'
+  },
+  // Storage - Two-Stage Cooling Total
+  {
+    id: 'storage-cooling-total',
+    question: 'What is the total time allowed for the two-stage cooling process from 135°F to 41°F?',
+    questionSpanish: '¿Cuál es el tiempo total permitido para el proceso de enfriamiento de dos etapas de 57°C a 5°C?',
+    correctAnswer: '6 hours total',
+    options: ['2 hours total', '4 hours total', '6 hours total', '8 hours total'],
+    optionsSpanish: ['2 horas en total', '4 horas en total', '6 horas en total', '8 horas en total'],
+    explanation: 'Two-stage cooling: Stage 1 is 135°F to 70°F within 2 hours. Stage 2 is 70°F to 41°F within 4 more hours. Total time must not exceed 6 hours. If Stage 1 fails, discard the food.',
+    explanationSpanish: 'Enfriamiento de dos etapas: Etapa 1 de 57°C a 21°C en 2 horas. Etapa 2 de 21°C a 5°C en 4 horas más. El tiempo total no debe exceder 6 horas. Si la Etapa 1 falla, descarte la comida.',
+    category: 'storage'
+  },
+  // Contamination - Chemical Storage
+  {
+    id: 'storage-chemicals',
+    question: 'Where should cleaning chemicals be stored in a food establishment?',
+    questionSpanish: '¿Dónde deben almacenarse los productos químicos de limpieza en un establecimiento de alimentos?',
+    correctAnswer: 'In a separate area, below and away from food, in labeled containers',
+    options: ['On the same shelf as dry goods if labeled', 'In a separate area, below and away from food, in labeled containers', 'Anywhere convenient as long as they are sealed', 'Above food items to prevent spills on the floor'],
+    optionsSpanish: ['En el mismo estante que los productos secos si están etiquetados', 'En un área separada, debajo y lejos de la comida, en envases etiquetados', 'En cualquier lugar conveniente siempre que estén sellados', 'Encima de los alimentos para prevenir derrames en el piso'],
+    explanation: 'Chemicals must be stored separately from food, below food items (never above), in properly labeled original or approved containers. This prevents chemical contamination.',
+    explanationSpanish: 'Los productos químicos deben almacenarse separados de los alimentos, debajo de los artículos de comida (nunca arriba), en envases originales o aprobados correctamente etiquetados.',
+    category: 'contamination'
+  },
+  // Contamination - Pest Indicators
+  {
+    id: 'contam-pests',
+    question: 'Which of the following is a sign of a pest infestation in a food establishment?',
+    questionSpanish: '¿Cuál de los siguientes es un signo de infestación de plagas en un establecimiento de alimentos?',
+    correctAnswer: 'All of these',
+    options: ['Droppings or urine stains', 'Gnaw marks on food packaging', 'Nesting materials in dark corners', 'All of these'],
+    optionsSpanish: ['Excrementos o manchas de orina', 'Marcas de mordeduras en empaques de alimentos', 'Materiales de anidación en esquinas oscuras', 'Todos estos'],
+    explanation: 'Signs of pests include droppings, gnaw marks, nesting materials, grease marks along walls, damaged food packages, and unusual odors. Report signs immediately to management.',
+    explanationSpanish: 'Los signos de plagas incluyen excrementos, marcas de mordeduras, materiales de anidación, marcas de grasa en las paredes, paquetes de alimentos dañados y olores inusuales. Reporte los signos inmediatamente a la gerencia.',
+    category: 'contamination'
+  },
+  // Storage - Receiving Shipments
+  {
+    id: 'storage-receiving',
+    question: 'When receiving a delivery, at what temperature should you reject cold TCS food?',
+    questionSpanish: '¿Al recibir una entrega, a qué temperatura debe rechazar la comida TCS fría?',
+    correctAnswer: 'Above 41°F (5°C)',
+    options: ['Above 32°F (0°C)', 'Above 38°F (3°C)', 'Above 41°F (5°C)', 'Above 45°F (7°C)'],
+    optionsSpanish: ['Arriba de 0°C', 'Arriba de 3°C', 'Arriba de 5°C', 'Arriba de 7°C'],
+    explanation: 'Reject cold TCS food received above 41°F (5°C). Also reject food with damaged packaging, unusual odors or colors, or signs of pest contamination. Always use a calibrated thermometer.',
+    explanationSpanish: 'Rechace la comida TCS fría recibida por encima de 5°C. También rechace alimentos con empaques dañados, olores o colores inusuales, o signos de contaminación por plagas.',
+    category: 'storage'
+  },
+  // Hygiene - Handwashing Procedure
+  {
+    id: 'hygiene-handwash-steps',
+    question: 'What is the correct order for the handwashing procedure?',
+    questionSpanish: '¿Cuál es el orden correcto para el procedimiento de lavado de manos?',
+    correctAnswer: 'Wet hands, apply soap, scrub 20 seconds, rinse, dry with single-use towel',
+    options: ['Apply soap, wet hands, scrub 10 seconds, rinse, air dry', 'Wet hands, apply soap, scrub 20 seconds, rinse, dry with single-use towel', 'Wet hands, scrub 20 seconds, apply soap, rinse, dry with cloth towel', 'Apply hand sanitizer, rinse with water, dry with apron'],
+    optionsSpanish: ['Aplicar jabón, mojar manos, frotar 10 segundos, enjuagar, secar al aire', 'Mojar manos, aplicar jabón, frotar 20 segundos, enjuagar, secar con toalla desechable', 'Mojar manos, frotar 20 segundos, aplicar jabón, enjuagar, secar con trapo', 'Aplicar desinfectante de manos, enjuagar con agua, secar con delantal'],
+    explanation: 'Proper handwashing: wet hands with warm water (at least 100°F/38°C), apply soap, scrub hands and arms for at least 20 seconds, rinse thoroughly, and dry with a single-use paper towel or air dryer.',
+    explanationSpanish: 'Lavado correcto de manos: mojar con agua tibia (al menos 38°C), aplicar jabón, frotar manos y brazos por al menos 20 segundos, enjuagar bien, y secar con toalla de papel desechable o secador de aire.',
+    category: 'hygiene'
+  },
+  // Hygiene - Gloves and Handwashing
+  {
+    id: 'hygiene-gloves-replace',
+    question: 'Do disposable gloves replace the need for handwashing?',
+    questionSpanish: '¿Los guantes desechables reemplazan la necesidad de lavarse las manos?',
+    correctAnswer: 'No — you must wash hands before putting on gloves and when changing them',
+    options: ['Yes, gloves eliminate the need for handwashing', 'No — you must wash hands before putting on gloves and when changing them', 'Only if the gloves are latex-free', 'Yes, as long as you change gloves every hour'],
+    optionsSpanish: ['Sí, los guantes eliminan la necesidad de lavarse las manos', 'No — debe lavarse las manos antes de ponerse guantes y al cambiarlos', 'Solo si los guantes son libres de látex', 'Sí, siempre que cambie los guantes cada hora'],
+    explanation: 'Gloves are not a substitute for handwashing. Hands must be washed before putting on gloves and each time gloves are changed. Bacteria can transfer through small tears in gloves.',
+    explanationSpanish: 'Los guantes no sustituyen el lavado de manos. Las manos deben lavarse antes de ponerse guantes y cada vez que se cambien. Las bacterias pueden transferirse a través de pequeñas roturas en los guantes.',
+    category: 'hygiene'
+  },
+  // Hygiene - Big 6 Foodborne Illnesses
+  {
+    id: 'hygiene-big-six',
+    question: 'Which of the following is one of the "Big 6" foodborne illnesses that must be reported to management?',
+    questionSpanish: '¿Cuál de las siguientes es una de las "6 Grandes" enfermedades transmitidas por alimentos que deben reportarse a la gerencia?',
+    correctAnswer: 'All of these',
+    options: ['Norovirus', 'Salmonella Typhi', 'Hepatitis A', 'All of these'],
+    optionsSpanish: ['Norovirus', 'Salmonella Typhi', 'Hepatitis A', 'Todos estos'],
+    explanation: 'The Big 6 foodborne illnesses per the FDA Food Code: Norovirus, Hepatitis A, Salmonella Typhi, Shigella, E. coli O157:H7, and non-typhoidal Salmonella. Food handlers diagnosed with these must be excluded or restricted from work.',
+    explanationSpanish: 'Las 6 Grandes enfermedades transmitidas por alimentos según el Código Alimentario de la FDA: Norovirus, Hepatitis A, Salmonella Typhi, Shigella, E. coli O157:H7 y Salmonella no tifoidea. Los manipuladores diagnosticados deben ser excluidos o restringidos del trabajo.',
     category: 'hygiene'
   }
 ];

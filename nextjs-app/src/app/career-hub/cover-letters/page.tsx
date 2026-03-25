@@ -16,6 +16,8 @@ import {
   Star
 } from "lucide-react";
 import { coverLetterTemplates, type CoverLetterTemplate } from "@/lib/data/cover-letter-templates";
+import ResumeBuilderCTA from "@/components/career-hub/cta/ResumeBuilderCTA";
+import CTASection from "@/components/career-hub/CTASection";
 
 export const metadata: Metadata = {
   title: "Cover Letter Templates by Industry | Free Downloads | Indeed Flex",
@@ -249,6 +251,9 @@ export default function CoverLettersPage() {
           </div>
         </div>
 
+        {/* Resume Builder CTA */}
+        <ResumeBuilderCTA className="mb-16" />
+
         {/* Related Resources */}
         <div className="mb-16">
           <h2 className="text-2xl font-bold text-gray-900 mb-6">Related Resources</h2>
@@ -315,6 +320,7 @@ export default function CoverLettersPage() {
           }),
         }}
       />
+      <CTASection variant="resume-builder" />
     </div>
   );
 }

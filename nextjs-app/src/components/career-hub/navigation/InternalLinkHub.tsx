@@ -786,7 +786,6 @@ const getContextualRecommendations = (context?: PageContext): ContextualRecommen
         title: 'Career Tools',
         icon: <Target className="h-4 w-4" />,
         links: [
-          { href: '/career-hub/tools/certification-roi', label: 'Certification ROI Calculator', description: 'Calculate value' },
           { href: '/career-hub/tools/career-path', label: 'Career Path Explorer', description: 'Plan advancement' },
         ],
       },

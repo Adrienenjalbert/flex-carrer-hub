@@ -220,15 +220,20 @@ export default function CareerPathClient() {
               {currentPath.levels.map((level, index) => (
                 <Card
                   key={index}
-                  className={`cursor-pointer transition-all ${
+                  className={`transition-all ${
                     expandedLevel === index ? "border-primary" : ""
                   }`}
-                  onClick={() =>
-                    setExpandedLevel(expandedLevel === index ? null : index)
-                  }
                 >
                   <CardHeader className="pb-2">
-                    <div className="flex items-center justify-between">
+                    <button
+                      type="button"
+                      className="flex items-center justify-between w-full text-left cursor-pointer bg-transparent border-none p-0"
+                      onClick={() =>
+                        setExpandedLevel(expandedLevel === index ? null : index)
+                      }
+                      aria-expanded={expandedLevel === index}
+                      aria-label={`Toggle ${level.title} details`}
+                    >
                       <div className="flex items-center gap-3">
                         <div
                           className={`w-8 h-8 rounded-full flex items-center justify-center ${
@@ -262,7 +267,7 @@ export default function CareerPathClient() {
                           }`}
                         />
                       </div>
-                    </div>
+                    </button>
                   </CardHeader>
                   {expandedLevel === index && (
                     <CardContent className="pt-4 border-t">
