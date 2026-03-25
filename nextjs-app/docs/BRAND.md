@@ -251,6 +251,45 @@ AI-referred traffic converts at 14.2% compared to traditional search at 2.8%. Sc
 | Backlinks drive authority | Structured data and verifiable facts drive citations |
 | Ranking on page 1 = success | Being cited by AI engines = success |
 
+### Princeton GEO Research: What Boosts AI Visibility
+
+Based on KDD 2024 research across Perplexity.ai (the most rigorous study of AI citation factors):
+
+| Method | Visibility Boost | How to Apply in Career Hub |
+|--------|:---------------:|----------------------------|
+| **Cite sources inline** | +40% | Add "(BLS, 2025)" or "(Indeed Flex data)" after every stat |
+| **Add statistics** | +37% | Include specific numbers: "$16.20-$22.50/hr" not "competitive pay" |
+| **Add quotations** | +30% | Expert quotes with name and title where available |
+| **Authoritative tone** | +25% | Write with demonstrated expertise, not hedging |
+| **Improve clarity** | +20% | Simplify complex concepts, Grade 8 reading level |
+| **Technical terms** | +18% | Use domain-specific terminology (OSHA, BLS OEWS, W-2) |
+| **Fluency + Statistics** | **+115%** | Best combination. Low-authority sites benefit most. |
+| ~~Keyword stuffing~~ | **-10%** | **Actively hurts AI visibility. Never keyword-stuff.** |
+
+### Content Extractability Rules
+
+AI systems extract passages, not pages. Every key claim must work as a standalone statement.
+
+| Check | Requirement |
+|-------|-------------|
+| Clear answer in first paragraph | 40-60 words with a data point |
+| Self-contained sections | Each H2 works if extracted and quoted in isolation |
+| Statistics with inline sources | "(BLS, 2025)" not footnotes |
+| Comparison tables | For vs-queries (33% of AI citations use comparisons) |
+| FAQ with natural-language questions | Direct Q&A extraction by AI |
+| Schema markup present | +30-40% AI visibility |
+| Updated within 6 months | Freshness heavily weighted by all AI platforms |
+
+### AI Platform Ranking Factors
+
+| Platform | Source Selection | Career Hub Priority |
+|----------|-----------------|---------------------|
+| **Google AI Overviews** | Correlates with traditional rankings; appears in ~45% of searches | Maintain page 1 positions |
+| **ChatGPT** | Wider range; structure matters more than rank | Statistics + self-contained sections |
+| **Perplexity** | Favors authoritative, recent, well-structured content | Inline citations + freshness + schema |
+| **Gemini** | Google index + Knowledge Graph | Traditional SEO + schema |
+| **Claude** | Brave Search when enabled | Content quality + structure |
+
 ### Schema Markup for AI Citation
 
 Implement these JSON-LD schemas on every article (increases citation probability by 30-40%):
@@ -263,11 +302,16 @@ Implement these JSON-LD schemas on every article (increases citation probability
 
 ### AI Crawler Access
 
-Allow these AI crawlers in `robots.txt`:
-- `OAI-SearchBot` (ChatGPT Search)
-- `PerplexityBot`
-- `ClaudeBot`
-- `GoogleOther` (AI training/citation)
+Allow these AI crawlers in `robots.txt` (blocking prevents citation):
+
+| Bot | Platform | Purpose |
+|-----|----------|---------|
+| `GPTBot`, `ChatGPT-User`, `OAI-SearchBot` | OpenAI | ChatGPT web search and crawling |
+| `PerplexityBot` | Perplexity | AI search crawling |
+| `ClaudeBot`, `anthropic-ai` | Anthropic | Claude search |
+| `Google-Extended`, `GoogleOther` | Google | Gemini + AI Overviews |
+
+Block training-only crawlers with no citation benefit: `CCBot` (Common Crawl).
 
 ### Quality Scoring
 
@@ -277,6 +321,8 @@ AEO readiness is scored by the quality scorer (`src/lib/content-engine/quality-s
 - Direct answer count
 - FAQ count and quality
 - Entity clarity in first 100 words
+- Inline source citations (Princeton GEO: +40% visibility)
+- Statistics with numbers (Princeton GEO: +37% visibility)
 
 ---
 

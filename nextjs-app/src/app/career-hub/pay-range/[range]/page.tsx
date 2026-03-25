@@ -8,12 +8,14 @@ import {
   Briefcase,
   CheckCircle,
   Star,
+  Award,
+  MapPin,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { roles, industries } from "@/lib/data/roles";
-import { payBrackets, getPayBracketBySlug, getJobsByPayBracket, getJobsInPayRange, type JobByPay } from "@/lib/data/jobs-by-pay";
+import { getJobsByPayBracket, getJobsInPayRange } from "@/lib/data/jobs-by-pay";
 import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
 import CTASection from "@/components/career-hub/CTASection";
 import { FAQSchema, WebPageSchema, BreadcrumbSchema } from "@/components/career-hub/seo";
@@ -21,8 +23,6 @@ import DataSourceCitation from "@/components/career-hub/DataSourceCitation";
 import { AuthorByline } from "@/components/career-hub/AuthorByline";
 import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
 import { getLastUpdated } from "@/lib/utils/date-variation";
-import { Award, MapPin, Zap } from "lucide-react";
-
 // Map existing slug format to jobs-by-pay bracket IDs
 const slugToBracketId: Record<string, string> = {
   "15-under": "under-15",
@@ -252,9 +252,7 @@ export default async function PayRangePage({
                 <CardContent>
                   <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {/* Jobs from jobs-by-pay dataset (rich data) */}
-                    {jobs.map((job) => {
-                      const role = roles.find((r) => r.slug === job.roleSlug);
-                      return (
+                    {jobs.map((job) => (
                         <Link
                           key={job.roleSlug}
                           href={`/career-hub/roles/${job.roleSlug}`}
@@ -338,8 +336,7 @@ export default async function PayRangePage({
                             )}
                           </div>
                         </Link>
-                      );
-                    })}
+                    ))}
                     {/* Additional roles not in jobs-by-pay */}
                     {industryRoles.map((role) => (
                       <Link

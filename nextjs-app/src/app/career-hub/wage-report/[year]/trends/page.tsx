@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { TrendingUp, TrendingDown, DollarSign, Briefcase, MapPin, Calendar, AlertCircle } from "lucide-react";
+import { TrendingUp, DollarSign, Briefcase, MapPin, Calendar, AlertCircle } from "lucide-react";
 import { wageReport2026 } from "@/lib/data/wage-report/2026-data";
 import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
 import { BreadcrumbSchema } from "@/components/career-hub/seo";
@@ -55,7 +55,7 @@ export default async function TrendsPage({ params }: TrendsPageProps) {
   }
 
   const breadcrumbs = [
-    { label: "Home", href: "/" },
+    { label: "Career Hub", href: "/career-hub" },
     { label: "Wage Report", href: "/career-hub/wage-report" },
     { label: year, href: `/career-hub/wage-report/${year}` },
     { label: "Trends & Analysis" },
@@ -78,15 +78,15 @@ export default async function TrendsPage({ params }: TrendsPageProps) {
   const sortedByGrowth = [...wageReport2026.occupations].sort(
     (a, b) => b.yoyChange.percentChange - a.yoyChange.percentChange
   );
-  const fastestGrowing = sortedByGrowth[0];
-  const slowestGrowing = sortedByGrowth[sortedByGrowth.length - 1];
+  const _fastestGrowing = sortedByGrowth[0];
+  const _slowestGrowing = sortedByGrowth[sortedByGrowth.length - 1];
 
   // Find highest and lowest paying
   const sortedByWage = [...wageReport2026.occupations].sort(
     (a, b) => b.currentYear.wagePercentiles.percentile50 - a.currentYear.wagePercentiles.percentile50
   );
   const highestPaying = sortedByWage[0];
-  const lowestPaying = sortedByWage[sortedByWage.length - 1];
+  const _lowestPaying = sortedByWage[sortedByWage.length - 1];
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -100,7 +100,7 @@ export default async function TrendsPage({ params }: TrendsPageProps) {
         </h1>
         <p className="text-lg text-muted-foreground max-w-3xl">
           Deep dive into wage trends, minimum wage impact, inflation effects, and seasonal patterns 
-          across flexible work. Understand what's driving wage growth and what to expect.
+          across flexible work. Understand what&apos;s driving wage growth and what to expect.
         </p>
       </div>
 

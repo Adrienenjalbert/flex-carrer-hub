@@ -15,19 +15,15 @@ import { Checkbox } from "@/components/ui/checkbox";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Heart,
-  DollarSign,
   CheckCircle2,
   XCircle,
   ExternalLink,
-  Info,
   Users,
 } from "lucide-react";
 import CTASection from "@/components/career-hub/CTASection";
@@ -70,7 +66,6 @@ const federalPovertyLevel = {
 export default function BenefitsCheckerClient() {
   const [annualIncome, setAnnualIncome] = useState<string>("30000");
   const [householdSize, setHouseholdSize] = useState<string>("1");
-  const [state, setState] = useState<string>("TX");
   const [isW2, setIsW2] = useState(true);
   const [hasEmployerCoverage, setHasEmployerCoverage] = useState(false);
 
@@ -132,6 +127,7 @@ export default function BenefitsCheckerClient() {
       <div className="container mx-auto px-4 py-8">
         <Breadcrumbs
           items={[
+            { label: "Career Hub", href: "/career-hub" },
             { label: "Tools", href: "/career-hub/tools" },
             { label: "Benefits Checker" },
           ]}

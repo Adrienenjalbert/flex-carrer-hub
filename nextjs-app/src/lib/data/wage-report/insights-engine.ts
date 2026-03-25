@@ -15,7 +15,7 @@ import type {
   TrendAnalysis,
   WageComparison
 } from "./types";
-import { occupationWageData, industryTrends, regionalAnalysis } from "./2026-data";
+import { occupationWageData } from "./2026-data";
 
 // ============================================
 // INSIGHT GENERATION

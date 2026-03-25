@@ -1,17 +1,17 @@
 import { Metadata } from "next";
+import { generateToolMetadata } from "@/lib/seo/metadata";
 import WorkTalkClient from "./WorkTalkClient";
-import CTASection from "@/components/career-hub/CTASection";
 import { SoftwareApplicationSchema } from "@/components/career-hub/seo";
-import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
+import StandardPageLayout from "@/components/career-hub/layout/StandardPageLayout";
 
 const toolName = "WorkTalk";
 const toolDescription = "Learn and practice essential English phrases for the workplace. Build confidence with flashcards for common job situations.";
 const canonical = "https://indeedflex.com/career-hub/tools/worktalk";
 
-export const metadata: Metadata = {
-  title: "WorkTalk | Practice Job English Phrases | Indeed Flex",
-  description:
-    "Learn and practice essential English phrases for the workplace. Build confidence with flashcards for common job situations.",
+export const metadata: Metadata = generateToolMetadata({
+  name: toolName,
+  slug: "worktalk",
+  description: toolDescription,
   keywords: [
     "workplace English",
     "job phrases",
@@ -20,26 +20,14 @@ export const metadata: Metadata = {
     "ESL work",
     "professional English",
   ],
-  alternates: {
-    canonical,
-  },
-  openGraph: {
-    title: "WorkTalk | Practice Job English Phrases",
-    description: "Learn and practice essential English phrases for the workplace.",
-    url: canonical,
-    type: "website",
-    siteName: "Indeed Flex Career Hub",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "WorkTalk",
-    description: "Learn and practice essential English phrases for the workplace.",
-  },
-};
+});
 
 export default function WorkTalkPage() {
   return (
-    <>
+    <StandardPageLayout
+      showBreadcrumbs={false}
+      currentPage={{ type: "tool", slug: "worktalk", relatedTools: [] }}
+    >
       <SoftwareApplicationSchema
         name={toolName}
         description={toolDescription}
@@ -49,17 +37,6 @@ export default function WorkTalkPage() {
         featureList={[]}
       />
       <WorkTalkClient />
-      <div className="container mx-auto px-4 py-12">
-        <InternalLinkHub 
-          variant="full" 
-          currentPage={{ 
-            type: "tool", 
-            slug: "worktalk",
-            relatedTools: []
-          }} 
-        />
-      </div>
-      <CTASection />
-    </>
+    </StandardPageLayout>
   );
 }

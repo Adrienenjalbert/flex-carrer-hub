@@ -14,7 +14,7 @@ import {
   Lightbulb,
   Copy
 } from "lucide-react";
-import { coverLetterTemplates, getCoverLetterBySlug, type CoverLetterTemplate } from "@/lib/data/cover-letter-templates";
+import { coverLetterTemplates, getCoverLetterBySlug } from "@/lib/data/cover-letter-templates";
 import { resumeExamples } from "@/lib/data/resume-examples";
 
 interface PageProps {

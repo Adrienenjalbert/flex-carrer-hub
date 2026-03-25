@@ -19,6 +19,11 @@ import {
   MapPin,
   Calendar
 } from "lucide-react";
+import {
+  FAQSchema,
+  BreadcrumbSchema,
+} from "@/components/career-hub/seo";
+import FAQSection from "@/components/career-hub/FAQSection";
 import { resumeExamples, getResumeExampleByRole, type ResumeExample } from "@/lib/data/resume-examples";
 import { resumeTemplates } from "@/lib/data/resume-templates";
 import { coverLetterTemplates } from "@/lib/data/cover-letter-templates";
@@ -67,6 +72,28 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
+function generateResumeFAQs(example: ResumeExample) {
+  const topSkills = example.skills.slice(0, 5).join(", ");
+  return [
+    {
+      question: `How long should a ${example.roleName} resume be?`,
+      answer: `For most ${example.roleName} positions, keep your resume to one page — especially if you have less than 5 years of experience. Recruiters in the ${example.industry} industry typically spend 6-10 seconds scanning a resume, so a concise, single-page format with clear section headers works best. If you have 5+ years of relevant experience, two pages are acceptable.`,
+    },
+    {
+      question: `What skills should a ${example.roleName} include on their resume?`,
+      answer: `The most important skills for a ${example.roleName} resume include ${topSkills}. Lead with your strongest skills and match them to the job description. Use the exact keywords from the listing so your resume passes ATS (applicant tracking system) screening.`,
+    },
+    {
+      question: `Do I need a resume for ${example.roleName} jobs?`,
+      answer: `Yes — even for hourly and flexible ${example.roleName} positions, a resume helps you stand out. Many employers use it to quickly assess your qualifications. Build your ${example.roleName} resume for free with the Indeed Flex Resume Builder at indeedflex.com/resume-builder/ai-resume-generator/build-your-resume/.`,
+    },
+    {
+      question: `What should I put in my ${example.roleName} resume summary?`,
+      answer: `Your summary should be 2-3 sentences highlighting your experience level, top skills, and a measurable achievement. For example: "${example.summary.slice(0, 150)}…" Tailor it to each job by mirroring keywords from the listing.`,
+    },
+  ];
+}
+
 export default async function ResumeExamplePage({ params }: PageProps) {
   const { roleSlug } = await params;
   const example = getResumeExampleByRole(roleSlug);
@@ -110,8 +137,20 @@ export default async function ResumeExamplePage({ params }: PageProps) {
 
   const colorClass = industryColors[example.industry] || industryColors.hospitality;
 
+  const resumeFaqs = generateResumeFAQs(example);
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+      <FAQSchema questions={resumeFaqs} />
+      <BreadcrumbSchema
+        items={[
+          { name: "Career Hub", url: "https://indeedflex.com/career-hub" },
+          { name: "Job Application Toolkit", url: "https://indeedflex.com/career-hub/job-application-toolkit" },
+          { name: "Resume Examples", url: "https://indeedflex.com/career-hub/resume-examples" },
+          { name: example.roleName },
+        ]}
+      />
+
       <div className="container mx-auto px-4 py-8">
         <Breadcrumbs items={breadcrumbs} />
 
@@ -332,6 +371,31 @@ export default async function ResumeExamplePage({ params }: PageProps) {
                   </span>
                 ))}
               </div>
+            </div>
+
+            {/* Resume Builder CTA */}
+            <div className="bg-blue-50 rounded-xl border border-blue-200 p-8 mb-8 text-center">
+              <h2 className="text-2xl font-bold text-gray-900 mb-3">Build Your {example.roleName} Resume</h2>
+              <p className="text-gray-600 mb-4">
+                Skip the formatting hassle. Our AI-powered tool creates a polished, ATS-friendly resume in minutes.
+              </p>
+              <a
+                href="https://indeedflex.com/resume-builder/ai-resume-generator/build-your-resume/"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+              >
+                <FileText className="h-5 w-5" />
+                Build Your Resume for Free
+                <ArrowRight className="h-4 w-4" />
+              </a>
+            </div>
+
+            {/* FAQ Section */}
+            <div className="bg-white rounded-xl border p-8 mb-8">
+              <FAQSection
+                faqs={resumeFaqs}
+                title={`Frequently Asked Questions About ${example.roleName} Resumes`}
+                suppressSchema
+              />
             </div>
           </div>
 

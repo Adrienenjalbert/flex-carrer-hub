@@ -5,7 +5,6 @@ import {
   Rocket,
   ArrowRight,
   Briefcase,
-  CheckCircle,
   Star,
   DollarSign,
   TrendingUp,

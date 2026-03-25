@@ -41,7 +41,7 @@ const SalaryComparison = ({
   }, [items, currentItem]);
 
   const maxValue = useMemo(() => 
-    Math.max(...chartData.map(d => d.max)) + 5
+    chartData.length > 0 ? Math.max(...chartData.map(d => d.max), 0) + 5 : 20
   , [chartData]);
 
   const CustomTooltip = ({ active, payload }: { active?: boolean; payload?: Array<{ payload: { fullName: string; min: number; avg: number; max: number; isCurrent?: boolean } }> }) => {
@@ -63,6 +63,19 @@ const SalaryComparison = ({
     }
     return null;
   };
+
+  if (!items?.length) {
+    return (
+      <Card>
+        <CardHeader className="pb-4">
+          <CardTitle className="flex items-center gap-2 text-lg">{title}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-sm text-muted-foreground">No data to compare.</p>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <Card>
@@ -99,8 +112,8 @@ const SalaryComparison = ({
         </div>
       </CardHeader>
       <CardContent>
-        <div className="h-64">
-          <ResponsiveContainer width="100%" height="100%">
+        <div className="h-64 min-w-[280px]">
+          <ResponsiveContainer width="100%" height="100%" initialDimension={{ width: 400, height: 256 }}>
             <BarChart
               data={chartData}
               layout="vertical"

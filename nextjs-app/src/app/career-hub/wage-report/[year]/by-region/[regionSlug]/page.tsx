@@ -2,13 +2,12 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, MapPin, DollarSign, TrendingUp, Briefcase } from "lucide-react";
+import { ArrowLeft, MapPin, TrendingUp, Briefcase } from "lucide-react";
 import { getRegionBySlug, occupationWageData } from "@/lib/data/wage-report/2026-data";
 import { generateRegionalInsights } from "@/lib/data/wage-report/insights-engine";
 import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
 import { BreadcrumbSchema } from "@/components/career-hub/seo";
-import { InsightCard, RegionalHeatmap } from "@/components/career-hub/wage-report";
+import { InsightCard } from "@/components/career-hub/wage-report";
 import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
 import CTASection from "@/components/career-hub/CTASection";
 
@@ -59,7 +58,7 @@ export default async function RegionPage({ params }: RegionPageProps) {
   }
 
   const breadcrumbs = [
-    { label: "Home", href: "/" },
+    { label: "Career Hub", href: "/career-hub" },
     { label: "Wage Report", href: "/career-hub/wage-report" },
     { label: year, href: `/career-hub/wage-report/${year}` },
     { label: "By Region", href: `/career-hub/wage-report/${year}/by-region` },
@@ -76,7 +75,7 @@ export default async function RegionPage({ params }: RegionPageProps) {
   ];
 
   const insights = generateRegionalInsights(region);
-  const regionOccupations = occupationWageData.filter(occ => 
+  const _regionOccupations = occupationWageData.filter(occ => 
     occ.byRegion.some(r => r.citySlug === region.citySlug || r.stateCode === region.stateCode)
   );
 
@@ -154,7 +153,7 @@ export default async function RegionPage({ params }: RegionPageProps) {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {region.topOccupations.map((occ, index) => (
+                  {region.topOccupations.map((occ, _index) => (
                     <Link key={occ.occupationSlug} href={`/career-hub/wage-report/${year}/by-occupation/${occ.occupationSlug}`}>
                       <Card className="hover:shadow-lg transition-all duration-200 border-2 hover:border-primary/30">
                         <CardContent className="p-5">

@@ -6,7 +6,6 @@ import {
   ShoppingBag,
   Building2,
   ArrowRight,
-  Briefcase,
   TrendingUp,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -102,7 +101,7 @@ const industries = [
 
 export default function IndustriesPage() {
   const totalRoles = roles.length;
-  const industriesWithCounts = industries.map(industry => {
+  const _industriesWithCounts = industries.map(industry => {
     const industryRoles = roles.filter(
       (r) => r.industry.toLowerCase() === industry.id.toLowerCase() ||
              r.industry.toLowerCase().includes(industry.id.toLowerCase())
@@ -115,6 +114,7 @@ export default function IndustriesPage() {
       <div className="container mx-auto px-4 py-4">
         <Breadcrumbs
           items={[
+            { label: "Career Hub", href: "/career-hub" },
             { label: "Industries" },
           ]}
         />

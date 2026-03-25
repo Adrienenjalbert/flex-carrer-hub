@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { generateToolMetadata } from "@/lib/seo/metadata";
 import PayCalculatorClient from "./PayCalculatorClient";
 import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
 import CTASection from "@/components/career-hub/CTASection";
@@ -11,10 +12,10 @@ const toolName = "Pay Calculator";
 const toolDescription = "Free paycheck calculator for hourly workers. Calculate your take-home pay, taxes, and deductions. Convert hourly wage to annual salary instantly.";
 const canonical = "https://indeedflex.com/career-hub/tools/pay-calculator";
 
-export const metadata: Metadata = {
-  title: "Pay Calculator - Calculate Your Take-Home Pay | Indeed Flex",
-  description:
-    "Free paycheck calculator for hourly workers. Calculate your take-home pay, taxes, and deductions. Convert hourly wage to annual salary instantly.",
+export const metadata: Metadata = generateToolMetadata({
+  name: toolName,
+  slug: "pay-calculator",
+  description: toolDescription,
   keywords: [
     "pay calculator",
     "hourly wage calculator",
@@ -25,22 +26,7 @@ export const metadata: Metadata = {
     "wage calculator",
     "net pay calculator",
   ],
-  alternates: {
-    canonical,
-  },
-  openGraph: {
-    title: "Pay Calculator - Calculate Your Take-Home Pay",
-    description: "Free paycheck calculator for hourly workers. Calculate your take-home pay after taxes.",
-    url: canonical,
-    type: "website",
-    siteName: "Indeed Flex Career Hub",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Pay Calculator",
-    description: "Free paycheck calculator for hourly workers.",
-  },
-};
+});
 
 const toolFAQs = [
   {
@@ -49,7 +35,7 @@ const toolFAQs = [
   },
   {
     question: "Is this pay calculator accurate for all US states?",
-    answer: "Yes, our calculator includes current 2024 federal tax brackets and state-specific income tax rates for all 50 US states, including states with no income tax like Texas, Florida, and Washington."
+    answer: "Yes, our calculator uses the federal and state tax tables configured for supported US states, including no-income-tax states like Texas, Florida, and Washington."
   },
   {
     question: "How do I convert my hourly wage to annual salary?",
@@ -69,13 +55,13 @@ export default function PayCalculatorPage() {
         description={toolDescription}
         url={canonical}
         applicationCategory="FinanceApplication"
-        aggregateRating={{ ratingValue: 4.8, ratingCount: 2847 }}
         featureList={[]}
       />
       <FAQSchema questions={toolFAQs} />
       <div className="container mx-auto px-4 py-4">
         <Breadcrumbs
           items={[
+            { label: "Career Hub", href: "/career-hub" },
             { label: "Tools", href: "/career-hub/tools" },
             { label: toolName },
           ]}

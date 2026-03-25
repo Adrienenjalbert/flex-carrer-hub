@@ -14,6 +14,7 @@ import MarkdownContent from "@/components/career-hub/MarkdownContent";
 import TableOfContents from "@/components/career-hub/TableOfContents";
 import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
 import { AuthorByline } from "@/components/career-hub/AuthorByline";
+import InlineCTA from "@/components/career-hub/InlineCTA";
 import { generateTOCFromSections } from "@/lib/utils/toc";
 import { allGuideArticles, allGuideCategories } from "@/lib/data/articles/guides";
 import { FAQSchema, ArticleSchema, BreadcrumbSchema } from "@/components/career-hub/seo";
@@ -112,8 +113,8 @@ export default async function GuidesArticlePage({
           logo: "https://indeedflex.com/logo.png",
           url: "https://indeedflex.com",
         }}
-        datePublished="2024-01-15T00:00:00Z"
-        dateModified={new Date().toISOString()}
+        datePublished={new Date(article.lastReviewed ?? article.dateModified ?? '2024-01-15').toISOString()}
+        dateModified={new Date(article.dateModified ?? article.lastReviewed ?? '2024-01-15').toISOString()}
         mainEntityOfPage={`https://indeedflex.com/career-hub/guides/${article.slug}`}
         articleSection={article.category}
       />
@@ -130,6 +131,7 @@ export default async function GuidesArticlePage({
         <div className="container mx-auto px-4">
           <Breadcrumbs
             items={[
+              { label: "Career Hub", href: "/career-hub" },
               { label: "Career Guides", href: "/career-hub/guides" },
               {
                 label: article.category,
@@ -236,6 +238,16 @@ export default async function GuidesArticlePage({
             </div>
           </div>
         </section>
+
+        {/* Mid-Content CTA */}
+        <div className="container mx-auto px-4 max-w-3xl">
+          <InlineCTA
+            title={`Ready to put this into practice?`}
+            subtitle="Browse available shifts and start earning on your own schedule"
+            href="https://indeedflex.onelink.me/4jvh/x7l4jms3"
+            variant="app"
+          />
+        </div>
 
         {/* FAQs */}
         {article.faqs.length > 0 && (

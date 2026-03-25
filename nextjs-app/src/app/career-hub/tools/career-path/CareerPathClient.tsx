@@ -1,9 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
+import { useState, useEffect } from "react";
 import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -19,7 +17,6 @@ import {
   Award,
   Clock,
   DollarSign,
-  ArrowRight,
   ChevronDown,
 } from "lucide-react";
 import CTASection from "@/components/career-hub/CTASection";
@@ -146,10 +143,25 @@ const careerPaths = {
   },
 };
 
+const CP_STORAGE_KEY = "career-path-selection";
+
+function loadSavedSelection(): keyof typeof careerPaths {
+  if (typeof window === "undefined") return "hospitality";
+  try {
+    const saved = localStorage.getItem(CP_STORAGE_KEY);
+    if (saved && saved in careerPaths) return saved as keyof typeof careerPaths;
+  } catch { /* ignore */ }
+  return "hospitality";
+}
+
 export default function CareerPathClient() {
   const [selectedIndustry, setSelectedIndustry] =
-    useState<keyof typeof careerPaths>("hospitality");
+    useState<keyof typeof careerPaths>(() => loadSavedSelection());
   const [expandedLevel, setExpandedLevel] = useState<number | null>(0);
+
+  useEffect(() => {
+    localStorage.setItem(CP_STORAGE_KEY, selectedIndustry);
+  }, [selectedIndustry]);
 
   const currentPath = careerPaths[selectedIndustry];
 
@@ -158,6 +170,7 @@ export default function CareerPathClient() {
       <div className="container mx-auto px-4 py-8">
         <Breadcrumbs
           items={[
+            { label: "Career Hub", href: "/career-hub" },
             { label: "Tools", href: "/career-hub/tools" },
             { label: "Career Path Explorer" },
           ]}

@@ -7,9 +7,6 @@
  * Last Updated: February 2026
  */
 
-import { researchSources } from "../research-templates";
-import { dataSources } from "../data-sources";
-
 export const wageReportMethodology = {
   reportYear: 2026,
   publishDate: "2026-02-28",

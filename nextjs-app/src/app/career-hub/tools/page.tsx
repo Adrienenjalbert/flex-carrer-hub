@@ -36,7 +36,12 @@ export default function ToolsPage() {
   return (
     <>
       <div className="container mx-auto px-4 py-4">
-        <Breadcrumbs items={[{ label: "Tools" }]} />
+        <Breadcrumbs
+          items={[
+            { label: "Career Hub", href: "/career-hub" },
+            { label: "Tools" },
+          ]}
+        />
       </div>
       <ToolsClient />
       <div className="container mx-auto px-4 py-12">

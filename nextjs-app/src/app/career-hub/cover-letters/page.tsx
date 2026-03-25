@@ -89,7 +89,7 @@ function CoverLetterCard({ template }: { template: CoverLetterTemplate }) {
         <div className="mb-4">
           <p className="text-xs text-gray-500 mb-2">Sections:</p>
           <div className="flex gap-1">
-            {template.structure.map((section, i) => (
+            {template.structure.map((section, _i) => (
               <span 
                 key={section.section} 
                 className="flex-1 h-2 bg-gray-200 rounded-full first:rounded-l-full last:rounded-r-full"

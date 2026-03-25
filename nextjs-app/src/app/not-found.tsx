@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import { Search, Home, Briefcase, Calculator, BookOpen, ArrowRight } from "lucide-react";
+import { Home, Briefcase, Calculator, BookOpen, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -24,7 +24,7 @@ export default function NotFound() {
               Page Not Found
             </h2>
             <p className="text-xl text-muted-foreground mb-8">
-              The page you're looking for doesn't exist or has been moved.
+              The page you&apos;re looking for doesn&apos;t exist or has been moved.
             </p>
           </div>
 

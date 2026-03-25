@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import SalaryConverterClient from "./SalaryConverterClient";
 import { getToolBySlug } from "@/lib/data/tool-registry";
+import { generateToolMetadata } from "@/lib/seo/metadata";
 import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
 import CTASection from "@/components/career-hub/CTASection";
 import { SoftwareApplicationSchema } from "@/components/career-hub/seo";
@@ -11,26 +12,12 @@ import { getLastUpdated } from "@/lib/utils/date-variation";
 const tool = getToolBySlug('salary-converter')!;
 const canonical = "https://indeedflex.com/career-hub/tools/salary-converter";
 
-export const metadata: Metadata = {
-  title: `${tool.name} - Hourly to Salary Calculator 2026 | Indeed Flex`,
+export const metadata: Metadata = generateToolMetadata({
+  name: tool.name,
+  slug: "salary-converter",
   description: tool.description,
   keywords: [tool.primaryKeyword, ...tool.secondaryKeywords],
-  alternates: {
-    canonical,
-  },
-  openGraph: {
-    title: `${tool.name} - Hourly to Salary Calculator 2026`,
-    description: tool.shortDescription,
-    url: canonical,
-    type: "website",
-    siteName: "Indeed Flex Career Hub",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: `${tool.name} - Hourly to Salary Calculator`,
-    description: tool.shortDescription,
-  },
-};
+});
 
 export default function SalaryConverterPage() {
   return (
@@ -46,6 +33,7 @@ export default function SalaryConverterPage() {
       <div className="container mx-auto px-4 py-4">
         <Breadcrumbs
           items={[
+            { label: "Career Hub", href: "/career-hub" },
             { label: "Tools", href: "/career-hub/tools" },
             { label: tool.name },
           ]}

@@ -7,7 +7,7 @@ import {
   Calculator, DollarSign, ChevronRight, HelpCircle, Share2, 
   TrendingUp, ArrowRight, Briefcase, Check, Info, FileText,
   Clock, Calendar, Users, Building2, ExternalLink, Lightbulb,
-  Sparkles, Target, PiggyBank, Shield, MapPin, AlertTriangle
+  Sparkles, Target
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -43,7 +43,6 @@ import {
   FEDERAL_STANDARD_DEDUCTION_2026,
   type FilingStatus,
   type TaxCalculationResult,
-  type BracketDetail,
 } from "@/lib/calculators/tax-engine";
 import { getSortedStates, stateTaxData } from "@/lib/data/state-taxes";
 import { getTaxDisclaimer, federalTaxSource, ficaSource, getStateSource } from "@/lib/data/tax-sources";
@@ -162,14 +161,14 @@ function generateDynamicTaxTips(
   }
   
   // 5. Tax Bracket Proximity Warning
-  const taxableIncome = results.taxableIncome;
+  const _taxableIncome = results.taxableIncome;
   const brackets = results.taxes.federalBrackets || [];
   for (const bracket of brackets) {
     if (bracket.incomeInBracket > 0 && bracket.max !== Infinity) {
       const distanceToNextBracket = bracket.max - (bracket.min + bracket.incomeInBracket);
       if (distanceToNextBracket < 5000 && distanceToNextBracket > 0) {
         const nextRate = brackets.find(b => b.min === bracket.max)?.rate || 0;
-        const rateDiff = (nextRate - bracket.rate) * 100;
+        const _rateDiff = (nextRate - bracket.rate) * 100;
         tips.push({
           id: 'bracket-proximity',
           icon: '⚠️',
@@ -206,7 +205,7 @@ function generateDynamicTaxTips(
   
   // 7. Social Security Wage Base
   if (annualIncome > FICA_2026.socialSecurityWageBase * 0.9) {
-    const ssMax = FICA_2026.socialSecurityWageBase * FICA_2026.socialSecurityRate;
+    const _ssMax = FICA_2026.socialSecurityWageBase * FICA_2026.socialSecurityRate;
     const incomeAboveBase = Math.max(0, annualIncome - FICA_2026.socialSecurityWageBase);
     if (incomeAboveBase > 0) {
       tips.push({
@@ -605,7 +604,7 @@ function PaycheckCalculatorInner() {
   // What-if scenarios
   const whatIfResults = useMemo(() => {
     return commonWhatIfScenarios.slice(0, 4).map(scenario => {
-      let baseAnnual = results.grossIncome.annual;
+      const baseAnnual = results.grossIncome.annual;
       let newAnnual = baseAnnual;
       
       if (scenario.delta.field === 'hourlyRate' && scenario.delta.operation === 'add') {
@@ -1560,7 +1559,7 @@ function PaycheckCalculatorInner() {
                     
                     {/* Tips List */}
                     <div className="space-y-2 sm:space-y-3">
-                      {taxTips.slice(0, showAdvanced ? taxTips.length : 4).map((tip, index) => (
+                      {taxTips.slice(0, showAdvanced ? taxTips.length : 4).map((tip, _index) => (
                         <div 
                           key={tip.id}
                           className={`group p-3 sm:p-4 rounded-xl border transition-all hover:shadow-md ${

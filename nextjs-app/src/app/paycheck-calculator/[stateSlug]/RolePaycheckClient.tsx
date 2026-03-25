@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { 
   DollarSign, ChevronRight, HelpCircle, Share2, 
-  TrendingUp, Check, Info, Briefcase, Users, Clock, MapPin
+  Check, Info, Briefcase, Users
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -16,12 +16,8 @@ import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
 import { Progress } from "@/components/ui/progress";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { 
-  FAQSchema, 
-  WebPageSchema, 
-  BreadcrumbSchema, 
-  OccupationSchema,
-} from "@/components/career-hub/seo";
+
+
 import { 
   calculatorRolePresets, 
   stateTaxData,
@@ -80,7 +76,7 @@ function RolePaycheckInner({ rolePreset }: RolePaycheckInnerProps) {
   const [hourlyRate, setHourlyRate] = useState<number>(rolePreset.hourlyRate);
   const [hoursPerWeek, setHoursPerWeek] = useState<number>(rolePreset.hoursPerWeek);
   const [state, setState] = useState<string>("TX");
-  const [retirement401k, setRetirement401k] = useState<number>(0);
+  const [retirement401k, _setRetirement401k] = useState<number>(0);
   const [includeTips, setIncludeTips] = useState<boolean>(rolePreset.hasTips);
   const [tipsPerHour, setTipsPerHour] = useState<number>(rolePreset.avgTipsPerHour || 0);
   const [copied, setCopied] = useState(false);
@@ -145,35 +141,6 @@ function RolePaycheckInner({ rolePreset }: RolePaycheckInnerProps) {
 
   return (
     <>
-      <WebPageSchema
-        name={`${rolePreset.name} Pay Calculator`}
-        description={`Calculate take-home pay for ${rolePreset.name} jobs.`}
-        url={`https://indeedflex.com/paycheck-calculator/${rolePreset.roleId}`}
-        breadcrumb={[
-          { name: "Career Hub", url: "https://indeedflex.com/career-hub" },
-          { name: "Tools", url: "https://indeedflex.com/career-hub/tools" },
-          { name: `${rolePreset.name} Calculator` },
-        ]}
-      />
-      <FAQSchema questions={roleFaqs} />
-      <BreadcrumbSchema
-        items={[
-          { name: "Career Hub", url: "https://indeedflex.com/career-hub" },
-          { name: "Tools", url: "https://indeedflex.com/career-hub/tools" },
-          { name: `${rolePreset.name} Calculator` },
-        ]}
-      />
-      <OccupationSchema
-        name={rolePreset.name}
-        description={rolePreset.description}
-        estimatedSalary={{
-          currency: "USD",
-          minValue: (rolePreset.hourlyRate - 3) * rolePreset.hoursPerWeek * 52,
-          maxValue: (rolePreset.hourlyRate + 5) * rolePreset.hoursPerWeek * 52,
-          unitText: "YEAR",
-        }}
-      />
-
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-6xl mx-auto">
           <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-6">

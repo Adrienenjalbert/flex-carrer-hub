@@ -116,7 +116,7 @@ const CSP_HEADER = [
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: https: blob:",
   "font-src 'self' data:",
-  "connect-src 'self' https://*.supabase.co https://www.google-analytics.com https://vitals.vercel-analytics.com",
+  "connect-src 'self' https://www.google-analytics.com https://vitals.vercel-analytics.com",
   "frame-ancestors 'self'",
   "base-uri 'self'",
   "form-action 'self'",

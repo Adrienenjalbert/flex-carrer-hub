@@ -4,7 +4,7 @@ import Link from "next/link";
 import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
 import CTASection from "@/components/career-hub/CTASection";
 import RoleCard from "@/components/career-hub/RoleCard";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { roles } from "@/lib/data/roles";
 import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
@@ -309,7 +309,7 @@ export default async function IndustryPage({
         <InternalLinkHub 
           variant="full" 
           currentPage={{ 
-            type: "generic",
+            type: "industry",
             industry: industryId
           }} 
         />

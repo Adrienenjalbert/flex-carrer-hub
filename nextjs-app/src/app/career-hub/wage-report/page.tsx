@@ -14,7 +14,7 @@ const canonical = "https://indeedflex.com/career-hub/wage-report";
 
 export const metadata: Metadata = {
   title: "2026 Flex Work Wage Report | Annual Hourly Wage Analysis | Indeed Flex",
-  description: "Comprehensive 2026 wage report covering hourly pay across 49 occupations, 6 industries, and 20+ regions. Data-driven insights from BLS and Indeed Flex market data.",
+  description: "Comprehensive 2026 wage report covering hourly pay across 47 occupations, 6 industries, and 20+ regions. Data-driven insights from BLS and Indeed Flex market data.",
   keywords: ["wage report", "hourly wages", "flex work", "gig economy wages", "BLS data", "salary report 2026"],
   alternates: {
     canonical,
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
 };
 
 const breadcrumbs = [
-  { label: "Home", href: "/" },
+  { label: "Career Hub", href: "/career-hub" },
   { label: "Wage Report", href: "/career-hub/wage-report" },
 ];
 
@@ -224,7 +224,7 @@ export default function WageReportHubPage() {
                         <TrendingUp className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
                         <div>
                           <h3 className="font-semibold mb-2 text-base">By Occupation</h3>
-                          <p className="text-sm text-muted-foreground">Detailed wage profiles for 49 roles</p>
+                          <p className="text-sm text-muted-foreground">Detailed wage profiles for 47 roles</p>
                         </div>
                       </div>
                     </CardContent>

@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import { CheckCircle, XCircle, AlertCircle, HelpCircle, TrendingUp, DollarSign, Clock, Users } from "lucide-react";
+import { CheckCircle, XCircle, AlertCircle, TrendingUp, DollarSign, Clock } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { careerEvaluations } from "@/lib/data/career-evaluations";
@@ -143,7 +143,7 @@ export default function IsItAGoodJobListingPage() {
       <div className="container mx-auto px-4 py-12">
         <InternalLinkHub
           variant="full"
-          currentPage={{ type: "generic" }}
+          currentPage={{ type: "career-evaluation" }}
         />
       </div>
       <CTASection />

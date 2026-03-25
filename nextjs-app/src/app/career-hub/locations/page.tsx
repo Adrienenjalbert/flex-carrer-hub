@@ -48,7 +48,12 @@ export default function LocationsPage() {
   return (
     <>
       <div className="container mx-auto px-4 py-4">
-        <Breadcrumbs items={[{ label: "Locations" }]} />
+        <Breadcrumbs
+          items={[
+            { label: "Career Hub", href: "/career-hub" },
+            { label: "Locations" },
+          ]}
+        />
       </div>
       <PageHero
         title="Flexible Jobs by Location"

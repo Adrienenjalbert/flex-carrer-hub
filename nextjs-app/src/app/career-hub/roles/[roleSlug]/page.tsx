@@ -14,6 +14,7 @@ import {
   Scale,
   MessageSquare,
   BookOpen,
+  FileText,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 // Badge available for future use
@@ -21,6 +22,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { roles, getRoleBySlug, industries } from "@/lib/data/roles";
 import { usLocations } from "@/lib/data/locations";
 import { getDayInTheLife, getComparisonsForRole } from "@/lib/data/role-content";
+import { resumeExamples } from "@/lib/data/resume-examples";
+import { salaryByLocation } from "@/lib/data/salary-by-location";
 import { generateComprehensiveFAQs } from "@/lib/faq-generator";
 import { generateRoleMetadata } from "@/lib/seo/metadata";
 import {
@@ -41,6 +44,8 @@ import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
 import EarningsBreakdown from "@/components/career-hub/EarningsBreakdown";
 import DataSourceCitation from "@/components/career-hub/DataSourceCitation";
 import { AuthorByline } from "@/components/career-hub/AuthorByline";
+import FlexerTestimonials from "@/components/career-hub/FlexerTestimonials";
+import InlineCTA from "@/components/career-hub/InlineCTA";
 import RolePageClient from "./RolePageClient";
 
 // Generate static params for all roles
@@ -122,6 +127,63 @@ export default async function RolePage({
     slug: l.slug,
   }));
 
+  const industryGuides: Record<string, { slug: string; title: string }[]> = {
+    hospitality: [
+      { slug: "hospitality-guide", title: "Breaking Into Hospitality Work" },
+      { slug: "certifications", title: "Getting Certifications That Pay Off" },
+    ],
+    industrial: [
+      { slug: "warehouse-guide", title: "Warehouse Work: What You Need to Know" },
+      { slug: "certifications", title: "Getting Certifications That Pay Off" },
+    ],
+    retail: [
+      { slug: "retail-guide", title: "Retail Jobs: Tips for Success" },
+      { slug: "skill-boost", title: "Skills That Boost Your Hourly Rate" },
+    ],
+    facilities: [
+      { slug: "facilities-guide", title: "Facilities and Cleaning Careers" },
+      { slug: "certifications", title: "Getting Certifications That Pay Off" },
+    ],
+    events: [
+      { slug: "event-staffing-guide", title: "Event Staffing: Concerts, Sports & More" },
+      { slug: "first-flex-job", title: "Finding Flexible Work" },
+    ],
+    healthcare: [
+      { slug: "certifications", title: "Getting Certifications That Pay Off" },
+      { slug: "career-paths", title: "Career Paths for Hourly Workers" },
+    ],
+  };
+
+  const industryTools: Record<string, { slug: string; title: string }[]> = {
+    hospitality: [
+      { slug: "pay-calculator", title: "Pay Calculator" },
+      { slug: "cocktail-quiz", title: "Cocktail Quiz" },
+    ],
+    industrial: [
+      { slug: "pay-calculator", title: "Pay Calculator" },
+      { slug: "safety-first", title: "Safety First Quiz" },
+    ],
+    retail: [
+      { slug: "pay-calculator", title: "Pay Calculator" },
+      { slug: "shift-planner", title: "Shift Planner" },
+    ],
+    facilities: [
+      { slug: "pay-calculator", title: "Pay Calculator" },
+      { slug: "shift-planner", title: "Shift Planner" },
+    ],
+    events: [
+      { slug: "pay-calculator", title: "Pay Calculator" },
+      { slug: "shift-planner", title: "Shift Planner" },
+    ],
+    healthcare: [
+      { slug: "pay-calculator", title: "Pay Calculator" },
+      { slug: "certification-roi", title: "Certification ROI Calculator" },
+    ],
+  };
+
+  const roleGuides = industryGuides[role.industry] || industryGuides.hospitality;
+  const roleTools = industryTools[role.industry] || industryTools.hospitality;
+
   return (
     <>
       {/* Schema Markup */}
@@ -191,7 +253,8 @@ export default async function RolePage({
       <div className="container mx-auto px-4">
         <Breadcrumbs
           items={[
-            { label: "Industries", href: "/career-hub" },
+            { label: "Career Hub", href: "/career-hub" },
+            { label: "Industries", href: "/career-hub/industries" },
             {
               label: industry?.name || role.industry,
               href: `/career-hub/industries/${role.industry}`,
@@ -210,15 +273,28 @@ export default async function RolePage({
                 {role.industry}
               </span>
               <span className="bg-primary-foreground/10 text-primary-foreground/80 px-3 py-1 rounded-full text-sm">
-                Flexible Work
+                Temp & Flexible
               </span>
             </div>
             <h1 className="text-3xl md:text-5xl font-bold mb-4">
               {role.title} Career Guide
             </h1>
-            <p className="text-xl text-primary-foreground/90 mb-8 max-w-3xl">
-              {role.description}
+            <p className="text-xl text-primary-foreground/90 mb-6 max-w-3xl">
+              {role.description} Temporary and part-time {role.title.toLowerCase()} shifts 
+              pay ${role.avgHourlyRate.min}&ndash;${role.avgHourlyRate.max}/hr with flexible scheduling through Indeed Flex.
             </p>
+
+            <div className="mb-8">
+              <a
+                href="https://indeedflex.onelink.me/4jvh/x7l4jms3"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-accent text-accent-foreground px-6 py-3 rounded-full font-semibold text-lg hover:bg-accent/90 transition-colors shadow-lg"
+              >
+                Find {role.title} Shifts
+                <ArrowRight className="h-5 w-5" />
+              </a>
+            </div>
 
             {/* Quick Stats Grid */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -302,7 +378,14 @@ export default async function RolePage({
                 >
                   Apply through the Indeed Flex app
                 </a>{" "}
-                and start working within 48 hours.
+                and start working within 48 hours. Use our{" "}
+                <Link
+                  href={`/paycheck-calculator/${role.slug}`}
+                  className="text-primary hover:underline"
+                >
+                  Paycheck Calculator
+                </Link>{" "}
+                to estimate your take-home pay.
               </>
             }
           />
@@ -418,6 +501,16 @@ export default async function RolePage({
                       </div>
                     ))}
                   </div>
+                  <p className="text-sm text-muted-foreground mt-6">
+                    Explore your career progression with our{" "}
+                    <Link
+                      href="/career-hub/tools/career-path"
+                      className="text-primary hover:underline font-medium"
+                    >
+                      Career Path Explorer
+                    </Link>
+                    .
+                  </p>
                 </CardContent>
               </Card>
             </div>
@@ -542,7 +635,9 @@ export default async function RolePage({
 
       {/* Role Comparisons */}
       {comparisons.length > 0 && (
-        <RoleComparisons comparisons={comparisons} currentRoleSlug={role.slug} />
+        <section id="role-comparisons">
+          <RoleComparisons comparisons={comparisons} currentRoleSlug={role.slug} />
+        </section>
       )}
 
       {/* FAQ Section - Now with 10+ FAQs */}
@@ -551,9 +646,20 @@ export default async function RolePage({
           <FAQSection
             faqs={comprehensiveFaqs}
             title={`Frequently Asked Questions About ${role.title} Jobs`}
+            suppressSchema
           />
         </div>
       </section>
+
+      {/* Progressive Engagement CTA */}
+      <div className="container mx-auto px-4 max-w-4xl">
+        <InlineCTA
+          title={`Ready to start as a ${role.title}?`}
+          subtitle="Browse available shifts and book your first one today"
+          href="https://indeedflex.onelink.me/4jvh/x7l4jms3"
+          variant="app"
+        />
+      </div>
 
       {/* Explore More Section - Internal Linking for SEO */}
       <section className="py-12">
@@ -599,14 +705,7 @@ export default async function RolePage({
 
             {/* Compare Roles Link */}
             {comparisons.length > 0 && (
-              <Link
-                href={`/compare/${
-                  comparisons[0].role1Slug === role.slug
-                    ? `${role.slug}-vs-${comparisons[0].role2Slug}`
-                    : `${comparisons[0].role1Slug}-vs-${role.slug}`
-                }`}
-                className="block"
-              >
+              <Link href="#role-comparisons" className="block">
                 <Card className="hover:border-primary/50 transition-colors h-full">
                   <CardContent className="pt-6">
                     <div className="flex items-center gap-3 mb-3">
@@ -622,6 +721,67 @@ export default async function RolePage({
                 </Card>
               </Link>
             )}
+
+            {/* Resume Example Link */}
+            {resumeExamples.some((e) => e.roleSlug === role.slug) && (
+              <Link href={`/career-hub/resume-examples/${role.slug}`} className="block">
+                <Card className="hover:border-primary/50 transition-colors h-full">
+                  <CardContent className="pt-6">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="p-2 bg-primary/10 rounded-lg">
+                        <FileText className="h-5 w-5 text-primary" />
+                      </div>
+                      <h3 className="font-semibold">{role.title} Resume Example</h3>
+                    </div>
+                    <p className="text-sm text-muted-foreground">
+                      See a complete {role.title.toLowerCase()} resume with skills, summary, and experience bullets
+                    </p>
+                  </CardContent>
+                </Card>
+              </Link>
+            )}
+
+            {/* Salary by City Link */}
+            {salaryByLocation.some((s) => s.roleSlug === role.slug) && (
+              <Link href={`/career-hub/salary/${role.slug}`} className="block">
+                <Card className="hover:border-primary/50 transition-colors h-full">
+                  <CardContent className="pt-6">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="p-2 bg-primary/10 rounded-lg">
+                        <DollarSign className="h-5 w-5 text-primary" />
+                      </div>
+                      <h3 className="font-semibold">Salary by City</h3>
+                    </div>
+                    <p className="text-sm text-muted-foreground">
+                      Compare {role.title.toLowerCase()} pay across major US cities and metro areas
+                    </p>
+                  </CardContent>
+                </Card>
+              </Link>
+            )}
+
+            {/* Build Your Resume Link */}
+            <a
+              href="https://indeedflex.com/resume-builder/ai-resume-generator/build-your-resume/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block"
+            >
+              <Card className="hover:border-primary/50 transition-colors h-full">
+                <CardContent className="pt-6">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="p-2 bg-primary/10 rounded-lg">
+                      <FileText className="h-5 w-5 text-primary" />
+                    </div>
+                    <h3 className="font-semibold">Build Your Resume</h3>
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    Create a professional {role.title} resume with the free
+                    Indeed Flex Resume Builder
+                  </p>
+                </CardContent>
+              </Card>
+            </a>
           </div>
         </div>
       </section>
@@ -638,30 +798,16 @@ export default async function RolePage({
           name: `${l.city}, ${l.stateCode}`,
           slug: l.slug,
         }))}
-        tools={[
-          {
-            title: "Pay Calculator",
-            slug: "pay-calculator",
-            description: `Calculate your ${role.title} earnings`,
-          },
-          {
-            title: "Shift Planner",
-            slug: "shift-planner",
-            description: "Plan your work schedule",
-          },
-        ]}
-        guides={[
-          {
-            title: "How to Get Your First Flexible Job",
-            slug: "first-flex-job",
-            readTime: "5 min",
-          },
-          {
-            title: "Skills That Boost Your Hourly Rate",
-            slug: "skill-boost",
-            readTime: "7 min",
-          },
-        ]}
+        tools={roleTools.map((t) => ({
+          title: t.title,
+          slug: t.slug,
+          description: `${t.title} for ${role.title} workers`,
+        }))}
+        guides={roleGuides.map((g) => ({
+          title: g.title,
+          slug: g.slug,
+          readTime: "5 min",
+        }))}
         variant="full"
       />
 
@@ -677,6 +823,8 @@ export default async function RolePage({
       <div className="container mx-auto px-4 max-w-4xl">
         <DataSourceCitation pageType="role" />
       </div>
+
+      <FlexerTestimonials industry={role.industry} />
 
       <CTASection
         title={`Ready to Start as a ${role.title}?`}

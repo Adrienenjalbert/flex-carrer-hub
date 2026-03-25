@@ -123,6 +123,23 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 
 ## Career Hub Components (`/src/components/career-hub/`)
 
+Components are organized into subdirectories:
+
+```
+career-hub/
+  layout/        — Breadcrumbs, PageHero, StandardPageLayout, HeroSection, SectionHeader
+  content/       — FAQSection, AuthorByline, MarkdownContent, TableOfContents, DataSourceCitation, etc.
+  cards/         — RoleCard, ToolCard, IndustryCard, LocationCard, etc.
+  navigation/    — InternalLinkHub, RelatedContent, FilterBar, QuickSearch, etc.
+  cta/           — CTASection, PrimaryActions, InlineCTA, FlexerTestimonials, PlatformStats
+  seo/           — EnhancedSchema, JsonLd
+  interactive/   — EmbeddedPayCalculator, SalaryComparison, SkillsAssessment
+  wage-report/   — WageExplorer, WageDistributionChart, RegionalHeatmap
+  tools/         — FlashcardMode, PhraseCard
+```
+
+Re-export shims exist at the root for backward compatibility (e.g., `import CTASection from "@/components/career-hub/CTASection"` still works).
+
 ### Header
 
 Main navigation header with mega menu.
@@ -222,6 +239,22 @@ import SalaryComparison from "@/components/career-hub/interactive/SalaryComparis
   citySlug="new-york"
 />
 ```
+
+### Recharts (Wage Report Charts)
+
+Wage report charts use Recharts with SSR-safe configuration. **Always add `initialDimension`** to ResponsiveContainer to avoid build failures during static generation:
+
+```tsx
+<ResponsiveContainer
+  width="100%"
+  height="100%"
+  initialDimension={{ width: 400, height: 256 }}
+>
+  <BarChart data={data}>...</BarChart>
+</ResponsiveContainer>
+```
+
+Without `initialDimension`, ResponsiveContainer gets width/height -1 during SSR (no DOM to measure), causing warnings and potential build failures. Chart components should also guard against empty data (e.g. `chartData.length === 0`).
 
 ### EmbeddedPayCalculator
 

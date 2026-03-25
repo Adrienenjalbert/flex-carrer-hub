@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { generateToolMetadata } from "@/lib/seo/metadata";
 import TaxCalculatorClient from "./TaxCalculatorClient";
 import CTASection from "@/components/career-hub/CTASection";
 import { SoftwareApplicationSchema, FAQSchema } from "@/components/career-hub/seo";
@@ -10,10 +11,10 @@ import { getLastUpdated } from "@/lib/utils/date-variation";
 const tool = getToolBySlug('tax-calculator')!;
 const canonical = "https://indeedflex.com/career-hub/tools/tax-calculator";
 
-export const metadata: Metadata = {
-  title: "1099 Tax Calculator: Self-Employment & Quarterly Tax Estimator | Indeed Flex",
-  description:
-    "Free 1099 tax calculator for gig workers. Estimate self-employment tax, federal and state income tax, quarterly payments, and mileage deductions. See your real take-home pay.",
+export const metadata: Metadata = generateToolMetadata({
+  name: tool.name,
+  slug: "tax-calculator",
+  description: tool.description,
   keywords: [
     "1099 tax calculator",
     "quarterly estimated tax",
@@ -25,22 +26,7 @@ export const metadata: Metadata = {
     "state income tax",
     "tax withholding",
   ],
-  alternates: {
-    canonical,
-  },
-  openGraph: {
-    title: "1099 Tax Calculator: Self-Employment & Quarterly Tax Estimator",
-    description: "Free 1099 tax calculator for gig workers. Estimate self-employment tax, federal and state income tax, quarterly payments, and mileage deductions.",
-    url: canonical,
-    type: "website",
-    siteName: "Indeed Flex Career Hub",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "1099 Tax Calculator for Gig Workers",
-    description: "Free 1099 tax calculator for gig workers. Estimate quarterly payments and take-home pay.",
-  },
-};
+});
 
 const taxFAQs = [
   {
@@ -48,8 +34,8 @@ const taxFAQs = [
     answer: "As a 1099 worker, you should typically set aside 25-30% of your income for taxes. This covers both income tax and the 15.3% self-employment tax (Social Security and Medicare)."
   },
   {
-    question: "What is the self-employment tax rate for 2024?",
-    answer: "The self-employment tax rate for 2024 is 15.3%, which includes 12.4% for Social Security and 2.9% for Medicare. You can deduct half of this on your income taxes."
+    question: "What is the self-employment tax rate?",
+    answer: "The self-employment tax rate is 15.3%, which includes 12.4% for Social Security and 2.9% for Medicare. You can deduct half of this on your income taxes."
   },
   {
     question: "When are quarterly taxes due for gig workers?",
@@ -57,7 +43,7 @@ const taxFAQs = [
   },
   {
     question: "Can I deduct mileage as a gig worker?",
-    answer: "Yes! For 2024, the IRS standard mileage rate is 67 cents per mile for business use. Track all work-related miles to maximize your deduction."
+    answer: "Yes. The IRS standard mileage rate changes annually, so you should use the current rate for the tax year you are filing. Track all work-related miles to maximize your deduction."
   }
 ];
 
@@ -69,10 +55,7 @@ export default function TaxCalculatorPage() {
         description={tool.description}
         url={canonical}
         applicationCategory="FinanceApplication"
-        aggregateRating={tool.schema?.aggregateRating || {
-          ratingValue: 4.7,
-          ratingCount: 1923
-        }}
+        aggregateRating={tool.schema?.aggregateRating}
         featureList={tool.inputs.map(i => i.name)}
       />
       <FAQSchema questions={taxFAQs} />

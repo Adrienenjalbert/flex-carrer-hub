@@ -70,6 +70,7 @@ export default function InterviewQuestionsPage() {
       <div className="container mx-auto px-4 py-4">
         <Breadcrumbs
           items={[
+            { label: "Career Hub", href: "/career-hub" },
             { label: "Interview Questions" },
           ]}
         />

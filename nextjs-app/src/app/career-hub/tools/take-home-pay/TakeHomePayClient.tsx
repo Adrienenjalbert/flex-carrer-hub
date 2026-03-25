@@ -20,7 +20,6 @@ import {
 } from "@/components/career-hub/seo";
 import { 
   getToolBySlug, 
-  commonDataSources,
   stateTaxData,
   getRelatedTools,
 } from "@/lib/data/tool-registry";

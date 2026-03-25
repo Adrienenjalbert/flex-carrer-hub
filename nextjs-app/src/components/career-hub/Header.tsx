@@ -23,15 +23,12 @@ import {
   BookOpen,
   Compass,
   TrendingUp,
-  Heart,
   Users,
-  GraduationCap,
   MessageSquare,
   HelpCircle,
   // Financial Resources
   Lightbulb,
   BarChart3,
-  DollarSign,
   // Career Tools – Pay & Salary
   Calculator,
   Repeat,
@@ -60,7 +57,7 @@ import {
 import logo from "@/assets/logo.svg";
 
 // ═══════════════════════════════════════════════════════════════════════
-// DATA: 5 Content Pillars — each becomes a secondary nav tab with dropdown
+// DATA: 4 Content Pillars — each becomes a secondary nav tab with dropdown
 // ═══════════════════════════════════════════════════════════════════════
 
 const contentPillars = [
@@ -88,7 +85,7 @@ const contentPillars = [
             { title: "Seasonal Hiring Guide", href: "/career-hub/seasonal-hiring", icon: Calendar },
             { title: "Summer Jobs 2026", href: "/career-hub/summer-jobs-2026", icon: Sun },
             { title: "Holiday Jobs 2026", href: "/career-hub/holiday-jobs-2026", icon: Snowflake },
-            { title: "Active Markets", href: "/career-hub/locations", icon: MapPin },
+            { title: "Trending Markets", href: "/career-hub/locations", icon: TrendingUp },
           ],
         },
       ],
@@ -138,17 +135,16 @@ const contentPillars = [
           label: "Learning Resources",
           items: [
             { title: "All Career Guides", href: "/career-hub/guides", icon: BookOpen },
-            { title: "How to Become Guides", href: "/how-to-become", icon: HelpCircle },
-            { title: "Interview Questions", href: "/interview-questions", icon: MessageSquare },
             { title: "Certifications", href: "/certifications", icon: Award },
+            { title: "Resources for You", href: "/career-hub/for", icon: Users },
           ],
         },
         {
-          label: "Personalized Help",
+          label: "Money & Growth",
           items: [
-            { title: "Resources for You", href: "/career-hub/for", icon: Users },
-            { title: "All Resources", href: "/career-hub/resources", icon: GraduationCap },
-            { title: "About Career Hub", href: "/career-hub/about", icon: Compass },
+            { title: "Financial Tips & Advice", href: "/career-hub/financial-tips", icon: Lightbulb },
+            { title: "Wage Report 2026", href: "/career-hub/wage-report", icon: BarChart3 },
+            { title: "Unemployment Benefits", href: "/unemployment-benefits", icon: AlertCircle },
           ],
         },
       ],
@@ -156,37 +152,7 @@ const contentPillars = [
     },
   },
 
-  // ── 4. Financial Resources ───────────────────────────────────────
-  {
-    id: "financial-resources",
-    label: "Financial Resources",
-    href: "/career-hub/financial-tips",
-    dropdown: {
-      type: "multi" as const,
-      columns: [
-        {
-          label: "Financial Guidance",
-          items: [
-            { title: "Financial Tips & Advice", href: "/career-hub/financial-tips", icon: Lightbulb },
-            { title: "Wage Report 2026", href: "/career-hub/wage-report", icon: BarChart3 },
-            { title: "Unemployment Benefits", href: "/unemployment-benefits", icon: AlertCircle },
-          ],
-        },
-        {
-          label: "Financial Calculators",
-          items: [
-            { title: "Paycheck Calculator", href: "/career-hub/tools/paycheck-calculator", icon: Calculator },
-            { title: "Tax Calculator", href: "/career-hub/tools/tax-calculator", icon: Receipt },
-            { title: "Cost of Living", href: "/career-hub/tools/cost-of-living", icon: Globe },
-            { title: "Unemployment Calculator", href: "/career-hub/tools/unemployment-calculator", icon: AlertCircle },
-          ],
-        },
-      ],
-      viewAll: { text: "View all financial resources", href: "/career-hub/financial-tips" },
-    },
-  },
-
-  // ── 5. Career Tools ──────────────────────────────────────────────
+  // ── 4. Career Tools ──────────────────────────────────────────────
   {
     id: "career-tools",
     label: "Career Tools",
@@ -364,10 +330,11 @@ const Header = () => {
           <nav className="flex items-center" style={{ gap: 0 }}>
             {contentPillars.map((pillar) => {
               const isOpen = openDropdown === pillar.id;
+              const isWide = (pillar.dropdown.columns?.length ?? 0) > 3;
               return (
                 <div
                   key={pillar.id}
-                  className="relative"
+                  className={isWide ? 'static' : 'relative'}
                   onMouseEnter={() => handleMouseEnter(pillar.id)}
                   onMouseLeave={handleMouseLeave}
                 >
@@ -385,7 +352,6 @@ const Header = () => {
                   >
                     {pillar.label}
                     <ChevronDown className={`h-3.5 w-3.5 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
-                    {/* Active indicator bar */}
                     {isOpen && (
                       <span style={{
                         position: 'absolute', left: 16, right: 16, bottom: 0, height: 2,
@@ -394,31 +360,36 @@ const Header = () => {
                     )}
                   </button>
 
-                  {/* ── Dropdown Panel ── */}
                   {isOpen && (
                     <div
-                      className="absolute top-full left-0 bg-white rounded-b-xl shadow-xl z-50"
+                      className="absolute top-full rounded-b-xl shadow-xl z-50"
                       style={{
+                        backgroundColor: '#ffffff',
                         border: '1px solid rgb(236,236,236)', borderTop: 'none',
-                        minWidth: pillar.dropdown.type === 'multi' 
-                          ? (pillar.dropdown.columns?.length === 2 ? 500 : pillar.dropdown.columns?.length === 3 ? 750 : 800)
-                          : 320,
-                        maxWidth: pillar.dropdown.type === 'multi' ? 900 : 400,
+                        ...(isWide
+                          ? { left: 0, right: 0 }
+                          : { left: 0, minWidth: pillar.dropdown.columns?.length === 2 ? 480 : 660, maxWidth: 860 }),
                         animation: 'fadeSlideDown 150ms ease-out',
                         boxShadow: '0 10px 40px -10px rgba(0,0,0,0.15)',
                       }}
                     >
-                      {/* Multi-column dropdown (Mega Menu) */}
                       {pillar.dropdown.type === 'multi' && (
                         <div style={{ padding: '20px 0 16px' }}>
-                          <div className={`grid ${pillar.dropdown.columns?.length === 2 ? 'grid-cols-2' : pillar.dropdown.columns?.length === 3 ? 'grid-cols-3' : 'grid-cols-2 lg:grid-cols-4'}`} style={{ gap: 0 }}>
+                          <div 
+                            className={`grid ${
+                              pillar.dropdown.columns?.length === 2 
+                                ? 'grid-cols-2' 
+                                : pillar.dropdown.columns?.length === 3 
+                                  ? 'grid-cols-3' 
+                                  : 'grid-cols-4'
+                            }`}
+                          >
                             {pillar.dropdown.columns?.map((column, cIdx) => (
                               <div 
                                 key={cIdx} 
                                 style={{ 
-                                  padding: '0 12px', 
+                                  padding: '0 10px', 
                                   borderRight: cIdx < (pillar.dropdown.columns?.length ?? 0) - 1 ? '1px solid rgb(236,236,236)' : 'none',
-                                  minWidth: pillar.id === 'career-tools' ? 180 : 200,
                                 }}
                               >
                                 <p style={{ 
@@ -427,8 +398,8 @@ const Header = () => {
                                   textTransform: 'uppercase', 
                                   letterSpacing: 1, 
                                   color: 'rgba(60,60,60,0.6)', 
-                                  padding: '0 8px 12px',
-                                  marginBottom: 4,
+                                  padding: '0 8px 10px',
+                                  marginBottom: 2,
                                 }}>
                                   {column.label}
                                 </p>
@@ -439,11 +410,11 @@ const Header = () => {
                                       key={item.href}
                                       href={item.href}
                                       onClick={() => setOpenDropdown(null)}
-                                      className="flex items-center gap-2.5 hover:bg-gray-50 transition-colors rounded group"
-                                      style={{ padding: '10px 8px', textDecoration: 'none', marginBottom: 2 }}
+                                      className="flex items-center gap-2 hover:bg-gray-50 transition-colors rounded group"
+                                      style={{ padding: '8px 8px', textDecoration: 'none', marginBottom: 1 }}
                                     >
-                                      <Icon className="h-4 w-4 flex-shrink-0 group-hover:scale-110 transition-transform" style={{ color: 'rgb(221,0,169)' }} strokeWidth={1.8} />
-                                      <span style={{ fontSize: 13, fontWeight: 600, color: 'rgba(60,60,60,0.9)', lineHeight: '18px' }}>
+                                      <Icon className="h-3.5 w-3.5 flex-shrink-0 group-hover:scale-110 transition-transform" style={{ color: 'rgb(221,0,169)' }} strokeWidth={1.8} />
+                                      <span style={{ fontSize: 13, fontWeight: 600, color: 'rgba(60,60,60,0.9)', lineHeight: '16px' }}>
                                         {item.title}
                                       </span>
                                     </Link>
@@ -454,12 +425,12 @@ const Header = () => {
                           </div>
                           {pillar.dropdown.viewAll && (
                             <>
-                              <div style={{ height: 1, backgroundColor: 'rgb(236,236,236)', margin: '16px 20px 0' }} />
+                              <div style={{ height: 1, backgroundColor: 'rgb(236,236,236)', margin: '14px 16px 0' }} />
                               <Link
                                 href={pillar.dropdown.viewAll.href}
                                 onClick={() => setOpenDropdown(null)}
                                 className="flex items-center gap-2 hover:bg-gray-50 transition-colors group"
-                                style={{ padding: '14px 20px 10px', textDecoration: 'none' }}
+                                style={{ padding: '12px 16px 8px', textDecoration: 'none' }}
                               >
                                 <span style={{ fontSize: 14, fontWeight: 700, color: 'rgb(221,0,169)' }}>
                                   {pillar.dropdown.viewAll.text}
@@ -485,38 +456,48 @@ const Header = () => {
           className="lg:hidden fixed left-0 w-full bg-white overflow-hidden z-30 flex flex-col"
           style={{ top: 57, height: 'calc(100vh - 57px)' }}
         >
-          {/* Top links */}
-          <div style={{ borderBottom: '1px solid rgb(236,236,236)', flexShrink: 0 }}>
-            <a
-              href="https://indeedflex.com"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block"
-              style={{ fontSize: 14, fontWeight: 700, lineHeight: '27px', letterSpacing: '0.25px', color: 'rgba(60,60,60,0.8)', textDecoration: 'none', padding: '14px 16px', borderBottom: '1px solid rgb(236,236,236)' }}
-            >
-              Jobseekers
-            </a>
-            <a
-              href="https://indeedflex.com/employers/"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block"
-              style={{ fontSize: 14, fontWeight: 700, lineHeight: '27px', letterSpacing: '0.25px', color: 'rgba(60,60,60,0.8)', textDecoration: 'none', padding: '14px 16px', borderBottom: '1px solid rgb(236,236,236)' }}
-            >
-              Employers
-            </a>
-            <Link
-              href="/career-hub"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block"
-              style={{ fontSize: 14, fontWeight: 700, lineHeight: '27px', letterSpacing: '0.25px', color: 'rgb(221,0,169)', textDecoration: 'none', padding: '14px 16px' }}
-            >
-              Career Hub Home
-            </Link>
+          {/* Quick-access strip */}
+          <div style={{ padding: '12px 16px', borderBottom: '1px solid rgb(236,236,236)', flexShrink: 0 }}>
+            <div className="flex items-center gap-2 mb-3">
+              <Link
+                href="/career-hub"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center gap-1.5"
+                style={{ fontSize: 13, fontWeight: 700, color: 'rgb(221,0,169)', textDecoration: 'none' }}
+              >
+                <Compass className="h-3.5 w-3.5" strokeWidth={2} style={{ color: 'rgb(221,0,169)' }} />
+                Career Hub
+              </Link>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              {[
+                { title: "Pay Calculator", href: "/career-hub/tools/paycheck-calculator", icon: Calculator },
+                { title: "Browse Roles", href: "/career-hub/roles", icon: Briefcase },
+                { title: "Resume Builder", href: "/career-hub/templates", icon: FileText },
+                { title: "Career Guides", href: "/career-hub/guides", icon: BookOpen },
+              ].map((item) => {
+                const Icon = item.icon;
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-2 rounded-lg active:bg-pink-50 transition-colors"
+                    style={{ padding: '8px 10px', textDecoration: 'none', backgroundColor: 'rgba(221,0,169,0.04)', border: '1px solid rgba(221,0,169,0.1)' }}
+                  >
+                    <Icon className="h-3.5 w-3.5 flex-shrink-0" style={{ color: 'rgb(221,0,169)' }} strokeWidth={2} />
+                    <span style={{ fontSize: 12, fontWeight: 700, color: 'rgba(60,60,60,0.9)' }}>{item.title}</span>
+                  </Link>
+                );
+              })}
+            </div>
           </div>
 
           {/* Pillar accordion sections */}
           <div className="flex-1 overflow-auto">
             {contentPillars.map((pillar) => {
               const isExpanded = mobileExpandedSection === pillar.id;
+              const isToolsPillar = pillar.id === 'career-tools';
 
               return (
                 <div key={pillar.id} style={{ borderBottom: '1px solid rgb(236,236,236)' }}>
@@ -536,37 +517,37 @@ const Header = () => {
 
                   {isExpanded && (
                     <div style={{ paddingBottom: 8, backgroundColor: 'rgba(249,249,249,0.6)' }}>
-                      {/* Show column labels for multi-column (Career Tools) */}
                       {pillar.dropdown.type === 'multi' && pillar.dropdown.columns?.map((column, cIdx) => (
                         <div key={cIdx}>
                           <p style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 1, color: 'rgba(60,60,60,0.45)', padding: '10px 16px 4px' }}>
                             {column.label}
                           </p>
-                          {column.items.map((item) => {
-                            const Icon = item.icon;
-                            return (
-                              <Link
-                                key={item.href}
-                                href={item.href}
-                                onClick={() => setMobileMenuOpen(false)}
-                                className="flex items-center gap-3 hover:bg-gray-100/60 transition-colors"
-                                style={{ padding: '10px 16px 10px 28px', textDecoration: 'none' }}
-                              >
-                                <Icon className="h-4 w-4 flex-shrink-0" style={{ color: 'rgb(221,0,169)' }} strokeWidth={1.8} />
-                                <span style={{ fontSize: 13, fontWeight: 600, color: 'rgba(60,60,60,0.9)' }}>{item.title}</span>
-                              </Link>
-                            );
-                          })}
+                          <div className={isToolsPillar ? 'grid grid-cols-2 sm:grid-cols-2' : ''}>
+                            {column.items.map((item) => {
+                              const Icon = item.icon;
+                              return (
+                                <Link
+                                  key={item.href}
+                                  href={item.href}
+                                  onClick={() => setMobileMenuOpen(false)}
+                                  className="flex items-center gap-2.5 hover:bg-gray-100/60 active:bg-gray-100 transition-colors"
+                                  style={{ padding: isToolsPillar ? '10px 16px 10px 16px' : '10px 16px 10px 28px', textDecoration: 'none' }}
+                                >
+                                  <Icon className="h-4 w-4 flex-shrink-0" style={{ color: 'rgb(221,0,169)' }} strokeWidth={1.8} />
+                                  <span style={{ fontSize: 13, fontWeight: 600, color: 'rgba(60,60,60,0.9)', lineHeight: '16px' }}>{item.title}</span>
+                                </Link>
+                              );
+                            })}
+                          </div>
                         </div>
                       ))}
 
-                      {/* View all link */}
                       {pillar.dropdown.viewAll && (
                         <Link
                           href={pillar.dropdown.viewAll.href}
                           onClick={() => setMobileMenuOpen(false)}
                           className="flex items-center gap-2"
-                          style={{ padding: '10px 16px 10px 28px', textDecoration: 'none' }}
+                          style={{ padding: '12px 16px 10px 16px', textDecoration: 'none', marginTop: 4 }}
                         >
                           <span style={{ fontSize: 13, fontWeight: 700, color: 'rgb(221,0,169)' }}>{pillar.dropdown.viewAll.text}</span>
                           <ArrowRight className="h-3.5 w-3.5" style={{ color: 'rgb(221,0,169)' }} />

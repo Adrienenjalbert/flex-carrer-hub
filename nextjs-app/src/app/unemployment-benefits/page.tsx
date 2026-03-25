@@ -93,7 +93,7 @@ export default function UnemploymentBenefitsPage() {
           {/* Hero */}
           <div className="mb-8">
             <h1 className="text-4xl font-bold mb-4">
-              Unemployment Benefits by State {new Date().getFullYear()}
+              Unemployment Benefits by State 2026
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl">
               Compare unemployment benefits across all 50 states. Understand how much you can receive, how long benefits last, and how gig work affects your eligibility.
@@ -269,7 +269,7 @@ export default function UnemploymentBenefitsPage() {
       </div>
 
       <div className="container mx-auto px-4 py-12">
-        <InternalLinkHub variant="full" currentPage={{ type: "generic" }} />
+        <InternalLinkHub variant="full" currentPage={{ type: "financial" }} />
       </div>
       <CTASection />
     </>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -8,23 +8,26 @@ import { Slider } from "@/components/ui/slider";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import {
-  Car,
-  Clock,
-  DollarSign,
-  Fuel,
-  ParkingCircle,
-  AlertCircle,
-} from "lucide-react";
+import { Car, DollarSign } from "lucide-react";
 import CTASection from "@/components/career-hub/CTASection";
 import FAQSection from "@/components/career-hub/FAQSection";
 import ToolDisclaimer from "@/components/career-hub/ToolDisclaimer";
 import RelatedToolsSidebar from "@/components/career-hub/RelatedToolsSidebar";
+
+const STORAGE_KEY = "commute-calculator-inputs";
+
+function loadSavedInputs() {
+  if (typeof window === "undefined") return null;
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    return saved ? JSON.parse(saved) : null;
+  } catch {
+    return null;
+  }
+}
 
 const faqs = [
   {
@@ -52,15 +55,29 @@ const faqs = [
 // Average costs
 const GAS_PRICE_PER_GALLON = 3.50;
 const AVG_MPG = 28;
-const IRS_MILEAGE_RATE = 0.70; // 2026 rate for vehicle wear
 
 export default function CommuteCalculatorClient() {
-  const [hourlyRate, setHourlyRate] = useState<string>("18");
-  const [commuteDistance, setCommuteDistance] = useState<number[]>([15]);
-  const [commuteTime, setCommuteTime] = useState<number[]>([25]);
-  const [parkingCost, setParkingCost] = useState<string>("0");
-  const [shiftsPerWeek, setShiftsPerWeek] = useState<number[]>([4]);
-  const [hoursPerShift, setHoursPerShift] = useState<number[]>([6]);
+  const saved = useMemo(() => loadSavedInputs(), []);
+  const [hourlyRate, setHourlyRate] = useState<string>(saved?.hourlyRate ?? "18");
+  const [commuteDistance, setCommuteDistance] = useState<number[]>([saved?.commuteDistance ?? 15]);
+  const [commuteTime, setCommuteTime] = useState<number[]>([saved?.commuteTime ?? 25]);
+  const [parkingCost, setParkingCost] = useState<string>(saved?.parkingCost ?? "0");
+  const [shiftsPerWeek, setShiftsPerWeek] = useState<number[]>([saved?.shiftsPerWeek ?? 4]);
+  const [hoursPerShift, setHoursPerShift] = useState<number[]>([saved?.hoursPerShift ?? 6]);
+
+  useEffect(() => {
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({
+        hourlyRate,
+        commuteDistance: commuteDistance[0],
+        commuteTime: commuteTime[0],
+        parkingCost,
+        shiftsPerWeek: shiftsPerWeek[0],
+        hoursPerShift: hoursPerShift[0],
+      })
+    );
+  }, [hourlyRate, commuteDistance, commuteTime, parkingCost, shiftsPerWeek, hoursPerShift]);
 
   const calculations = useMemo(() => {
     const rate = parseFloat(hourlyRate) || 0;
@@ -109,6 +126,7 @@ export default function CommuteCalculatorClient() {
       <div className="container mx-auto px-4 py-8">
         <Breadcrumbs
           items={[
+            { label: "Career Hub", href: "/career-hub" },
             { label: "Tools", href: "/career-hub/tools" },
             { label: "Commute Calculator" },
           ]}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -24,7 +24,6 @@ import Link from "next/link";
 import {
   DollarSign,
   Baby,
-  Clock,
   TrendingUp,
   AlertCircle,
   CheckCircle2,
@@ -69,12 +68,38 @@ const childcareCosts = {
   "low-cost": { name: "Low-Cost Area", infant: 900, toddler: 750, preschool: 600 },
 };
 
+const CC_STORAGE_KEY = "childcare-calculator-inputs";
+
+function loadCCInputs() {
+  if (typeof window === "undefined") return null;
+  try {
+    const saved = localStorage.getItem(CC_STORAGE_KEY);
+    return saved ? JSON.parse(saved) : null;
+  } catch {
+    return null;
+  }
+}
+
 export default function ChildcareCalculatorClient() {
-  const [hourlyRate, setHourlyRate] = useState<string>("18");
-  const [hoursPerWeek, setHoursPerWeek] = useState<number[]>([30]);
-  const [cityType, setCityType] = useState<keyof typeof childcareCosts>("medium-cost");
-  const [childAge, setChildAge] = useState<string>("toddler");
-  const [numberOfChildren, setNumberOfChildren] = useState<number[]>([1]);
+  const saved = useMemo(() => loadCCInputs(), []);
+  const [hourlyRate, setHourlyRate] = useState<string>(saved?.hourlyRate ?? "18");
+  const [hoursPerWeek, setHoursPerWeek] = useState<number[]>([saved?.hoursPerWeek ?? 30]);
+  const [cityType, setCityType] = useState<keyof typeof childcareCosts>(saved?.cityType ?? "medium-cost");
+  const [childAge, setChildAge] = useState<string>(saved?.childAge ?? "toddler");
+  const [numberOfChildren, setNumberOfChildren] = useState<number[]>([saved?.numberOfChildren ?? 1]);
+
+  useEffect(() => {
+    localStorage.setItem(
+      CC_STORAGE_KEY,
+      JSON.stringify({
+        hourlyRate,
+        hoursPerWeek: hoursPerWeek[0],
+        cityType,
+        childAge,
+        numberOfChildren: numberOfChildren[0],
+      })
+    );
+  }, [hourlyRate, hoursPerWeek, cityType, childAge, numberOfChildren]);
 
   const calculations = useMemo(() => {
     const rate = parseFloat(hourlyRate) || 0;
@@ -105,6 +130,7 @@ export default function ChildcareCalculatorClient() {
       <div className="container mx-auto px-4 py-8">
         <Breadcrumbs
           items={[
+            { label: "Career Hub", href: "/career-hub" },
             { label: "Tools", href: "/career-hub/tools" },
             { label: "Childcare Calculator" },
           ]}

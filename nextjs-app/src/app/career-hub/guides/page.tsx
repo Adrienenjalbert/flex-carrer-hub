@@ -4,9 +4,9 @@ import { BookOpen, GraduationCap, Briefcase, Shield, Heart, FileText, Lightbulb,
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { allGuideCategories, guideArticles } from "@/lib/data/articles/guides";
-import PageHero from "@/components/career-hub/PageHero";
-import SectionHeader from "@/components/career-hub/SectionHeader";
-import ContentGrid from "@/components/career-hub/ContentGrid";
+import PageHero from "@/components/career-hub/layout/PageHero";
+import SectionHeader from "@/components/career-hub/layout/SectionHeader";
+import ContentGrid from "@/components/career-hub/content/ContentGrid";
 import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
 
 const canonical = "https://indeedflex.com/career-hub/guides";
@@ -276,7 +276,7 @@ export default function GuidesPage() {
       <div className="container mx-auto px-4 py-12">
         <InternalLinkHub 
           variant="full" 
-          currentPage={{ type: "generic" }} 
+          currentPage={{ type: "guide" }} 
         />
       </div>
     </div>

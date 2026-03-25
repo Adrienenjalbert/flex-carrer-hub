@@ -1,17 +1,17 @@
 import { Metadata } from "next";
+import { generateToolMetadata } from "@/lib/seo/metadata";
 import SafetyFirstClient from "./SafetyFirstClient";
-import CTASection from "@/components/career-hub/CTASection";
 import { SoftwareApplicationSchema } from "@/components/career-hub/seo";
-import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
+import StandardPageLayout from "@/components/career-hub/layout/StandardPageLayout";
 
 const toolName = "Safety First";
 const toolDescription = "Learn essential workplace safety procedures. Practice scenarios for warehouse, hospitality, and retail environments.";
 const canonical = "https://indeedflex.com/career-hub/tools/safety-first";
 
-export const metadata: Metadata = {
-  title: "Safety First | Workplace Safety Training | Indeed Flex",
-  description:
-    "Learn essential workplace safety procedures. Practice scenarios for warehouse, hospitality, and retail environments.",
+export const metadata: Metadata = generateToolMetadata({
+  name: toolName,
+  slug: "safety-first",
+  description: toolDescription,
   keywords: [
     "workplace safety",
     "safety training",
@@ -20,26 +20,14 @@ export const metadata: Metadata = {
     "food safety",
     "safety quiz",
   ],
-  alternates: {
-    canonical,
-  },
-  openGraph: {
-    title: "Safety First | Workplace Safety Training",
-    description: "Learn essential workplace safety procedures. Practice scenarios for warehouse, hospitality, and retail environments.",
-    url: canonical,
-    type: "website",
-    siteName: "Indeed Flex Career Hub",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Safety First | Workplace Safety Training",
-    description: "Learn essential workplace safety procedures.",
-  },
-};
+});
 
 export default function SafetyFirstPage() {
   return (
-    <>
+    <StandardPageLayout
+      showBreadcrumbs={false}
+      currentPage={{ type: "tool", slug: "safety-first", relatedTools: [] }}
+    >
       <SoftwareApplicationSchema
         name={toolName}
         description={toolDescription}
@@ -48,17 +36,6 @@ export default function SafetyFirstPage() {
         featureList={[]}
       />
       <SafetyFirstClient />
-      <div className="container mx-auto px-4 py-12">
-        <InternalLinkHub 
-          variant="full" 
-          currentPage={{ 
-            type: "tool", 
-            slug: "safety-first",
-            relatedTools: []
-          }} 
-        />
-      </div>
-      <CTASection />
-    </>
+    </StandardPageLayout>
   );
 }

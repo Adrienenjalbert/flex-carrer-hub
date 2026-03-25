@@ -14,8 +14,6 @@
 
 import {
   stateTaxData,
-  calculateStateTax as calculateStateTaxFromData,
-  calculateProgressiveTax,
   getMarginalRate,
   type FilingStatus,
   type TaxBracket,

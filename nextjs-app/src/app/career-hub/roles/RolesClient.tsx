@@ -2,15 +2,22 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import { Briefcase, Star, TrendingUp, DollarSign } from "lucide-react";
+import { Briefcase, TrendingUp, DollarSign, MessageSquare, BookOpen, FileText } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { roles, industries } from "@/lib/data/roles";
-import FilterBar, { FilterConfig } from "@/components/career-hub/FilterBar";
-import SectionHeader from "@/components/career-hub/SectionHeader";
-import ContentGrid from "@/components/career-hub/ContentGrid";
-import EmptyState from "@/components/career-hub/EmptyState";
-import PageHero from "@/components/career-hub/PageHero";
+import { howToBecomeGuides } from "@/lib/data/how-to-become";
+import { interviewGuides } from "@/lib/data/interview-questions";
+import { resumeExamples } from "@/lib/data/resume-examples";
+import FilterBar, { FilterConfig } from "@/components/career-hub/navigation/FilterBar";
+import SectionHeader from "@/components/career-hub/layout/SectionHeader";
+import ContentGrid from "@/components/career-hub/content/ContentGrid";
+import EmptyState from "@/components/career-hub/content/EmptyState";
+import PageHero from "@/components/career-hub/layout/PageHero";
+
+const howToBecomeSlugs = new Set(howToBecomeGuides.map((g) => g.roleSlug));
+const interviewSlugs = new Set(interviewGuides.map((g) => g.roleSlug));
+const resumeSlugs = new Set(resumeExamples.map((e) => e.roleSlug));
 
 export default function RolesClient() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -21,7 +28,6 @@ export default function RolesClient() {
   const filteredRoles = useMemo(() => {
     let result = roles;
 
-    // Search filter
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
       result = result.filter(
@@ -32,12 +38,10 @@ export default function RolesClient() {
       );
     }
 
-    // Industry filter
     if (selectedIndustry) {
       result = result.filter((role) => role.industry === selectedIndustry);
     }
 
-    // Pay range filter
     if (selectedPayRange) {
       const [min, max] = selectedPayRange.split("-").map(Number);
       result = result.filter(
@@ -45,7 +49,6 @@ export default function RolesClient() {
       );
     }
 
-    // Entry level filter
     if (entryLevelOnly) {
       result = result.filter((role) => role.entryLevel === true);
     }
@@ -62,7 +65,7 @@ export default function RolesClient() {
 
   const filterConfig: FilterConfig = {
     search: {
-      placeholder: "Search roles by name, industry, or skills...",
+      placeholder: "Search temp jobs by role, industry, or skills...",
       onSearch: setSearchQuery,
     },
     filters: [
@@ -72,7 +75,7 @@ export default function RolesClient() {
         options: industries.map((ind) => ({
           id: ind.id,
           label: ind.name,
-          value: ind.name,
+          value: ind.id,
         })),
         value: selectedIndustry,
         onChange: setSelectedIndustry,
@@ -115,12 +118,89 @@ export default function RolesClient() {
     return groups;
   }, [filteredRoles]);
 
+  const isUnfiltered = !searchQuery && !selectedIndustry && !selectedPayRange && !entryLevelOnly;
+
+  const renderRoleCard = (role: typeof roles[0], badge?: { label: string; className: string }) => (
+    <Card className="h-full hover:shadow-soft transition-shadow cursor-pointer group hover:border-primary/30 flex flex-col">
+      <CardHeader className="pb-2">
+        <div className="flex items-start justify-between mb-3">
+          <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
+            <Briefcase className="h-5 w-5 text-primary" />
+          </div>
+          <div className="flex gap-1">
+            {badge && (
+              <Badge variant="secondary" className={`text-xs ${badge.className}`}>
+                {badge.label}
+              </Badge>
+            )}
+            {role.entryLevel && !badge?.label.includes("Entry") && (
+              <Badge variant="outline" className="text-xs">
+                Entry-Level
+              </Badge>
+            )}
+          </div>
+        </div>
+        <CardTitle className="text-lg group-hover:text-primary transition-colors">
+          {role.title}
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="flex-1 flex flex-col">
+        <CardDescription className="mb-3 flex-1">
+          {role.shortDescription || role.description.slice(0, 100)}...
+        </CardDescription>
+        <div className="flex items-center justify-between mb-3">
+          <span className="font-semibold text-primary">
+            ${role.avgHourlyRate.min}-${role.avgHourlyRate.max}/hr
+          </span>
+          {role.avgTips ? (
+            <Badge variant="outline" className="text-xs">+ Tips</Badge>
+          ) : (
+            <Badge variant="outline" className="text-xs capitalize">{role.industry}</Badge>
+          )}
+        </div>
+        {/* Spoke page cross-links */}
+        <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs border-t pt-2">
+          {interviewSlugs.has(role.slug) && (
+            <Link
+              href={`/interview-questions/${role.slug}`}
+              className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <MessageSquare className="h-3 w-3" />
+              Interview Prep
+            </Link>
+          )}
+          {howToBecomeSlugs.has(role.slug) && (
+            <Link
+              href={`/how-to-become/${role.slug}`}
+              className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <BookOpen className="h-3 w-3" />
+              How to Start
+            </Link>
+          )}
+          {resumeSlugs.has(role.slug) && (
+            <Link
+              href={`/career-hub/resume-examples/${role.slug}`}
+              className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <FileText className="h-3 w-3" />
+              Resume
+            </Link>
+          )}
+        </div>
+      </CardContent>
+    </Card>
+  );
+
   return (
     <>
       <PageHero
-        title="Flexible Work Roles"
-        description={`Find the perfect flexible role matching your skills and interests. ${roles.length} roles across ${industries.length} industries.`}
-        searchPlaceholder="Search roles by name, industry, or skills..."
+        title="Temp & Flexible Work Roles"
+        description={`Browse ${roles.length} temporary, part-time, and flexible job roles across ${industries.length} industries. Compare hourly pay, skills needed, and career growth paths.`}
+        searchPlaceholder="Search temp jobs by role, industry, or skills..."
         onSearch={setSearchQuery}
         stats={[
           { value: roles.length.toString(), label: "Total Roles" },
@@ -133,97 +213,36 @@ export default function RolesClient() {
 
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-6xl mx-auto">
-          {/* Popular Roles Section */}
-          {!searchQuery && !selectedIndustry && !selectedPayRange && !entryLevelOnly && (
+          {/* Popular Roles */}
+          {isUnfiltered && (
             <section className="mb-12">
               <SectionHeader
-                title="Popular Roles"
-                description="Most searched and in-demand flexible work roles"
+                title="Popular Temp Roles"
+                description="Most searched and in-demand temporary work roles"
                 icon={<TrendingUp className="h-6 w-6 text-primary" />}
               />
               <ContentGrid columns={3} gap="md">
                 {popularRoles.slice(0, 6).map((role) => (
                   <Link key={role.slug} href={`/career-hub/roles/${role.slug}`}>
-                    <Card className="h-full hover:shadow-soft transition-shadow cursor-pointer group hover:border-primary/30">
-                      <CardHeader className="pb-2">
-                        <div className="flex items-start justify-between mb-3">
-                          <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
-                            <Briefcase className="h-5 w-5 text-primary" />
-                          </div>
-                          <div className="flex gap-1">
-                            <Badge variant="secondary" className="bg-accent/10 text-accent text-xs">
-                              Popular
-                            </Badge>
-                            {role.entryLevel && (
-                              <Badge variant="outline" className="text-xs">
-                                Entry-Level
-                              </Badge>
-                            )}
-                          </div>
-                        </div>
-                        <CardTitle className="text-lg group-hover:text-primary transition-colors">
-                          {role.title}
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <CardDescription className="mb-3">
-                          {role.shortDescription || role.description.slice(0, 100)}...
-                        </CardDescription>
-                        <div className="flex items-center justify-between">
-                          <span className="font-semibold text-primary">
-                            ${role.avgHourlyRate.min}-${role.avgHourlyRate.max}/hr
-                          </span>
-                          <Badge variant="outline" className="text-xs">
-                            {role.industry}
-                          </Badge>
-                        </div>
-                      </CardContent>
-                    </Card>
+                    {renderRoleCard(role, { label: "Popular", className: "bg-accent/10 text-accent" })}
                   </Link>
                 ))}
               </ContentGrid>
             </section>
           )}
 
-          {/* Entry-Level Roles Section */}
-          {!searchQuery && !selectedIndustry && !selectedPayRange && !entryLevelOnly && (
+          {/* Highest Paying Roles */}
+          {isUnfiltered && highPayingRoles.length > 0 && (
             <section className="mb-12">
               <SectionHeader
-                title="Entry-Level Roles"
-                description="No experience required - perfect for getting started"
-                icon={<Star className="h-6 w-6 text-primary" />}
+                title="Highest Paying Roles"
+                description="Top-earning flexible positions — $20+/hr and above"
+                icon={<DollarSign className="h-6 w-6 text-primary" />}
               />
               <ContentGrid columns={3} gap="md">
-                {entryLevelRoles.slice(0, 6).map((role) => (
+                {highPayingRoles.map((role) => (
                   <Link key={role.slug} href={`/career-hub/roles/${role.slug}`}>
-                    <Card className="h-full hover:shadow-soft transition-shadow cursor-pointer group hover:border-primary/30">
-                      <CardHeader className="pb-2">
-                        <div className="flex items-start justify-between mb-3">
-                          <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
-                            <Briefcase className="h-5 w-5 text-primary" />
-                          </div>
-                          <Badge variant="secondary" className="bg-green-500/10 text-green-600 text-xs">
-                            Entry-Level
-                          </Badge>
-                        </div>
-                        <CardTitle className="text-lg group-hover:text-primary transition-colors">
-                          {role.title}
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <CardDescription className="mb-3">
-                          {role.shortDescription || role.description.slice(0, 100)}...
-                        </CardDescription>
-                        <div className="flex items-center justify-between">
-                          <span className="font-semibold text-primary">
-                            ${role.avgHourlyRate.min}-${role.avgHourlyRate.max}/hr
-                          </span>
-                          <Badge variant="outline" className="text-xs">
-                            {role.industry}
-                          </Badge>
-                        </div>
-                      </CardContent>
-                    </Card>
+                    {renderRoleCard(role, { label: "High Pay", className: "bg-green-500/10 text-green-600" })}
                   </Link>
                 ))}
               </ContentGrid>
@@ -237,7 +256,7 @@ export default function RolesClient() {
               description="Try adjusting your filters or search query to find what you're looking for."
               onClearFilters={clearAllFilters}
             />
-          ) : searchQuery || selectedIndustry || selectedPayRange || entryLevelOnly ? (
+          ) : !isUnfiltered ? (
             <section>
               <SectionHeader
                 title={`${filteredRoles.length} Role${filteredRoles.length !== 1 ? "s" : ""} Found`}
@@ -245,43 +264,7 @@ export default function RolesClient() {
               <ContentGrid columns={3} gap="md">
                 {filteredRoles.map((role) => (
                   <Link key={role.slug} href={`/career-hub/roles/${role.slug}`}>
-                    <Card className="h-full hover:shadow-soft transition-shadow cursor-pointer group hover:border-primary/30">
-                      <CardHeader className="pb-2">
-                        <div className="flex items-start justify-between mb-3">
-                          <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
-                            <Briefcase className="h-5 w-5 text-primary" />
-                          </div>
-                          <div className="flex gap-1">
-                            {role.entryLevel && (
-                              <Badge variant="outline" className="text-xs">
-                                Entry-Level
-                              </Badge>
-                            )}
-                            {(role.searchVolume === "very-high" || role.searchVolume === "high") && (
-                              <Badge variant="secondary" className="bg-accent/10 text-accent text-xs">
-                                Popular
-                              </Badge>
-                            )}
-                          </div>
-                        </div>
-                        <CardTitle className="text-lg group-hover:text-primary transition-colors">
-                          {role.title}
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <CardDescription className="mb-3">
-                          {role.shortDescription || role.description.slice(0, 100)}...
-                        </CardDescription>
-                        <div className="flex items-center justify-between">
-                          <span className="font-semibold text-primary">
-                            ${role.avgHourlyRate.min}-${role.avgHourlyRate.max}/hr
-                          </span>
-                          <Badge variant="outline" className="text-xs">
-                            {role.industry}
-                          </Badge>
-                        </div>
-                      </CardContent>
-                    </Card>
+                    {renderRoleCard(role)}
                   </Link>
                 ))}
               </ContentGrid>
@@ -289,7 +272,7 @@ export default function RolesClient() {
           ) : (
             <>
               {industries.map((industry) => {
-                const industryRoles = rolesByIndustry[industry.name] || [];
+                const industryRoles = rolesByIndustry[industry.id] || [];
                 if (industryRoles.length === 0) return null;
 
                 return (
@@ -301,45 +284,7 @@ export default function RolesClient() {
                     <ContentGrid columns={3} gap="md">
                       {industryRoles.map((role) => (
                         <Link key={role.slug} href={`/career-hub/roles/${role.slug}`}>
-                          <Card className="h-full hover:shadow-soft transition-shadow cursor-pointer group hover:border-primary/30">
-                            <CardHeader className="pb-2">
-                              <div className="flex items-start justify-between mb-3">
-                                <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
-                                  <Briefcase className="h-5 w-5 text-primary" />
-                                </div>
-                                <div className="flex gap-1">
-                                  {role.entryLevel && (
-                                    <Badge variant="outline" className="text-xs">
-                                      Entry-Level
-                                    </Badge>
-                                  )}
-                                  {(role.searchVolume === "very-high" || role.searchVolume === "high") && (
-                                    <Badge variant="secondary" className="bg-accent/10 text-accent text-xs">
-                                      Popular
-                                    </Badge>
-                                  )}
-                                </div>
-                              </div>
-                              <CardTitle className="text-lg group-hover:text-primary transition-colors">
-                                {role.title}
-                              </CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                              <CardDescription className="mb-3">
-                                {role.shortDescription || role.description.slice(0, 100)}...
-                              </CardDescription>
-                              <div className="flex items-center justify-between">
-                                <span className="font-semibold text-primary">
-                                  ${role.avgHourlyRate.min}-${role.avgHourlyRate.max}/hr
-                                </span>
-                                {role.avgTips && (
-                                  <Badge variant="outline" className="text-xs">
-                                    + Tips
-                                  </Badge>
-                                )}
-                              </div>
-                            </CardContent>
-                          </Card>
+                          {renderRoleCard(role)}
                         </Link>
                       ))}
                     </ContentGrid>
@@ -353,4 +298,3 @@ export default function RolesClient() {
     </>
   );
 }
-

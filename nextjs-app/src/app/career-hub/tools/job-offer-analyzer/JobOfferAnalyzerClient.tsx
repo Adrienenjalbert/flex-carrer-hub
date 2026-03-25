@@ -8,20 +8,11 @@ import { Checkbox } from "@/components/ui/checkbox";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import {
-  Scale,
-  DollarSign,
-  Star,
-  TrendingUp,
-  Clock,
-  Car,
-  Heart,
-} from "lucide-react";
+import { Scale, Star } from "lucide-react";
 import CTASection from "@/components/career-hub/CTASection";
 import FAQSection from "@/components/career-hub/FAQSection";
 import ToolDisclaimer from "@/components/career-hub/ToolDisclaimer";
@@ -201,6 +192,7 @@ export default function JobOfferAnalyzerClient() {
       <div className="container mx-auto px-4 py-8">
         <Breadcrumbs
           items={[
+            { label: "Career Hub", href: "/career-hub" },
             { label: "Tools", href: "/career-hub/tools" },
             { label: "Job Offer Analyzer" },
           ]}

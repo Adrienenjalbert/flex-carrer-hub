@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { GraduationCap, CheckCircle2, ChevronRight, Clock, DollarSign } from "lucide-react";
+import { GraduationCap, CheckCircle2, Clock, DollarSign } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -10,6 +10,7 @@ import { getRoleBySlug } from "@/lib/data/roles";
 import { HowToSchema, FAQSchema, BreadcrumbSchema } from "@/components/career-hub/seo";
 import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
 import CTASection from "@/components/career-hub/CTASection";
+import FAQSection from "@/components/career-hub/FAQSection";
 import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
 import { AuthorByline } from "@/components/career-hub/AuthorByline";
 import { getLastUpdated } from "@/lib/utils/date-variation";
@@ -84,8 +85,8 @@ export default async function HowToBecomePage({
 
   const roleTitle = role?.title || guide.roleTitle;
 
-  // Generate FAQs
-  const faqs = [
+  // Generate generic FAQs, then merge with guide-specific FAQs from data
+  const generatedFaqs = [
     {
       question: `How long does it take to become a ${roleTitle}?`,
       answer: guide.timeToStart || `The time varies depending on your background and the specific requirements, but most people can start working as a ${roleTitle} within a few weeks to months.`,
@@ -101,6 +102,7 @@ export default async function HowToBecomePage({
         : `Earnings vary by location and experience. Use our salary calculator for estimates.`,
     },
   ];
+  const faqs = [...(guide.faqs || []), ...generatedFaqs];
 
   return (
     <>
@@ -238,23 +240,7 @@ export default async function HowToBecomePage({
           )}
 
           {/* FAQs */}
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4">
-              Frequently Asked Questions
-            </h2>
-            <div className="space-y-4">
-              {faqs.map((faq, i) => (
-                <Card key={i}>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-lg">{faq.question}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground">{faq.answer}</p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </section>
+          <FAQSection faqs={faqs} suppressSchema />
 
           {/* CTA */}
           <div className="bg-primary/5 rounded-xl p-8 text-center">

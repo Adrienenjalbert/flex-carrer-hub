@@ -4,11 +4,9 @@ import {
   Snowflake, 
   DollarSign, 
   MapPin, 
-  Calendar, 
   TrendingUp,
   Clock,
   Package,
-  Briefcase,
   CheckCircle2,
   ArrowRight,
   Star,
@@ -26,6 +24,8 @@ import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
 import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
 import { BreadcrumbSchema, FAQSchema } from "@/components/career-hub/seo";
 
+const canonical = "https://indeedflex.com/career-hub/holiday-jobs-2026";
+
 export const metadata: Metadata = {
   title: "Holiday Jobs 2026 | Seasonal Christmas & Peak Season Work | Indeed Flex",
   description: "Find holiday jobs for 2026. Warehouse, retail, and hospitality positions for Black Friday, Christmas, and peak season. Premium pay rates available. Apply early for best selection.",
@@ -41,16 +41,26 @@ export const metadata: Metadata = {
     "seasonal employment 2026",
     "winter seasonal jobs"
   ],
+  alternates: {
+    canonical,
+  },
   openGraph: {
     title: "Holiday Jobs 2026 | Indeed Flex",
     description: "Find premium-paying holiday work in warehouse, retail, and hospitality. Black Friday, Christmas, and peak season positions available.",
+    url: canonical,
     type: "website",
+    siteName: "Indeed Flex Career Hub",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Holiday Jobs 2026 | Indeed Flex",
+    description: "Find premium-paying holiday work in warehouse, retail, and hospitality.",
   },
 };
 
 export default function HolidayJobs2026Page() {
-  const holidaySeason = getSeasonBySlug("holiday-2026");
-  const blackFriday = getEventBySlug("black-friday-2026");
+  const _holidaySeason = getSeasonBySlug("holiday-2026");
+  const _blackFriday = getEventBySlug("black-friday-2026");
   
   // Holiday-focused roles
   const holidayRoles = roles.filter(role => 
@@ -306,7 +316,7 @@ export default function HolidayJobs2026Page() {
                       Hospitality
                     </h3>
                     <p className="text-muted-foreground mb-4">
-                      Holiday parties, corporate events, and New Year's Eve drive premium demand.
+                      Holiday parties, corporate events, and New Year&apos;s Eve drive premium demand.
                     </p>
                     <div className="flex items-center gap-2 text-amber-600 font-medium">
                       <DollarSign className="h-4 w-4" />

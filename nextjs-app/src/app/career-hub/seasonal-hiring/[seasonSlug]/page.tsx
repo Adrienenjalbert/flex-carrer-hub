@@ -379,7 +379,7 @@ export default async function SeasonPage({ params }: PageProps) {
               Ready to Start Earning?
             </h2>
             <p className="text-lg text-muted-foreground mb-6 max-w-2xl mx-auto">
-              Don't wait until the last minute. Apply now for {season.name.toLowerCase()} positions 
+              Don&apos;t wait until the last minute. Apply now for {season.name.toLowerCase()} positions 
               and secure your spot at the best employers.
             </p>
             <div className="flex flex-wrap gap-4 justify-center">

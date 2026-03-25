@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { generateToolMetadata } from "@/lib/seo/metadata";
 import ShiftPlannerClient from "./ShiftPlannerClient";
 import CTASection from "@/components/career-hub/CTASection";
 import { SoftwareApplicationSchema, FAQSchema } from "@/components/career-hub/seo";
@@ -10,10 +11,10 @@ import { getLastUpdated } from "@/lib/utils/date-variation";
 const tool = getToolBySlug('shift-planner')!;
 const canonical = "https://indeedflex.com/career-hub/tools/shift-planner";
 
-export const metadata: Metadata = {
-  title: "Shift Income Planner | Calculate Your Weekly Earnings | Indeed Flex",
-  description:
-    "Plan your weekly earnings based on shifts, hourly rate, and tips. See which shifts pay the most and optimize your flexible work schedule for maximum income.",
+export const metadata: Metadata = generateToolMetadata({
+  name: tool.name,
+  slug: "shift-planner",
+  description: tool.description,
   keywords: [
     "shift planner",
     "income calculator",
@@ -24,22 +25,7 @@ export const metadata: Metadata = {
     "shift scheduling",
     "work hours calculator",
   ],
-  alternates: {
-    canonical,
-  },
-  openGraph: {
-    title: "Shift Income Planner | Calculate Your Weekly Earnings",
-    description: "Plan and optimize your weekly shifts for maximum earnings.",
-    url: canonical,
-    type: "website",
-    siteName: "Indeed Flex Career Hub",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Shift Income Planner",
-    description: "Plan and optimize your weekly shifts for maximum earnings.",
-  },
-};
+});
 
 const shiftFAQs = [
   {
@@ -64,10 +50,7 @@ export default function ShiftPlannerPage() {
         description={tool.description}
         url={canonical}
         applicationCategory="BusinessApplication"
-        aggregateRating={tool.schema?.aggregateRating || {
-          ratingValue: 4.6,
-          ratingCount: 1456
-        }}
+        aggregateRating={tool.schema?.aggregateRating}
         featureList={tool.inputs.map(i => i.name)}
       />
       <FAQSchema questions={shiftFAQs} />

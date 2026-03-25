@@ -9,6 +9,8 @@ import { FAQSchema, WebPageSchema, BreadcrumbSchema } from "@/components/career-
 import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
 import CTASection from "@/components/career-hub/CTASection";
 import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
+import { AuthorByline } from "@/components/career-hub/AuthorByline";
+import DataSourceCitation from "@/components/career-hub/DataSourceCitation";
 
 // Generate static params for all states
 export function generateStaticParams() {
@@ -426,11 +428,14 @@ export default async function UnemploymentBenefitsPage({
               </CardContent>
             </Card>
           </section>
+
+          <AuthorByline contentType="guide" lastUpdated="2026-01-15" />
+          <DataSourceCitation pageType="guide" additionalSources={["bls-oews", "state-labor"]} />
         </div>
       </div>
 
       <div className="container mx-auto px-4 py-12">
-        <InternalLinkHub variant="full" currentPage={{ type: "generic" }} />
+        <InternalLinkHub variant="full" currentPage={{ type: "financial" }} />
       </div>
       <CTASection />
     </>

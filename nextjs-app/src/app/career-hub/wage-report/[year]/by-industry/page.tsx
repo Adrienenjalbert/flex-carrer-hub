@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, TrendingUp, Briefcase, DollarSign } from "lucide-react";
+import { ArrowRight, TrendingUp, Briefcase } from "lucide-react";
 import { wageReport2026 } from "@/lib/data/wage-report/2026-data";
 import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
 import { BreadcrumbSchema } from "@/components/career-hub/seo";
@@ -55,7 +55,7 @@ export default async function ByIndustryPage({ params }: ByIndustryPageProps) {
   }
 
   const breadcrumbs = [
-    { label: "Home", href: "/" },
+    { label: "Career Hub", href: "/career-hub" },
     { label: "Wage Report", href: "/career-hub/wage-report" },
     { label: year, href: `/career-hub/wage-report/${year}` },
     { label: "By Industry" },

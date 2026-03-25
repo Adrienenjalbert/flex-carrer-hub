@@ -55,7 +55,7 @@ export default async function ByOccupationPage({ params }: ByOccupationPageProps
   }
 
   const breadcrumbs = [
-    { label: "Home", href: "/" },
+    { label: "Career Hub", href: "/career-hub" },
     { label: "Wage Report", href: "/career-hub/wage-report" },
     { label: year, href: `/career-hub/wage-report/${year}` },
     { label: "By Occupation" },

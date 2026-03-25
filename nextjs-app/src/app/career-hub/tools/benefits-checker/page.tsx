@@ -1,17 +1,17 @@
 import { Metadata } from "next";
+import { generateToolMetadata } from "@/lib/seo/metadata";
 import BenefitsCheckerClient from "./BenefitsCheckerClient";
-import CTASection from "@/components/career-hub/CTASection";
 import { SoftwareApplicationSchema } from "@/components/career-hub/seo";
-import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
+import StandardPageLayout from "@/components/career-hub/layout/StandardPageLayout";
 
 const toolName = "Benefits Eligibility Checker";
 const toolDescription = "Check your eligibility for benefits as a flexible worker. See what healthcare, unemployment, and assistance programs you may qualify for.";
 const canonical = "https://indeedflex.com/career-hub/tools/benefits-checker";
 
-export const metadata: Metadata = {
-  title: "Benefits Eligibility Checker | See What You Qualify For | Indeed Flex",
-  description:
-    "Check your eligibility for benefits as a flexible worker. See what healthcare, unemployment, and assistance programs you may qualify for.",
+export const metadata: Metadata = generateToolMetadata({
+  name: toolName,
+  slug: "benefits-checker",
+  description: toolDescription,
   keywords: [
     "benefits eligibility",
     "healthcare eligibility",
@@ -20,26 +20,14 @@ export const metadata: Metadata = {
     "worker benefits",
     "assistance programs",
   ],
-  alternates: {
-    canonical,
-  },
-  openGraph: {
-    title: "Benefits Eligibility Checker | See What You Qualify For",
-    description: "Check your eligibility for benefits as a flexible worker.",
-    url: canonical,
-    type: "website",
-    siteName: "Indeed Flex Career Hub",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Benefits Eligibility Checker",
-    description: "Check your eligibility for benefits as a flexible worker.",
-  },
-};
+});
 
 export default function BenefitsCheckerPage() {
   return (
-    <>
+    <StandardPageLayout
+      showBreadcrumbs={false}
+      currentPage={{ type: "tool", slug: "benefits-checker", relatedTools: [] }}
+    >
       <SoftwareApplicationSchema
         name={toolName}
         description={toolDescription}
@@ -49,17 +37,6 @@ export default function BenefitsCheckerPage() {
         featureList={[]}
       />
       <BenefitsCheckerClient />
-      <div className="container mx-auto px-4 py-12">
-        <InternalLinkHub 
-          variant="full" 
-          currentPage={{ 
-            type: "tool", 
-            slug: "benefits-checker",
-            relatedTools: []
-          }} 
-        />
-      </div>
-      <CTASection />
-    </>
+    </StandardPageLayout>
   );
 }

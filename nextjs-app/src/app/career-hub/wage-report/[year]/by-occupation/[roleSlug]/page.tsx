@@ -2,8 +2,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, TrendingUp, MapPin, DollarSign } from "lucide-react";
+import { ArrowLeft, DollarSign } from "lucide-react";
 import { getOccupationBySlug } from "@/lib/data/wage-report/2026-data";
 import { generateOccupationInsights } from "@/lib/data/wage-report/insights-engine";
 import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
@@ -60,7 +59,7 @@ export default async function OccupationPage({ params }: OccupationPageProps) {
   }
 
   const breadcrumbs = [
-    { label: "Home", href: "/" },
+    { label: "Career Hub", href: "/career-hub" },
     { label: "Wage Report", href: "/career-hub/wage-report" },
     { label: year, href: `/career-hub/wage-report/${year}` },
     { label: "By Occupation", href: `/career-hub/wage-report/${year}/by-occupation` },

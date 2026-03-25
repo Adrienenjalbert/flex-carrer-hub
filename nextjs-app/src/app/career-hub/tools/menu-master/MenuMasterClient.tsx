@@ -1,35 +1,45 @@
 "use client";
 
-import { useState } from "react";
-import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
-import { Button } from "@/components/ui/button";
+import { useState, useMemo, useEffect, useCallback } from "react";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import {
-  ChefHat,
-  ChevronLeft,
-  ChevronRight,
-  RotateCcw,
-  Eye,
-  Volume2,
+  BookOpen, Dices, ShieldCheck, Check, X,
+  RotateCcw, Volume2, VolumeX, ChefHat, Utensils,
 } from "lucide-react";
+import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
 import CTASection from "@/components/career-hub/CTASection";
 import FAQSection from "@/components/career-hub/FAQSection";
 import RelatedToolsSidebar from "@/components/career-hub/RelatedToolsSidebar";
-import { culinaryTerms } from "@/lib/data/culinary-terms";
+import { useSpeechSynthesis } from "@/hooks/useSpeechSynthesis";
+import {
+  culinaryTerms, knifeCuts, foodSafetyQuestions,
+  categoryLabels, difficultyLabels, safetyCategoryLabels,
+  type CulinaryTerm, type FoodSafetyQuestion,
+} from "@/lib/data/culinary-terms";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { cn } from "@/lib/utils";
+
+type Mode = "learn" | "flashcard" | "cuts" | "safety";
+type CategoryFilter = CulinaryTerm["category"] | "all";
+type DifficultyFilter = CulinaryTerm["difficulty"] | "all";
+
+const PROGRESS_KEY = "menumaster-progress";
+
+interface MenuMasterProgress {
+  masteredTerms: string[];
+  masteredCuts: string[];
+  safetyScore: number;
+  safetyAttempts: number;
+}
 
 const faqs = [
   {
     question: "What culinary terms does Menu Master cover?",
     answer:
-      "It covers essential kitchen and restaurant terms including cooking techniques, equipment names, and menu descriptions that you'll encounter in hospitality jobs.",
+      "It covers essential kitchen terms including cooking techniques, equipment names, menu descriptions, knife cuts, and food safety knowledge you'll need in hospitality jobs.",
   },
   {
     question: "Do I need to know these terms for restaurant work?",
@@ -43,202 +53,649 @@ const faqs = [
   },
 ];
 
-const categories = [
-  { id: "cooking-methods", name: "Cooking Methods" },
-  { id: "cuts", name: "Cuts & Prep" },
-  { id: "sauces", name: "Sauces" },
-  { id: "french-terms", name: "French Terms" },
-];
+function loadProgress(): MenuMasterProgress {
+  if (typeof window === "undefined") {
+    return { masteredTerms: [], masteredCuts: [], safetyScore: 0, safetyAttempts: 0 };
+  }
+  try {
+    const saved = localStorage.getItem(PROGRESS_KEY);
+    if (saved) return JSON.parse(saved);
+  } catch { /* ignore */ }
+  return { masteredTerms: [], masteredCuts: [], safetyScore: 0, safetyAttempts: 0 };
+}
+
+function shuffleArray<T>(array: T[]): T[] {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
 
 export default function MenuMasterClient() {
-  const [selectedCategory, setSelectedCategory] = useState("cooking-methods");
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [showDefinition, setShowDefinition] = useState(false);
+  const [mode, setMode] = useState<Mode>("learn");
+  const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>("all");
+  const [difficultyFilter, setDifficultyFilter] = useState<DifficultyFilter>("all");
+  const [progress, setProgress] = useState<MenuMasterProgress>(() => loadProgress());
 
-  const terms = culinaryTerms.filter((t) => t.category === selectedCategory);
-  const term = terms[currentIndex];
+  // Flashcard state
+  const [flashcardIndex, setFlashcardIndex] = useState(0);
+  const [isFlipped, setIsFlipped] = useState(false);
+  const [flashcardDeck, setFlashcardDeck] = useState<CulinaryTerm[]>([]);
 
-  const nextCard = () => {
-    setShowDefinition(false);
-    setCurrentIndex((prev) => (prev < terms.length - 1 ? prev + 1 : 0));
-  };
+  // Safety quiz state
+  const [safetyIndex, setSafetyIndex] = useState(0);
+  const [safetySelected, setSafetySelected] = useState<string | null>(null);
+  const [safetyShowResult, setSafetyShowResult] = useState(false);
+  const [safetyScore, setSafetyScore] = useState(0);
+  const [safetyComplete, setSafetyComplete] = useState(false);
+  const [safetyQuestions, setSafetyQuestions] = useState<FoodSafetyQuestion[]>([]);
 
-  const prevCard = () => {
-    setShowDefinition(false);
-    setCurrentIndex((prev) => (prev > 0 ? prev - 1 : terms.length - 1));
-  };
+  const { speak, stop, isSpeaking, isSupported } = useSpeechSynthesis({ defaultRate: 0.85 });
 
-  const resetCategory = () => {
-    setCurrentIndex(0);
-    setShowDefinition(false);
-  };
+  const masteredTermsSet = useMemo(() => new Set(progress.masteredTerms), [progress.masteredTerms]);
+  const masteredCutsSet = useMemo(() => new Set(progress.masteredCuts), [progress.masteredCuts]);
 
-  const speakTerm = (text: string) => {
-    if ("speechSynthesis" in window) {
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = "en-US";
-      utterance.rate = 0.8;
-      window.speechSynthesis.speak(utterance);
+  const totalItems = culinaryTerms.length + knifeCuts.length + foodSafetyQuestions.length;
+  const masteredCount = progress.masteredTerms.length + progress.masteredCuts.length;
+  const overallProgress = Math.round(
+    ((masteredCount + (progress.safetyAttempts > 0 ? Math.min(progress.safetyScore, foodSafetyQuestions.length) : 0)) / totalItems) * 100
+  );
+
+  useEffect(() => {
+    localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
+  }, [progress]);
+
+  const filteredTerms = useMemo(() => {
+    let terms = culinaryTerms;
+    if (categoryFilter !== "all") terms = terms.filter((t) => t.category === categoryFilter);
+    if (difficultyFilter !== "all") terms = terms.filter((t) => t.difficulty === difficultyFilter);
+    return terms;
+  }, [categoryFilter, difficultyFilter]);
+
+  useEffect(() => {
+    if (mode === "flashcard") {
+      setFlashcardDeck(shuffleArray(filteredTerms));
+      setFlashcardIndex(0);
+      setIsFlipped(false);
+    }
+  }, [mode, filteredTerms]);
+
+  useEffect(() => {
+    if (mode === "safety") {
+      setSafetyQuestions(shuffleArray(foodSafetyQuestions));
+      setSafetyIndex(0);
+      setSafetySelected(null);
+      setSafetyShowResult(false);
+      setSafetyScore(0);
+      setSafetyComplete(false);
+    }
+  }, [mode]);
+
+  const toggleTermMastered = useCallback((termId: string) => {
+    setProgress((prev) => {
+      const set = new Set(prev.masteredTerms);
+      if (set.has(termId)) set.delete(termId);
+      else set.add(termId);
+      return { ...prev, masteredTerms: Array.from(set) };
+    });
+  }, []);
+
+  const toggleCutMastered = useCallback((cutId: string) => {
+    setProgress((prev) => {
+      const set = new Set(prev.masteredCuts);
+      if (set.has(cutId)) set.delete(cutId);
+      else set.add(cutId);
+      return { ...prev, masteredCuts: Array.from(set) };
+    });
+  }, []);
+
+  const handleSafetyAnswer = (answer: string) => {
+    if (safetyShowResult) return;
+    setSafetySelected(answer);
+    setSafetyShowResult(true);
+    if (answer === safetyQuestions[safetyIndex].correctAnswer) {
+      setSafetyScore((prev) => prev + 1);
     }
   };
+
+  const nextSafetyQuestion = () => {
+    if (safetyIndex < safetyQuestions.length - 1) {
+      setSafetyIndex((prev) => prev + 1);
+      setSafetySelected(null);
+      setSafetyShowResult(false);
+    } else {
+      setSafetyComplete(true);
+      setProgress((prev) => ({
+        ...prev,
+        safetyScore: Math.max(prev.safetyScore, safetyScore),
+        safetyAttempts: prev.safetyAttempts + 1,
+      }));
+    }
+  };
+
+  const resetProgress = () => {
+    const empty: MenuMasterProgress = { masteredTerms: [], masteredCuts: [], safetyScore: 0, safetyAttempts: 0 };
+    setProgress(empty);
+  };
+
+  const categories = Object.keys(categoryLabels) as CulinaryTerm["category"][];
+  const difficulties = Object.keys(difficultyLabels) as CulinaryTerm["difficulty"][];
 
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8">
         <Breadcrumbs
           items={[
+            { label: "Career Hub", href: "/career-hub" },
             { label: "Tools", href: "/career-hub/tools" },
             { label: "Menu Master" },
           ]}
         />
 
         <div className="flex flex-col lg:flex-row gap-8 mt-8">
-          {/* Main Content */}
           <div className="flex-1">
+            {/* Hero */}
             <div className="mb-8">
-              <h1 className="text-3xl font-bold text-foreground mb-4">
-                Menu Master
-              </h1>
-              <p className="text-lg text-muted-foreground">
-                Learn essential culinary terms and menu vocabulary. Perfect for
-                servers, kitchen staff, and hospitality workers.
+              <div className="flex items-center gap-3 mb-4">
+                <span className="text-4xl">👨‍🍳</span>
+                <div>
+                  <h1 className="text-3xl font-bold text-foreground">Menu Master</h1>
+                  <p className="text-lg text-primary font-medium">
+                    Kitchen & Restaurant Vocabulary
+                  </p>
+                </div>
+              </div>
+              <p className="text-muted-foreground">
+                Learn essential culinary terms, knife cuts, and food safety. Perfect for servers,
+                kitchen staff, and hospitality workers.
               </p>
+
+              <div className="flex items-center gap-4 mt-4 bg-muted/50 rounded-lg p-3">
+                <div className="flex-1">
+                  <div className="flex justify-between text-sm mb-1">
+                    <span className="text-muted-foreground">Overall Progress / Progreso</span>
+                    <span className="font-medium text-foreground">{overallProgress}%</span>
+                  </div>
+                  <Progress value={overallProgress} className="h-2" />
+                </div>
+                <Button variant="ghost" size="sm" onClick={resetProgress}>
+                  <RotateCcw className="h-3 w-3 mr-1" />
+                  Reset
+                </Button>
+              </div>
             </div>
 
-            {/* Category Selection */}
-            <Card className="mb-8">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <ChefHat className="h-5 w-5 text-primary" />
-                  Choose a Category
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ToggleGroup
-                  type="single"
-                  value={selectedCategory}
-                  onValueChange={(value) => {
-                    if (value) {
-                      setSelectedCategory(value);
-                      setCurrentIndex(0);
-                      setShowDefinition(false);
-                    }
-                  }}
-                  className="justify-start flex-wrap"
-                >
+            {/* Mode Tabs */}
+            <Tabs value={mode} onValueChange={(v) => setMode(v as Mode)} className="mb-6">
+              <TabsList className="grid grid-cols-4 w-full">
+                <TabsTrigger value="learn">
+                  <BookOpen className="h-4 w-4 mr-1.5" />
+                  Learn
+                </TabsTrigger>
+                <TabsTrigger value="flashcard">
+                  <Dices className="h-4 w-4 mr-1.5" />
+                  Flashcard
+                </TabsTrigger>
+                <TabsTrigger value="cuts">
+                  <Utensils className="h-4 w-4 mr-1.5" />
+                  Cuts
+                </TabsTrigger>
+                <TabsTrigger value="safety">
+                  <ShieldCheck className="h-4 w-4 mr-1.5" />
+                  Safety
+                </TabsTrigger>
+              </TabsList>
+            </Tabs>
+
+            {/* LEARN MODE */}
+            {mode === "learn" && (
+              <>
+                {/* Filters */}
+                <div className="flex flex-wrap gap-2 mb-4">
+                  <button
+                    onClick={() => setCategoryFilter("all")}
+                    className={cn(
+                      "px-3 py-1.5 rounded-full text-sm font-medium transition-colors",
+                      categoryFilter === "all"
+                        ? "bg-primary text-primary-foreground"
+                        : "bg-muted text-muted-foreground hover:bg-primary/10"
+                    )}
+                  >
+                    All / Todos
+                  </button>
                   {categories.map((cat) => (
-                    <ToggleGroupItem key={cat.id} value={cat.id}>
-                      {cat.name}
-                    </ToggleGroupItem>
-                  ))}
-                </ToggleGroup>
-              </CardContent>
-            </Card>
-
-            {/* Flashcard */}
-            {term && (
-              <Card className="mb-8 min-h-[350px]">
-                <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <Badge variant="outline">
-                      {currentIndex + 1} of {terms.length}
-                    </Badge>
-                    {term.difficulty && (
-                      <Badge
-                        variant={
-                          term.difficulty === "beginner"
-                            ? "default"
-                            : term.difficulty === "intermediate"
-                            ? "secondary"
-                            : "destructive"
-                        }
-                      >
-                        {term.difficulty}
-                      </Badge>
-                    )}
-                  </div>
-                </CardHeader>
-                <CardContent className="text-center py-8">
-                  <div className="mb-6">
-                    <h2 className="text-4xl font-bold text-primary mb-2">
-                      {term.term}
-                    </h2>
-                    {term.pronunciation && (
-                      <div className="flex items-center justify-center gap-2">
-                        <p className="text-muted-foreground italic">
-                          /{term.pronunciation}/
-                        </p>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          onClick={() => speakTerm(term.term)}
-                        >
-                          <Volume2 className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    )}
-                  </div>
-
-                  {!showDefinition ? (
-                    <Button
-                      onClick={() => setShowDefinition(true)}
-                      size="lg"
-                      variant="outline"
+                    <button
+                      key={cat}
+                      onClick={() => setCategoryFilter(cat)}
+                      className={cn(
+                        "px-3 py-1.5 rounded-full text-sm font-medium transition-colors",
+                        categoryFilter === cat
+                          ? "bg-primary text-primary-foreground"
+                          : "bg-muted text-muted-foreground hover:bg-primary/10"
+                      )}
                     >
-                      <Eye className="h-4 w-4 mr-2" />
-                      Show Definition
-                    </Button>
-                  ) : (
-                    <div className="space-y-4">
-                      <div className="bg-primary/10 rounded-lg p-6">
-                        <p className="text-lg">{term.definition}</p>
-                      </div>
-                      {term.definitionSpanish && (
-                        <p className="text-sm text-muted-foreground">
-                          <strong>Spanish:</strong> {term.definitionSpanish}
+                      {categoryLabels[cat]?.en || cat} / {categoryLabels[cat]?.es || cat}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {difficulties.map((diff) => (
+                    <button
+                      key={diff}
+                      onClick={() => setDifficultyFilter(difficultyFilter === diff ? "all" : diff)}
+                      className={cn(
+                        "px-3 py-1 rounded-full text-xs font-medium transition-colors",
+                        difficultyFilter === diff
+                          ? "bg-primary text-primary-foreground"
+                          : diff === "beginner"
+                          ? "bg-green-100 text-green-700 hover:bg-green-200"
+                          : diff === "intermediate"
+                          ? "bg-amber-100 text-amber-700 hover:bg-amber-200"
+                          : "bg-red-100 text-red-700 hover:bg-red-200"
+                      )}
+                    >
+                      {difficultyLabels[diff]?.en || diff}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {filteredTerms.map((term) => (
+                    <Card key={term.id} className="overflow-hidden">
+                      <CardHeader className="pb-2">
+                        <div className="flex items-center justify-between">
+                          <CardTitle className="text-lg">{term.term}</CardTitle>
+                          <button
+                            onClick={() => toggleTermMastered(term.id)}
+                            className={cn(
+                              "p-1.5 rounded-full transition-colors",
+                              masteredTermsSet.has(term.id)
+                                ? "text-green-600"
+                                : "text-muted-foreground hover:text-green-600"
+                            )}
+                          >
+                            {masteredTermsSet.has(term.id) ? (
+                              <Check className="h-5 w-5" />
+                            ) : (
+                              <X className="h-5 w-5" />
+                            )}
+                          </button>
+                        </div>
+                        {term.termSpanish && (
+                          <p className="text-sm text-muted-foreground">{term.termSpanish}</p>
+                        )}
+                      </CardHeader>
+                      <CardContent>
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="text-xs text-muted-foreground font-mono bg-muted px-2 py-0.5 rounded">
+                            /{term.pronunciation}/
+                          </span>
+                          {isSupported && (
+                            <button
+                              onClick={() => {
+                                stop();
+                                speak(term.term, "en-US");
+                              }}
+                              className="p-1 rounded-full hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors"
+                            >
+                              {isSpeaking ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
+                            </button>
+                          )}
+                        </div>
+                        <p className="text-sm text-foreground">{term.definition}</p>
+                        {term.definitionSpanish && (
+                          <p className="text-xs text-muted-foreground mt-1 italic">
+                            {term.definitionSpanish}
+                          </p>
+                        )}
+                        <div className="flex gap-1.5 mt-3">
+                          <Badge variant="outline" className="text-[10px]">
+                            {categoryLabels[term.category]?.en || term.category}
+                          </Badge>
+                          <Badge
+                            variant={
+                              term.difficulty === "beginner"
+                                ? "default"
+                                : term.difficulty === "intermediate"
+                                ? "secondary"
+                                : "destructive"
+                            }
+                            className="text-[10px]"
+                          >
+                            {term.difficulty}
+                          </Badge>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </>
+            )}
+
+            {/* FLASHCARD MODE */}
+            {mode === "flashcard" && flashcardDeck.length > 0 && (
+              <div className="max-w-md mx-auto">
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-sm text-muted-foreground">
+                    Card {flashcardIndex + 1} of {flashcardDeck.length}
+                  </span>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => {
+                      setFlashcardDeck(shuffleArray(filteredTerms));
+                      setFlashcardIndex(0);
+                      setIsFlipped(false);
+                    }}
+                  >
+                    <RotateCcw className="h-4 w-4 mr-1" />
+                    Shuffle
+                  </Button>
+                </div>
+
+                <div
+                  className="relative w-full aspect-[3/4] cursor-pointer perspective-1000"
+                  onClick={() => setIsFlipped(!isFlipped)}
+                >
+                  <div
+                    className={cn(
+                      "absolute inset-0 transition-transform duration-500 transform-style-preserve-3d",
+                      isFlipped && "rotate-y-180"
+                    )}
+                  >
+                    {/* Front */}
+                    <div
+                      className={cn(
+                        "absolute inset-0 backface-hidden bg-card rounded-2xl border-2 border-border p-6 flex flex-col items-center justify-center text-center shadow-md",
+                        isFlipped && "invisible"
+                      )}
+                    >
+                      <ChefHat className="h-12 w-12 text-primary mb-4" />
+                      <h3 className="text-3xl font-bold text-foreground mb-2">
+                        {flashcardDeck[flashcardIndex].term}
+                      </h3>
+                      <p className="text-sm text-muted-foreground font-mono mb-4">
+                        /{flashcardDeck[flashcardIndex].pronunciation}/
+                      </p>
+                      {flashcardDeck[flashcardIndex].termSpanish && (
+                        <p className="text-muted-foreground">
+                          {flashcardDeck[flashcardIndex].termSpanish}
+                        </p>
+                      )}
+                      <p className="text-xs text-muted-foreground mt-6">Tap to reveal definition</p>
+                    </div>
+
+                    {/* Back */}
+                    <div
+                      className={cn(
+                        "absolute inset-0 backface-hidden bg-gradient-to-br from-primary/5 to-accent/5 rounded-2xl border-2 border-primary/20 p-6 flex flex-col items-center justify-center text-center shadow-md rotate-y-180",
+                        !isFlipped && "invisible"
+                      )}
+                    >
+                      <h3 className="text-xl font-bold text-foreground mb-4">
+                        {flashcardDeck[flashcardIndex].term}
+                      </h3>
+                      <p className="text-foreground mb-3">
+                        {flashcardDeck[flashcardIndex].definition}
+                      </p>
+                      {flashcardDeck[flashcardIndex].definitionSpanish && (
+                        <p className="text-sm text-muted-foreground italic">
+                          {flashcardDeck[flashcardIndex].definitionSpanish}
                         </p>
                       )}
                     </div>
-                  )}
-                </CardContent>
-              </Card>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between mt-6">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => {
+                      setFlashcardIndex((prev) => Math.max(0, prev - 1));
+                      setIsFlipped(false);
+                    }}
+                    disabled={flashcardIndex === 0}
+                  >
+                    ←
+                  </Button>
+                  <div className="flex gap-2">
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        setFlashcardIndex((prev) => Math.min(flashcardDeck.length - 1, prev + 1));
+                        setIsFlipped(false);
+                      }}
+                    >
+                      Still Learning
+                    </Button>
+                    <Button
+                      className="bg-green-600 hover:bg-green-700"
+                      onClick={() => {
+                        toggleTermMastered(flashcardDeck[flashcardIndex].id);
+                        setFlashcardIndex((prev) => Math.min(flashcardDeck.length - 1, prev + 1));
+                        setIsFlipped(false);
+                      }}
+                    >
+                      Got It!
+                    </Button>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => {
+                      setFlashcardIndex((prev) => Math.min(flashcardDeck.length - 1, prev + 1));
+                      setIsFlipped(false);
+                    }}
+                    disabled={flashcardIndex === flashcardDeck.length - 1}
+                  >
+                    →
+                  </Button>
+                </div>
+              </div>
             )}
 
-            {/* Navigation */}
-            <div className="flex justify-center gap-4 mb-8">
-              <Button variant="outline" onClick={prevCard}>
-                <ChevronLeft className="h-4 w-4 mr-2" />
-                Previous
-              </Button>
-              <Button variant="outline" onClick={resetCategory}>
-                <RotateCcw className="h-4 w-4 mr-2" />
-                Restart
-              </Button>
-              <Button onClick={nextCard}>
-                Next
-                <ChevronRight className="h-4 w-4 ml-2" />
-              </Button>
+            {/* CUTS MODE */}
+            {mode === "cuts" && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {knifeCuts.map((cut) => (
+                  <Card key={cut.id} className="overflow-hidden">
+                    <CardHeader className="pb-2">
+                      <div className="flex items-center justify-between">
+                        <CardTitle className="text-lg">
+                          🔪 {cut.name}
+                        </CardTitle>
+                        <button
+                          onClick={() => toggleCutMastered(cut.id)}
+                          className={cn(
+                            "p-1.5 rounded-full transition-colors",
+                            masteredCutsSet.has(cut.id)
+                              ? "text-green-600"
+                              : "text-muted-foreground hover:text-green-600"
+                          )}
+                        >
+                          {masteredCutsSet.has(cut.id) ? (
+                            <Check className="h-5 w-5" />
+                          ) : (
+                            <X className="h-5 w-5" />
+                          )}
+                        </button>
+                      </div>
+                      {cut.nameSpanish && (
+                        <p className="text-sm text-muted-foreground">{cut.nameSpanish}</p>
+                      )}
+                    </CardHeader>
+                    <CardContent>
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="text-xs text-muted-foreground font-mono bg-muted px-2 py-0.5 rounded">
+                          /{cut.pronunciation}/
+                        </span>
+                        {isSupported && (
+                          <button
+                            onClick={() => {
+                              stop();
+                              speak(cut.name, "en-US");
+                            }}
+                            className="p-1 rounded-full hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors"
+                          >
+                            <Volume2 className="h-4 w-4" />
+                          </button>
+                        )}
+                      </div>
+                      <p className="text-sm text-foreground mb-1">{cut.description}</p>
+                      {cut.descriptionSpanish && (
+                        <p className="text-xs text-muted-foreground italic mb-2">
+                          {cut.descriptionSpanish}
+                        </p>
+                      )}
+                      <p className="text-xs text-muted-foreground">
+                        <span className="font-medium">Size:</span> {cut.size}
+                      </p>
+                      <div className="flex flex-wrap gap-1 mt-2">
+                        {cut.usedFor.map((use) => (
+                          <Badge key={use} variant="outline" className="text-[10px]">
+                            {use}
+                          </Badge>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            )}
+
+            {/* SAFETY QUIZ MODE */}
+            {mode === "safety" && (
+              <div className="max-w-lg mx-auto">
+                {safetyComplete ? (
+                  <Card className="text-center">
+                    <CardHeader>
+                      <ShieldCheck className="h-16 w-16 mx-auto text-green-600 mb-2" />
+                      <CardTitle className="text-2xl">
+                        Food Safety Quiz Complete!
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-5xl font-bold mb-2">
+                        {safetyScore}/{safetyQuestions.length}
+                      </p>
+                      <p className="text-muted-foreground mb-4">
+                        {safetyScore >= safetyQuestions.length * 0.8
+                          ? "🎉 Excellent! You know your food safety!"
+                          : safetyScore >= safetyQuestions.length * 0.5
+                          ? "👍 Good foundation! Keep studying."
+                          : "📚 Review food safety guidelines and try again."}
+                      </p>
+                      <p className="text-sm text-muted-foreground mb-4">
+                        Best score: {progress.safetyScore}/{foodSafetyQuestions.length} &bull;
+                        Attempts: {progress.safetyAttempts}
+                      </p>
+                      <Button onClick={() => setMode("safety")}>
+                        <RotateCcw className="h-4 w-4 mr-2" />
+                        Try Again
+                      </Button>
+                    </CardContent>
+                  </Card>
+                ) : safetyQuestions.length > 0 ? (
+                  <>
+                    <Card className="mb-4">
+                      <CardContent className="pt-6">
+                        <div className="flex justify-between text-sm mb-2">
+                          <span>
+                            Question {safetyIndex + 1} of {safetyQuestions.length}
+                          </span>
+                          <Badge variant="secondary">Score: {safetyScore}</Badge>
+                        </div>
+                        <Progress
+                          value={((safetyIndex + 1) / safetyQuestions.length) * 100}
+                          className="h-2"
+                        />
+                      </CardContent>
+                    </Card>
+
+                    <Card>
+                      <CardHeader>
+                        <Badge variant="outline" className="w-fit mb-2">
+                          {safetyCategoryLabels[safetyQuestions[safetyIndex].category]?.en ||
+                            safetyQuestions[safetyIndex].category}
+                        </Badge>
+                        <CardTitle className="text-lg">
+                          {safetyQuestions[safetyIndex].question}
+                        </CardTitle>
+                        {safetyQuestions[safetyIndex].questionSpanish && (
+                          <p className="text-sm text-muted-foreground italic">
+                            {safetyQuestions[safetyIndex].questionSpanish}
+                          </p>
+                        )}
+                      </CardHeader>
+                      <CardContent>
+                        <div className="space-y-3">
+                          {safetyQuestions[safetyIndex].options.map((option, i) => {
+                            let btnClass = "w-full justify-start text-left p-4 h-auto";
+                            if (safetyShowResult) {
+                              if (option === safetyQuestions[safetyIndex].correctAnswer) {
+                                btnClass +=
+                                  " bg-green-100 dark:bg-green-950 border-green-500";
+                              } else if (option === safetySelected) {
+                                btnClass += " bg-red-100 dark:bg-red-950 border-red-500";
+                              }
+                            }
+                            return (
+                              <Button
+                                key={i}
+                                variant="outline"
+                                className={btnClass}
+                                onClick={() => handleSafetyAnswer(option)}
+                                disabled={safetyShowResult}
+                              >
+                                <span className="flex flex-col items-start gap-0.5">
+                                  <span>{option}</span>
+                                  {safetyQuestions[safetyIndex].optionsSpanish?.[i] && (
+                                    <span className="text-xs text-muted-foreground italic">
+                                      {safetyQuestions[safetyIndex].optionsSpanish![i]}
+                                    </span>
+                                  )}
+                                </span>
+                              </Button>
+                            );
+                          })}
+                        </div>
+
+                        {safetyShowResult && (
+                          <div className="mt-4">
+                            <div className="bg-muted p-4 rounded-lg mb-3">
+                              <p className="text-sm">
+                                <strong>Explanation:</strong>{" "}
+                                {safetyQuestions[safetyIndex].explanation}
+                              </p>
+                              {safetyQuestions[safetyIndex].explanationSpanish && (
+                                <p className="text-xs text-muted-foreground mt-1 italic">
+                                  {safetyQuestions[safetyIndex].explanationSpanish}
+                                </p>
+                              )}
+                            </div>
+                            <Button onClick={nextSafetyQuestion} className="w-full">
+                              {safetyIndex < safetyQuestions.length - 1
+                                ? "Next Question"
+                                : "See Results"}
+                            </Button>
+                          </div>
+                        )}
+                      </CardContent>
+                    </Card>
+                  </>
+                ) : null}
+              </div>
+            )}
+
+            <div className="mt-12">
+              <FAQSection faqs={faqs} />
             </div>
-
-            {/* Tips */}
-            <Card className="mb-8">
-              <CardHeader>
-                <CardTitle>Learning Tips</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-2 text-muted-foreground">
-                  <li>• Try to recall the definition before flipping the card</li>
-                  <li>• Say the term out loud to practice pronunciation</li>
-                  <li>• Use terms in context when describing dishes</li>
-                  <li>• Review regularly - spaced repetition helps retention</li>
-                </ul>
-              </CardContent>
-            </Card>
-
-            <FAQSection faqs={faqs} />
           </div>
 
-          {/* Sidebar */}
           <aside className="lg:w-80">
             <RelatedToolsSidebar currentPath="/career-hub/tools/menu-master" />
           </aside>
@@ -246,7 +703,21 @@ export default function MenuMasterClient() {
       </div>
 
       <CTASection />
+
+      <style jsx>{`
+        .perspective-1000 {
+          perspective: 1000px;
+        }
+        .transform-style-preserve-3d {
+          transform-style: preserve-3d;
+        }
+        .backface-hidden {
+          backface-visibility: hidden;
+        }
+        .rotate-y-180 {
+          transform: rotateY(180deg);
+        }
+      `}</style>
     </div>
   );
 }
-

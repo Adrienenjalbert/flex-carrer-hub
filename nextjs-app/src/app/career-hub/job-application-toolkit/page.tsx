@@ -12,8 +12,6 @@ import {
   Target, 
   CheckCircle, 
   ArrowRight,
-  Star,
-  BookOpen,
   Wrench,
   MessageSquare
 } from "lucide-react";

@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { generateToolMetadata } from "@/lib/seo/metadata";
 import CostOfLivingClient from "./CostOfLivingClient";
 import CTASection from "@/components/career-hub/CTASection";
 import { SoftwareApplicationSchema, FAQSchema } from "@/components/career-hub/seo";
@@ -10,10 +11,10 @@ const toolName = "Cost of Living Comparison";
 const toolDescription = "Compare cost of living between US cities. See how far your money goes in different locations and make informed decisions about relocation for work.";
 const canonical = "https://indeedflex.com/career-hub/tools/cost-of-living";
 
-export const metadata: Metadata = {
-  title: "Cost of Living Comparison | Compare US Cities | Indeed Flex",
-  description:
-    "Compare cost of living between US cities. See how far your money goes in different locations and make informed decisions about relocation for work.",
+export const metadata: Metadata = generateToolMetadata({
+  name: toolName,
+  slug: "cost-of-living",
+  description: toolDescription,
   keywords: [
     "cost of living",
     "city comparison",
@@ -24,22 +25,7 @@ export const metadata: Metadata = {
     "cost of living index",
     "moving calculator",
   ],
-  alternates: {
-    canonical,
-  },
-  openGraph: {
-    title: "Cost of Living Comparison | Compare US Cities",
-    description: "Compare cost of living across US cities. Make informed relocation decisions.",
-    url: canonical,
-    type: "website",
-    siteName: "Indeed Flex Career Hub",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Cost of Living Comparison",
-    description: "Compare cost of living across US cities.",
-  },
-};
+});
 
 const costFAQs = [
   {
@@ -68,7 +54,6 @@ export default function CostOfLivingPage() {
         description={toolDescription}
         url={canonical}
         applicationCategory="FinanceApplication"
-        aggregateRating={{ ratingValue: 4.7, ratingCount: 2134 }}
         featureList={["City Comparison", "Cost Breakdown", "Salary Adjustment"]}
       />
       <FAQSchema questions={costFAQs} />

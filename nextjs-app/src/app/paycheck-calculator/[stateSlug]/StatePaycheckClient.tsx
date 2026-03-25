@@ -4,8 +4,8 @@ import { useState, useMemo, Suspense, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { 
-  Calculator, DollarSign, ChevronRight, HelpCircle, Share2, 
-  TrendingUp, ArrowRight, Check, Info, MapPin, Briefcase
+  DollarSign, ChevronRight, HelpCircle, Share2, 
+  TrendingUp, Check, Info, MapPin, Briefcase
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -16,12 +16,8 @@ import { Switch } from "@/components/ui/switch";
 import { Progress } from "@/components/ui/progress";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { 
-  FAQSchema, 
-  WebPageSchema, 
-  BreadcrumbSchema, 
-  SoftwareApplicationSchema 
-} from "@/components/career-hub/seo";
+
+
 import { 
   calculatorRolePresets, 
   commonWhatIfScenarios,
@@ -279,34 +275,6 @@ function StatePaycheckInner({ stateCode, stateName }: StatePaycheckInnerProps) {
 
   return (
     <>
-      {/* Schema Markup */}
-      <WebPageSchema
-        name={`${stateName} Paycheck Calculator 2026`}
-        description={`Calculate your take-home pay in ${stateName}. Free paycheck calculator with ${stateName} tax rates, minimum wage info, and deduction estimates.`}
-        url={`https://indeedflex.com/paycheck-calculator/${stateCode.toLowerCase()}`}
-        breadcrumb={[
-          { name: "Career Hub", url: "https://indeedflex.com/career-hub" },
-          { name: "Tools", url: "https://indeedflex.com/career-hub/tools" },
-          { name: `${stateName} Calculator` },
-        ]}
-      />
-      <FAQSchema questions={stateFaqs} />
-      <BreadcrumbSchema
-        items={[
-          { name: "Career Hub", url: "https://indeedflex.com/career-hub" },
-          { name: "Tools", url: "https://indeedflex.com/career-hub/tools" },
-          { name: `${stateName} Calculator` },
-        ]}
-      />
-      <SoftwareApplicationSchema
-        name={`${stateName} Paycheck Calculator`}
-        description={`Free ${stateName} paycheck calculator for hourly workers`}
-        url={`https://indeedflex.com/paycheck-calculator/${stateCode.toLowerCase()}`}
-        applicationCategory="FinanceApplication"
-        operatingSystem="Web"
-        offers={{ price: 0, priceCurrency: "USD" }}
-      />
-
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-6xl mx-auto">
           {/* Breadcrumb */}

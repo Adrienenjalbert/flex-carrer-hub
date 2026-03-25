@@ -8,7 +8,6 @@ import {
   TrendingUp,
   Clock,
   Users,
-  Briefcase,
   CheckCircle2,
   ArrowRight,
   Star,
@@ -19,10 +18,11 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { roles } from "@/lib/data/roles";
 import { cities } from "@/lib/data/cities";
-import { getSeasonBySlug } from "@/lib/data/seasonal-hiring";
 import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
 import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
 import { BreadcrumbSchema, FAQSchema } from "@/components/career-hub/seo";
+
+const canonical = "https://indeedflex.com/career-hub/summer-jobs-2026";
 
 export const metadata: Metadata = {
   title: "Summer Jobs 2026 | Find Flexible Summer Work | Indeed Flex",
@@ -39,16 +39,24 @@ export const metadata: Metadata = {
     "college summer jobs",
     "summer temp work"
   ],
+  alternates: {
+    canonical,
+  },
   openGraph: {
     title: "Summer Jobs 2026 | Indeed Flex",
     description: "Find flexible summer work in hospitality, events, warehouse, and retail. Perfect for students and those seeking seasonal income.",
+    url: canonical,
     type: "website",
+    siteName: "Indeed Flex Career Hub",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Summer Jobs 2026 | Indeed Flex",
+    description: "Find flexible summer work in hospitality, events, warehouse, and retail.",
   },
 };
 
 export default function SummerJobs2026Page() {
-  const summerSeason = getSeasonBySlug("summer-2026");
-  
   // Summer-focused roles
   const summerRoles = roles.filter(role => 
     ["hospitality", "events", "retail"].includes(role.industry)
@@ -381,7 +389,7 @@ export default function SummerJobs2026Page() {
               Start Your Summer Job Search Today
             </h2>
             <p className="text-lg text-white/90 mb-6 max-w-2xl mx-auto">
-              Don't wait until summer arrives. Apply now for the best selection of shifts, 
+              Don&apos;t wait until summer arrives. Apply now for the best selection of shifts, 
               locations, and opportunities. Your summer earnings are waiting.
             </p>
             <div className="flex flex-wrap gap-4 justify-center">

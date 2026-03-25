@@ -6,7 +6,35 @@ This document defines the required elements and structure for all pages in the C
 
 ### 1. Metadata (All Pages)
 
-Every page MUST have complete metadata in the `generateMetadata` function or `metadata` export:
+Every page MUST use metadata helpers from `src/lib/seo/metadata.ts`:
+
+```typescript
+// Dynamic pages
+import { generateCityMetadata } from "@/lib/seo/metadata";
+export async function generateMetadata({ params }) {
+  return generateCityMetadata({ name, slug, state });
+}
+
+// Static pages
+import { generateToolMetadata } from "@/lib/seo/metadata";
+export const metadata: Metadata = generateToolMetadata({ name, slug, description, keywords });
+```
+
+Available helpers: `generateRoleMetadata`, `generateCityMetadata`, `generateSalaryMetadata`, `generateGuideMetadata`, `generateToolMetadata`, `generateLocationMetadata`, `generateStateTaxMetadata`.
+
+For custom metadata, use `generateSEOMetadata()` directly:
+
+```typescript
+export const metadata: Metadata = generateSEOMetadata({
+  title: "Page Title", // "| Indeed Flex" appended automatically
+  description: "Compelling description. 150-160 chars.",
+  canonical: "https://indeedflex.com/career-hub/page-slug",
+  keywords: ["keyword1", "keyword2"],
+  // OG, Twitter, robots handled automatically
+});
+```
+
+Legacy hand-rolled metadata pattern (avoid in new pages):
 
 ```typescript
 export const metadata: Metadata = {

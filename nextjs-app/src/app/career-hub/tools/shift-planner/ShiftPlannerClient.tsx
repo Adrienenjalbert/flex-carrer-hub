@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import Link from "next/link";
+import { useState, useMemo, useEffect } from "react";
 import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,37 +8,33 @@ import { Slider } from "@/components/ui/slider";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import {
-  TrendingUp,
-  DollarSign,
   Clock,
-  Calendar,
-  Target,
-  Zap,
   Sun,
   Moon,
   Sparkles,
-  CheckCircle2,
-  Info,
 } from "lucide-react";
 import CTASection from "@/components/career-hub/CTASection";
 import ToolDisclaimer from "@/components/career-hub/ToolDisclaimer";
 import RelatedToolsSidebar from "@/components/career-hub/RelatedToolsSidebar";
 import FAQSection from "@/components/career-hub/FAQSection";
 import { roles } from "@/lib/data/roles";
+
+const STORAGE_KEY = "shift-planner-inputs";
+
+function loadSavedInputs() {
+  if (typeof window === "undefined") return null;
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    return saved ? JSON.parse(saved) : null;
+  } catch {
+    return null;
+  }
+}
 
 // Tip patterns by day and shift type
 const TIP_PATTERNS = {
@@ -93,11 +88,25 @@ const faqs = [
 ];
 
 export default function ShiftPlannerClient() {
-  const [hourlyRate, setHourlyRate] = useState<string>("15");
-  const [hoursPerShift, setHoursPerShift] = useState<number[]>([6]);
-  const [shiftsPerWeek, setShiftsPerWeek] = useState<number[]>([4]);
-  const [expectedTips, setExpectedTips] = useState<string>("50");
-  const [industry, setIndustry] = useState<string>("hospitality");
+  const saved = useMemo(() => loadSavedInputs(), []);
+  const [hourlyRate, setHourlyRate] = useState<string>(saved?.hourlyRate ?? "15");
+  const [hoursPerShift, setHoursPerShift] = useState<number[]>([saved?.hoursPerShift ?? 6]);
+  const [shiftsPerWeek, setShiftsPerWeek] = useState<number[]>([saved?.shiftsPerWeek ?? 4]);
+  const [expectedTips, setExpectedTips] = useState<string>(saved?.expectedTips ?? "50");
+  const [industry, setIndustry] = useState<string>(saved?.industry ?? "hospitality");
+
+  useEffect(() => {
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({
+        hourlyRate,
+        hoursPerShift: hoursPerShift[0],
+        shiftsPerWeek: shiftsPerWeek[0],
+        expectedTips,
+        industry,
+      })
+    );
+  }, [hourlyRate, hoursPerShift, shiftsPerWeek, expectedTips, industry]);
 
   const calculations = useMemo(() => {
     const rate = parseFloat(hourlyRate) || 0;
@@ -122,13 +131,14 @@ export default function ShiftPlannerClient() {
     };
   }, [hourlyRate, hoursPerShift, shiftsPerWeek, expectedTips]);
 
-  const tipRoles = roles.filter((r) => r.industry === "hospitality");
+  const _tipRoles = roles.filter((r) => r.industry === "hospitality");
 
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8">
         <Breadcrumbs
           items={[
+            { label: "Career Hub", href: "/career-hub" },
             { label: "Tools", href: "/career-hub/tools" },
             { label: "Shift Income Planner" },
           ]}
@@ -268,19 +278,23 @@ export default function ShiftPlannerClient() {
               </Card>
             </div>
 
-            {/* Tip Insights */}
-            {industry === "hospitality" && (
-              <Card className="mb-8">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Sparkles className="h-5 w-5 text-yellow-500" />
-                    Maximize Your Tips
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground mb-4">
-                    {TIP_PATTERNS.hospitality.description}
-                  </p>
+            {/* Industry-Specific Insights */}
+            <Card className="mb-8">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Sparkles className="h-5 w-5 text-yellow-500" />
+                  {industry === "hospitality"
+                    ? "Maximize Your Tips"
+                    : industry === "industrial"
+                    ? "Shift Premium Insights"
+                    : "Best Shifts for Retail"}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground mb-4">
+                  {TIP_PATTERNS[industry as keyof typeof TIP_PATTERNS].description}
+                </p>
+                {industry === "hospitality" && (
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                     <div className="flex items-center gap-2 text-sm">
                       <Moon className="h-4 w-4 text-primary" />
@@ -295,11 +309,43 @@ export default function ShiftPlannerClient() {
                       <span>Weekday lunch: -30% tips</span>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
-            )}
+                )}
+                {industry === "industrial" && (
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="flex items-center gap-2 text-sm">
+                      <Moon className="h-4 w-4 text-primary" />
+                      <span>Night shift: +15% premium</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm">
+                      <Sun className="h-4 w-4 text-yellow-500" />
+                      <span>Weekend night: +25% premium</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm">
+                      <Clock className="h-4 w-4 text-muted-foreground" />
+                      <span>Weekend day: +10% premium</span>
+                    </div>
+                  </div>
+                )}
+                {industry === "retail" && (
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="flex items-center gap-2 text-sm">
+                      <Sun className="h-4 w-4 text-yellow-500" />
+                      <span>Weekend day: +20% busier</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm">
+                      <Moon className="h-4 w-4 text-primary" />
+                      <span>Weekend evening: +10% busier</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm">
+                      <Clock className="h-4 w-4 text-muted-foreground" />
+                      <span>Weekday day: -10% slower</span>
+                    </div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
 
-            <FAQSection faqs={faqs} />
+            <FAQSection faqs={faqs} suppressSchema />
 
             <ToolDisclaimer
               type="planning"

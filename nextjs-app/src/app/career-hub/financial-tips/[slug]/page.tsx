@@ -3,8 +3,8 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
 import CTASection from "@/components/career-hub/CTASection";
+import InlineCTA from "@/components/career-hub/InlineCTA";
 import MarkdownContent from "@/components/career-hub/MarkdownContent";
-import FAQSection from "@/components/career-hub/FAQSection";
 import { financialArticles } from "@/lib/data/articles/financial-tips";
 import { ArticleSchema, FAQSchema, BreadcrumbSchema } from "@/components/career-hub/seo";
 import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
@@ -17,7 +17,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 // Generate static params for all financial articles
 export function generateStaticParams() {
@@ -97,8 +96,8 @@ export default async function FinancialTipsArticlePage({
           logo: "https://indeedflex.com/logo.png",
           url: "https://indeedflex.com",
         }}
-        datePublished="2024-01-15T00:00:00Z"
-        dateModified={new Date().toISOString()}
+        datePublished={new Date(article.lastReviewed ?? article.dateModified ?? '2024-01-15').toISOString()}
+        dateModified={new Date(article.dateModified ?? article.lastReviewed ?? '2024-01-15').toISOString()}
         mainEntityOfPage={`https://indeedflex.com/career-hub/financial-tips/${article.slug}`}
         articleSection="Financial Tips"
       />
@@ -191,6 +190,16 @@ export default async function FinancialTipsArticlePage({
             </div>
           </div>
         </section>
+
+        {/* Mid-Content CTA */}
+        <div className="container mx-auto px-4 max-w-3xl">
+          <InlineCTA
+            title="Start earning on your own terms"
+            subtitle="Find flexible shifts that fit your financial goals"
+            href="https://indeedflex.onelink.me/4jvh/x7l4jms3"
+            variant="app"
+          />
+        </div>
 
         {/* FAQs */}
         {article.faqs.length > 0 && (

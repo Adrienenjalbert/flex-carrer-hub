@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import Link from "next/link";
 import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -19,15 +18,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import {
-  Award,
-  DollarSign,
-  TrendingUp,
-  Clock,
-  CheckCircle2,
-  Calculator,
-} from "lucide-react";
+import { Award, Calculator } from "lucide-react";
 import CTASection from "@/components/career-hub/CTASection";
 import FAQSection from "@/components/career-hub/FAQSection";
 import ToolDisclaimer from "@/components/career-hub/ToolDisclaimer";
@@ -64,7 +55,6 @@ export default function CertificationROIClient() {
     if (!cert) return null;
 
     const hours = parseFloat(hoursPerWeek) || 0;
-    const rate = parseFloat(currentRate) || 0;
 
     // Estimate cost from first provider
     const costString = cert.providers[0]?.cost || "$0";
@@ -96,13 +86,14 @@ export default function CertificationROIClient() {
       fiveYearReturn,
       roiPercentage,
     };
-  }, [selectedCert, hoursPerWeek, currentRate]);
+  }, [selectedCert, hoursPerWeek]);
 
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8">
         <Breadcrumbs
           items={[
+            { label: "Career Hub", href: "/career-hub" },
             { label: "Tools", href: "/career-hub/tools" },
             { label: "Certification ROI" },
           ]}

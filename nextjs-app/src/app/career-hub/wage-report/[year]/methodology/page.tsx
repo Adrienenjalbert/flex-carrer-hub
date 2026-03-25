@@ -52,7 +52,7 @@ export default async function MethodologyPage({ params }: MethodologyPageProps) 
   }
 
   const breadcrumbs = [
-    { label: "Home", href: "/" },
+    { label: "Career Hub", href: "/career-hub" },
     { label: "Wage Report", href: "/career-hub/wage-report" },
     { label: year, href: `/career-hub/wage-report/${year}` },
     { label: "Methodology", href: `/career-hub/wage-report/${year}/methodology` },

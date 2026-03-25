@@ -2,8 +2,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { ArrowRight, MapPin, DollarSign, TrendingUp } from "lucide-react";
+import { ArrowRight, MapPin, TrendingUp } from "lucide-react";
 import { wageReport2026 } from "@/lib/data/wage-report/2026-data";
 import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
 import { BreadcrumbSchema } from "@/components/career-hub/seo";
@@ -55,7 +54,7 @@ export default async function ByRegionPage({ params }: ByRegionPageProps) {
   }
 
   const breadcrumbs = [
-    { label: "Home", href: "/" },
+    { label: "Career Hub", href: "/career-hub" },
     { label: "Wage Report", href: "/career-hub/wage-report" },
     { label: year, href: `/career-hub/wage-report/${year}` },
     { label: "By Region" },

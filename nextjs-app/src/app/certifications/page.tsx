@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import { ChevronRight, Award, Clock, DollarSign, BookOpen, ArrowRight, BadgeCheck, Utensils, Package } from "lucide-react";
+import { Award, Clock, DollarSign, BookOpen, ArrowRight, BadgeCheck, Utensils, Package } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { certifications, getHospitalityCertifications, getWarehouseCertifications, getUniversalCertifications } from "@/lib/data/certifications";
@@ -95,6 +95,7 @@ export default function CertificationsPage() {
       <div className="container mx-auto px-4 py-4">
         <Breadcrumbs
           items={[
+            { label: "Career Hub", href: "/career-hub" },
             { label: "Certifications" },
           ]}
         />
@@ -102,7 +103,7 @@ export default function CertificationsPage() {
       <PageHero
         title="Career Certifications for Flex Workers"
         description="Boost your hourly rate and unlock more shift opportunities with industry-recognized certifications. Most can be completed in a single day."
-        badge={`Updated ${new Date().getFullYear()}`}
+        badge="Updated 2026"
         stats={[
           { value: certifications.length.toString(), label: "Certifications" },
           { value: "+$5-10/hr", label: "Best ROI" },

@@ -7,8 +7,7 @@ import { howToBecomeGuides } from "@/lib/data/how-to-become";
 import { interviewGuides } from "@/lib/data/interview-questions";
 import { stateUnemploymentData } from "@/lib/data/unemployment-benefits";
 import { certifications } from "@/lib/data/certifications";
-import { getCitiesWithEmployerData } from "@/lib/data/local-employers";
-import { getCitiesWithNeighborhoodData } from "@/lib/data/city-neighborhoods";
+import { getHighValueCitySlugs } from "@/lib/data/cities";
 import { resumeTemplates } from "@/lib/data/resume-templates";
 import { coverLetterTemplates } from "@/lib/data/cover-letter-templates";
 import { resumeExamples } from "@/lib/data/resume-examples";
@@ -20,7 +19,6 @@ import { allGuideArticles } from "@/lib/data/articles/guides";
 import { financialArticles } from "@/lib/data/articles/financial-tips";
 import { careerEvaluations } from "@/lib/data/career-evaluations";
 import { salaryByLocation } from "@/lib/data/salary-by-location";
-import { payBrackets } from "@/lib/data/jobs-by-pay";
 
 const BASE_URL = "https://indeedflex.com";
 
@@ -169,6 +167,12 @@ function generateCoreSitemap(now: Date): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.8,
     },
+    ...["hospitality", "industrial", "retail", "facilities"].map((id) => ({
+      url: `${BASE_URL}/career-hub/industries/${id}`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    })),
     {
       url: `${BASE_URL}/career-hub/wage-report`,
       lastModified: now,
@@ -209,16 +213,8 @@ function generateCitiesSitemap(now: Date): MetadataRoute.Sitemap {
 
 // City + Role combination pages sitemap
 function generateCityRolesSitemap(now: Date): MetadataRoute.Sitemap {
-  // Only include cities with enriched local data
-  const citiesWithData = new Set([
-    ...getCitiesWithEmployerData(),
-    ...getCitiesWithNeighborhoodData(),
-  ]);
-
-  // High-value cities with search volume or local data
-  const highValueCities = cities.filter(
-    (c) => c.searchVolume === "high" || citiesWithData.has(c.slug)
-  );
+  const highValueSlugs = getHighValueCitySlugs();
+  const highValueCities = cities.filter(c => highValueSlugs.has(c.slug));
 
   return highValueCities.flatMap((city) =>
     roles.map((role) => ({
@@ -244,18 +240,14 @@ function generateToolsSitemap(now: Date): MetadataRoute.Sitemap {
     "worktalk",
     "safety-first",
     "career-path",
-    "interview-prep",
     "cocktail-quiz",
     "menu-master",
-    "side-hustle",
-    "certification-finder",
-    "job-search-checklist",
-    "resume-builder",
     "childcare-calculator",
     "certification-roi",
     "job-offer-analyzer",
     "skills-analyzer",
     "data-verification",
+    "w2-vs-1099",
   ];
 
   // Role intent pages for paycheck calculator
@@ -277,12 +269,6 @@ function generateToolsSitemap(now: Date): MetadataRoute.Sitemap {
   }));
 
   return [
-    {
-      url: `${BASE_URL}/career-hub/tools`,
-      lastModified: now,
-      changeFrequency: "weekly" as const,
-      priority: 0.9,
-    },
     // Canonical calculator tools (highest priority)
     ...canonicalTools.map((tool) => ({
       url: `${BASE_URL}/career-hub/tools/${tool}`,

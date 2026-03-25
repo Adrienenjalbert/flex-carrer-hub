@@ -7,9 +7,7 @@ const nextConfig = {
   eslint: {
     // Only run ESLint on these directories during production build
     dirs: ['src/app', 'src/components', 'src/lib'],
-    // Allow production builds to complete with warnings (unused imports)
-    // Run `npm run lint` separately to check for issues
-    ignoreDuringBuilds: true,
+    ignoreDuringBuilds: false,
   },
 
   // TypeScript configuration

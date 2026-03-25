@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { MapPin } from "lucide-react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { MapPin, DollarSign, TrendingDown, TrendingUp, Minus } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { cities, getUniqueStates, getUniqueRegions, type City } from "@/lib/data/cities";
+import { cities, getUniqueStates, getUniqueRegions } from "@/lib/data/cities";
 
 export default function CitiesClient() {
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
@@ -69,33 +69,41 @@ export default function CitiesClient() {
         </h2>
         {filteredMajorCities.length > 0 ? (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filteredMajorCities.slice(0, 12).map((city) => (
-              <Link key={city.slug} href={`/career-hub/cities/${city.slug}`}>
-                <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer">
-                  <CardHeader className="pb-2">
-                    <div className="flex items-center gap-2">
-                      <MapPin className="h-5 w-5 text-primary" />
-                      <CardTitle className="text-lg">{city.city}</CardTitle>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription>
-                      {city.city}, {city.state}
-                    </CardDescription>
-                    {city.population && (
-                      <p className="text-xs text-muted-foreground mt-1">
-                        Pop:{" "}
-                        {(
-                          parseInt(city.population.replace(/,/g, ""), 10) /
-                          1000000
-                        ).toFixed(1)}
-                        M
-                      </p>
-                    )}
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
+            {filteredMajorCities.slice(0, 12).map((city) => {
+              const ColIcon = city.costOfLiving.index > 100 ? TrendingUp : city.costOfLiving.index < 100 ? TrendingDown : Minus;
+              return (
+                <Link key={city.slug} href={`/career-hub/cities/${city.slug}`}>
+                  <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer">
+                    <CardHeader className="pb-2">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <MapPin className="h-5 w-5 text-primary" />
+                          <CardTitle className="text-lg">{city.city}</CardTitle>
+                        </div>
+                        <Badge variant="outline" className="text-xs">
+                          {city.stateCode}
+                        </Badge>
+                      </div>
+                    </CardHeader>
+                    <CardContent className="space-y-2">
+                      <div className="flex items-center gap-1.5 text-sm">
+                        <DollarSign className="h-3.5 w-3.5 text-primary" />
+                        <span className="font-semibold text-primary">
+                          ${city.avgHourlyWage.min}–${city.avgHourlyWage.max}/hr
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between text-xs text-muted-foreground">
+                        <div className="flex items-center gap-1">
+                          <ColIcon className={`h-3 w-3 ${city.costOfLiving.index > 100 ? 'text-red-500' : city.costOfLiving.index < 100 ? 'text-green-500' : ''}`} />
+                          <span>COL: {city.costOfLiving.index}</span>
+                        </div>
+                        <span>{city.topIndustries[0]}</span>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Link>
+              );
+            })}
           </div>
         ) : (
           <p className="text-muted-foreground">
@@ -106,8 +114,8 @@ export default function CitiesClient() {
 
       {/* Cities by State */}
       <section>
-        <h2 className="text-2xl font-semibold mb-6">Browse by State</h2>
-        <div className="grid md:grid-cols-4 gap-4">
+        <h2 className="text-2xl font-semibold mb-6">Browse Temp Jobs by State</h2>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {states.map((state) => {
             const stateCities = cities.filter(
               (c) =>
@@ -116,22 +124,25 @@ export default function CitiesClient() {
             );
             if (stateCities.length === 0) return null;
             return (
-              <div key={state.code} className="p-4 border rounded-lg">
-                <h3 className="font-medium mb-2">{state.name}</h3>
-                <ul className="text-sm space-y-1">
+              <div key={state.code} className="p-4 border rounded-lg hover:border-primary/30 transition-colors">
+                <div className="flex items-center justify-between mb-2">
+                  <h3 className="font-semibold">{state.name}</h3>
+                  <Badge variant="secondary" className="text-xs">{stateCities.length}</Badge>
+                </div>
+                <ul className="space-y-1.5">
                   {stateCities.slice(0, 5).map((city) => (
                     <li key={city.slug}>
                       <Link
                         href={`/career-hub/cities/${city.slug}`}
-                        className="text-muted-foreground hover:text-primary"
+                        className="text-sm text-muted-foreground hover:text-primary transition-colors"
                       >
                         {city.city}
                       </Link>
                     </li>
                   ))}
                   {stateCities.length > 5 && (
-                    <li className="text-muted-foreground">
-                      +{stateCities.length - 5} more
+                    <li className="text-xs text-muted-foreground/70">
+                      +{stateCities.length - 5} more cities
                     </li>
                   )}
                 </ul>

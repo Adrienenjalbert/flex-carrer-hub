@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
 import { Button } from "@/components/ui/button";
@@ -15,7 +15,6 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import {
   Target,
-  CheckCircle2,
   Star,
   ArrowRight,
   Sparkles,
@@ -87,11 +86,36 @@ const skillCategories = [
   },
 ];
 
+const SA_STORAGE_KEY = "skills-analyzer-results";
+
+function loadSavedResults() {
+  if (typeof window === "undefined") return null;
+  try {
+    const saved = localStorage.getItem(SA_STORAGE_KEY);
+    return saved ? JSON.parse(saved) : null;
+  } catch {
+    return null;
+  }
+}
+
 export default function SkillsAnalyzerClient() {
+  const [_hasSavedResults] = useState(() => !!loadSavedResults());
   const [currentCategory, setCurrentCategory] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [answers, setAnswers] = useState<Record<string, number[]>>({});
-  const [isComplete, setIsComplete] = useState(false);
+  const [answers, setAnswers] = useState<Record<string, number[]>>(() => {
+    const saved = loadSavedResults();
+    return saved?.answers ?? {};
+  });
+  const [isComplete, setIsComplete] = useState(() => {
+    const saved = loadSavedResults();
+    return saved?.isComplete ?? false;
+  });
+
+  useEffect(() => {
+    if (isComplete) {
+      localStorage.setItem(SA_STORAGE_KEY, JSON.stringify({ answers, isComplete }));
+    }
+  }, [answers, isComplete]);
 
   const handleAnswer = (score: number) => {
     const category = skillCategories[currentCategory];
@@ -152,6 +176,7 @@ export default function SkillsAnalyzerClient() {
     setCurrentQuestion(0);
     setAnswers({});
     setIsComplete(false);
+    localStorage.removeItem(SA_STORAGE_KEY);
   };
 
   const totalQuestions = skillCategories.reduce(
@@ -166,6 +191,7 @@ export default function SkillsAnalyzerClient() {
       <div className="container mx-auto px-4 py-8">
         <Breadcrumbs
           items={[
+            { label: "Career Hub", href: "/career-hub" },
             { label: "Tools", href: "/career-hub/tools" },
             { label: "Career Change Skills Quiz" },
           ]}

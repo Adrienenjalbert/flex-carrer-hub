@@ -2,16 +2,17 @@ import { Metadata } from "next";
 import Link from "next/link";
 import HeroSection from "@/components/career-hub/HeroSection";
 import IndustryCard from "@/components/career-hub/IndustryCard";
-import ToolCard from "@/components/career-hub/ToolCard";
 import CTASection from "@/components/career-hub/CTASection";
 import FAQSection from "@/components/career-hub/FAQSection";
 import GuidesCategorySection from "@/components/career-hub/GuidesCategorySection";
 import FinancialTipsSection from "@/components/career-hub/FinancialTipsSection";
 import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
+import PlatformStats from "@/components/career-hub/PlatformStats";
+import FlexerTestimonials from "@/components/career-hub/FlexerTestimonials";
 import PrimaryActions from "@/components/career-hub/PrimaryActions";
 import QuickSearch from "@/components/career-hub/QuickSearch";
-import SectionHeader from "@/components/career-hub/SectionHeader";
-import ContentGrid from "@/components/career-hub/ContentGrid";
+import SectionHeader from "@/components/career-hub/layout/SectionHeader";
+import ContentGrid from "@/components/career-hub/content/ContentGrid";
 import { usLocations } from "@/lib/data/locations";
 import { roles } from "@/lib/data/roles";
 import { guideArticles } from "@/lib/data/articles/guides";
@@ -330,6 +331,9 @@ export default function CareerHubHome() {
       {/* Primary Actions */}
       <PrimaryActions />
 
+      {/* Platform Stats - Social Proof */}
+      <PlatformStats />
+
       {/* Persona Section - Resources For You */}
       <section className="py-16 bg-gradient-to-b from-primary/5 to-background">
         <div className="container mx-auto px-4">
@@ -602,6 +606,9 @@ export default function CareerHubHome() {
           <InternalLinkHub variant="full" currentPage={{ type: "home" }} />
         </div>
       </section>
+
+      {/* Flexer Testimonials */}
+      <FlexerTestimonials />
 
       <CTASection />
     </>

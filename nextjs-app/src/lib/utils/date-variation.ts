@@ -5,12 +5,18 @@
  * Uses deterministic hashing to ensure consistent dates per page while creating
  * natural variation across the site.
  * 
+ * IMPORTANT: Uses a STATIC reference date (not runtime new Date()) to ensure
+ * build-reproducible dates and avoid dishonest freshness signaling.
+ * Update REFERENCE_DATE during quarterly data refreshes.
+ * 
  * Strategy:
  * - Core content (roles, cities) has older dates (6-12 months ago)
  * - New content (career evaluations, salary pages) has recent dates (1-3 months ago)
  * - Updates are spread across the last 6 months
  * - Dates are deterministic per slug to avoid regeneration issues
  */
+
+const REFERENCE_DATE = new Date("2026-03-15");
 
 /**
  * Simple hash function to convert string to number
@@ -48,7 +54,7 @@ export function generatePageDate(
 ): string {
   const {
     contentType = 'update',
-    baseDate = new Date(),
+    baseDate = REFERENCE_DATE,
     minDaysAgo,
     maxDaysAgo,
   } = options;

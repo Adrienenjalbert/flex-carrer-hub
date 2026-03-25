@@ -1,17 +1,17 @@
 import { Metadata } from "next";
+import { generateToolMetadata } from "@/lib/seo/metadata";
 import CommuteCalculatorClient from "./CommuteCalculatorClient";
-import CTASection from "@/components/career-hub/CTASection";
 import { SoftwareApplicationSchema } from "@/components/career-hub/seo";
-import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
+import StandardPageLayout from "@/components/career-hub/layout/StandardPageLayout";
 
 const toolName = "Commute Cost Calculator";
 const toolDescription = "Calculate the real cost of your commute including gas, car wear, parking, and time. See how commute affects your effective hourly rate.";
 const canonical = "https://indeedflex.com/career-hub/tools/commute-calculator";
 
-export const metadata: Metadata = {
-  title: "Commute Cost Calculator | True Cost of Your Commute | Indeed Flex",
-  description:
-    "Calculate the real cost of your commute including gas, car wear, parking, and time. See how commute affects your effective hourly rate.",
+export const metadata: Metadata = generateToolMetadata({
+  name: toolName,
+  slug: "commute-calculator",
+  description: toolDescription,
   keywords: [
     "commute calculator",
     "commute cost",
@@ -20,26 +20,14 @@ export const metadata: Metadata = {
     "mileage calculator",
     "work commute",
   ],
-  alternates: {
-    canonical,
-  },
-  openGraph: {
-    title: "Commute Cost Calculator | True Cost of Your Commute",
-    description: "Calculate the real cost of your commute including gas, car wear, parking, and time.",
-    url: canonical,
-    type: "website",
-    siteName: "Indeed Flex Career Hub",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Commute Cost Calculator",
-    description: "Calculate the real cost of your commute.",
-  },
-};
+});
 
 export default function CommuteCalculatorPage() {
   return (
-    <>
+    <StandardPageLayout
+      showBreadcrumbs={false}
+      currentPage={{ type: "tool", slug: "commute-calculator", relatedTools: [] }}
+    >
       <SoftwareApplicationSchema
         name={toolName}
         description={toolDescription}
@@ -49,17 +37,6 @@ export default function CommuteCalculatorPage() {
         featureList={[]}
       />
       <CommuteCalculatorClient />
-      <div className="container mx-auto px-4 py-12">
-        <InternalLinkHub 
-          variant="full" 
-          currentPage={{ 
-            type: "tool", 
-            slug: "commute-calculator",
-            relatedTools: []
-          }} 
-        />
-      </div>
-      <CTASection />
-    </>
+    </StandardPageLayout>
   );
 }

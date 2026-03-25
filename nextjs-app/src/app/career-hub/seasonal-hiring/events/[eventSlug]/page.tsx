@@ -377,7 +377,7 @@ export default async function EventPage({ params }: PageProps) {
           {/* CTA */}
           <section className="bg-gradient-to-br from-accent/5 to-accent/10 rounded-2xl p-8 md:p-12 text-center mb-12">
             <h2 className="text-2xl md:text-3xl font-bold mb-4">
-              Don't Miss {event.name}
+              Don&apos;t Miss {event.name}
             </h2>
             <p className="text-lg text-muted-foreground mb-6 max-w-2xl mx-auto">
               Apply early to secure the best shifts. {event.name} positions fill quickly 

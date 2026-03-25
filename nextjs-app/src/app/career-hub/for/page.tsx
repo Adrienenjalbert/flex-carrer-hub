@@ -25,6 +25,9 @@ export const metadata: Metadata = {
     "gig worker resources",
     "flexible work by situation",
   ],
+  alternates: {
+    canonical: "https://indeedflex.com/career-hub/for",
+  },
 };
 
 const personaIcons: Record<string, React.ComponentType<{ className?: string }>> = {

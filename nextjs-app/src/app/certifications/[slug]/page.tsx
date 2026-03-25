@@ -10,7 +10,7 @@ import { certifications, getCertificationBySlug, Certification } from "@/lib/dat
 import { FAQSchema, WebPageSchema, BreadcrumbSchema, ArticleSchema } from "@/components/career-hub/seo";
 import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
 import { AuthorByline } from "@/components/career-hub/AuthorByline";
-import { getLastUpdated } from "@/lib/utils/date-variation";
+import { getArticleDates, getLastUpdated } from "@/lib/utils/date-variation";
 
 // Generate static params for all certifications
 export function generateStaticParams() {
@@ -33,7 +33,7 @@ export async function generateMetadata({
   }
 
   const canonical = `https://indeedflex.com/certifications/${slug}`;
-  const title = `${cert.name} Guide ${new Date().getFullYear()} | Cost, Duration & Providers`;
+  const title = `${cert.name} Guide 2026 | Cost, Duration & Providers`;
   const description = `Get your ${cert.name} certification. ${cert.description} Compare ${cert.providers.length} providers, costs from ${cert.providers[0]?.cost || "varies"}, and complete in ${cert.providers[0]?.duration || "1 day"}.`;
 
   return {
@@ -119,6 +119,7 @@ export default async function CertificationPage({
     const bCost = parseInt(b.cost.replace(/[^0-9]/g, "")) || 0;
     return aCost - bCost;
   });
+  const { publishedTime, modifiedTime } = getArticleDates(slug, "guide");
 
   return (
     <>
@@ -134,12 +135,12 @@ export default async function CertificationPage({
         ]}
       />
       <ArticleSchema
-        headline={`${cert.name} Guide ${new Date().getFullYear()}`}
+        headline={`${cert.name} Guide 2026`}
         description={cert.description}
         author={{ name: "Indeed Flex Career Hub", url: "https://indeedflex.com" }}
         publisher={{ name: "Indeed Flex", logo: "https://indeedflex.com/logo.png", url: "https://indeedflex.com" }}
-        datePublished={new Date().toISOString()}
-        dateModified={new Date().toISOString()}
+        datePublished={publishedTime}
+        dateModified={modifiedTime}
         mainEntityOfPage={`https://indeedflex.com/certifications/${slug}`}
       />
       <FAQSchema questions={faqs} />
@@ -154,6 +155,7 @@ export default async function CertificationPage({
       <div className="container mx-auto px-4 py-4">
         <Breadcrumbs
           items={[
+            { label: "Career Hub", href: "/career-hub" },
             { label: "Certifications", href: "/certifications" },
             { label: cert.name },
           ]}
@@ -170,7 +172,7 @@ export default async function CertificationPage({
               {cert.stateSpecific && (
                 <Badge variant="outline">State-Specific</Badge>
               )}
-              <Badge variant="default">Updated {new Date().getFullYear()}</Badge>
+              <Badge variant="default">Updated 2026</Badge>
             </div>
             <h1 className="text-4xl font-bold mb-4">{cert.name}</h1>
             <p className="text-xl text-muted-foreground">{cert.description}</p>

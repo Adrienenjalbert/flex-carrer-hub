@@ -16,7 +16,7 @@ import {
   Type,
   ArrowLeft
 } from "lucide-react";
-import { resumeTemplates, getTemplateBySlug, type ResumeTemplate } from "@/lib/data/resume-templates";
+import { resumeTemplates, getTemplateBySlug } from "@/lib/data/resume-templates";
 import { resumeExamples } from "@/lib/data/resume-examples";
 
 interface PageProps {

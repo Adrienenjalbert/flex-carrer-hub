@@ -5,29 +5,32 @@ import CTASection from "@/components/career-hub/CTASection";
 import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
 
 export const metadata: Metadata = {
-  title: "Flexible Work Roles | Indeed Flex Career Hub",
-  description: "Explore flexible hourly work roles across hospitality, warehouse, retail, events, and more. Find the right job for your skills.",
+  title: "Temp & Flexible Job Roles | Indeed Flex Career Hub",
+  description: "Browse 40+ temporary, part-time, and flexible job roles across hospitality, warehouse, retail, and more. Compare hourly pay ($12-$30/hr), skills needed, and career paths.",
   keywords: [
-    "flexible jobs",
-    "hourly work roles",
     "temp jobs",
+    "temporary jobs",
+    "flexible jobs",
+    "part time jobs",
+    "hourly work roles",
     "warehouse jobs",
     "hospitality jobs",
     "retail jobs",
+    "seasonal jobs",
   ],
   alternates: {
     canonical: "https://indeedflex.com/career-hub/roles",
   },
   openGraph: {
-    title: "Flexible Work Roles | Indeed Flex Career Hub",
-    description: "Explore flexible hourly work roles across hospitality, warehouse, retail, events, and more.",
+    title: "Temp & Flexible Job Roles | Indeed Flex Career Hub",
+    description: "Browse 40+ temporary, part-time, and flexible job roles. Compare hourly pay, skills, and career paths.",
     url: "https://indeedflex.com/career-hub/roles",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Flexible Work Roles",
-    description: "Explore flexible hourly work roles across multiple industries.",
+    title: "Temp & Flexible Job Roles",
+    description: "Browse temporary and flexible job roles across hospitality, warehouse, retail, and more.",
   },
 };
 
@@ -35,7 +38,12 @@ export default function RolesPage() {
   return (
     <>
       <div className="container mx-auto px-4 py-4">
-        <Breadcrumbs items={[{ label: "Roles" }]} />
+        <Breadcrumbs
+          items={[
+            { label: "Career Hub", href: "/career-hub" },
+            { label: "Roles" },
+          ]}
+        />
       </div>
       <RolesClient />
       <div className="container mx-auto px-4 py-12">

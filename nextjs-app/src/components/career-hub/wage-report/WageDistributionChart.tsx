@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, ReferenceLine } from "recharts";
-import { DollarSign, TrendingUp } from "lucide-react";
+import { DollarSign } from "lucide-react";
 import type { WagePercentiles } from "@/lib/data/wage-report/types";
 
 interface WageDistributionChartProps {
@@ -69,6 +69,7 @@ export function WageDistributionChart({
     ? Math.max(...chartData.map(d => d.value), 0) * 1.1
     : 10;
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const CustomTooltip = ({ active, payload }: { active?: boolean; payload?: any[] }) => {
     if (active && payload && payload.length) {
       const data = payload[0].payload;

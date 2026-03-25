@@ -200,8 +200,8 @@ export function generateRoleMetadata(
   baseUrl = "https://indeedflex.com"
 ): Metadata {
   return generateSEOMetadata({
-    title: `${role.title} Jobs - Salary, Requirements & Career Guide`,
-    description: `Learn about ${role.title} jobs: $${role.salaryRange.min}-$${role.salaryRange.max}/hr salary, requirements, and career path. Find flexible ${role.title} work near you.`,
+    title: `${role.title} Jobs - $${role.salaryRange.min}-$${role.salaryRange.max}/hr | Temp & Flexible`,
+    description: `Find temp ${role.title} jobs paying $${role.salaryRange.min}-$${role.salaryRange.max}/hr. Temporary, part-time, and flexible ${role.title.toLowerCase()} shifts with Indeed Flex. See requirements, skills, and career path.`,
     canonical: `${baseUrl}/career-hub/roles/${role.slug}`,
     ogType: "article",
     keywords: generateKeywords(
@@ -249,7 +249,7 @@ export function generateStateTaxMetadata(
 ): Metadata {
   return generateSEOMetadata({
     title: `${state.name} Paycheck Calculator - Take-Home Pay & Tax Breakdown`,
-    description: `Calculate your ${state.name} take-home pay. Free ${state.abbreviation} paycheck calculator with ${new Date().getFullYear()} tax rates, deductions, and hourly-to-salary conversion.`,
+    description: `Calculate your ${state.name} take-home pay. Free ${state.abbreviation} paycheck calculator with 2026 tax rates, deductions, and hourly-to-salary conversion.`,
     canonical: `${baseUrl}/paycheck-calculator/${state.slug}`,
     ogType: "article",
     keywords: [
@@ -263,6 +263,102 @@ export function generateStateTaxMetadata(
     ],
     geoRegion: `US-${state.abbreviation}`,
     geoPlacename: state.name,
+  });
+}
+
+/**
+ * Generate city page metadata
+ */
+export function generateCityMetadata(
+  city: { name: string; slug: string; state: string },
+  baseUrl = "https://indeedflex.com"
+): Metadata {
+  return generateSEOMetadata({
+    title: `Flexible Jobs in ${city.name}, ${city.state} - Hourly Work & Temp Shifts`,
+    description: `Find flexible hourly jobs in ${city.name}, ${city.state}. Explore warehouse, hospitality, retail, and gig shifts. See local pay rates, cost of living, and top employers.`,
+    canonical: `${baseUrl}/career-hub/cities/${city.slug}`,
+    ogType: "website",
+    keywords: generateKeywords(
+      ["flexible jobs", "hourly work", "temp jobs", "gig economy", "part-time jobs"],
+      `${city.name}, ${city.state}`
+    ),
+    geoPlacename: `${city.name}, ${city.state}`,
+    geoRegion: `US-${city.state}`,
+  });
+}
+
+/**
+ * Generate salary page metadata
+ */
+export function generateSalaryMetadata(
+  role: { title: string; slug: string },
+  baseUrl = "https://indeedflex.com"
+): Metadata {
+  return generateSEOMetadata({
+    title: `${role.title} Salary Guide 2026 - Pay Rates, Ranges & Benefits`,
+    description: `How much do ${role.title.toLowerCase()}s make? See 2026 ${role.title.toLowerCase()} salary data by city and state, plus tips to increase your earnings.`,
+    canonical: `${baseUrl}/career-hub/salary/${role.slug}`,
+    ogType: "article",
+    keywords: generateKeywords(
+      [
+        `${role.title} salary`,
+        `${role.title} pay`,
+        `${role.title} hourly rate`,
+        `how much do ${role.title.toLowerCase()}s make`,
+        "salary guide 2026",
+      ],
+      undefined,
+      role.title
+    ),
+  });
+}
+
+/**
+ * Generate guide/article page metadata
+ */
+export function generateGuideMetadata(
+  article: {
+    title: string;
+    slug: string;
+    description: string;
+    category?: string;
+    tags?: string[];
+    publishedDate?: string;
+    updatedDate?: string;
+  },
+  baseUrl = "https://indeedflex.com"
+): Metadata {
+  return generateSEOMetadata({
+    title: article.title,
+    description: article.description,
+    canonical: `${baseUrl}/career-hub/guides/${article.slug}`,
+    ogType: "article",
+    publishedTime: article.publishedDate,
+    modifiedTime: article.updatedDate,
+    section: article.category,
+    tags: article.tags,
+    keywords: article.tags ?? [],
+  });
+}
+
+/**
+ * Generate tool page metadata
+ */
+export function generateToolMetadata(
+  tool: {
+    name: string;
+    slug: string;
+    description: string;
+    keywords?: string[];
+  },
+  baseUrl = "https://indeedflex.com"
+): Metadata {
+  return generateSEOMetadata({
+    title: `${tool.name} | Free Online Calculator`,
+    description: tool.description,
+    canonical: `${baseUrl}/career-hub/tools/${tool.slug}`,
+    ogType: "website",
+    keywords: tool.keywords ?? [tool.name.toLowerCase(), "calculator", "free tool"],
   });
 }
 

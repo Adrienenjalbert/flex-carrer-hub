@@ -11,7 +11,6 @@ import {
   Building2,
   GraduationCap,
   Users,
-  ArrowRight,
   Calculator,
   Target,
   Zap,
@@ -22,7 +21,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { cities, getCityBySlug } from "@/lib/data/cities";
+import { cities, getCityBySlug, getHighValueCitySlugs } from "@/lib/data/cities";
 import { roles, getRoleBySlug, industries } from "@/lib/data/roles";
 import { generateCityRoleFAQs } from "@/lib/faq-generator";
 import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
@@ -58,17 +57,17 @@ function getLocalSalary(
   return { min: Math.max(min, role.avgHourlyRate.min), max };
 }
 
-// Get nearby cities for internal linking
+// Only link to cities that have generated pages (high-value) to avoid 404s
 function getNearbyCities(
-  currentCity: { slug: string; region: string },
+  currentCity: { slug: string; region: string; state: string },
   limit: number = 5
 ) {
+  const highValue = getHighValueCitySlugs();
   return cities
-    .filter((c) => c.slug !== currentCity.slug && c.region === currentCity.region)
+    .filter((c) => c.slug !== currentCity.slug && highValue.has(c.slug) && c.region === currentCity.region)
     .slice(0, limit);
 }
 
-// Get related roles in same industry
 function getRelatedRoles(
   currentRole: { slug: string; industry: string },
   limit: number = 5
@@ -78,10 +77,36 @@ function getRelatedRoles(
     .slice(0, limit);
 }
 
-// Generate static params for all city-role combinations
+// Compare this role's pay across nearby cities for the comparison table
+function getSalaryComparison(
+  currentCity: { slug: string; region: string; costOfLiving: { index: number } },
+  role: { avgHourlyRate: { min: number; max: number } },
+  limit: number = 4
+) {
+  const highValue = getHighValueCitySlugs();
+  const nearby = cities
+    .filter((c) => c.slug !== currentCity.slug && highValue.has(c.slug) && c.region === currentCity.region)
+    .slice(0, limit);
+  
+  return nearby.map((c) => {
+    const adj = c.costOfLiving.index / 100;
+    return {
+      city: c.city,
+      stateCode: c.stateCode,
+      slug: c.slug,
+      min: Math.round(Math.max(role.avgHourlyRate.min, role.avgHourlyRate.min * adj) * 100) / 100,
+      max: Math.round(role.avgHourlyRate.max * adj * 100) / 100,
+      colIndex: c.costOfLiving.index,
+      rent: c.costOfLiving.rent.oneBed,
+    };
+  });
+}
+
+// Generate static params for high-value city-role combinations only
 export function generateStaticParams() {
+  const highValue = getHighValueCitySlugs();
   const params: { citySlug: string; roleSlug: string }[] = [];
-  cities.forEach((city) => {
+  cities.filter(c => highValue.has(c.slug)).forEach((city) => {
     roles.forEach((role) => {
       params.push({
         citySlug: city.slug,
@@ -91,6 +116,8 @@ export function generateStaticParams() {
   });
   return params;
 }
+
+export const dynamicParams = false;
 
 // Generate metadata
 export async function generateMetadata({
@@ -109,7 +136,7 @@ export async function generateMetadata({
   const localSalary = getLocalSalary(role, city);
   const canonical = `https://indeedflex.com/career-hub/cities/${citySlug}/${roleSlug}`;
   const title = `${role.title} Jobs in ${city.city}, ${city.stateCode} | $${localSalary.min.toFixed(0)}-$${localSalary.max.toFixed(0)}/hr`;
-  const description = `Find ${role.title} jobs in ${city.city}, ${city.stateCode}. Earn $${localSalary.min.toFixed(2)}-$${localSalary.max.toFixed(2)}/hr with flexible scheduling. ${role.shortDescription}. Apply today with Indeed Flex.`;
+  const description = `Find temp ${role.title} jobs in ${city.city}, ${city.stateCode}. Earn $${localSalary.min.toFixed(2)}-$${localSalary.max.toFixed(2)}/hr. Temporary, part-time, and flexible ${role.title.toLowerCase()} shifts available now. Apply today with Indeed Flex.`;
 
   return {
     title: `${title} | Indeed Flex`,
@@ -158,6 +185,17 @@ export default async function CityRolePage({
   const nearbyCities = getNearbyCities(city);
   const relatedRoles = getRelatedRoles(role);
   const industryInfo = industries.find((i) => i.id === role.industry);
+  const salaryComparison = getSalaryComparison(city, role);
+
+  const avgHourly = (localSalary.min + localSalary.max) / 2;
+  const monthlyGross = Math.round(avgHourly * 40 * 4.33);
+  const estimatedTax = Math.round(monthlyGross * 0.22);
+  const monthlyNet = monthlyGross - estimatedTax;
+  const afterRent = monthlyNet - city.costOfLiving.rent.oneBed;
+  const colDiff = Math.abs(city.costOfLiving.index - 100);
+  const colDirection = city.costOfLiving.index > 100 ? 'above' : city.costOfLiving.index < 100 ? 'below' : 'at';
+  const nationalAvg = (role.avgHourlyRate.min + role.avgHourlyRate.max) / 2;
+  const localVsNational = ((avgHourly - nationalAvg) / nationalAvg * 100).toFixed(0);
 
   // Generate city+role specific FAQs
   const faqs = generateCityRoleFAQs({
@@ -298,9 +336,10 @@ export default async function CityRolePage({
               </h1>
 
               <p className="text-xl text-muted-foreground mb-6">
-                {role.shortDescription}. Find flexible {role.title.toLowerCase()}{" "}
-                positions in {city.city}, {city.stateCode} with competitive pay
-                and scheduling that fits your life.
+                Temp and flexible {role.title.toLowerCase()} positions in {city.city} pay ${localSalary.min.toFixed(2)}&ndash;${localSalary.max.toFixed(2)}/hr
+                &mdash; {Number(localVsNational) >= 0 ? `${localVsNational}% above` : `${Math.abs(Number(localVsNational))}% below`} the
+                national average, with a cost of living {colDiff}% {colDirection} the U.S. baseline (BLS, 2024).
+                {' '}{role.shortDescription}. Here&apos;s what you need to know about temporary and part-time {role.title.toLowerCase()} work in {city.city}.
               </p>
 
               {/* Key Stats */}
@@ -439,15 +478,134 @@ export default async function CityRolePage({
               </h2>
               <Card>
                 <CardContent className="p-6">
-                  <p className="text-muted-foreground mb-4">{role.description}</p>
+                  <p className="text-muted-foreground mb-4">
+                    {role.title}s in {city.city} earn ${localSalary.min.toFixed(2)}&ndash;${localSalary.max.toFixed(2)}/hr,
+                    {' '}{Number(localVsNational) >= 0 ? 'above' : 'below'} the national average of
+                    {' '}${role.avgHourlyRate.min}&ndash;${role.avgHourlyRate.max}/hr.
+                    {' '}{city.city}&apos;s {city.topIndustries.slice(0, 2).join(' and ')} sectors
+                    drive steady demand for this role, with a cost of living index of {city.costOfLiving.index}
+                    {' '}({city.costOfLiving.index > 100 ? 'above' : 'below'} the national baseline).
+                  </p>
+                  <p className="text-muted-foreground mb-4">
+                    {role.description}
+                    {' '}In the {city.metroArea || city.city} metro area, {role.title.toLowerCase()}s
+                    benefit from {city.highlights[0]?.toLowerCase()}{city.highlights[1] ? ` and ${city.highlights[1]?.toLowerCase()}` : ''}.
+                  </p>
                   <p className="text-muted-foreground">
-                    In {city.city}, {role.title.toLowerCase()}s are in demand across
-                    the {city.topIndustries.slice(0, 2).join(" and ")} sectors. The
-                    city&apos;s {city.highlights[0]?.toLowerCase()} creates consistent
-                    opportunities for flexible workers.
+                    Most {role.title.toLowerCase()} positions in {city.city} are available as temporary,
+                    part-time, or flexible shifts. At 40 hours per week, you can expect to gross
+                    roughly ${weeklyEarnings.fullTime}/week before taxes. Many temp {role.title.toLowerCase()} roles
+                    lead to longer-term opportunities as employers hire their best performers.
                   </p>
                 </CardContent>
               </Card>
+            </section>
+
+            {/* Salary Comparison Table */}
+            {salaryComparison.length > 0 && (
+              <section>
+                <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
+                  <DollarSign className="w-6 h-6" />
+                  {role.title} Pay: {city.city} vs Nearby Cities
+                </h2>
+                <Card>
+                  <CardContent className="p-0">
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-sm">
+                        <thead>
+                          <tr className="border-b bg-muted/50">
+                            <th className="text-left p-3 font-semibold">City</th>
+                            <th className="text-right p-3 font-semibold">Hourly Pay</th>
+                            <th className="text-right p-3 font-semibold">Cost of Living</th>
+                            <th className="text-right p-3 font-semibold">1-Bed Rent</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr className="border-b bg-primary/5">
+                            <td className="p-3 font-semibold text-primary">{city.city}, {city.stateCode}</td>
+                            <td className="text-right p-3 font-semibold">${localSalary.min.toFixed(0)}&ndash;${localSalary.max.toFixed(0)}/hr</td>
+                            <td className="text-right p-3">{city.costOfLiving.index}</td>
+                            <td className="text-right p-3">${city.costOfLiving.rent.oneBed.toLocaleString()}</td>
+                          </tr>
+                          {salaryComparison.map((comp) => (
+                            <tr key={comp.slug} className="border-b hover:bg-muted/30">
+                              <td className="p-3">
+                                <Link href={`/career-hub/cities/${comp.slug}/${role.slug}`} className="hover:text-primary transition-colors">
+                                  {comp.city}, {comp.stateCode}
+                                </Link>
+                              </td>
+                              <td className="text-right p-3">${comp.min.toFixed(0)}&ndash;${comp.max.toFixed(0)}/hr</td>
+                              <td className="text-right p-3">{comp.colIndex}</td>
+                              <td className="text-right p-3">${comp.rent.toLocaleString()}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                    <p className="text-xs text-muted-foreground p-3 border-t">
+                      Pay adjusted by local cost of living. National avg: ${role.avgHourlyRate.min}&ndash;${role.avgHourlyRate.max}/hr. Source: BLS OEWS 2024, Indeed Flex platform data.
+                    </p>
+                  </CardContent>
+                </Card>
+              </section>
+            )}
+
+            {/* Monthly Earnings Breakdown */}
+            <section>
+              <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
+                <Calculator className="w-6 h-6" />
+                What You&apos;ll Actually Earn in {city.city}
+              </h2>
+              <div className="grid md:grid-cols-2 gap-4">
+                <Card>
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-lg">Monthly Income (40 hrs/wk)</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Gross monthly</span>
+                      <span className="font-semibold">${monthlyGross.toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Est. taxes (~22%)</span>
+                      <span className="text-red-600">-${estimatedTax.toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between border-t pt-2">
+                      <span className="font-medium">Take-home</span>
+                      <span className="font-bold text-lg">${monthlyNet.toLocaleString()}</span>
+                    </div>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-lg">After Essential Costs</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Take-home pay</span>
+                      <span className="font-semibold">${monthlyNet.toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">1-bed rent</span>
+                      <span>-${city.costOfLiving.rent.oneBed.toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Groceries + transport</span>
+                      <span>-${(city.costOfLiving.groceries + city.costOfLiving.transport).toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between border-t pt-2">
+                      <span className="font-medium">Remaining</span>
+                      <span className={`font-bold text-lg ${(afterRent - city.costOfLiving.groceries - city.costOfLiving.transport) > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                        ${(afterRent - city.costOfLiving.groceries - city.costOfLiving.transport).toLocaleString()}
+                      </span>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+              <p className="text-xs text-muted-foreground mt-3">
+                Based on avg {role.title} rate of ${avgHourly.toFixed(2)}/hr at 40 hrs/wk. Tax estimate is approximate &mdash; use our{' '}
+                <Link href="/career-hub/tools/tax-calculator" className="text-primary hover:underline">Tax Calculator</Link> for a personalized estimate.
+              </p>
             </section>
 
             {/* Responsibilities */}
@@ -547,7 +705,7 @@ export default async function CityRolePage({
               <h2 className="text-2xl font-bold mb-4">
                 FAQs: {role.title} Jobs in {city.city}
               </h2>
-              <FAQSection faqs={faqs} />
+              <FAQSection faqs={faqs} suppressSchema />
             </section>
           </div>
 
@@ -701,11 +859,15 @@ export default async function CityRolePage({
         <section className="mt-12 pt-8 border-t">
           <h2 className="text-2xl font-bold mb-6">Explore More Opportunities</h2>
           <div className="grid md:grid-cols-3 gap-6">
-            {/* Other Roles in City */}
+            {/* Other Roles in City -- prioritize same industry */}
             <div>
               <h3 className="font-semibold mb-3">More Jobs in {city.city}</h3>
               <ul className="space-y-2">
-                {roles.slice(0, 6).map((r) => (
+                {[...roles]
+                  .sort((a, b) => (a.industry === role.industry ? -1 : 1) - (b.industry === role.industry ? -1 : 1))
+                  .filter((r) => r.slug !== role.slug)
+                  .slice(0, 6)
+                  .map((r) => (
                   <li key={r.slug}>
                     <Link
                       href={`/career-hub/cities/${city.slug}/${r.slug}`}
@@ -718,23 +880,26 @@ export default async function CityRolePage({
               </ul>
             </div>
 
-            {/* Same Role in Other Cities */}
+            {/* Same Role in Other Cities -- only high-value to avoid 404s */}
             <div>
               <h3 className="font-semibold mb-3">{role.title} in Other Cities</h3>
               <ul className="space-y-2">
-                {cities
-                  .filter((c) => c.slug !== city.slug)
-                  .slice(0, 6)
-                  .map((c) => (
-                    <li key={c.slug}>
-                      <Link
-                        href={`/career-hub/cities/${c.slug}/${role.slug}`}
-                        className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                      >
-                        {role.title} in {c.city}, {c.stateCode}
-                      </Link>
-                    </li>
-                  ))}
+                {(() => {
+                  const hv = getHighValueCitySlugs();
+                  return cities
+                    .filter((c) => c.slug !== city.slug && hv.has(c.slug))
+                    .slice(0, 6)
+                    .map((c) => (
+                      <li key={c.slug}>
+                        <Link
+                          href={`/career-hub/cities/${c.slug}/${role.slug}`}
+                          className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                        >
+                          {role.title} in {c.city}, {c.stateCode}
+                        </Link>
+                      </li>
+                    ));
+                })()}
               </ul>
             </div>
 

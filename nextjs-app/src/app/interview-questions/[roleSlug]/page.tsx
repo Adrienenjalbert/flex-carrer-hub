@@ -12,7 +12,7 @@ import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
 import CTASection from "@/components/career-hub/CTASection";
 import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
 import { AuthorByline } from "@/components/career-hub/AuthorByline";
-import { getLastUpdated } from "@/lib/utils/date-variation";
+import { getArticleDates, getLastUpdated } from "@/lib/utils/date-variation";
 
 // Generate static params for all interview guides
 export function generateStaticParams() {
@@ -82,6 +82,7 @@ export default async function InterviewQuestionsPage({
   }
 
   const roleTitle = role?.title || guide.roleTitle;
+  const { publishedTime, modifiedTime } = getArticleDates(roleSlug, "guide");
 
   return (
     <>
@@ -89,7 +90,8 @@ export default async function InterviewQuestionsPage({
       <ArticleSchema
         headline={`${roleTitle} Interview Questions & Answers`}
         description={`Complete guide to ${roleTitle} interview questions with expert answers.`}
-        datePublished={new Date().toISOString().split("T")[0]}
+        datePublished={publishedTime}
+        dateModified={modifiedTime}
         author={{ name: "Indeed Flex Career Team" }}
         publisher={{
           name: "Indeed Flex",

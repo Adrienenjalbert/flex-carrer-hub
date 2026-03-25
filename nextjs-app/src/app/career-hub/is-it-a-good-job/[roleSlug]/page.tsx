@@ -10,7 +10,6 @@ import {
   Clock,
   Users,
   Target,
-  Scale,
   Zap,
   ArrowRight,
   ThumbsUp,
@@ -377,7 +376,7 @@ export default async function CareerEvaluationPage({
           {faqs.length > 0 && (
             <section className="mb-8">
               <h2 className="text-2xl font-semibold mb-4">Common Questions</h2>
-              <FAQSection faqs={faqs} />
+              <FAQSection faqs={faqs} suppressSchema />
             </section>
           )}
 

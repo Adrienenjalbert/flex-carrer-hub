@@ -21,9 +21,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import {
   Home,
-  Car,
   ShoppingCart,
-  Zap,
   DollarSign,
   TrendingUp,
   TrendingDown,
@@ -33,7 +31,6 @@ import CTASection from "@/components/career-hub/CTASection";
 import ToolDisclaimer from "@/components/career-hub/ToolDisclaimer";
 import RelatedToolsSidebar from "@/components/career-hub/RelatedToolsSidebar";
 import FAQSection from "@/components/career-hub/FAQSection";
-import { usLocations } from "@/lib/data/locations";
 
 const faqs = [
   {
@@ -115,6 +112,7 @@ export default function CostOfLivingClient() {
       <div className="container mx-auto px-4 py-8">
         <Breadcrumbs
           items={[
+            { label: "Career Hub", href: "/career-hub" },
             { label: "Tools", href: "/career-hub/tools" },
             { label: "Cost of Living Comparison" },
           ]}
@@ -285,7 +283,7 @@ export default function CostOfLivingClient() {
               </>
             )}
 
-            <FAQSection faqs={faqs} />
+            <FAQSection faqs={faqs} suppressSchema />
 
             <ToolDisclaimer
               type="comparison"

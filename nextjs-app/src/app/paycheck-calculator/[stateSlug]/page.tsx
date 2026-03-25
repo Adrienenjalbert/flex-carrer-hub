@@ -5,8 +5,15 @@ import { stateTaxData, calculatorRolePresets } from "@/lib/data/tool-registry";
 import StatePaycheckClient from "./StatePaycheckClient";
 import RolePaycheckClient from "./RolePaycheckClient";
 import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
-import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
-import CTASection from "@/components/career-hub/CTASection";
+import { AuthorByline } from "@/components/career-hub/AuthorByline";
+import DataSourceCitation from "@/components/career-hub/DataSourceCitation";
+import {
+  FAQSchema,
+  WebPageSchema,
+  BreadcrumbSchema,
+  SoftwareApplicationSchema,
+  OccupationSchema,
+} from "@/components/career-hub/seo";
 
 // US State name mapping
 const stateNames: Record<string, string> = {
@@ -174,11 +181,142 @@ export default async function PaycheckCalculatorDynamicPage({
     }
 
     const stateName = stateNames[stateCode] || stateData.name;
-    return <StatePaycheckClient stateCode={stateCode} stateName={stateName} />;
+
+    const stateFaqs = [
+      {
+        question: `What is the income tax rate in ${stateName}?`,
+        answer: stateData?.hasNoIncomeTax
+          ? `${stateName} has no state income tax! This means you keep more of your paycheck compared to states that do tax income.`
+          : `${stateName} has a state income tax rate of approximately ${((stateData?.incomeTaxRate || 0) * 100).toFixed(2)}%. The exact amount depends on your income level and filing status.`,
+      },
+      {
+        question: `What is the minimum wage in ${stateName}?`,
+        answer: `The current minimum wage in ${stateName} is $${stateData?.minWage.toFixed(2)} per hour (2026). Some cities may have higher local minimum wages.`,
+      },
+      {
+        question: `How do I calculate my take-home pay in ${stateName}?`,
+        answer: `Use this ${stateName} paycheck calculator! Enter your hourly rate and hours worked to see your estimated take-home pay after federal taxes${stateData?.hasNoIncomeTax ? "" : `, ${stateName} state taxes`}, Social Security, and Medicare.`,
+      },
+      {
+        question: `Does ${stateName} have overtime rules?`,
+        answer: stateData?.overtimeRules === "daily"
+          ? `${stateName} requires overtime pay (1.5x) for hours over 8 in a day AND hours over 40 in a week, which is stricter than federal law.`
+          : `${stateName} follows federal overtime rules: 1.5x pay for hours over 40 per week.`,
+      },
+    ];
+
+    return (
+      <>
+        <WebPageSchema
+          name={`${stateName} Paycheck Calculator 2026`}
+          description={`Calculate your take-home pay in ${stateName}. Free paycheck calculator with ${stateName} tax rates, minimum wage info, and deduction estimates.`}
+          url={`https://indeedflex.com/paycheck-calculator/${stateSlug}`}
+          breadcrumb={[
+            { name: "Career Hub", url: "https://indeedflex.com/career-hub" },
+            { name: "Tools", url: "https://indeedflex.com/career-hub/tools" },
+            { name: `${stateName} Calculator` },
+          ]}
+        />
+        <FAQSchema questions={stateFaqs} />
+        <BreadcrumbSchema
+          items={[
+            { name: "Career Hub", url: "https://indeedflex.com/career-hub" },
+            { name: "Tools", url: "https://indeedflex.com/career-hub/tools" },
+            { name: `${stateName} Calculator` },
+          ]}
+        />
+        <SoftwareApplicationSchema
+          name={`${stateName} Paycheck Calculator`}
+          description={`Free ${stateName} paycheck calculator for hourly workers`}
+          url={`https://indeedflex.com/paycheck-calculator/${stateSlug}`}
+          applicationCategory="FinanceApplication"
+          operatingSystem="Web"
+          offers={{ price: 0, priceCurrency: "USD" }}
+        />
+        <div className="container mx-auto px-4 max-w-4xl pt-6">
+          <Breadcrumbs
+            items={[
+              { label: "Career Hub", href: "/career-hub" },
+              { label: "Paycheck Calculator", href: "/paycheck-calculator" },
+              { label: `${stateName}` },
+            ]}
+          />
+        </div>
+        <StatePaycheckClient stateCode={stateCode} stateName={stateName} />
+        <div className="container mx-auto px-4 max-w-4xl">
+          <AuthorByline contentType="calculator" lastUpdated="2026-01-15" />
+          <DataSourceCitation pageType="calculator" additionalSources={["bls-oews", "state-labor"]} />
+        </div>
+      </>
+    );
   }
 
   if (slugInfo.type === 'role' && slugInfo.roleId) {
-    return <RolePaycheckClient roleId={slugInfo.roleId} />;
+    const rolePreset = calculatorRolePresets.find(r => r.roleId === slugInfo.roleId);
+    if (!rolePreset) {
+      notFound();
+    }
+
+    const formatCurrency = (value: number) =>
+      new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(value);
+
+    const roleFaqs = [
+      {
+        question: `How much do ${rolePreset.name}s make per hour?`,
+        answer: `The average ${rolePreset.name} earns around $${rolePreset.hourlyRate}/hour.${rolePreset.hasTips ? ` Tips can add ~$${rolePreset.avgTipsPerHour}/hour on average.` : ""}`,
+      },
+      {
+        question: `What is the annual salary for a ${rolePreset.name}?`,
+        answer: `Working ${rolePreset.hoursPerWeek} hours/week at $${rolePreset.hourlyRate}/hour, a ${rolePreset.name} earns approximately ${formatCurrency(rolePreset.hourlyRate * rolePreset.hoursPerWeek * 52)}/year before taxes.`,
+      },
+    ];
+
+    return (
+      <>
+        <WebPageSchema
+          name={`${rolePreset.name} Pay Calculator`}
+          description={`Calculate take-home pay for ${rolePreset.name} jobs.`}
+          url={`https://indeedflex.com/paycheck-calculator/${rolePreset.roleId}`}
+          breadcrumb={[
+            { name: "Career Hub", url: "https://indeedflex.com/career-hub" },
+            { name: "Tools", url: "https://indeedflex.com/career-hub/tools" },
+            { name: `${rolePreset.name} Calculator` },
+          ]}
+        />
+        <FAQSchema questions={roleFaqs} />
+        <BreadcrumbSchema
+          items={[
+            { name: "Career Hub", url: "https://indeedflex.com/career-hub" },
+            { name: "Tools", url: "https://indeedflex.com/career-hub/tools" },
+            { name: `${rolePreset.name} Calculator` },
+          ]}
+        />
+        <OccupationSchema
+          name={rolePreset.name}
+          description={rolePreset.description}
+          estimatedSalary={{
+            currency: "USD",
+            minValue: (rolePreset.hourlyRate - 3) * rolePreset.hoursPerWeek * 52,
+            maxValue: (rolePreset.hourlyRate + 5) * rolePreset.hoursPerWeek * 52,
+            unitText: "YEAR",
+          }}
+        />
+        <div className="container mx-auto px-4 max-w-4xl pt-6">
+          <Breadcrumbs
+            items={[
+              { label: "Career Hub", href: "/career-hub" },
+              { label: "Paycheck Calculator", href: "/paycheck-calculator" },
+              { label: `${rolePreset.name}` },
+            ]}
+          />
+        </div>
+        <RolePaycheckClient roleId={slugInfo.roleId} />
+        <div className="container mx-auto px-4 max-w-4xl">
+          <AuthorByline contentType="calculator" lastUpdated="2026-01-15" />
+          <DataSourceCitation pageType="calculator" additionalSources={["bls-oews", "state-labor"]} />
+        </div>
+      </>
+    );
   }
 
   notFound();

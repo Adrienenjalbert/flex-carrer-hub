@@ -1,17 +1,17 @@
 import { Metadata } from "next";
+import { generateToolMetadata } from "@/lib/seo/metadata";
 import CareerPathClient from "./CareerPathClient";
-import CTASection from "@/components/career-hub/CTASection";
 import { SoftwareApplicationSchema } from "@/components/career-hub/seo";
-import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
+import StandardPageLayout from "@/components/career-hub/layout/StandardPageLayout";
 
 const toolName = "Career Path Explorer";
 const toolDescription = "Explore career progression paths from entry-level to management. See salary ranges, required skills, and timelines for advancement.";
 const canonical = "https://indeedflex.com/career-hub/tools/career-path";
 
-export const metadata: Metadata = {
-  title: "Career Path Explorer | Visualize Your Growth | Indeed Flex",
-  description:
-    "Explore career progression paths from entry-level to management. See salary ranges, required skills, and timelines for advancement.",
+export const metadata: Metadata = generateToolMetadata({
+  name: toolName,
+  slug: "career-path",
+  description: toolDescription,
   keywords: [
     "career path",
     "career progression",
@@ -20,26 +20,14 @@ export const metadata: Metadata = {
     "career planning",
     "management career",
   ],
-  alternates: {
-    canonical,
-  },
-  openGraph: {
-    title: "Career Path Explorer | Visualize Your Growth",
-    description: "Explore career progression paths from entry-level to management.",
-    url: canonical,
-    type: "website",
-    siteName: "Indeed Flex Career Hub",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Career Path Explorer",
-    description: "Explore career progression paths from entry-level to management.",
-  },
-};
+});
 
 export default function CareerPathPage() {
   return (
-    <>
+    <StandardPageLayout
+      showBreadcrumbs={false}
+      currentPage={{ type: "tool", slug: "career-path", relatedTools: [] }}
+    >
       <SoftwareApplicationSchema
         name={toolName}
         description={toolDescription}
@@ -49,17 +37,6 @@ export default function CareerPathPage() {
         featureList={[]}
       />
       <CareerPathClient />
-      <div className="container mx-auto px-4 py-12">
-        <InternalLinkHub 
-          variant="full" 
-          currentPage={{ 
-            type: "tool", 
-            slug: "career-path",
-            relatedTools: []
-          }} 
-        />
-      </div>
-      <CTASection />
-    </>
+    </StandardPageLayout>
   );
 }

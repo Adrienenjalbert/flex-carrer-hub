@@ -2,7 +2,6 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { 
   GraduationCap, 
-  ChevronRight, 
   Clock, 
   DollarSign,
   Star,

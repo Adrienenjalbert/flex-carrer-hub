@@ -297,8 +297,7 @@ export const toolRegistry: ToolDefinition[] = [
     ],
     schema: {
       type: 'SoftwareApplication',
-      category: 'FinanceApplication',
-      aggregateRating: { ratingValue: 4.8, ratingCount: 2847 }
+      category: 'FinanceApplication'
     },
     lastUpdated: '2026-02-01',
     supportedCountries: ['US'],
@@ -356,8 +355,7 @@ export const toolRegistry: ToolDefinition[] = [
     intentPages: [],
     schema: {
       type: 'SoftwareApplication',
-      category: 'FinanceApplication',
-      aggregateRating: { ratingValue: 4.7, ratingCount: 1523 }
+      category: 'FinanceApplication'
     },
     lastUpdated: '2026-02-01',
     supportedCountries: ['US'],
@@ -421,8 +419,7 @@ export const toolRegistry: ToolDefinition[] = [
     ],
     schema: {
       type: 'SoftwareApplication',
-      category: 'FinanceApplication',
-      aggregateRating: { ratingValue: 4.6, ratingCount: 1876 }
+      category: 'FinanceApplication'
     },
     lastUpdated: '2026-02-01',
     supportedCountries: ['US'],
@@ -481,8 +478,7 @@ export const toolRegistry: ToolDefinition[] = [
     intentPages: [],
     schema: {
       type: 'SoftwareApplication',
-      category: 'FinanceApplication',
-      aggregateRating: { ratingValue: 4.9, ratingCount: 3245 }
+      category: 'FinanceApplication'
     },
     lastUpdated: '2026-02-01',
     supportedCountries: ['US'],
@@ -541,8 +537,7 @@ export const toolRegistry: ToolDefinition[] = [
     intentPages: [],
     schema: {
       type: 'WebApplication',
-      category: 'UtilityApplication',
-      aggregateRating: { ratingValue: 4.7, ratingCount: 987 }
+      category: 'UtilityApplication'
     },
     lastUpdated: '2026-02-01',
     supportedCountries: ['US'],
@@ -565,21 +560,6 @@ export function getToolBySlug(slug: string): ToolDefinition | undefined {
  */
 export function getCanonicalToolSlugs(): string[] {
   return toolRegistry.map(tool => tool.slug);
-}
-
-/**
- * Build redirect map from all tool synonyms
- */
-export function buildToolRedirectMap(): Record<string, string> {
-  const redirects: Record<string, string> = {};
-  
-  for (const tool of toolRegistry) {
-    for (const synonym of tool.synonyms) {
-      redirects[synonym] = `/career-hub/tools/${tool.slug}`;
-    }
-  }
-  
-  return redirects;
 }
 
 /**

@@ -17,7 +17,7 @@ import {
   Target,
   HelpCircle
 } from "lucide-react";
-import { personaHubs, getPersonaHub, getAllPersonaHubs, type PersonaHub } from "@/lib/data/persona-hubs";
+import { personaHubs, getPersonaHub, getAllPersonaHubs } from "@/lib/data/persona-hubs";
 import { guideCategories } from "@/lib/data/articles/guides";
 import { resumeTemplates } from "@/lib/data/resume-templates";
 

@@ -1,24 +1,25 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { MapPin, Building, Users, DollarSign, Home, ShoppingCart, Car, Calculator } from "lucide-react";
+import { MapPin, Building, Users, DollarSign, Home, ShoppingCart, Calculator, CheckCircle, TrendingUp } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { cities, getCityBySlug } from "@/lib/data/cities";
+import { cities, getCityBySlug, getHighValueCitySlugs } from "@/lib/data/cities";
 import { roles, industries } from "@/lib/data/roles";
 import { BreadcrumbSchema, WebPageSchema, FAQSchema } from "@/components/career-hub/seo";
 import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
 import CTASection from "@/components/career-hub/CTASection";
 import { InternalLinkHub } from "@/components/career-hub/InternalLinkHub";
 import NeighborhoodGuide from "@/components/career-hub/NeighborhoodGuide";
-import { getEmployersByCity, getCityStats, type LocalEmployer } from "@/lib/data/local-employers";
+import { getEmployersByCity, getCityStats } from "@/lib/data/local-employers";
 import { generateCityFAQs } from "@/lib/faq-generator";
 import FAQSection from "@/components/career-hub/FAQSection";
 import { AuthorByline } from "@/components/career-hub/AuthorByline";
 import DataSourceCitation from "@/components/career-hub/DataSourceCitation";
 import { getLastUpdated } from "@/lib/utils/date-variation";
+import { generateCityMetadata } from "@/lib/seo/metadata";
 
 // Generate static params for all cities
 export function generateStaticParams() {
@@ -40,35 +41,11 @@ export async function generateMetadata({
     return { title: "City Not Found" };
   }
 
-  const description = city.description || `Find flexible hourly jobs in ${city.city}, ${city.state}. Explore opportunities in ${city.topIndustries.join(", ")} with Indeed Flex.`;
-  const canonical = `https://indeedflex.com/career-hub/cities/${city.slug}`;
-
-  return {
-    title: `Flexible Jobs in ${city.city}, ${city.state} | Indeed Flex Career Hub`,
-    description,
-    keywords: [
-      `jobs in ${city.city}`,
-      `${city.city} jobs`,
-      `flexible work ${city.city}`,
-      `hourly jobs ${city.state}`,
-      `${city.city} ${city.state} jobs`,
-    ],
-    alternates: {
-      canonical,
-    },
-    openGraph: {
-      title: `Flexible Jobs in ${city.city}, ${city.state}`,
-      description,
-      url: canonical,
-      type: "website",
-      locale: "en_US",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: `Flexible Jobs in ${city.city}, ${city.state}`,
-      description,
-    },
-  };
+  return generateCityMetadata({
+    name: city.city,
+    slug: city.slug,
+    state: city.state,
+  });
 }
 
 export default async function CityPage({
@@ -83,6 +60,8 @@ export default async function CityPage({
     notFound();
   }
 
+  const isHighValue = getHighValueCitySlugs().has(citySlug);
+
   // Get all roles grouped by industry
   const rolesByIndustry = industries.reduce((acc, industry) => {
     acc[industry.id] = roles.filter((role) => role.industry === industry.id);
@@ -91,7 +70,7 @@ export default async function CityPage({
 
   // Get local employers
   const cityEmployers = getEmployersByCity(citySlug);
-  const cityStats = getCityStats(citySlug);
+  const _cityStats = getCityStats(citySlug);
 
   // Generate city FAQs
   const cityFAQs = generateCityFAQs(city);
@@ -108,6 +87,21 @@ export default async function CityPage({
   const population = city.population 
     ? parseInt(city.population.replace(/,/g, ''), 10) 
     : 0;
+
+  // Comparison data for nearby cities
+  const nearbyCities = cities
+    .filter((c) => c.slug !== city.slug && c.region === city.region)
+    .slice(0, 4);
+
+  // Budget calculations
+  const avgHourly = (city.avgHourlyWage.min + city.avgHourlyWage.max) / 2;
+  const monthlyGross = Math.round(avgHourly * 40 * 4.33);
+  const estimatedTax = Math.round(monthlyGross * 0.22);
+  const monthlyNet = monthlyGross - estimatedTax;
+  const totalEssentials = city.costOfLiving.rent.oneBed + city.costOfLiving.groceries + city.costOfLiving.transport;
+  const disposable = monthlyNet - totalEssentials;
+  const colDiff = Math.abs(city.costOfLiving.index - 100);
+  const colDirection = city.costOfLiving.index > 100 ? 'above' : city.costOfLiving.index < 100 ? 'below' : 'at';
 
   return (
     <>
@@ -141,6 +135,7 @@ export default async function CityPage({
       <div className="container mx-auto px-4 py-4">
         <Breadcrumbs
           items={[
+            { label: "Career Hub", href: "/career-hub" },
             { label: "Cities", href: "/career-hub/cities" },
             { label: `${city.city}, ${city.state}` },
           ]}
@@ -151,56 +146,62 @@ export default async function CityPage({
 
           {/* Hero */}
           <div className="mb-8">
-            <div className="flex items-center gap-2 mb-2">
+            <div className="flex items-center gap-2 mb-3">
               <MapPin className="h-5 w-5 text-primary" />
               <Badge variant="outline">{city.state}</Badge>
               <Badge variant="secondary">{city.region}</Badge>
             </div>
             <h1 className="text-4xl font-bold mb-4">
-              Flexible Jobs in {city.city}, {city.state}
+              Temp &amp; Flexible Jobs in {city.city}, {city.state}
             </h1>
-            <p className="text-xl text-muted-foreground">{city.description}</p>
+            {/* Answer-first paragraph for AEO */}
+            <p className="text-lg text-muted-foreground leading-relaxed mb-2">
+              Temporary and flexible workers in {city.city} earn ${city.avgHourlyWage.min}&ndash;${city.avgHourlyWage.max}/hr across {city.topIndustries.slice(0, 3).join(', ')} &mdash; with 
+              a cost of living {colDiff}% {colDirection} the national average (BLS, 2024). 
+              {city.costOfLiving.index < 100 
+                ? ` Your dollar stretches further here than in most major metros.`
+                : city.costOfLiving.index > 110 
+                  ? ` Higher wages help offset the above-average cost of living.`
+                  : ` Living costs are close to the national average.`
+              }
+            </p>
+            <p className="text-muted-foreground">{city.description}</p>
           </div>
 
           {/* Key Stats */}
-          <div className="grid md:grid-cols-3 gap-4 mb-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <Card className="bg-primary/5 border-primary/20">
+              <CardContent className="p-4 text-center">
+                <DollarSign className="h-6 w-6 mx-auto mb-2 text-primary" />
+                <p className="text-2xl font-bold text-primary">
+                  ${city.avgHourlyWage.min}&ndash;${city.avgHourlyWage.max}
+                </p>
+                <p className="text-sm text-muted-foreground">Avg Hourly Pay</p>
+              </CardContent>
+            </Card>
             <Card>
-              <CardHeader className="pb-2">
-                <Users className="h-5 w-5 text-primary" />
-                <CardTitle className="text-lg">Population</CardTitle>
-              </CardHeader>
-              <CardContent>
+              <CardContent className="p-4 text-center">
+                <TrendingUp className="h-6 w-6 mx-auto mb-2 text-green-600" />
+                <p className="text-2xl font-bold">{city.costOfLiving.index}</p>
+                <p className="text-sm text-muted-foreground">Cost Index</p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-4 text-center">
+                <Users className="h-6 w-6 mx-auto mb-2 text-blue-600" />
                 <p className="text-2xl font-bold">
                   {population > 1000000 
                     ? `${(population / 1000000).toFixed(1)}M` 
                     : `${(population / 1000).toFixed(0)}K`}
                 </p>
+                <p className="text-sm text-muted-foreground">Population</p>
               </CardContent>
             </Card>
-
             <Card>
-              <CardHeader className="pb-2">
-                <Building className="h-5 w-5 text-primary" />
-                <CardTitle className="text-lg">Top Industries</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-wrap gap-1">
-                  {city.topIndustries.slice(0, 3).map((ind) => (
-                    <Badge key={ind} variant="secondary" className="text-xs">
-                      {ind}
-                    </Badge>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="pb-2">
-                <MapPin className="h-5 w-5 text-primary" />
-                <CardTitle className="text-lg">Region</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-2xl font-bold">{city.region}</p>
+              <CardContent className="p-4 text-center">
+                <Building className="h-6 w-6 mx-auto mb-2 text-orange-600" />
+                <p className="text-2xl font-bold">{city.topIndustries.length}</p>
+                <p className="text-sm text-muted-foreground">Key Industries</p>
               </CardContent>
             </Card>
           </div>
@@ -273,16 +274,131 @@ export default async function CityPage({
             </div>
           </section>
 
-          {/* All Roles by Industry */}
+          {/* Why Work Here */}
+          {city.highlights.length > 0 && (
+            <section className="mb-8">
+              <h2 className="text-2xl font-semibold mb-4">Why Work in {city.city}?</h2>
+              <div className="grid md:grid-cols-2 gap-3">
+                {city.highlights.map((highlight, index) => (
+                  <div key={index} className="flex items-start gap-3 p-3 rounded-lg bg-secondary/30">
+                    <CheckCircle className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                    <span className="text-sm">{highlight}</span>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Salary Comparison Table */}
+          {nearbyCities.length > 0 && (
+            <section className="mb-8">
+              <h2 className="text-2xl font-semibold mb-4">{city.city} vs Nearby Cities</h2>
+              <Card>
+                <CardContent className="p-0">
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="border-b bg-muted/50">
+                          <th className="text-left p-3 font-semibold">City</th>
+                          <th className="text-right p-3 font-semibold">Avg Wage</th>
+                          <th className="text-right p-3 font-semibold">Cost Index</th>
+                          <th className="text-right p-3 font-semibold">1-Bed Rent</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr className="border-b bg-primary/5">
+                          <td className="p-3 font-semibold text-primary">{city.city}, {city.stateCode}</td>
+                          <td className="text-right p-3 font-semibold">${city.avgHourlyWage.min}&ndash;${city.avgHourlyWage.max}/hr</td>
+                          <td className="text-right p-3">{city.costOfLiving.index}</td>
+                          <td className="text-right p-3">${city.costOfLiving.rent.oneBed.toLocaleString()}</td>
+                        </tr>
+                        {nearbyCities.map((nc) => (
+                          <tr key={nc.slug} className="border-b hover:bg-muted/30">
+                            <td className="p-3">
+                              <Link href={`/career-hub/cities/${nc.slug}`} className="hover:text-primary transition-colors">
+                                {nc.city}, {nc.stateCode}
+                              </Link>
+                            </td>
+                            <td className="text-right p-3">${nc.avgHourlyWage.min}&ndash;${nc.avgHourlyWage.max}/hr</td>
+                            <td className="text-right p-3">{nc.costOfLiving.index}</td>
+                            <td className="text-right p-3">${nc.costOfLiving.rent.oneBed.toLocaleString()}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <p className="text-xs text-muted-foreground p-3 border-t">
+                    Source: BLS OEWS 2024, local housing data. Cost index 100 = national average.
+                  </p>
+                </CardContent>
+              </Card>
+            </section>
+          )}
+
+          {/* Monthly Budget Snapshot */}
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4">All Jobs in {city.city}</h2>
+            <h2 className="text-2xl font-semibold mb-4">Monthly Budget Snapshot</h2>
+            <Card>
+              <CardContent className="p-6">
+                <p className="text-sm text-muted-foreground mb-4">
+                  If you earn the average hourly wage (${avgHourly.toFixed(2)}/hr) working 40 hours/week in {city.city}:
+                </p>
+                <div className="space-y-3 mb-4">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm">Monthly gross income</span>
+                    <span className="font-semibold">${monthlyGross.toLocaleString()}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-muted-foreground">Est. taxes (~22%)</span>
+                    <span className="text-red-600">-${estimatedTax.toLocaleString()}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-muted-foreground">1-bedroom rent</span>
+                    <span>-${city.costOfLiving.rent.oneBed.toLocaleString()}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-muted-foreground">Groceries + transport</span>
+                    <span>-${(city.costOfLiving.groceries + city.costOfLiving.transport).toLocaleString()}</span>
+                  </div>
+                  <div className="flex justify-between items-center border-t pt-3">
+                    <span className="font-medium">Remaining for savings &amp; lifestyle</span>
+                    <span className={`font-bold text-lg ${disposable > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                      ${disposable.toLocaleString()}/mo
+                    </span>
+                  </div>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  <Button asChild variant="outline" size="sm">
+                    <Link href="/career-hub/tools/paycheck-calculator">
+                      <Calculator className="mr-2 h-4 w-4" />
+                      Customize Your Budget
+                    </Link>
+                  </Button>
+                  <Button asChild variant="outline" size="sm">
+                    <Link href="/career-hub/tools/cost-of-living">
+                      <Home className="mr-2 h-4 w-4" />
+                      Compare Cost of Living
+                    </Link>
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </section>
+
+          {/* Temp & Flexible Jobs by Industry */}
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold mb-4">Temp &amp; Flexible Jobs in {city.city}</h2>
             <Tabs defaultValue={industries[0]?.id || "hospitality"} className="w-full">
-              <TabsList className="grid w-full grid-cols-2 lg:grid-cols-4 mb-6">
+              <TabsList className="!h-auto flex flex-wrap gap-2 bg-transparent p-0 mb-6">
                 {industries.map((industry) => {
                   const industryRoles = rolesByIndustry[industry.id] || [];
                   if (industryRoles.length === 0) return null;
                   return (
-                    <TabsTrigger key={industry.id} value={industry.id}>
+                    <TabsTrigger 
+                      key={industry.id} 
+                      value={industry.id}
+                      className="rounded-full border border-border bg-background px-4 py-2 text-sm font-medium data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:border-primary transition-colors"
+                    >
                       {industry.name} ({industryRoles.length})
                     </TabsTrigger>
                   );
@@ -291,38 +407,55 @@ export default async function CityPage({
               {industries.map((industry) => {
                 const industryRoles = rolesByIndustry[industry.id] || [];
                 if (industryRoles.length === 0) return null;
+                const INITIAL = 6;
+                const visibleRoles = industryRoles.slice(0, INITIAL);
+                const hiddenRoles = industryRoles.slice(INITIAL);
+                
+                const renderRoleCard = (role: typeof roles[0]) => {
+                  const localSalary = getLocalSalary(role.avgHourlyRate.min, role.avgHourlyRate.max);
+                  return (
+                    <Link
+                      key={role.slug}
+                      href={isHighValue ? `/career-hub/cities/${citySlug}/${role.slug}` : `/career-hub/roles/${role.slug}`}
+                    >
+                      <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer">
+                        <CardHeader className="pb-2">
+                          <CardTitle className="text-lg">{role.title}</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <CardDescription className="mb-2 line-clamp-2">
+                            {role.shortDescription}
+                          </CardDescription>
+                          <div className="flex items-center justify-between mt-3">
+                            <p className="text-sm font-medium text-primary">
+                              ${localSalary.min} - ${localSalary.max}/hr
+                            </p>
+                            <Badge variant="outline" className="text-xs">
+                              {industry.name}
+                            </Badge>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </Link>
+                  );
+                };
+
                 return (
                   <TabsContent key={industry.id} value={industry.id}>
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                      {industryRoles.map((role) => {
-                        const localSalary = getLocalSalary(role.avgHourlyRate.min, role.avgHourlyRate.max);
-                        return (
-                          <Link
-                            key={role.slug}
-                            href={`/career-hub/cities/${citySlug}/${role.slug}`}
-                          >
-                            <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer">
-                              <CardHeader className="pb-2">
-                                <CardTitle className="text-lg">{role.title}</CardTitle>
-                              </CardHeader>
-                              <CardContent>
-                                <CardDescription className="mb-2 line-clamp-2">
-                                  {role.shortDescription}
-                                </CardDescription>
-                                <div className="flex items-center justify-between mt-3">
-                                  <p className="text-sm font-medium text-primary">
-                                    ${localSalary.min} - ${localSalary.max}/hr
-                                  </p>
-                                  <Badge variant="outline" className="text-xs">
-                                    {industry.name}
-                                  </Badge>
-                                </div>
-                              </CardContent>
-                            </Card>
-                          </Link>
-                        );
-                      })}
+                      {visibleRoles.map(renderRoleCard)}
                     </div>
+                    {hiddenRoles.length > 0 && (
+                      <details className="mt-4 group">
+                        <summary className="flex items-center justify-center cursor-pointer text-sm font-medium text-primary hover:text-primary/80 transition-colors py-2 list-none [&::-webkit-details-marker]:hidden">
+                          <span className="group-open:hidden">Show all {industryRoles.length} roles ↓</span>
+                          <span className="hidden group-open:inline">Show fewer ↑</span>
+                        </summary>
+                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+                          {hiddenRoles.map(renderRoleCard)}
+                        </div>
+                      </details>
+                    )}
                   </TabsContent>
                 );
               })}
@@ -405,7 +538,7 @@ export default async function CityPage({
           {cityFAQs.length > 0 && (
             <section className="mb-8">
               <h2 className="text-2xl font-semibold mb-4">Frequently Asked Questions</h2>
-              <FAQSection faqs={cityFAQs} />
+              <FAQSection faqs={cityFAQs} suppressSchema />
             </section>
           )}
 

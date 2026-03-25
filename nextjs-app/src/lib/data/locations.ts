@@ -1,3 +1,8 @@
+/**
+ * Location data for /career-hub/locations/ pages.
+ * Simpler per-city data without SEO/region fields.
+ * For extended metro data used by /career-hub/cities/, see City in cities/types.ts.
+ */
 export interface Location {
   id: string;
   city: string;

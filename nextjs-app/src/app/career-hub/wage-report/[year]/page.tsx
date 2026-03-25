@@ -59,7 +59,7 @@ export default async function YearReportPage({ params }: YearPageProps) {
   }
 
   const breadcrumbs = [
-    { label: "Home", href: "/" },
+    { label: "Career Hub", href: "/career-hub" },
     { label: "Wage Report", href: "/career-hub/wage-report" },
     { label: year, href: `/career-hub/wage-report/${year}` },
   ];
@@ -159,7 +159,7 @@ export default async function YearReportPage({ params }: YearPageProps) {
             <CardContent className="prose prose-gray max-w-none">
               <p className="text-base md:text-lg leading-relaxed mb-4">
                 The 2026 Flex Work Wage Report provides comprehensive analysis of hourly wages across {wageReport2026.summary.totalOccupations} flexible work occupations, 
-                covering {wageReport2026.industries.length} major industries and {wageReport2026.regions.length}+ metropolitan regions. This year's report reveals 
+                covering {wageReport2026.industries.length} major industries and {wageReport2026.regions.length}+ metropolitan regions. This year&apos;s report reveals 
                 strong wage growth across most sectors, with an average increase of <strong>{wageReport2026.summary.avgWageGrowth}%</strong> over the past year.
               </p>
               <p className="text-base md:text-lg leading-relaxed mb-4">

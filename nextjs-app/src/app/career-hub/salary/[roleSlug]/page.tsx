@@ -15,8 +15,11 @@ import DataSourceCitation from "@/components/career-hub/DataSourceCitation";
 import {
   WebPageSchema,
   BreadcrumbSchema,
+  FAQSchema,
 } from "@/components/career-hub/seo";
+import FAQSection from "@/components/career-hub/FAQSection";
 import { getLastUpdated } from "@/lib/utils/date-variation";
+import { generateSalaryMetadata } from "@/lib/seo/metadata";
 
 export function generateStaticParams() {
   return salaryByLocation.map((data) => ({
@@ -37,34 +40,7 @@ export async function generateMetadata({
     return { title: "Salary Data Not Found" };
   }
 
-  const title = `${role.title} Salary by City | Compare Pay Across Locations`;
-  const description = `Compare ${role.title} salaries across major US cities. See hourly pay, tips, cost of living adjustments, and purchasing power. National average: $${salaryData.nationalAverage.hourly.min}-$${salaryData.nationalAverage.hourly.max}/hr.`;
-  const canonical = `https://indeedflex.com/career-hub/salary/${roleSlug}`;
-
-  return {
-    title: `${title} | Indeed Flex Career Hub`,
-    description,
-    keywords: [
-      `${role.title.toLowerCase()} salary by city`,
-      `${role.title.toLowerCase()} pay by location`,
-      `${role.title.toLowerCase()} hourly rate`,
-      `compare ${role.title.toLowerCase()} salaries`,
-    ],
-    alternates: {
-      canonical,
-    },
-    openGraph: {
-      title,
-      description,
-      url: canonical,
-      type: "article",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-    },
-  };
+  return generateSalaryMetadata({ title: role.title, slug: role.slug });
 }
 
 function getDemandBadgeVariant(level: string) {
@@ -104,6 +80,39 @@ function getJobsAvailableLabel(level: string) {
   }
 }
 
+function generateSalaryFAQs(
+  roleTitle: string,
+  salaryData: (typeof salaryByLocation)[number],
+  sortedCities: (typeof salaryByLocation)[number]["cityData"]
+) {
+  const topCity = sortedCities[0];
+  const highestPaying = [...salaryData.cityData].sort(
+    (a, b) => b.hourly.max - a.hourly.max
+  )[0];
+  const lastCareerStep = salaryData.tipsIncluded
+    ? `With tips, experienced ${roleTitle}s in top-paying cities like ${highestPaying.cityName} can earn $${highestPaying.withTips?.max || highestPaying.hourly.max}/hr or more.`
+    : `Experienced ${roleTitle}s in top-paying cities like ${highestPaying.cityName} can earn up to $${highestPaying.hourly.max}/hr.`;
+
+  return [
+    {
+      question: `What is the highest-paying city for ${roleTitle}?`,
+      answer: `${highestPaying.cityName}, ${highestPaying.state} offers the highest ${roleTitle} pay at $${highestPaying.hourly.min}-$${highestPaying.hourly.max}/hr${highestPaying.withTips ? ` (up to $${highestPaying.withTips.max}/hr with tips)` : ""}. However, consider cost of living — ${topCity.cityName}, ${topCity.state} ranks #1 for purchasing power with a score of ${topCity.adjustedPurchasingPower}/100.`,
+    },
+    {
+      question: `How does cost of living affect ${roleTitle} pay?`,
+      answer: `A higher salary doesn't always mean more spending power. For example, a ${roleTitle} earning $${topCity.hourly.median}/hr in ${topCity.cityName} (COL index: ${topCity.costOfLivingIndex}) keeps more of their paycheck than someone earning more in a high-cost city. We use a purchasing power score (100 = national average) to help you compare real take-home value across cities.`,
+    },
+    {
+      question: `How much can a ${roleTitle} earn with experience?`,
+      answer: `Entry-level ${roleTitle}s typically start around $${salaryData.nationalAverage.hourly.min}/hr nationally. With 2-3 years of experience, pay rises toward the median of $${salaryData.nationalAverage.hourly.median}/hr. ${lastCareerStep} Annual equivalent at the top range is approximately $${(salaryData.nationalAverage.annual.max / 1000).toFixed(0)}K based on 40 hours per week.`,
+    },
+    {
+      question: `What is the national average ${roleTitle} salary?`,
+      answer: `The national average ${roleTitle} salary is $${salaryData.nationalAverage.hourly.min}-$${salaryData.nationalAverage.hourly.max}/hr (median $${salaryData.nationalAverage.hourly.median}/hr), which works out to roughly $${(salaryData.nationalAverage.annual.min / 1000).toFixed(0)}K-$${(salaryData.nationalAverage.annual.max / 1000).toFixed(0)}K per year at 40 hours per week.${salaryData.tipsIncluded && salaryData.avgTipsPerHour ? ` Tips can add an average of $${salaryData.avgTipsPerHour}/hr on top of base pay.` : ""}`,
+    },
+  ];
+}
+
 export default async function SalaryByCityPage({
   params,
 }: {
@@ -121,6 +130,8 @@ export default async function SalaryByCityPage({
   const sortedCities = [...salaryData.cityData].sort(
     (a, b) => b.adjustedPurchasingPower - a.adjustedPurchasingPower
   );
+
+  const salaryFaqs = generateSalaryFAQs(role.title, salaryData, sortedCities);
 
   return (
     <>
@@ -141,6 +152,7 @@ export default async function SalaryByCityPage({
           { name: role.title },
         ]}
       />
+      <FAQSchema questions={salaryFaqs} />
 
       <div className="container mx-auto px-4 py-4">
         <Breadcrumbs
@@ -390,6 +402,16 @@ export default async function SalaryByCityPage({
           </div>
         </div>
       </div>
+
+      <section className="py-12 bg-secondary">
+        <div className="container mx-auto px-4 max-w-4xl">
+          <FAQSection
+            faqs={salaryFaqs}
+            title={`Frequently Asked Questions About ${role.title} Salaries`}
+            suppressSchema
+          />
+        </div>
+      </section>
 
       <div className="container mx-auto px-4 py-12">
         <InternalLinkHub

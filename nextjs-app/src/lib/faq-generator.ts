@@ -24,10 +24,10 @@ export const generateComprehensiveFAQs = (role: RoleData): GeneratedFAQ[] => {
     answer: `${role.title}s typically earn between $${role.avgHourlyRate.min} and $${role.avgHourlyRate.max} per hour. Your actual pay depends on experience, location, shift timing, and the specific employer. With Indeed Flex, you can see the exact pay rate before accepting any shift.`
   });
 
-  // 2. Experience FAQ
+  // 2. Temp vs full-time FAQ
   faqs.push({
-    question: `Do I need experience to become a ${role.title}?`,
-    answer: `Many ${role.title} positions are entry-level friendly. While some experience is helpful, Indeed Flex offers opportunities for beginners. Key requirements include: ${role.requirements.slice(0, 2).join(', ')}. Most employers provide on-the-job training.`
+    question: `What's the difference between temp and full-time ${role.title} work?`,
+    answer: `Temp ${role.title} positions offer flexible scheduling — you choose when and where you work, often through apps like Indeed Flex. Full-time roles provide stable hours but less flexibility. Many temp ${role.title}s earn comparable hourly rates ($${role.avgHourlyRate.min}-$${role.avgHourlyRate.max}/hr) and top performers often get offered permanent positions.`
   });
 
   // 3. Skills FAQ
@@ -42,10 +42,10 @@ export const generateComprehensiveFAQs = (role: RoleData): GeneratedFAQ[] => {
     answer: `As a ${role.title}, your daily tasks typically include: ${role.responsibilities.slice(0, 3).join('; ')}. Shifts vary by employer but generally range from 4-10 hours.`
   });
 
-  // 5. Career Growth FAQ
+  // 5. Hours per week FAQ
   faqs.push({
-    question: `What career advancement opportunities exist for ${role.title}s?`,
-    answer: `The career path for ${role.title}s is promising. You can progress from ${role.careerPath.map(c => c.role).join(' → ')}. Many people advance to supervisory and management roles within ${role.careerPath[role.careerPath.length - 1]?.years || '5+ years'}.`
+    question: `How many hours per week can I work as a ${role.title}?`,
+    answer: `With temp ${role.title} work through Indeed Flex, you control your hours. Most workers pick up 15-40 hours per week depending on their availability. Shifts typically run 4-10 hours. You can work as little or as much as you want — there's no minimum commitment.`
   });
 
   // 6. Schedule FAQ
@@ -72,10 +72,10 @@ export const generateComprehensiveFAQs = (role: RoleData): GeneratedFAQ[] => {
     answer: `Physical requirements depend on the specific role and employer. Some positions may require standing for extended periods, lifting, or other physical tasks. Job descriptions on Indeed Flex clearly outline any physical requirements.`
   });
 
-  // 10. Getting Started FAQ
+  // 10. Side job compatibility FAQ
   faqs.push({
-    question: `How do I get started as a ${role.title} with Indeed Flex?`,
-    answer: `Getting started is easy! Download the Indeed Flex app, complete your profile, and browse available ${role.title} shifts in your area. You can apply and accept shifts directly through the app, often starting work within days.`
+    question: `Can I work as a ${role.title} while studying or at a second job?`,
+    answer: `Absolutely. Temp ${role.title} work is popular with students, parents, and people with other commitments. With Indeed Flex, you browse available shifts and only accept ones that fit your schedule — no fixed hours or minimum shifts required. Many workers combine ${role.title.toLowerCase()} shifts with other work or school.`
   });
 
   // Add any existing FAQs from the role data
@@ -103,46 +103,47 @@ export interface CityData {
     transport: number;
   };
   population?: string;
+  metroArea?: string;
 }
 
 export const generateCityFAQs = (city: CityData): GeneratedFAQ[] => {
   const faqs: GeneratedFAQ[] = [];
 
-  // 1. Minimum Wage FAQ
+  const colStatus = city.costOfLiving.index > 100 ? 'higher than' : city.costOfLiving.index < 100 ? 'lower than' : 'at';
+  const colDiff = Math.abs(city.costOfLiving.index - 100);
+  const avgWage = (city.avgHourlyWage.min + city.avgHourlyWage.max) / 2;
+  const monthlyGross = Math.round(avgWage * 40 * 4.33);
+  const monthlyNet = Math.round(monthlyGross * 0.78);
+  const rentPercent = Math.round((city.costOfLiving.rent.oneBed / monthlyNet) * 100);
+
   faqs.push({
-    question: `What's the minimum wage in ${city.city}, ${city.state}?`,
-    answer: `The minimum wage in ${city.state} varies by location and employer size. Many flexible work positions through Indeed Flex pay above minimum wage, typically ranging from $${city.avgHourlyWage.min} to $${city.avgHourlyWage.max} per hour. Check individual job postings for exact rates.`
+    question: `How much do flexible workers earn in ${city.city}?`,
+    answer: `Flexible workers in ${city.city}, ${city.state} typically earn $${city.avgHourlyWage.min}–$${city.avgHourlyWage.max} per hour depending on the role and industry. At 40 hours per week, that's roughly $${monthlyGross.toLocaleString()} gross per month ($${monthlyNet.toLocaleString()} after estimated taxes). Top-paying industries include ${city.topIndustries.slice(0, 2).join(' and ')}.`
   });
 
-  // 2. Best Areas FAQ
   faqs.push({
-    question: `What are the best areas for flexible work in ${city.city}?`,
-    answer: `${city.city} offers flexible work opportunities across multiple neighborhoods. Areas with high concentrations of ${city.topIndustries.slice(0, 2).join(' and ')} jobs tend to have the most opportunities. Use the Indeed Flex app to see available shifts by neighborhood.`
+    question: `Can I afford to live in ${city.city} on an hourly wage?`,
+    answer: `${city.city}'s cost of living is ${colDiff}% ${colStatus} the national average (index: ${city.costOfLiving.index}). A one-bedroom apartment averages $${city.costOfLiving.rent.oneBed}/month, which is about ${rentPercent}% of a full-time flexible worker's take-home pay. Monthly groceries run about $${city.costOfLiving.groceries} and transport about $${city.costOfLiving.transport}. ${rentPercent <= 30 ? 'Housing is within the recommended 30% threshold.' : 'Consider a studio ($' + city.costOfLiving.rent.studio + '/mo) or a roommate to keep costs manageable.'}`
   });
 
-  // 3. Cost of Living FAQ
-  const colStatus = city.costOfLiving.index > 100 ? 'higher' : city.costOfLiving.index < 100 ? 'lower' : 'similar to';
   faqs.push({
-    question: `Is ${city.city} affordable for hourly workers?`,
-    answer: `The cost of living in ${city.city} is ${colStatus} the national average (index: ${city.costOfLiving.index}). Average rent for a studio apartment is around $${city.costOfLiving.rent.studio}/month, and a one-bedroom is approximately $${city.costOfLiving.rent.oneBed}/month. With hourly wages typically ranging from $${city.avgHourlyWage.min} to $${city.avgHourlyWage.max}, many workers find ${city.city} affordable, especially with flexible scheduling that allows for multiple income streams.`
+    question: `What industries hire the most flexible workers in ${city.city}?`,
+    answer: `${city.city}'s strongest industries for flexible work are ${city.topIndustries.join(', ')}. ${city.topIndustries[0]} leads hiring with year-round demand, while ${city.topIndustries[1] || city.topIndustries[0]} offers seasonal surges. Indeed Flex posts new shifts daily across all these sectors.`
   });
 
-  // 4. Job Availability FAQ
   faqs.push({
-    question: `What types of flexible jobs are available in ${city.city}?`,
-    answer: `${city.city} has a strong job market for flexible workers, particularly in ${city.topIndustries.join(', ')}. Indeed Flex offers shifts in hospitality, warehouse, retail, facilities, and more. New shifts are posted daily, and you can filter by location, pay rate, and schedule preferences.`
+    question: `What are the best neighborhoods for shift work in ${city.city}?`,
+    answer: `The best neighborhoods depend on your industry. Areas with high concentrations of ${city.topIndustries[0].toLowerCase()} jobs (typically downtown and commercial districts) offer the most shifts. Warehouse and logistics roles are often concentrated near ${city.metroArea ? `the ${city.metroArea} metro area` : 'industrial districts and highway corridors'}. The Indeed Flex app shows exact shift locations so you can filter by commute time.`
   });
 
-  // 5. Transportation FAQ
   faqs.push({
-    question: `Do I need a car to work flexible jobs in ${city.city}?`,
-    answer: `Transportation needs vary by job type. Many warehouse and industrial positions may require a car, while hospitality and retail jobs in downtown areas are often accessible by public transit. The Indeed Flex app shows job locations so you can choose shifts near you or accessible by your preferred transportation method.`
+    question: `Do I need transportation to work in ${city.city}?`,
+    answer: `It depends on the role. Average monthly transport costs in ${city.city} are about $${city.costOfLiving.transport}. Hospitality and retail jobs in central ${city.city} are often accessible by public transit, while warehouse positions near ${city.metroArea || city.city + ' suburbs'} may require a car. The Indeed Flex app shows shift locations upfront so you can plan your commute before accepting.`
   });
 
-  // 6. Peak Hiring FAQ
   faqs.push({
-    question: `When is the best time to find flexible work in ${city.city}?`,
-    answer: `Flexible work opportunities are available year-round in ${city.city}, but hiring peaks during seasonal periods. ${city.topIndustries[0]} jobs often have increased demand during holidays and special events. Check the Indeed Flex app regularly for new postings, as shifts are added daily.`
+    question: `When is the best time to find work in ${city.city}?`,
+    answer: `Flexible work is available year-round in ${city.city}, but demand spikes during seasonal peaks. ${city.topIndustries.includes('Hospitality') || city.topIndustries.includes('Tourism') ? 'Tourism and hospitality surge in summer and around holidays.' : city.topIndustries.includes('Logistics') || city.topIndustries.includes('Retail') ? 'Warehouse and retail hiring peaks from October through January for the holiday season.' : 'Hiring is steady with modest seasonal variation.'} Download the Indeed Flex app to get notified when new shifts drop.`
   });
 
   return faqs;
@@ -166,41 +167,41 @@ export interface CityRoleData {
 export const generateCityRoleFAQs = (data: CityRoleData): GeneratedFAQ[] => {
   const faqs: GeneratedFAQ[] = [];
 
-  // 1. Salary in this city FAQ
+  const avgHourly = (data.localSalary.min + data.localSalary.max) / 2;
+  const monthlyGross = Math.round(avgHourly * 40 * 4.33);
+  const monthlyNet = Math.round(monthlyGross * 0.78);
+  const rentPercent = Math.round((data.rentOneBed / monthlyNet) * 100);
+  const colDiff = Math.abs(data.costOfLivingIndex - 100);
+  const colDirection = data.costOfLivingIndex > 100 ? 'above' : data.costOfLivingIndex < 100 ? 'below' : 'at';
+
   faqs.push({
-    question: `How much do ${data.roleTitle}s make in ${data.city}?`,
-    answer: `${data.roleTitle}s in ${data.city} typically earn between $${data.localSalary.min.toFixed(2)} and $${data.localSalary.max.toFixed(2)} per hour. Pay rates vary by employer, shift timing, and experience level. Check the Indeed Flex app for current rates in ${data.city}.`
+    question: `How much do ${data.roleTitle}s make in ${data.city}, ${data.stateCode}?`,
+    answer: `${data.roleTitle}s in ${data.city} earn $${data.localSalary.min.toFixed(2)}–$${data.localSalary.max.toFixed(2)} per hour, adjusted for ${data.city}'s cost of living (index: ${data.costOfLivingIndex}). At 40 hours per week, that's roughly $${monthlyGross.toLocaleString()}/month gross or $${monthlyNet.toLocaleString()} after estimated taxes. Rates vary by employer, shift timing, and experience.`
   });
 
-  // 2. Job availability FAQ
+  faqs.push({
+    question: `Can I afford a one-bedroom in ${data.city} on a ${data.roleTitle} salary?`,
+    answer: `A one-bedroom apartment in ${data.city} averages $${data.rentOneBed.toLocaleString()}/month, which is about ${rentPercent}% of a full-time ${data.roleTitle}'s take-home pay ($${monthlyNet.toLocaleString()}/month). ${rentPercent <= 30 ? 'That\'s within the recommended 30% housing-to-income ratio — ' + data.city + ' is manageable on this salary.' : rentPercent <= 40 ? 'That exceeds the recommended 30% threshold. Consider a studio apartment or roommate to improve your budget.' : 'Housing costs are steep relative to this salary. Many workers share apartments or commute from nearby suburbs.'}`
+  });
+
   faqs.push({
     question: `Are ${data.roleTitle} jobs available in ${data.city}?`,
-    answer: `Yes, ${data.roleTitle} positions are available in ${data.city} through Indeed Flex. New shifts are posted regularly, and you can filter by location, pay rate, and schedule. Many positions are entry-level friendly.`
+    answer: `Yes — ${data.roleTitle} positions are actively hiring in ${data.city} through Indeed Flex. ${data.city} is part of the ${data.metroArea || data.city + ' metro'} area with strong demand in ${data.topIndustries.slice(0, 2).join(' and ')}. New shifts are posted daily and many are entry-level friendly.`
   });
 
-  // 3. Requirements FAQ
   faqs.push({
     question: `What do I need to work as a ${data.roleTitle} in ${data.city}?`,
-    answer: `Requirements for ${data.roleTitle} positions in ${data.city} typically include: ${data.requirements.slice(0, 3).join(', ')}. Most employers provide on-the-job training.`
+    answer: `Most ${data.roleTitle} positions in ${data.city} require: ${data.requirements.slice(0, 3).join('; ')}. Key skills employers look for include ${data.skills.slice(0, 3).join(', ')}. Most employers provide on-the-job training, so prior experience isn't always required.`
   });
 
-  // 4. Skills FAQ
   faqs.push({
-    question: `What skills are needed for ${data.roleTitle} work in ${data.city}?`,
-    answer: `Key skills for ${data.roleTitle}s in ${data.city} include: ${data.skills.slice(0, 4).join(', ')}. These skills can often be developed through training and experience.`
+    question: `Is ${data.city} a good city for ${data.roleTitle} work?`,
+    answer: `${data.city}'s cost of living is ${colDiff}% ${colDirection} average, and ${data.roleTitle} pay reflects that adjustment. The ${data.topIndustries[0]} and ${data.topIndustries[1] || data.topIndustries[0]} sectors drive consistent demand for ${data.roleTitle}s. ${data.costOfLivingIndex < 100 ? 'Lower living costs mean your paycheck goes further here.' : 'Higher wages offset the above-average costs.'} Download Indeed Flex to browse current shifts.`
   });
 
-  // 5. Cost of living FAQ
-  const colStatus = data.costOfLivingIndex > 100 ? 'higher' : data.costOfLivingIndex < 100 ? 'lower' : 'similar to';
   faqs.push({
-    question: `Can I afford to live in ${data.city} as a ${data.roleTitle}?`,
-    answer: `The cost of living in ${data.city} is ${colStatus} the national average. With ${data.roleTitle} wages typically ranging from $${data.localSalary.min.toFixed(2)} to $${data.localSalary.max.toFixed(2)} per hour, many workers find ${data.city} affordable, especially with flexible scheduling that allows for multiple income streams. Average rent for a one-bedroom apartment is around $${data.rentOneBed}/month.`
-  });
-
-  // 6. Getting started FAQ
-  faqs.push({
-    question: `How do I start working as a ${data.roleTitle} in ${data.city}?`,
-    answer: `To get started, download the Indeed Flex app and complete your profile. Browse available ${data.roleTitle} shifts in ${data.city} and apply directly through the app. Many workers start within days of applying.`
+    question: `How quickly can I start as a ${data.roleTitle} in ${data.city}?`,
+    answer: `Most workers start within 1-3 days of applying through the Indeed Flex app. Download the app, complete your profile, and browse available ${data.roleTitle} shifts in ${data.city}. You can accept shifts directly and start earning immediately.`
   });
 
   return faqs;

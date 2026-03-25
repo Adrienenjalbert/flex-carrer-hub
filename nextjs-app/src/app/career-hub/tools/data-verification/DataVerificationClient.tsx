@@ -4,7 +4,6 @@ import Breadcrumbs from "@/components/career-hub/Breadcrumbs";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -145,6 +144,7 @@ export default function DataVerificationClient() {
       <div className="container mx-auto px-4 py-8">
         <Breadcrumbs
           items={[
+            { label: "Career Hub", href: "/career-hub" },
             { label: "Tools", href: "/career-hub/tools" },
             { label: "Data Verification" },
           ]}

@@ -128,6 +128,7 @@ export default function TaxCalculatorClient() {
       <div className="container mx-auto px-4 py-8">
         <Breadcrumbs
           items={[
+            { label: "Career Hub", href: "/career-hub" },
             { label: "Tools", href: "/career-hub/tools" },
             { label: "Tax Calculator" },
           ]}
